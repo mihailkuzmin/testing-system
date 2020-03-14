@@ -11,6 +11,20 @@ export class Task {
     private correctOutputFileName: string,
   ) {}
 
+  static async getById(id: number | string) {
+    try {
+      const { rows } = await db.query(
+        `
+        SELECT * FROM Task WHERE Task.id = ($1)
+      `,
+        [id],
+      )
+      return rows
+    } catch (e) {
+      throw e
+    }
+  }
+
   static async getAll(): Promise<TaskQueryResult[]> {
     try {
       const { rows } = await db.query(`

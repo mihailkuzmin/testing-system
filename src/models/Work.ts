@@ -17,6 +17,20 @@ export class Work {
     }
   }
 
+  static async getById(id: number | string) {
+    try {
+      const { rows } = await db.query(
+        `
+        SELECT * FROM Work WHERE Work.id = ($1)
+      `,
+        [id],
+      )
+      return rows
+    } catch (e) {
+      throw e
+    }
+  }
+
   static async getAll(): Promise<WorkQueryResult[]> {
     try {
       const { rows } = await db.query(`
