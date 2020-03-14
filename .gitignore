@@ -99,3 +99,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# config files
+*.config.json
+
+# TS build
+build

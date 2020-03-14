@@ -1,5 +1,5 @@
 import fastify, { FastifyInstance } from 'fastify'
-import { workController } from './controllers'
+import {routes} from './routes'
 import { PoolConfig } from 'pg'
 import { db } from './db'
 import config from '../config.json'
@@ -10,7 +10,7 @@ const connection: PoolConfig = config.db
 const start = async (): Promise<void> => {
   try {
     await db.connect(connection)
-    app.register(workController, { prefix: '/work' })
+    app.register(routes, { prefix: '/api' })
     await app.listen(config.port)
   } catch (e) {
     app.log.error(e)
