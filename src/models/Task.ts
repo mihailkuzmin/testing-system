@@ -14,7 +14,7 @@ export class Task {
   static async getAll(): Promise<TaskQueryResult[]> {
     try {
       const { rows } = await db.query(`
-        SELECT * from Student
+        SELECT * from Task
       `)
       return rows
     } catch (e) {
