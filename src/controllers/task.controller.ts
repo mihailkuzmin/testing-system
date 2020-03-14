@@ -1,8 +1,10 @@
 import { IController } from '../typings/controller'
+import { Task } from '../models'
 
 export const taskController: IController = (app, options, done) => {
-  app.get('/getAll', async (request, reply) => {
-    reply.send({ message: 'getAll stub' })
+  app.get('/', async (request, reply) => {
+    const result = await Task.getAll()
+    reply.send(result)
   })
 
   done()

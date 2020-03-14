@@ -1,8 +1,8 @@
 import { IController } from '../typings/controller'
-import {Work} from '../models'
+import { Work } from '../models'
 
 export const workController: IController = (app, options, done) => {
-  app.get('/getAll', async (request, reply) => {
+  app.get('/', async (request, reply) => {
     const result = await Work.getAll()
     reply.send(result)
   })
