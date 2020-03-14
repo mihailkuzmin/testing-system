@@ -1,0 +1,28 @@
+{
+  "name": "testing-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf build && tsc",
+    "start": "node build/src/index.js",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.3",
+    "@types/node": "^13.9.1",
+    "@types/pg": "^7.14.2",
+    "pino-pretty": "^3.6.1",
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "fastify": "^2.12.1",
+    "fastify-plugin": "^1.6.1",
+    "pg": "^7.18.2"
+  }
+}

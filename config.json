@@ -1,0 +1,14 @@
+{
+  "db": {
+    "user": "user",
+    "host": "host",
+    "database": "database",
+    "password": "password",
+    "port": 1000
+  },
+  "logger": {
+    "prettyPrint": true
+  },
+  "port": 2000,
+  "restartTime": 5000
+}
