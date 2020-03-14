@@ -1,5 +1,5 @@
 import fastify, { FastifyInstance } from 'fastify'
-import {routes} from './routes'
+import { routes } from './routes'
 import { PoolConfig } from 'pg'
 import { db } from './db'
 import config from '../config.json'
