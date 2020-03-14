@@ -7,5 +7,11 @@ export const taskController: IController = (app, options, done) => {
     reply.send(result)
   })
 
+  app.get('/:id', async (request, reply) => {
+    const { id } = request.params
+    const result = await Task.getById(id)
+    reply.send(result)
+  })
+
   done()
 }
