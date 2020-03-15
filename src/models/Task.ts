@@ -36,17 +36,18 @@ export class Task {
     }
   }
 
-  public async save(): Promise<void> {
+  public async save(): Promise<TaskQueryResult> {
     try {
-      await db.query(
+      const { rows } = await db.query(
         `
         INSERT INTO Task(
           description,
           input_name,
           output_name,
-          example_intput,
+          example_input,
           example_output,
           correct_output) VALUES($1, $2, $3, $4, $5, $6)
+        RETURNING *
       `,
         [
           this.description,
@@ -57,6 +58,8 @@ export class Task {
           this.correctOutputFileName,
         ],
       )
+      const [result] = rows
+      return result
     } catch (e) {
       throw e
     }

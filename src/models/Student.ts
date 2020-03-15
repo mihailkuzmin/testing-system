@@ -29,14 +29,17 @@ export class Student {
     }
   }
 
-  public async save(): Promise<void> {
+  public async save(): Promise<StudentQueryResult> {
     try {
-      await db.query(
+      const { rows } = await db.query(
         `
         INSERT INTO Student(name, group_id) VALUES($1, $2)
+        RETURNING *
       `,
         [this.name, this.groupId],
       )
+      const [result] = rows
+      return result
     } catch (e) {
       throw e
     }

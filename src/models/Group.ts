@@ -1,10 +1,10 @@
 import { db } from '../db'
-import { StudentQueryResult } from '../typings/queries/student'
+import { GroupQueryResult } from '../typings/queries/group'
 
 export class Group {
   constructor(private name: string) {}
 
-  static async getById(id: number | string) {
+  static async getById(id: number | string): Promise<GroupQueryResult> {
     try {
       const { rows } = await db.query(
         `
@@ -12,13 +12,14 @@ export class Group {
       `,
         [id],
       )
-      return rows
+      const [result] = rows
+      return result
     } catch (e) {
       throw e
     }
   }
 
-  static async getAll(): Promise<StudentQueryResult[]> {
+  static async getAll(): Promise<GroupQueryResult[]> {
     try {
       const { rows } = await db.query(`
         SELECT * from StudentGroup
@@ -29,14 +30,17 @@ export class Group {
     }
   }
 
-  public async save(): Promise<void> {
+  public async save(): Promise<GroupQueryResult> {
     try {
-      await db.query(
+      const { rows } = await db.query(
         `
         INSERT INTO StudentGroup(name) VALUES($1)
+        RETURNING *
       `,
         [this.name],
       )
+      const [result] = rows
+      return result
     } catch (e) {
       throw e
     }

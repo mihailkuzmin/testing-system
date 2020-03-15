@@ -4,14 +4,17 @@ import { WorkQueryResult } from '../typings/queries/work'
 export class Work {
   constructor(private name: string, private openAt: string, private closeAt: string) {}
 
-  async save(): Promise<void> {
+  async save(): Promise<WorkQueryResult> {
     try {
-      await db.query(
+      const { rows } = await db.query(
         `
         INSERT INTO Work(name, open_at, close_at) VALUES($1, $2, $3)
+        RETURNING *
       `,
         [this.name, this.openAt, this.closeAt],
       )
+      const [result] = rows
+      return result
     } catch (e) {
       throw e
     }
