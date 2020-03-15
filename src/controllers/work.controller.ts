@@ -7,6 +7,15 @@ export const workController: IController = (app, options, done) => {
     reply.send(result)
   })
 
+  app.post('/', async (request, reply) => {
+    const { name, openAt, closeAt } = request.body
+
+    const work = new Work(name, openAt, closeAt)
+    const result = await work.save()
+
+    reply.send(result)
+  })
+
   app.get('/:id', async (request, reply) => {
     const { id } = request.params
     const result = await Work.getById(id)

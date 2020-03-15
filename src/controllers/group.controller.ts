@@ -7,6 +7,15 @@ export const groupController: IController = (app, options, done) => {
     reply.send(result)
   })
 
+  app.post('/', async (request, reply) => {
+    const { name } = request.body
+
+    const group = new Group(name)
+    const result = await group.save()
+
+    reply.send(result)
+  })
+
   app.get('/:id', async (request, reply) => {
     const { id } = request.params
     const result = await Group.getById(id)

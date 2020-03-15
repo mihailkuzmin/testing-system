@@ -7,6 +7,15 @@ export const studentController: IController = (app, options, done) => {
     reply.send(result)
   })
 
+  app.post('/', async (request, reply) => {
+    const { name, groupId } = request.body
+
+    const student = new Student(name, groupId)
+    const result = await student.save()
+
+    reply.send(result)
+  })
+
   app.get('/:id', async (request, reply) => {
     const { id } = request.params
     const result = await Student.getById(id)

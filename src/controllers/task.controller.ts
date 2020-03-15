@@ -7,6 +7,29 @@ export const taskController: IController = (app, options, done) => {
     reply.send(result)
   })
 
+  app.post('/', async (request, reply) => {
+    const {
+      description,
+      inputFileName,
+      outputFileName,
+      exampleInputFileName,
+      exampleOutputFileName,
+      correctOutputFileName,
+    } = request.body
+
+    const task = new Task(
+      description,
+      inputFileName,
+      outputFileName,
+      exampleInputFileName,
+      exampleOutputFileName,
+      correctOutputFileName,
+    )
+    const result = await task.save()
+
+    reply.send(result)
+  })
+
   app.get('/:id', async (request, reply) => {
     const { id } = request.params
     const result = await Task.getById(id)
