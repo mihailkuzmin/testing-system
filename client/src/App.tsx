@@ -1,14 +1,17 @@
 import React from 'react'
 import { Header } from './components'
-import { usePages } from './pages'
+import { usePages, useNavigation } from './hooks'
+import { routesConfig } from './routes'
 
 function App() {
-  const [pages, links] = usePages(true)
+  const isAuth = true
+  const pages = usePages(isAuth, routesConfig)
+  const navigation = useNavigation(isAuth, routesConfig)
 
   return (
     <div className='App'>
       <Header>
-        <nav>{links}</nav>
+        <nav>{navigation}</nav>
       </Header>
       {pages}
     </div>

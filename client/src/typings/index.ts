@@ -10,3 +10,19 @@ export interface IPageProps {
   uri?: string | undefined
   children?: ReactNode
 }
+
+export type Route = {
+  path: string
+  Page: (props: IPageProps) => JSX.Element
+  title?: string
+}
+
+export type RouteGroup = {
+  groupName: string
+  routes: Route[]
+}
+
+export interface IRoutesConfig {
+  admin: RouteGroup[]
+  common: RouteGroup[]
+}

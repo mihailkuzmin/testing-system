@@ -1,0 +1,26 @@
+.select {
+  color: white !important;
+  font-size: unset !important;
+  font-weight: unset !important;
+  font-family: unset !important;
+}
+
+.menuItem a {
+  color: unset;
+}
+
+.select > div {
+  padding: 0;
+}
+
+.select > svg {
+  color: white !important;
+}
+
+.select::before {
+  display: none;
+}
+
+.select::after {
+  display: none;
+}

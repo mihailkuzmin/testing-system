@@ -9,3 +9,12 @@ body {
     sans-serif;
   padding-top: 3.5rem;
 }
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-link.dropdown {
+  color: unset;
+}
