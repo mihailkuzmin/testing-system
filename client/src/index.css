@@ -8,11 +8,17 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   padding-top: 3.5rem;
+  background-color: rgba(175, 175, 175, 0.08);
 }
 
 .nav-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   color: white;
   text-decoration: none;
+  padding: 0 0.8rem;
+  height: inherit;
 }
 
 .nav-link.dropdown {
