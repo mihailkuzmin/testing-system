@@ -1,6 +1,7 @@
 import React from 'react'
 import { IPageProps } from '../../typings'
+import {Layout} from '../../components'
 
 export const Main = (props: IPageProps) => {
-  return <div>Main</div>
+  return <Layout>Main</Layout>
 }
