@@ -15,6 +15,13 @@
   padding: 0.5rem 1rem;
 }
 
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .formContainer {
   display: flex;
   flex-direction: column;

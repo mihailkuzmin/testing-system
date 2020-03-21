@@ -15,10 +15,11 @@ import styles from './AddModal.module.css'
 
 interface IAddModalProps {
   open: boolean
+  handleClose: () => void
   onClose: () => void
 }
 
-export const AddModal = ({ open, onClose }: IAddModalProps) => {
+export const AddModal = ({ open, handleClose, onClose }: IAddModalProps) => {
   return (
     <Modal
       className={styles.modal}
@@ -51,9 +52,14 @@ export const AddModal = ({ open, onClose }: IAddModalProps) => {
               <TextField label='Пароль' variant='outlined' />
             </div>
           </form>
-          <Button variant='contained' color='primary'>
-            Добавить
-          </Button>
+          <div className={styles.actions}>
+            <Button variant='outlined' color='primary'>
+              Добавить
+            </Button>
+            <Button onClick={handleClose} variant='outlined' color='secondary'>
+              Отменить
+            </Button>
+          </div>
         </Paper>
       </Fade>
     </Modal>
