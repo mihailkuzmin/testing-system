@@ -1,0 +1,1 @@
+export {GroupsTable} from './GroupsTable'
