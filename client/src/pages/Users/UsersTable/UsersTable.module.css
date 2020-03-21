@@ -1,0 +1,12 @@
+.table {
+  max-width: 700px;
+  margin: auto;
+}
+
+.row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.head th {
+  font-weight: 600;
+}
