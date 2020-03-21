@@ -11,6 +11,12 @@ body {
   background-color: rgba(175, 175, 175, 0.08);
 }
 
+.MuiTableCell-root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif !important;
+}
+
 .nav-link {
   display: flex;
   flex-direction: row;
