@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   TableCell,
   TableHead,
@@ -9,6 +9,7 @@ import {
   Paper,
   Button,
 } from '@material-ui/core'
+import {AddModal} from '../AddModal'
 import styles from './GroupsTable.module.css'
 
 // TODO remove 'any'
@@ -17,8 +18,14 @@ interface IGroupsTableProps {
 }
 
 export const GroupsTable = (props: IGroupsTableProps) => {
+  const [addGroupOpen, setAddGroupOpen] = useState(false)
+  const handleOpenAddGroup = () => setAddGroupOpen(true)
+  const handleCloseAddGroup = () => setAddGroupOpen(false)
+
   return (
-    <TableContainer className={styles.table} component={Paper}>
+    <Paper className={styles.table} elevation={3}>
+    <AddModal open={addGroupOpen} handleClose={handleCloseAddGroup} onClose={handleCloseAddGroup} />
+    <TableContainer>
       <Table>
         <TableHead className={styles.head}>
           <TableRow>
@@ -26,7 +33,7 @@ export const GroupsTable = (props: IGroupsTableProps) => {
               <div className={styles.headRow}>
                 <div className={styles.title}>Группы</div>
                 <div>
-                  <Button variant='outlined' color='primary'>
+                  <Button onClick={handleOpenAddGroup} variant='outlined' color='primary'>
                     Добавить
                   </Button>
                 </div>
@@ -58,5 +65,6 @@ export const GroupsTable = (props: IGroupsTableProps) => {
         </TableBody>
       </Table>
     </TableContainer>
+    </Paper>
   )
 }
