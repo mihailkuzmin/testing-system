@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import {
-  TableCell,
-  TableHead,
-  TableRow,
-  TableContainer,
+  TableCell as Cell,
+  TableHead as Head,
+  TableRow as Row,
   Table,
-  TableBody,
+  TableBody as Body,
   Paper,
   Button,
 } from '@material-ui/core'
-import {AddModal} from '../AddModal'
+import { AddModal } from '../AddModal'
 import styles from './GroupsTable.module.css'
 
 // TODO remove 'any'
@@ -24,12 +23,15 @@ export const GroupsTable = (props: IGroupsTableProps) => {
 
   return (
     <Paper className={styles.table} elevation={3}>
-    <AddModal open={addGroupOpen} handleClose={handleCloseAddGroup} onClose={handleCloseAddGroup} />
-    <TableContainer>
+      <AddModal
+        open={addGroupOpen}
+        handleClose={handleCloseAddGroup}
+        onClose={handleCloseAddGroup}
+      />
       <Table>
-        <TableHead className={styles.head}>
-          <TableRow>
-            <TableCell colSpan={3}>
+        <Head className={styles.head}>
+          <Row>
+            <Cell colSpan={3}>
               <div className={styles.headRow}>
                 <div className={styles.title}>Группы</div>
                 <div>
@@ -38,33 +40,32 @@ export const GroupsTable = (props: IGroupsTableProps) => {
                   </Button>
                 </div>
               </div>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>id</TableCell>
-            <TableCell align='right'>Название</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow className={styles.row}>
-            <TableCell>1</TableCell>
-            <TableCell align='right'>АП-31</TableCell>
-          </TableRow>
-          <TableRow className={styles.row}>
-            <TableCell>2</TableCell>
-            <TableCell align='right'>УС-31</TableCell>
-          </TableRow>
-          <TableRow className={styles.row}>
-            <TableCell>3</TableCell>
-            <TableCell align='right'>АП-21</TableCell>
-          </TableRow>
-          <TableRow className={styles.row}>
-            <TableCell>4</TableCell>
-            <TableCell align='right'>МР-191</TableCell>
-          </TableRow>
-        </TableBody>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>id</Cell>
+            <Cell align='right'>Название</Cell>
+          </Row>
+        </Head>
+        <Body>
+          <Row className={styles.row}>
+            <Cell>1</Cell>
+            <Cell align='right'>АП-31</Cell>
+          </Row>
+          <Row className={styles.row}>
+            <Cell>2</Cell>
+            <Cell align='right'>УС-31</Cell>
+          </Row>
+          <Row className={styles.row}>
+            <Cell>3</Cell>
+            <Cell align='right'>АП-21</Cell>
+          </Row>
+          <Row className={styles.row}>
+            <Cell>4</Cell>
+            <Cell align='right'>МР-191</Cell>
+          </Row>
+        </Body>
       </Table>
-    </TableContainer>
     </Paper>
   )
 }

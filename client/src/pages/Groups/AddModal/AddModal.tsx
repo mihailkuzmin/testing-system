@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  Paper,
-  TextField,
-  Button
-} from '@material-ui/core'
+import { Paper, TextField, Button } from '@material-ui/core'
 import { Modal } from '../../../components'
 import styles from './AddModal.module.css'
 

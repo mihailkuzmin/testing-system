@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import {
-  TableCell,
-  TableHead,
-  TableRow,
-  TableContainer,
+  TableCell as Cell,
+  TableHead as Head,
+  TableRow as Row,
   Table,
-  TableBody,
+  TableBody as Body,
   Paper,
   Button,
 } from '@material-ui/core'
@@ -25,51 +24,49 @@ export const UsersTable = (props: IUsersTableProps) => {
   return (
     <Paper className={styles.table} elevation={3}>
       <AddModal open={addUserOpen} handleClose={handleCloseAddUser} onClose={handleCloseAddUser} />
-      <TableContainer>
-        <Table>
-          <TableHead className={styles.head}>
-            <TableRow>
-              <TableCell colSpan={3}>
-                <div className={styles.headRow}>
-                  <div className={styles.title}>Пользователи</div>
-                  <div>
-                    <Button variant='outlined' color='primary' onClick={handleOpenAddUser}>
-                      Добавить
-                    </Button>
-                  </div>
+      <Table>
+        <Head className={styles.head}>
+          <Row>
+            <Cell colSpan={3}>
+              <div className={styles.headRow}>
+                <div className={styles.title}>Пользователи</div>
+                <div>
+                  <Button variant='outlined' color='primary' onClick={handleOpenAddUser}>
+                    Добавить
+                  </Button>
                 </div>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>ФИО</TableCell>
-              <TableCell align='right'>Группа</TableCell>
-              <TableCell align='right'>Логин</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow className={styles.row}>
-              <TableCell>Исаков Клим Ярославович</TableCell>
-              <TableCell align='right'>АП-31</TableCell>
-              <TableCell align='right'>login1</TableCell>
-            </TableRow>
-            <TableRow className={styles.row}>
-              <TableCell>Владосов Арнольд Артемович</TableCell>
-              <TableCell align='right'>АП-31</TableCell>
-              <TableCell align='right'>login2</TableCell>
-            </TableRow>
-            <TableRow className={styles.row}>
-              <TableCell>Виноградов Владислав Георгьевич</TableCell>
-              <TableCell align='right'>АП-21</TableCell>
-              <TableCell align='right'>login3</TableCell>
-            </TableRow>
-            <TableRow className={styles.row}>
-              <TableCell>Муравьёв Аристарх Романович</TableCell>
-              <TableCell align='right'>МР-191</TableCell>
-              <TableCell align='right'>login4</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+              </div>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>ФИО</Cell>
+            <Cell align='right'>Группа</Cell>
+            <Cell align='right'>Логин</Cell>
+          </Row>
+        </Head>
+        <Body>
+          <Row className={styles.row}>
+            <Cell>Исаков Клим Ярославович</Cell>
+            <Cell align='right'>АП-31</Cell>
+            <Cell align='right'>login1</Cell>
+          </Row>
+          <Row className={styles.row}>
+            <Cell>Владосов Арнольд Артемович</Cell>
+            <Cell align='right'>АП-31</Cell>
+            <Cell align='right'>login2</Cell>
+          </Row>
+          <Row className={styles.row}>
+            <Cell>Виноградов Владислав Георгьевич</Cell>
+            <Cell align='right'>АП-21</Cell>
+            <Cell align='right'>login3</Cell>
+          </Row>
+          <Row className={styles.row}>
+            <Cell>Муравьёв Аристарх Романович</Cell>
+            <Cell align='right'>МР-191</Cell>
+            <Cell align='right'>login4</Cell>
+          </Row>
+        </Body>
+      </Table>
     </Paper>
   )
 }
