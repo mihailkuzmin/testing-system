@@ -1,1 +1,1 @@
-export {GroupsTable} from './GroupsTable'
+export { GroupsTable } from './GroupsTable'
