@@ -7,6 +7,7 @@ import {
   Table,
   TableBody,
   Paper,
+  Button,
 } from '@material-ui/core'
 import styles from './GroupsTable.module.css'
 
@@ -21,26 +22,38 @@ export const GroupsTable = (props: IGroupsTableProps) => {
       <Table>
         <TableHead className={styles.head}>
           <TableRow>
-            <TableCell>Группа</TableCell>
-            <TableCell>Название</TableCell>
+            <TableCell colSpan={3}>
+              <div className={styles.headRow}>
+                <div className={styles.title}>Группы</div>
+                <div>
+                  <Button variant='outlined' color='primary'>
+                    Добавить
+                  </Button>
+                </div>
+              </div>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>id</TableCell>
+            <TableCell align='right'>Название</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow className={styles.row}>
             <TableCell>1</TableCell>
-            <TableCell>АП-31</TableCell>
+            <TableCell align='right'>АП-31</TableCell>
           </TableRow>
           <TableRow className={styles.row}>
             <TableCell>2</TableCell>
-            <TableCell>УС-31</TableCell>
+            <TableCell align='right'>УС-31</TableCell>
           </TableRow>
           <TableRow className={styles.row}>
             <TableCell>3</TableCell>
-            <TableCell>АП-21</TableCell>
+            <TableCell align='right'>АП-21</TableCell>
           </TableRow>
           <TableRow className={styles.row}>
             <TableCell>4</TableCell>
-            <TableCell>МР-191</TableCell>
+            <TableCell align='right'>МР-191</TableCell>
           </TableRow>
         </TableBody>
       </Table>

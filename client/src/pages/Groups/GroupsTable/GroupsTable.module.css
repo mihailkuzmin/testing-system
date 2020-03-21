@@ -10,3 +10,10 @@
 .head th {
   font-weight: 600;
 }
+
+.headRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem; 
+}
