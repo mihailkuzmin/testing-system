@@ -1,3 +1,7 @@
+.title {
+  font-size: 1.2rem;
+}
+
 .table {
   max-width: 700px;
   margin: auto;
@@ -9,4 +13,11 @@
 
 .head th {
   font-weight: 600;
+}
+
+.headRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem; 
 }
