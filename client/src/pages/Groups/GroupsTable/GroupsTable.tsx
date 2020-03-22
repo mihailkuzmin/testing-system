@@ -6,8 +6,8 @@ import {
   Table,
   TableBody as Body,
   Paper,
-  Button,
 } from '@material-ui/core'
+import { PrimaryButton } from '../../../components/Buttons'
 import { AddModal } from '../AddModal'
 import styles from './GroupsTable.module.css'
 
@@ -35,9 +35,7 @@ export const GroupsTable = (props: IGroupsTableProps) => {
               <div className={styles.headRow}>
                 <div className={styles.title}>Группы</div>
                 <div>
-                  <Button onClick={handleOpenAddGroup} variant='outlined' color='primary'>
-                    Добавить
-                  </Button>
+                  <PrimaryButton onClick={handleOpenAddGroup}>Добавить</PrimaryButton>
                 </div>
               </div>
             </Cell>

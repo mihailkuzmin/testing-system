@@ -8,7 +8,7 @@ import {
   Paper,
 } from '@material-ui/core'
 import { AddModal } from '../AddModal'
-import { AddButton } from './AddButton'
+import { PrimaryButton } from '../../../components/Buttons'
 import styles from './UsersTable.module.css'
 
 // TODO remove 'any'
@@ -31,7 +31,7 @@ export const UsersTable = (props: IUsersTableProps) => {
               <div className={styles.headRow}>
                 <div className={styles.title}>Пользователи</div>
                 <div className={styles.actions}>
-                  <AddButton onClick={handleOpenAddUser} />
+                  <PrimaryButton onClick={handleOpenAddUser}>Добавить</PrimaryButton>
                 </div>
               </div>
             </Cell>

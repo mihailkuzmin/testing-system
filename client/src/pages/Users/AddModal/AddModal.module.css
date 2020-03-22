@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  outline: none;
   max-width: 500px;
   padding: 0rem 1rem 1rem 1rem;
 }
