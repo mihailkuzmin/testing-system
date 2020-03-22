@@ -7,7 +7,8 @@ import {
   TableBody as Body,
   Paper,
 } from '@material-ui/core'
-import { PrimaryButton } from '../../../components/Buttons'
+import { PrimaryButton, EditButton, DeleteButton } from '../../../components/Buttons'
+import { RowActions } from '../../../components'
 import { AddModal } from '../AddModal'
 import styles from './GroupsTable.module.css'
 
@@ -21,12 +22,16 @@ export const GroupsTable = (props: IGroupsTableProps) => {
   const handleOpenAddGroup = () => setAddGroupOpen(true)
   const handleCloseAddGroup = () => setAddGroupOpen(false)
 
+  const groups = [
+    { id: 1, name: 'АП-31' },
+    { id: 2, name: 'УС-31' },
+    { id: 3, name: 'АП-21' },
+    { id: 4, name: 'МР-11' },
+  ]
+
   return (
     <Paper className={styles.table} elevation={3}>
-      <AddModal
-        open={addGroupOpen}
-        handleClose={handleCloseAddGroup}
-      />
+      <AddModal open={addGroupOpen} handleClose={handleCloseAddGroup} />
       <Table>
         <Head className={styles.head}>
           <Row>
@@ -42,25 +47,24 @@ export const GroupsTable = (props: IGroupsTableProps) => {
           <Row>
             <Cell>id</Cell>
             <Cell align='right'>Название</Cell>
+            <Cell align='center'>Действия</Cell>
           </Row>
         </Head>
         <Body>
-          <Row className={styles.row}>
-            <Cell>1</Cell>
-            <Cell align='right'>АП-31</Cell>
-          </Row>
-          <Row className={styles.row}>
-            <Cell>2</Cell>
-            <Cell align='right'>УС-31</Cell>
-          </Row>
-          <Row className={styles.row}>
-            <Cell>3</Cell>
-            <Cell align='right'>АП-21</Cell>
-          </Row>
-          <Row className={styles.row}>
-            <Cell>4</Cell>
-            <Cell align='right'>МР-191</Cell>
-          </Row>
+          {groups.map(({ id, name }) => {
+            return (
+              <Row key={id} className={styles.row}>
+                <Cell>{id}</Cell>
+                <Cell align='right'>{name}</Cell>
+                <Cell align='center'>
+                  <RowActions>
+                    <EditButton />
+                    <DeleteButton />
+                  </RowActions>
+                </Cell>
+              </Row>
+            )
+          })}
         </Body>
       </Table>
     </Paper>

@@ -5,7 +5,7 @@ import styles from './Modal.module.css'
 interface IModalProps {
   open: boolean
   onClose: () => void
-  children?: React.ReactNode,
+  children?: React.ReactNode
   className?: string
 }
 
@@ -22,7 +22,7 @@ export const Modal = ({ open, onClose, className, children }: IModalProps) => {
       }}
     >
       <Fade in={open}>
-        <Paper style={{outline: 'none'}} className={className}>
+        <Paper style={{ outline: 'none' }} className={className}>
           {children}
         </Paper>
       </Fade>
