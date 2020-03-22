@@ -10,9 +10,7 @@ function App() {
 
   return (
     <div className='App'>
-      <Header>
-        {navigation}
-      </Header>
+      <Header>{navigation}</Header>
       {pages}
     </div>
   )

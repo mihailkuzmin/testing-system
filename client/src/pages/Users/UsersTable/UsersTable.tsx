@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import { AddModal } from '../AddModal'
 import { PrimaryButton, EditButton, DeleteButton } from '../../../components/Buttons'
-import { RowActions } from '../../../components'
+import { TableRowActions, TableTitle, TableHeader, TableHeaderActions } from '../../../components'
 import styles from './UsersTable.module.css'
 
 // TODO remove 'any'
@@ -36,12 +36,12 @@ export const UsersTable = (props: IUsersTableProps) => {
         <Head className={styles.head}>
           <Row>
             <Cell colSpan={4}>
-              <div className={styles.headRow}>
-                <div className={styles.title}>Пользователи</div>
-                <div className={styles.actions}>
+              <TableHeader>
+                <TableTitle>Пользователи</TableTitle>
+                <TableHeaderActions>
                   <PrimaryButton onClick={handleOpenAddUser}>Добавить</PrimaryButton>
-                </div>
-              </div>
+                </TableHeaderActions>
+              </TableHeader>
             </Cell>
           </Row>
           <Row>
@@ -59,10 +59,10 @@ export const UsersTable = (props: IUsersTableProps) => {
                 <Cell align='right'>{group}</Cell>
                 <Cell align='right'>{login}</Cell>
                 <Cell align='center'>
-                  <RowActions>
+                  <TableRowActions>
                     <EditButton />
                     <DeleteButton />
-                  </RowActions>
+                  </TableRowActions>
                 </Cell>
               </Row>
             )

@@ -8,7 +8,7 @@ import {
   Paper,
 } from '@material-ui/core'
 import { PrimaryButton, EditButton, DeleteButton } from '../../../components/Buttons'
-import { RowActions } from '../../../components'
+import { TableRowActions, TableTitle, TableHeader, TableHeaderActions } from '../../../components'
 import { AddModal } from '../AddModal'
 import styles from './GroupsTable.module.css'
 
@@ -36,12 +36,12 @@ export const GroupsTable = (props: IGroupsTableProps) => {
         <Head className={styles.head}>
           <Row>
             <Cell colSpan={3}>
-              <div className={styles.headRow}>
-                <div className={styles.title}>Группы</div>
-                <div>
+              <TableHeader>
+                <TableTitle>Группы</TableTitle>
+                <TableHeaderActions>
                   <PrimaryButton onClick={handleOpenAddGroup}>Добавить</PrimaryButton>
-                </div>
-              </div>
+                </TableHeaderActions>
+              </TableHeader>
             </Cell>
           </Row>
           <Row>
@@ -57,10 +57,10 @@ export const GroupsTable = (props: IGroupsTableProps) => {
                 <Cell>{id}</Cell>
                 <Cell align='right'>{name}</Cell>
                 <Cell align='center'>
-                  <RowActions>
+                  <TableRowActions>
                     <EditButton />
                     <DeleteButton />
-                  </RowActions>
+                  </TableRowActions>
                 </Cell>
               </Row>
             )
