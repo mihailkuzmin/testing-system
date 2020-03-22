@@ -30,7 +30,7 @@ export const GroupsTable = (props: IGroupsTableProps) => {
   ]
 
   return (
-    <Paper className={styles.table} elevation={3}>
+    <Paper className={styles.table} elevation={5}>
       <AddModal open={addGroupOpen} handleClose={handleCloseAddGroup} />
       <Table>
         <Head className={styles.head}>
