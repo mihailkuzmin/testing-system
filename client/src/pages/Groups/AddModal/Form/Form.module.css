@@ -1,0 +1,8 @@
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content > * {
+  margin: 0.3rem 0 !important;
+}

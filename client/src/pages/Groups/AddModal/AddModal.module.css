@@ -6,19 +6,3 @@
   max-width: 500px;
   padding: 0rem 1rem 1rem 1rem;
 }
-
-.actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.formContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.formContainer > * {
-  margin: 0.3rem 0 !important;
-}

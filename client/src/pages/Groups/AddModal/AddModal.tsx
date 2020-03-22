@@ -1,5 +1,8 @@
 import React from 'react'
-import { Paper, TextField, Button } from '@material-ui/core'
+import { Paper, TextField } from '@material-ui/core'
+import { ModalActions } from './ModalActions'
+import { Form } from './Form'
+import {PrimaryButton, SecondaryButton} from '../../../components/Buttons'
 import { Modal } from '../../../components'
 import styles from './AddModal.module.css'
 
@@ -14,19 +17,13 @@ export const AddModal = ({ open, handleClose, onClose }: IAddModalProps) => {
     <Modal open={open} onClose={onClose}>
       <Paper className={styles.content}>
         <h3>Добавить группу</h3>
-        <form noValidate autoComplete='off'>
-          <div className={styles.formContainer}>
-            <TextField label='Название' variant='outlined' />
-          </div>
-        </form>
-        <div className={styles.actions}>
-          <Button variant='outlined' color='primary'>
-            Добавить
-          </Button>
-          <Button onClick={handleClose} variant='outlined' color='secondary'>
-            Отменить
-          </Button>
-        </div>
+        <Form>
+          <TextField label='Название' variant='outlined' />
+        </Form>
+        <ModalActions>
+        <PrimaryButton onClick={handleClose}>Добавить</PrimaryButton>
+          <SecondaryButton onClick={handleClose}>Отменить</SecondaryButton>
+        </ModalActions>
       </Paper>
     </Modal>
   )
