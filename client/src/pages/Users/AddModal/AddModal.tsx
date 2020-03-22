@@ -1,9 +1,8 @@
 import React from 'react'
 import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
 import { TextField } from '@material-ui/core'
-import { ModalActions } from './ModalActions'
 import { GroupSelect } from './GroupSelect'
-import { Modal } from '../../../components'
+import { Modal, ModalActions } from '../../../components'
 import styles from './AddModal.module.css'
 import { Form } from './Form'
 
@@ -17,17 +16,17 @@ export const AddModal = ({ open, handleClose }: IAddModalProps) => {
 
   return (
     <Modal open={open} onClose={handleClose} className={styles.content}>
-        <h3>Добавить пользователя</h3>
-        <Form>
-          <TextField label='ФИО' variant='outlined' />
-          <GroupSelect placeholder='Группа' items={groups} />
-          <TextField label='Логин' variant='outlined' />
-          <TextField label='Пароль' variant='outlined' />
-        </Form>
-        <ModalActions>
-          <PrimaryButton onClick={handleClose}>Добавить</PrimaryButton>
-          <SecondaryButton onClick={handleClose}>Отменить</SecondaryButton>
-        </ModalActions>
+      <h3>Добавить пользователя</h3>
+      <Form>
+        <TextField label='ФИО' variant='outlined' />
+        <GroupSelect placeholder='Группа' items={groups} />
+        <TextField label='Логин' variant='outlined' />
+        <TextField label='Пароль' variant='outlined' />
+      </Form>
+      <ModalActions>
+        <PrimaryButton onClick={handleClose}>Добавить</PrimaryButton>
+        <SecondaryButton onClick={handleClose}>Отменить</SecondaryButton>
+      </ModalActions>
     </Modal>
   )
 }
