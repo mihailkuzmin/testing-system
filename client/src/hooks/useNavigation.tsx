@@ -1,55 +1,41 @@
 import React from 'react'
 import { Link } from '@reach/router'
-import { LinksGroup } from '../components'
-import { List, Item } from '../components/Navigation'
-import { IRoutesConfig, RouteGroup } from '../typings'
+import { List, Item as ListItem } from '../components/Navigation'
+import { IRoutesConfig } from '../typings'
 
-const renderGroup = (group: RouteGroup) => {
-  return (
-    <Item key={group.groupName}>
-      <LinksGroup placeholder={group.groupName}>
-        {group.routes.map(({ path, title }) => (
-          <Link key={path} className='nav-link' to={path}>
-            {title}
-          </Link>
-        ))}
-      </LinksGroup>
-    </Item>
-  )
+interface INavItem {
+  title: string
+  path: string
+  Icon: () => JSX.Element
 }
 
-const renderSingle = (group: RouteGroup) => {
-  return group.routes.map(({ path, title }) => (
-    <Item key={path}>
+const Item = ({ title, path, Icon }: INavItem) => {
+  return (
+    <ListItem key={path}>
       <Link className='nav-link' to={path}>
+        <Icon />
         {title}
       </Link>
-    </Item>
-  ))
+    </ListItem>
+  )
 }
 
 export const useNavigation = (isAuth: boolean, routesConfig: IRoutesConfig) => {
   if (isAuth) {
     return (
       <List>
-        {routesConfig.admin.map((group) => {
-          if (group.groupName === 'Single') {
-            return renderSingle(group)
-          }
-          return renderGroup(group)
-        })}
+        {routesConfig.admin.map(({ title, path, Icon }) => (
+          <Item Icon={Icon} key={path} path={path} title={title} />
+        ))}
       </List>
     )
   }
 
   return (
     <List>
-      {routesConfig.common.map((group) => {
-        if (group.groupName === 'Single') {
-          return renderSingle(group)
-        }
-        return renderGroup(group)
-      })}
+      {routesConfig.common.map(({ title, path, Icon }) => (
+        <Item Icon={Icon} key={path} path={path} title={title} />
+      ))}
     </List>
   )
 }

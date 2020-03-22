@@ -1,5 +1,5 @@
 import { WindowLocation, NavigateFn } from 'reach__router'
-import { ReactNode } from 'react'
+import React from 'react'
 
 // Used for @reach-router
 export interface IPageProps {
@@ -8,21 +8,17 @@ export interface IPageProps {
   location?: WindowLocation | undefined
   navigate?: NavigateFn | undefined
   uri?: string | undefined
-  children?: ReactNode
+  children?: React.ReactNode
 }
 
-export type Route = {
+export interface IRoute {
   path: string
   Page: (props: IPageProps) => JSX.Element
-  title?: string
-}
-
-export type RouteGroup = {
-  groupName: string
-  routes: Route[]
+  Icon: () => JSX.Element
+  title: string
 }
 
 export interface IRoutesConfig {
-  admin: RouteGroup[]
-  common: RouteGroup[]
+  admin: IRoute[]
+  common: IRoute[]
 }

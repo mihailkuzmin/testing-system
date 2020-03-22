@@ -11,7 +11,7 @@ function App() {
   return (
     <div className='App'>
       <Header>
-        <nav>{navigation}</nav>
+        {navigation}
       </Header>
       {pages}
     </div>

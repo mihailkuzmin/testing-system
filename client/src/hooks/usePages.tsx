@@ -6,17 +6,17 @@ export const usePages = (isAuth: boolean, routesConfig: IRoutesConfig) => {
   if (isAuth) {
     return (
       <Router>
-        {routesConfig.admin.map((group) => {
-          return group.routes.map(({ path, Page }) => <Page path={path} />)
-        })}
+        {routesConfig.admin.map(({ path, Page }) => (
+          <Page key={path} path={path} />
+        ))}
       </Router>
     )
   }
   return (
     <Router>
-      {routesConfig.common.map((group) => {
-        return group.routes.map(({ path, Page }) => <Page path={path} />)
-      })}
+      {routesConfig.common.map(({ path, Page }) => (
+        <Page key={path} path={path} />
+      ))}
     </Router>
   )
 }
