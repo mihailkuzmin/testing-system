@@ -23,7 +23,7 @@ export const UsersTable = (props: IUsersTableProps) => {
 
   return (
     <Paper className={styles.table} elevation={3}>
-      <AddModal open={addUserOpen} handleClose={handleCloseAddUser} onClose={handleCloseAddUser} />
+      <AddModal open={addUserOpen} handleClose={handleCloseAddUser} />
       <Table>
         <Head className={styles.head}>
           <Row>

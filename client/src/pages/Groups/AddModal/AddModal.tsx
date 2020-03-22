@@ -9,12 +9,11 @@ import styles from './AddModal.module.css'
 interface IAddModalProps {
   open: boolean
   handleClose: () => void
-  onClose: () => void
 }
 
-export const AddModal = ({ open, handleClose, onClose }: IAddModalProps) => {
+export const AddModal = ({ open, handleClose }: IAddModalProps) => {
   return (
-    <Modal open={open} onClose={onClose} className={styles.content}>
+    <Modal open={open} onClose={handleClose} className={styles.content}>
         <h3>Добавить группу</h3>
         <Form>
           <TextField label='Название' variant='outlined' />

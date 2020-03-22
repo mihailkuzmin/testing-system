@@ -10,14 +10,13 @@ import { Form } from './Form'
 interface IAddModalProps {
   open: boolean
   handleClose: () => void
-  onClose: () => void
 }
 
-export const AddModal = ({ open, handleClose, onClose }: IAddModalProps) => {
+export const AddModal = ({ open, handleClose }: IAddModalProps) => {
   const groups = ['АП-31', 'УС-31', 'АП-21']
 
   return (
-    <Modal open={open} onClose={onClose} className={styles.content}>
+    <Modal open={open} onClose={handleClose} className={styles.content}>
         <h3>Добавить пользователя</h3>
         <Form>
           <TextField label='ФИО' variant='outlined' />

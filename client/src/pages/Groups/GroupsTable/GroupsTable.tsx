@@ -26,7 +26,6 @@ export const GroupsTable = (props: IGroupsTableProps) => {
       <AddModal
         open={addGroupOpen}
         handleClose={handleCloseAddGroup}
-        onClose={handleCloseAddGroup}
       />
       <Table>
         <Head className={styles.head}>
