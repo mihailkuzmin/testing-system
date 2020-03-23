@@ -8,7 +8,7 @@ import { Form } from './Form'
 
 interface IAddModalProps {
   open: boolean
-  handleClose: () => void
+  handleClose: any
 }
 
 export const AddModal = ({ open, handleClose }: IAddModalProps) => {

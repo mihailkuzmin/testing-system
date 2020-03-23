@@ -7,31 +7,21 @@ import {
   TableBody as Body,
   Paper,
 } from '@material-ui/core'
-import { AddModal } from '../AddModal'
 import { PrimaryButton, EditButton, DeleteButton } from '../../../components/Buttons'
 import { TableRowActions, TableTitle, TableHeader, TableHeaderActions } from '../../../components'
 import styles from './UsersTable.module.css'
 
+import {User} from '../model/typings'
+
 // TODO remove 'any'
 interface IUsersTableProps {
-  users?: any[]
+  users?: User[]
+  onAddClick: any
 }
 
-export const UsersTable = (props: IUsersTableProps) => {
-  const [addUserOpen, setAddUserOpen] = useState(false)
-  const handleOpenAddUser = () => setAddUserOpen(true)
-  const handleCloseAddUser = () => setAddUserOpen(false)
-
-  const users = [
-    { name: 'Исаков Клим Ярославович', group: 'АП-31', login: 'login1' },
-    { name: 'Владосов Арнольд Артемович', group: 'АП-31', login: 'login2' },
-    { name: 'Виноградов Владислав Георгьевич', group: 'АП-21', login: 'login3' },
-    { name: 'Муравьёв Аристарх Романович', group: 'МР-191', login: 'login4' },
-  ]
-
+export const UsersTable = ({users, onAddClick}: IUsersTableProps) => {
   return (
     <Paper className={styles.table} elevation={5}>
-      <AddModal open={addUserOpen} handleClose={handleCloseAddUser} />
       <Table>
         <Head className={styles.head}>
           <Row>
@@ -39,7 +29,7 @@ export const UsersTable = (props: IUsersTableProps) => {
               <TableHeader>
                 <TableTitle>Пользователи</TableTitle>
                 <TableHeaderActions>
-                  <PrimaryButton onClick={handleOpenAddUser}>Добавить</PrimaryButton>
+                  <PrimaryButton onClick={onAddClick}>Добавить</PrimaryButton>
                 </TableHeaderActions>
               </TableHeader>
             </Cell>
@@ -52,9 +42,9 @@ export const UsersTable = (props: IUsersTableProps) => {
           </Row>
         </Head>
         <Body>
-          {users.map(({ name, group, login }) => {
+          {users && users.map(({ id, name, group, login }) => {
             return (
-              <Row key={name} className={styles.row}>
+              <Row key={id} className={styles.row}>
                 <Cell>{name}</Cell>
                 <Cell align='right'>{group}</Cell>
                 <Cell align='right'>{login}</Cell>
