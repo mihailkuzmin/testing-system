@@ -34,7 +34,7 @@ export const addModal: AddModal = {
 
 export const addForm: AddForm = {
   name: '',
-  group: 0,
+  group: '',
   login: '',
   password: '',
 }

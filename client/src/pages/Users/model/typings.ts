@@ -11,7 +11,7 @@ export interface AddModal {
 
 export interface AddForm {
   name: string
-  group: number
+  group: number | string
   login: string
   password: string
 }
