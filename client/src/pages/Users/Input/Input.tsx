@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStoreMap } from 'effector-react'
 import { TextField } from '@material-ui/core'
-import { $addFormValues, valueChange } from '../model'
+import { $addFormValues, fieldValueChange } from '../model'
 import { AddForm } from '../model/typings'
 
 interface IMappedInput {
@@ -22,7 +22,7 @@ export const Input = ({ name, label }: IMappedInput) => {
       label={label}
       variant='outlined'
       value={value}
-      onChange={valueChange}
+      onChange={fieldValueChange}
     />
   )
 }

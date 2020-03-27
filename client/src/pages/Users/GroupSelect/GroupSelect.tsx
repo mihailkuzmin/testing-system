@@ -2,7 +2,7 @@
 import React from 'react'
 import { useStoreMap } from 'effector-react'
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
-import { $addFormValues, valueChange } from '../model'
+import { $addFormValues, fieldValueChange } from '../model'
 import { AddForm, Group } from '../model/typings'
 
 interface IGroupSelectProps {
@@ -26,7 +26,7 @@ export const GroupSelect = ({ name, label, items }: IGroupSelectProps) => {
         labelId='group-select'
         id='group-select'
         value={value}
-        onChange={valueChange}
+        onChange={fieldValueChange}
         label={label}
       >
         <MenuItem disabled value=''>
