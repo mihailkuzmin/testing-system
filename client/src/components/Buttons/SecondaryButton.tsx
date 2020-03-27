@@ -2,11 +2,14 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 
 interface ISecondaryButtonProps {
-  onClick?: () => void
+  onClick?: any
   children?: React.ReactNode
 }
 
-export const SecondaryButton = ({ children, onClick }: ISecondaryButtonProps) => {
+export const SecondaryButton = ({
+  children,
+  onClick,
+}: ISecondaryButtonProps) => {
   return (
     <Button variant='outlined' color='secondary' onClick={onClick}>
       {children}

@@ -8,3 +8,20 @@ export interface User {
 export interface AddModal {
   open: boolean
 }
+
+export interface AddForm {
+  name: string
+  group: number
+  login: string
+  password: string
+}
+
+export interface AddFormNewValue {
+  key: string
+  value: unknown
+}
+
+export interface Group {
+  id: number
+  name: string
+}

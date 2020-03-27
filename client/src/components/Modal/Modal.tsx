@@ -1,5 +1,10 @@
 import React from 'react'
-import { Modal as MaterialModal, Fade, Backdrop, Paper } from '@material-ui/core'
+import {
+  Modal as MaterialModal,
+  Fade,
+  Backdrop,
+  Paper,
+} from '@material-ui/core'
 import styles from './Modal.module.css'
 
 interface IModalProps {

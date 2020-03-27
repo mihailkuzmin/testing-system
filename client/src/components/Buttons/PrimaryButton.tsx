@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 
 interface IPrimaryButtonProps {
-  onClick?: () => void
+  onClick?: any
   children?: React.ReactNode
 }
 

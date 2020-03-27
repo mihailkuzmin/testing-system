@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   TableCell as Cell,
   TableHead as Head,
@@ -7,11 +7,18 @@ import {
   TableBody as Body,
   Paper,
 } from '@material-ui/core'
-import { PrimaryButton, EditButton, DeleteButton } from '../../../components/Buttons'
-import { TableRowActions, TableTitle, TableHeader, TableHeaderActions } from '../../../components'
+import {
+  TableRowActions,
+  TableTitle,
+  TableHeader,
+  TableHeaderActions,
+  PrimaryButton,
+  EditButton,
+  DeleteButton,
+} from '../../../components'
 import styles from './UsersTable.module.css'
 
-import {User} from '../model/typings'
+import { User } from '../model/typings'
 
 // TODO remove 'any'
 interface IUsersTableProps {
@@ -19,7 +26,7 @@ interface IUsersTableProps {
   onAddClick: any
 }
 
-export const UsersTable = ({users, onAddClick}: IUsersTableProps) => {
+export const UsersTable = ({ users, onAddClick }: IUsersTableProps) => {
   return (
     <Paper className={styles.table} elevation={5}>
       <Table>
@@ -42,21 +49,22 @@ export const UsersTable = ({users, onAddClick}: IUsersTableProps) => {
           </Row>
         </Head>
         <Body>
-          {users && users.map(({ id, name, group, login }) => {
-            return (
-              <Row key={id} className={styles.row}>
-                <Cell>{name}</Cell>
-                <Cell align='right'>{group}</Cell>
-                <Cell align='right'>{login}</Cell>
-                <Cell align='center'>
-                  <TableRowActions>
-                    <EditButton />
-                    <DeleteButton />
-                  </TableRowActions>
-                </Cell>
-              </Row>
-            )
-          })}
+          {users &&
+            users.map(({ id, name, group, login }) => {
+              return (
+                <Row key={id} className={styles.row}>
+                  <Cell>{name}</Cell>
+                  <Cell align='right'>{group}</Cell>
+                  <Cell align='right'>{login}</Cell>
+                  <Cell align='center'>
+                    <TableRowActions>
+                      <EditButton />
+                      <DeleteButton />
+                    </TableRowActions>
+                  </Cell>
+                </Row>
+              )
+            })}
         </Body>
       </Table>
     </Paper>

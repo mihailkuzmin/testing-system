@@ -1,0 +1,20 @@
+.fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.fields > * {
+  margin: 0.3rem 0 !important;
+}
+
+.title {
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0.3rem;
+}

@@ -1,8 +1,14 @@
-import {combine} from 'effector'
-import { $users, $addModal } from './stores'
-import {openAddModal, closeAddModal} from './events'
+import { combine } from 'effector'
+import { $users, $addModal, $addFormValues } from './stores'
+import * as events from './events'
 
-$addModal.on(openAddModal, (state, _) => ({...state, open: true}))
-$addModal.on(closeAddModal, (state, _) => ({...state, open: false}))
+$addModal.on(events.openAddModal, (state, _) => ({ ...state, open: true }))
+$addModal.on(events.closeAddModal, (state, _) => ({ ...state, open: false }))
 
-export const $model = combine($users, $addModal)
+$addFormValues.on(events.setField, (state, { key, value }) => ({
+  ...state,
+  [key]: value,
+}))
+$addFormValues.reset(events.closeAddModal)
+
+export const $page = combine($users, $addModal)

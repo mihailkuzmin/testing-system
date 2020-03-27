@@ -7,8 +7,17 @@ import {
   TableBody as Body,
   Paper,
 } from '@material-ui/core'
-import { PrimaryButton, EditButton, DeleteButton } from '../../../components/Buttons'
-import { TableRowActions, TableTitle, TableHeader, TableHeaderActions } from '../../../components'
+import {
+  PrimaryButton,
+  EditButton,
+  DeleteButton,
+} from '../../../components/Buttons'
+import {
+  TableRowActions,
+  TableTitle,
+  TableHeader,
+  TableHeaderActions,
+} from '../../../components'
 import { AddModal } from '../AddModal'
 import styles from './GroupsTable.module.css'
 
@@ -39,7 +48,9 @@ export const GroupsTable = (props: IGroupsTableProps) => {
               <TableHeader>
                 <TableTitle>Группы</TableTitle>
                 <TableHeaderActions>
-                  <PrimaryButton onClick={handleOpenAddGroup}>Добавить</PrimaryButton>
+                  <PrimaryButton onClick={handleOpenAddGroup}>
+                    Добавить
+                  </PrimaryButton>
                 </TableHeaderActions>
               </TableHeader>
             </Cell>

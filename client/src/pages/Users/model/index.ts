@@ -1,2 +1,3 @@
-export {$model} from './init'
-export {openAddModal, closeAddModal} from './events'
+export { $page } from './init'
+export { $addFormValues, $groups } from './stores'
+export { openAddModal, closeAddModal, valueChange } from './events'
