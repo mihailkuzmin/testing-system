@@ -18,7 +18,7 @@ export interface AddForm {
 
 export interface AddFormNewValue {
   key: string
-  value: unknown
+  value: number | string
 }
 
 export interface Group {
