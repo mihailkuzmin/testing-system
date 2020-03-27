@@ -8,8 +8,8 @@ export const setField = createEvent<AddFormNewValue>()
 export const valueChange = setField.prepend(
   (e: React.ChangeEvent<{ name: string; value: number | string }>) => {
     return {
-      key: e.currentTarget.name,
-      value: e.currentTarget.value,
+      key: e.target.name,
+      value: e.target.value,
     }
   },
 )

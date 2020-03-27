@@ -11,25 +11,12 @@ interface IGroupSelectProps {
   items?: Group[]
 }
 
-const handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
-  const newValue = {
-    currentTarget: {
-      name: e.target.name,
-      value: e.target.value,
-    },
-  }
-
-  valueChange(newValue)
-}
-
 export const GroupSelect = ({ name, label, items }: IGroupSelectProps) => {
   const value = useStoreMap({
     store: $addFormValues,
     keys: [name],
     fn: (values) => values[name],
   })
-
-  console.log(`${name} rerendered`)
 
   return (
     <FormControl variant='outlined'>
@@ -39,7 +26,7 @@ export const GroupSelect = ({ name, label, items }: IGroupSelectProps) => {
         labelId='group-select'
         id='group-select'
         value={value}
-        onChange={handleChange}
+        onChange={valueChange}
         label={label}
       >
         <MenuItem disabled value=''>

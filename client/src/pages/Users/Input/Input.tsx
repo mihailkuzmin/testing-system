@@ -16,8 +16,6 @@ export const Input = ({ name, label }: IMappedInput) => {
     fn: (values) => values[name],
   })
 
-  console.log(`${name} rerendered`)
-
   return (
     <TextField
       name={name}
