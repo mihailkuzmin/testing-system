@@ -6,9 +6,9 @@ export const groups = [
 ]
 
 export const addModal = {
-  open: false
+  open: false,
 }
 
 export const addForm = {
-  name: ''
+  name: '',
 }

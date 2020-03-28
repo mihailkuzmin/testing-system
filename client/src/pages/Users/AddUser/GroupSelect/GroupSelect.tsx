@@ -2,8 +2,8 @@
 import React from 'react'
 import { useStoreMap } from 'effector-react'
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
-import { $addFormValues, fieldValueChange } from '../model'
-import { AddForm, Group } from '../model/typings'
+import { $addFormValues, fieldValueChange } from '../../model'
+import { AddForm, Group } from '../../model/typings'
 
 interface IGroupSelectProps {
   name: keyof AddForm

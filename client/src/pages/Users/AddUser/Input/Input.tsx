@@ -1,8 +1,8 @@
 import React from 'react'
 import { useStoreMap } from 'effector-react'
 import { TextField } from '@material-ui/core'
-import { $addFormValues, fieldValueChange } from '../model'
-import { AddForm } from '../model/typings'
+import { $addFormValues, fieldValueChange } from '../../model'
+import { AddForm } from '../../model/typings'
 
 interface IMappedInput {
   name: keyof AddForm

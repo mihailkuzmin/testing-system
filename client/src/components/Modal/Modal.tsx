@@ -9,7 +9,7 @@ import styles from './Modal.module.css'
 
 interface IModalProps {
   open: boolean
-  onClose: () => void
+  onClose: any
   children?: React.ReactNode
   className?: string
 }

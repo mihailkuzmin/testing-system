@@ -1,5 +1,5 @@
-import {createStore} from 'effector'
-import {Group, AddModal, AddForm} from '../typings'
+import { createStore } from 'effector'
+import { Group, AddModal, AddForm } from '../typings'
 import * as states from './initialStates'
 
 export const $groups = createStore<Group[]>(states.groups)

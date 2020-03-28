@@ -1,10 +1,9 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { IPageProps } from '../../typings'
-import { Layout } from '../../components'
+import { Layout, Modal } from '../../components'
 import { UsersTable } from './UsersTable'
-import { AddModal } from './AddModal'
-import { AddForm } from './AddForm'
+import { AddUser } from './AddUser'
 import { $page, openAddModal, closeAddModal } from './model'
 
 export const Users = (props: IPageProps) => {
@@ -12,9 +11,9 @@ export const Users = (props: IPageProps) => {
 
   return (
     <Layout>
-      <AddModal open={addModal.open} handleClose={closeAddModal}>
-        <AddForm />
-      </AddModal>
+      <Modal open={addModal.open} onClose={closeAddModal}>
+        <AddUser />
+      </Modal>
       <UsersTable users={users} onAddClick={openAddModal} />
     </Layout>
   )
