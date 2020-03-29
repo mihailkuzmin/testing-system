@@ -10,7 +10,3 @@
 .item {
   max-width: inherit;
 }
-
-.item:hover {
-  background-color: #2a2e36;
-}
