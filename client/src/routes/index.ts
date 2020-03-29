@@ -18,6 +18,12 @@ export const routesConfig: IRoutesConfig = {
       Icon: Icons.Users,
     },
     {
+      path: '/works',
+      title: 'Работы',
+      Page: Pages.Works,
+      Icon: Icons.Works,
+    },
+    {
       path: '/tasks',
       title: 'Задания',
       Page: Pages.Tasks,
