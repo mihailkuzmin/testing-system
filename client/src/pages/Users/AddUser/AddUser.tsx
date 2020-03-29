@@ -1,10 +1,11 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
-import { Input } from './Input'
-import { GroupSelect } from './GroupSelect'
-import { $groups, closeAddModal } from '../model'
+import { MappedSelect, Item } from '../../../components/MappedSelect'
+import { MappedInput } from '../../../components'
+import { $groups, closeAddModal, $addForm, fieldValueChange } from '../model'
 import styles from './AddUser.module.css'
+import { AddForm } from '../model/typings'
 
 export const AddUser = () => {
   const groups = useStore($groups)
@@ -14,10 +15,36 @@ export const AddUser = () => {
       <form noValidate autoComplete='off'>
         <h3 className={styles.title}>Добавить пользователя</h3>
         <div className={styles.fields}>
-          <Input name='name' label='ФИО' />
-          <GroupSelect name='group' label='Группа' items={groups} />
-          <Input name='login' label='Логин' />
-          <Input name='password' label='Пароль' />
+          <MappedInput<AddForm>
+            name='name'
+            label='ФИО'
+            store={$addForm}
+            onChange={fieldValueChange}
+          />
+          <MappedSelect<AddForm>
+            name='group'
+            label='Группа'
+            store={$addForm}
+            onChange={fieldValueChange}
+          >
+            {groups.map(({ id, name }) => (
+              <Item key={id} value={id}>
+                {name}
+              </Item>
+            ))}
+          </MappedSelect>
+          <MappedInput<AddForm>
+            name='login'
+            label='Логин'
+            store={$addForm}
+            onChange={fieldValueChange}
+          />
+          <MappedInput<AddForm>
+            name='password'
+            label='Пароль'
+            store={$addForm}
+            onChange={fieldValueChange}
+          />
         </div>
         <div className={styles.actions}>
           <PrimaryButton onClick={closeAddModal}>Добавить</PrimaryButton>
