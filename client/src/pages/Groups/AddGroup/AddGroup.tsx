@@ -1,7 +1,8 @@
 import React from 'react'
 import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
-import { Input } from './Input'
-import { closeAddModal } from '../model'
+import { MappedInput } from '../../../components'
+import { $addForm, closeAddModal, fieldValueChange } from '../model'
+import { AddForm } from '../model/typings'
 import styles from './AddGroup.module.css'
 
 export const AddGroup = () => {
@@ -10,7 +11,12 @@ export const AddGroup = () => {
       <h3>Добавить группу</h3>
       <form noValidate autoComplete='off'>
         <div className={styles.fields}>
-          <Input name='name' label='Название' />
+          <MappedInput<AddForm>
+            name='name'
+            label='Название'
+            store={$addForm}
+            onChange={fieldValueChange}
+          />
         </div>
       </form>
       <div className={styles.actions}>
