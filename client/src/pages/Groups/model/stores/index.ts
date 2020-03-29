@@ -1,1 +1,1 @@
-export { $groups, $addModal, $addFormValues } from './stores'
+export { $groups, $addModal, $addForm } from './stores'
