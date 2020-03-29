@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { PrimaryButton, SecondaryButton } from '../../../components'
+import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
 import { Input } from './Input'
 import { GroupSelect } from './GroupSelect'
 import { $groups, closeAddModal } from '../model'

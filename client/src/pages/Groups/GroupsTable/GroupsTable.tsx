@@ -1,83 +1,65 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   TableCell as Cell,
   TableHead as Head,
   TableRow as Row,
-  Table,
   TableBody as Body,
-  Paper,
 } from '@material-ui/core'
+import {
+  TableTitle,
+  TableHeader,
+  TableHeaderActions,
+} from '../../../components'
+import { Table } from '../../../components/Table'
 import {
   PrimaryButton,
   EditButton,
   DeleteButton,
 } from '../../../components/Buttons'
-import {
-  TableRowActions,
-  TableTitle,
-  TableHeader,
-  TableHeaderActions,
-} from '../../../components'
-import { AddModal } from '../AddModal'
+import { Group } from '../model/typings'
 import styles from './GroupsTable.module.css'
 
-// TODO remove 'any'
 interface IGroupsTableProps {
-  groups?: any[]
+  groups?: Group[]
+  onAddClick: any
 }
 
-export const GroupsTable = (props: IGroupsTableProps) => {
-  const [addGroupOpen, setAddGroupOpen] = useState(false)
-  const handleOpenAddGroup = () => setAddGroupOpen(true)
-  const handleCloseAddGroup = () => setAddGroupOpen(false)
-
-  const groups = [
-    { id: 1, name: 'АП-31' },
-    { id: 2, name: 'УС-31' },
-    { id: 3, name: 'АП-21' },
-    { id: 4, name: 'МР-11' },
-  ]
-
+export const GroupsTable = ({ groups, onAddClick }: IGroupsTableProps) => {
   return (
-    <Paper className={styles.table} elevation={5}>
-      <AddModal open={addGroupOpen} handleClose={handleCloseAddGroup} />
-      <Table>
-        <Head className={styles.head}>
-          <Row>
-            <Cell colSpan={3}>
-              <TableHeader>
-                <TableTitle>Группы</TableTitle>
-                <TableHeaderActions>
-                  <PrimaryButton onClick={handleOpenAddGroup}>
-                    Добавить
-                  </PrimaryButton>
-                </TableHeaderActions>
-              </TableHeader>
-            </Cell>
-          </Row>
-          <Row>
-            <Cell>id</Cell>
-            <Cell align='right'>Название</Cell>
-            <Cell align='center'>Действия</Cell>
-          </Row>
-        </Head>
-        <Body>
-          {groups.map(({ id, name }) => {
-            return (
-              <Row key={id} className={styles.row}>
-                <Cell>{id}</Cell>
-                <Cell align='right'>{name}</Cell>
-                <Cell align='center'>
-                  <TableRowActions>
-                    <EditButton />
-                    <DeleteButton />
-                  </TableRowActions>
-                </Cell>
-              </Row>
-            )
-          })}
-        </Body>
-      </Table>
-    </Paper>
+    <Table>
+      <Head className={styles.head}>
+        <Row>
+          <Cell colSpan={3}>
+            <TableHeader>
+              <TableTitle>Группы</TableTitle>
+              <TableHeaderActions>
+                <PrimaryButton onClick={onAddClick}>Добавить</PrimaryButton>
+              </TableHeaderActions>
+            </TableHeader>
+          </Cell>
+        </Row>
+        <Row>
+          <Cell>id</Cell>
+          <Cell>Название</Cell>
+          <Cell>Действия</Cell>
+        </Row>
+      </Head>
+      <Body>
+        {groups?.map(({ id, name }) => {
+          return (
+            <Row key={id} className={styles.row}>
+              <Cell>{id}</Cell>
+              <Cell>{name}</Cell>
+              <Cell>
+                <div className={styles.rowActions}>
+                  <EditButton />
+                  <DeleteButton />
+                </div>
+              </Cell>
+            </Row>
+          )
+        })}
+      </Body>
+    </Table>
   )
 }
