@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '@reach/router'
+import { NavLink } from '../components'
 import { List, Item as ListItem } from '../components/Navigation'
 import { IRoutesConfig } from '../typings'
 
@@ -12,10 +12,10 @@ interface INavItem {
 const Item = ({ title, path, Icon }: INavItem) => {
   return (
     <ListItem key={path}>
-      <Link className='nav-link' to={path}>
+      <NavLink to={path}>
         <Icon />
         {title}
-      </Link>
+      </NavLink>
     </ListItem>
   )
 }
