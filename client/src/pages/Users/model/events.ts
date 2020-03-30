@@ -1,5 +1,5 @@
 import { createEvent } from 'effector'
-import { AddFormNewValue } from './typings'
+import { AddFormNewValue, AddForm } from './typings'
 
 export const openAddModal = createEvent()
 export const closeAddModal = createEvent()
@@ -13,3 +13,8 @@ export const fieldValueChange = setField.prepend(
     }
   },
 )
+
+export const closeMessage = createEvent()
+
+export const createUser = createEvent<AddForm>()
+export const getAllUsers = createEvent()

@@ -1,4 +1,5 @@
-import { User, AddModal, Group, AddForm } from '../typings'
+import { User, AddModal, Group, AddForm, AddFormMessage } from '../typings'
+import { Status } from '../../../../typings'
 
 export const users: User[] = [
   { id: 1, name: 'Исаков Клим Ярославович', group: 'АП-31', login: 'login1' },
@@ -37,4 +38,10 @@ export const addForm: AddForm = {
   group: '',
   login: '',
   password: '',
+}
+
+export const addFormMessage: AddFormMessage = {
+  open: false,
+  status: Status.Idle,
+  message: '',
 }

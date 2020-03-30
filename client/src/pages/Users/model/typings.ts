@@ -1,3 +1,5 @@
+import { Status } from '../../../typings'
+
 export interface User {
   id: number
   name: string
@@ -14,6 +16,12 @@ export interface AddForm {
   group: number | string
   login: string
   password: string
+}
+
+export interface AddFormMessage {
+  open: boolean
+  status: Status
+  message: string
 }
 
 export interface AddFormNewValue {
