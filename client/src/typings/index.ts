@@ -22,3 +22,19 @@ export interface IRoutesConfig {
   admin: IRoute[]
   common: IRoute[]
 }
+
+/*
+  Status for operation
+  success/error/etc - material-ui alert prop type
+  Using info & warning for types compatibility
+  Done - operation successfull
+  Fail - operation fails with error
+  Pending - wait for server response
+  Idle - initial state
+*/
+export enum Status {
+  Done = 'success',
+  Fail = 'error',
+  Pending = 'warning',
+  Idle = 'info',
+}
