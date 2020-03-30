@@ -2,30 +2,39 @@ import React from 'react'
 import { useStore } from 'effector-react'
 import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
 import { MappedSelect, Item } from '../../../components/MappedSelect'
-import { MappedInput } from '../../../components'
-import { $groups, closeAddModal, $addForm, fieldValueChange } from '../model'
-import styles from './AddUser.module.css'
+import { Linear } from '../../../components/Loaders'
+import { MappedInput, Message } from '../../../components'
 import { AddForm } from '../model/typings'
+import { stores, events } from '../model'
+import { Status } from '../../../typings'
+import styles from './AddUser.module.css'
 
 export const AddUser = () => {
-  const groups = useStore($groups)
+  const groups = useStore(stores.$groups)
+  const formMessage = useStore(stores.$addFormMessage)
 
   return (
     <div className={styles.addUser}>
+      <Message
+        onClose={events.closeMessage}
+        open={formMessage.open}
+        status={formMessage.status}
+        message={formMessage.message}
+      />
       <form noValidate autoComplete='off'>
         <h3 className={styles.title}>Добавить пользователя</h3>
         <div className={styles.fields}>
           <MappedInput<AddForm>
             name='name'
             label='ФИО'
-            store={$addForm}
-            onChange={fieldValueChange}
+            store={stores.$addForm}
+            onChange={events.fieldValueChange}
           />
           <MappedSelect<AddForm>
             name='group'
             label='Группа'
-            store={$addForm}
-            onChange={fieldValueChange}
+            store={stores.$addForm}
+            onChange={events.fieldValueChange}
           >
             {groups.map(({ id, name }) => (
               <Item key={id} value={id}>
@@ -36,20 +45,28 @@ export const AddUser = () => {
           <MappedInput<AddForm>
             name='login'
             label='Логин'
-            store={$addForm}
-            onChange={fieldValueChange}
+            store={stores.$addForm}
+            onChange={events.fieldValueChange}
           />
           <MappedInput<AddForm>
             name='password'
             label='Пароль'
-            store={$addForm}
-            onChange={fieldValueChange}
+            store={stores.$addForm}
+            onChange={events.fieldValueChange}
           />
         </div>
-        <div className={styles.actions}>
-          <PrimaryButton onClick={closeAddModal}>Добавить</PrimaryButton>
-          <SecondaryButton onClick={closeAddModal}>Отменить</SecondaryButton>
-        </div>
+        {formMessage.status === Status.Pending ? (
+          <div className={styles.loader}>
+            <Linear />
+          </div>
+        ) : (
+          <div className={styles.actions}>
+            <PrimaryButton onClick={events.createUser}>Добавить</PrimaryButton>
+            <SecondaryButton onClick={events.closeAddModal}>
+              Отменить
+            </SecondaryButton>
+          </div>
+        )}
       </form>
     </div>
   )

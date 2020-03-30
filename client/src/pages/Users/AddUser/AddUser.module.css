@@ -26,3 +26,8 @@
   width: 100%;
   margin-top: 0.3rem;
 }
+
+.loader {
+  margin-top: 0.3rem;
+  padding: 16px 0;
+}
