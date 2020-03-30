@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  Modal as MaterialModal,
-  Fade,
-  Backdrop,
-  Paper,
-} from '@material-ui/core'
+import { Modal as MaterialModal, Paper } from '@material-ui/core'
 import styles from './Modal.module.css'
 
 interface IModalProps {
@@ -14,23 +9,16 @@ interface IModalProps {
   className?: string
 }
 
-export const Modal = ({ open, onClose, className, children }: IModalProps) => {
+export const Modal = (props: IModalProps) => {
   return (
     <MaterialModal
       className={styles.modal}
-      open={open}
-      onClose={onClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
+      open={props.open}
+      onClose={props.onClose}
     >
-      <Fade in={open}>
-        <Paper style={{ outline: 'none' }} className={className}>
-          {children}
-        </Paper>
-      </Fade>
+      <Paper style={{ outline: 'none' }} className={props.className}>
+        {props.children}
+      </Paper>
     </MaterialModal>
   )
 }
