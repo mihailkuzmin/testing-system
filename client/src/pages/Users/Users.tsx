@@ -4,17 +4,18 @@ import { IPageProps } from '../../typings'
 import { Layout, Modal } from '../../components'
 import { UsersTable } from './UsersTable'
 import { AddUser } from './AddUser'
-import { $page, openAddModal, closeAddModal } from './model'
+import { stores, events } from './model'
 
 export const Users = (props: IPageProps) => {
-  const [users, addModal] = useStore($page)
+  const users = useStore(stores.$users)
+  const addModal = useStore(stores.$addModal)
 
   return (
     <Layout>
-      <Modal open={addModal.open} onClose={closeAddModal}>
+      <Modal open={addModal.open} onClose={events.closeAddModal}>
         <AddUser />
       </Modal>
-      <UsersTable users={users} onAddClick={openAddModal} />
+      <UsersTable users={users} onAddClick={events.openAddModal} />
     </Layout>
   )
 }
