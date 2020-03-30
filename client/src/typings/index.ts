@@ -38,3 +38,8 @@ export enum Status {
   Pending = 'warning',
   Idle = 'info',
 }
+
+export interface Response<T> {
+  result: T
+  message: string
+}
