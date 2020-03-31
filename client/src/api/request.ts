@@ -1,22 +1,27 @@
 import { Request, Response } from '../typings'
 import ky from 'ky'
 
+const timeout = (time: number): Promise<void> =>
+  new Promise((r) => setTimeout(r, time))
+
+const HOST = 'http://localhost:5000/api/'
+const TIMEOUT = 1000
+
+const api = ky.extend({
+  hooks: {
+    beforeRequest: [async (req) => await timeout(TIMEOUT)],
+  },
+  prefixUrl: HOST,
+})
+
 export const request: Request = {
   get: async <R>(url: string) => {
-    try {
-      const res: Response<R> = await ky.get(url).json()
-      return res
-    } catch (e) {
-      throw e
-    }
+    const res: Response<R> = await api.get(url).json()
+    return res
   },
 
   post: async <P, R>(url: string, payload: P) => {
-    try {
-      const res: Response<R> = await ky.post(url, { json: payload }).json()
-      return res
-    } catch (e) {
-      throw e
-    }
+    const res: Response<R> = await api.post(url, { json: payload }).json()
+    return res
   },
 }
