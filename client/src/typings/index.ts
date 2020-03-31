@@ -39,6 +39,11 @@ export enum Status {
   Idle = 'info',
 }
 
+export interface Request {
+  get: <R>(url: string) => Promise<Response<R>>
+  post: <P, R>(url: string, payload: P) => Promise<Response<R>>
+}
+
 export interface Response<T> {
   result: T
   message: string
