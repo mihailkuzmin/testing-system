@@ -1,5 +1,6 @@
 import fastify, { FastifyInstance } from 'fastify'
 import fastifyCookie from 'fastify-cookie'
+import fastifyCors from 'fastify-cors'
 import { routes } from './routes'
 import { PoolConfig } from 'pg'
 import { db } from './db'
@@ -10,6 +11,7 @@ const connection: PoolConfig = config.db
 
 app.register(routes, { prefix: '/api' })
 app.register(fastifyCookie)
+app.register(fastifyCors)
 
 const start = async (): Promise<void> => {
   try {
