@@ -45,6 +45,6 @@ export interface Request {
 }
 
 export interface Response<T> {
-  result: T
+  payload: T
   message: string
 }
