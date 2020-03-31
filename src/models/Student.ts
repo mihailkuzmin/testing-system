@@ -9,15 +9,16 @@ export class Student {
     private password: string,
   ) {}
 
-  static async getById(id: number | string) {
+  static async getById(id: number | string): Promise<StudentQueryResult> {
     try {
       const { rows } = await db.query(
         `
-        SELECT * FROM Student WHERE Student.id = ($1)
+        SELECT id, name, group_id as group, login FROM Student as S WHERE S.id = ($1)
       `,
         [id],
       )
-      return rows
+      const [result] = rows
+      return result
     } catch (e) {
       throw e
     }
@@ -26,7 +27,7 @@ export class Student {
   static async getAll(): Promise<StudentQueryResult[]> {
     try {
       const { rows } = await db.query(`
-        SELECT * from Student
+        SELECT id, name, group_id as group, login from Student
       `)
       return rows
     } catch (e) {
