@@ -12,7 +12,7 @@ interface IMessageProps extends AlertProps {
 
 export const Message = (props: IMessageProps) => {
   return (
-    <Snackbar open={props.open} autoHideDuration={1500} onClose={props.onClose}>
+    <Snackbar open={props.open} autoHideDuration={2000} onClose={props.onClose}>
       <Alert onClose={props.onClose} severity={props.status}>
         {props.message}
       </Alert>
