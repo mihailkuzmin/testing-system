@@ -6,7 +6,9 @@ import * as Messages from './typings/messages'
 export const studentController: IController = (app, options, done) => {
   app.get('/', async (request, reply) => {
     const result = await Student.getAll()
-    reply.send(result)
+
+    const response: Response<Payload.GetAll> = { payload: result, message: Messages.GetAll }
+    reply.send(response)
   })
 
   app.post('/', async (request, reply) => {
@@ -21,8 +23,11 @@ export const studentController: IController = (app, options, done) => {
 
   app.get('/:id', async (request, reply) => {
     const { id } = request.params
+
     const result = await Student.getById(id)
-    reply.send(result)
+
+    const response: Response<Payload.GetById> = { payload: result, message: Messages.GetById }
+    reply.send(response)
   })
 
   done()
