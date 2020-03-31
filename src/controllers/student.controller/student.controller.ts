@@ -1,5 +1,7 @@
-import { IController } from '../typings/controller'
-import { Student } from '../models'
+import { IController, Response } from '../../typings'
+import { Student } from '../../models'
+import * as Payload from './typings/payloads'
+import * as Messages from './typings/messages'
 
 export const studentController: IController = (app, options, done) => {
   app.get('/', async (request, reply) => {
@@ -8,12 +10,13 @@ export const studentController: IController = (app, options, done) => {
   })
 
   app.post('/', async (request, reply) => {
-    const { name, groupId } = request.body
+    const { name, group, login, password } = request.body
 
-    const student = new Student(name, groupId)
+    const student = new Student(name, group, login, password)
     const result = await student.save()
 
-    reply.send(result)
+    const response: Response<Payload.Create> = { payload: result, message: Messages.Create }
+    reply.send(response)
   })
 
   app.get('/:id', async (request, reply) => {
