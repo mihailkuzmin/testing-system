@@ -3,7 +3,7 @@ import { useStore } from 'effector-react'
 import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
 import { MappedSelect, Item } from '../../../components/MappedSelect'
 import { Linear } from '../../../components/Loaders'
-import { MappedInput, Message } from '../../../components'
+import { MappedInput } from '../../../components'
 import { AddForm } from '../model/typings'
 import { stores, events } from '../model'
 import { Status } from '../../../typings'
@@ -11,16 +11,10 @@ import styles from './AddUser.module.css'
 
 export const AddUser = () => {
   const groups = useStore(stores.$groups)
-  const formMessage = useStore(stores.$addFormMessage)
+  const createUserStatus = useStore(stores.$createUserStatus)
 
   return (
     <div className={styles.addUser}>
-      <Message
-        onClose={events.closeMessage}
-        open={formMessage.open}
-        status={formMessage.status}
-        message={formMessage.message}
-      />
       <form noValidate autoComplete='off'>
         <h3 className={styles.title}>Добавить пользователя</h3>
         <div className={styles.fields}>
@@ -55,7 +49,7 @@ export const AddUser = () => {
             onChange={events.fieldValueChange}
           />
         </div>
-        {formMessage.status === Status.Pending ? (
+        {createUserStatus === Status.Pending ? (
           <div className={styles.loader}>
             <Linear />
           </div>

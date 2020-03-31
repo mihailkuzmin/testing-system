@@ -21,30 +21,21 @@ stores.$addForm.on(events.setField, (state, { key, value }) => ({
   ...state,
   [key]: value,
 }))
-stores.$addForm.reset(events.closeAddModal, effects.create.done)
+stores.$addForm.reset(events.closeAddModal, effects.createUser.done)
 
-// Info messages
-stores.$addFormMessage.on(effects.create.failData, (_, { message }) => ({
-  status: Status.Fail,
-  message,
-  open: true,
-}))
-stores.$addFormMessage.on(effects.create.pending, (state, pending) => {
-  return pending ? { status: Status.Pending, message: '', open: false } : state
+stores.$createUserStatus.on(effects.createUser.done, () => Status.Done)
+stores.$createUserStatus.on(effects.createUser.fail, () => Status.Fail)
+stores.$createUserStatus.on(effects.createUser.pending, (state, pending) => {
+  return pending ? Status.Pending : state
 })
-stores.$addFormMessage.on(effects.create.doneData, (_, { message }) => ({
-  status: Status.Done,
-  message,
-  open: true,
-}))
-stores.$addFormMessage.reset(
-  events.closeMessage,
+stores.$createUserStatus.reset(
   events.setField,
   events.closeAddModal,
+  events.createUser,
 )
 
 sample({
   source: stores.$addForm,
   clock: events.createUser,
-  target: effects.create,
+  target: effects.createUser,
 })

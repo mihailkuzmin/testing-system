@@ -33,10 +33,10 @@ export interface IRoutesConfig {
   Idle - initial state
 */
 export enum Status {
-  Done = 'success',
-  Fail = 'error',
-  Pending = 'warning',
-  Idle = 'info',
+  Done,
+  Fail,
+  Pending,
+  Idle,
 }
 
 export interface Request {
