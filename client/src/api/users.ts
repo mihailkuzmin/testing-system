@@ -1,3 +1,4 @@
+import { request } from './request'
 import { Response } from '../typings'
 
 export interface User {
@@ -14,18 +15,14 @@ export interface CreateUser {
   password: string
 }
 
-const timeout = (time: number) =>
-  new Promise((res, rej) => {
-    setTimeout(res, time)
-  })
+const timeout = (time: number) => new Promise((r) => setTimeout(r, time))
 
 const api = 'http://localhost:5000/api'
 
-const getAll = async (): Promise<User[]> => {
+const getAll = async (): Promise<Response<User[]>> => {
   try {
-    await timeout(500)
-    const response = await fetch(`${api}/users`)
-    const result = await response.json()
+    await timeout(1000)
+    const result = await request.get<User[]>(`${api}/users`)
     return result
   } catch (e) {
     throw e
@@ -34,22 +31,9 @@ const getAll = async (): Promise<User[]> => {
 
 const create = async (user: CreateUser): Promise<Response<User>> => {
   try {
-    await timeout(500)
-    return {
-      result: {
-        id: 2,
-        group: 1,
-        name: '',
-        login: '',
-      },
-      message: 'Выполнено',
-    }
-    // const response = await fetch(`${api}/users`, {
-    //   method: 'POST',
-    //   body: JSON.stringify(user),
-    // })
-    // const result = await response.json()
-    // return result
+    await timeout(1000)
+    const result = await request.post<CreateUser, User>(`${api}/users`, user)
+    return result
   } catch (e) {
     throw e
   }
