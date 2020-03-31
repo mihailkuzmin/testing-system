@@ -5,6 +5,7 @@
   margin: 0;
   list-style: none;
   max-width: inherit;
+  width: 100%;
 }
 
 .item {
