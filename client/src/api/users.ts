@@ -22,7 +22,7 @@ const api = 'http://localhost:5000/api'
 const getAll = async (): Promise<Response<User[]>> => {
   try {
     await timeout(1000)
-    const result = await request.get<User[]>(`${api}/users`)
+    const result = await request.get<User[]>(`${api}/student`)
     return result
   } catch (e) {
     throw e
@@ -32,7 +32,7 @@ const getAll = async (): Promise<Response<User[]>> => {
 const create = async (user: CreateUser): Promise<Response<User>> => {
   try {
     await timeout(1000)
-    const result = await request.post<CreateUser, User>(`${api}/users`, user)
+    const result = await request.post<CreateUser, User>(`${api}/student`, user)
     return result
   } catch (e) {
     throw e
