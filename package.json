@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "fastify": "^2.12.1",
+    "fastify-cookie": "^3.6.0",
     "pg": "^7.18.2"
   }
 }
