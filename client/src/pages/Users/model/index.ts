@@ -1,41 +1,59 @@
 import { sample } from 'effector'
-import * as stores from './stores'
-import * as events from './events'
+import {
+  $addModal,
+  $addForm,
+  $createUserStatus,
+  $users,
+  $groups,
+} from './stores'
+import {
+  openAddModal,
+  closeAddModal,
+  setField,
+  createUser,
+  fieldValueChange,
+} from './events'
 import * as effects from './effects'
 import { Status } from '../../../typings'
 
-export { stores, events }
+// Add user modal
+$addModal.on(openAddModal, (_, __) => ({ open: true }))
+$addModal.on(closeAddModal, (_, __) => ({ open: false }))
 
-// Modal for form
-stores.$addModal.on(events.openAddModal, (state, _) => ({
-  ...state,
-  open: true,
-}))
-stores.$addModal.on(events.closeAddModal, (state, _) => ({
-  ...state,
-  open: false,
-}))
-
-// Form store
-stores.$addForm.on(events.setField, (state, { key, value }) => ({
+// Add user form
+$addForm.on(setField, (state, { key, value }) => ({
   ...state,
   [key]: value,
 }))
-stores.$addForm.reset(events.closeAddModal, effects.createUser.done)
+$addForm.reset(closeAddModal, effects.createUser.done)
 
-stores.$createUserStatus.on(effects.createUser.done, () => Status.Done)
-stores.$createUserStatus.on(effects.createUser.fail, () => Status.Fail)
-stores.$createUserStatus.on(effects.createUser.pending, (state, pending) => {
+// Create user operation state
+$createUserStatus.on(effects.createUser.done, () => Status.Done)
+$createUserStatus.on(effects.createUser.fail, () => Status.Fail)
+$createUserStatus.on(effects.createUser.pending, (state, pending) => {
   return pending ? Status.Pending : state
 })
-stores.$createUserStatus.reset(
-  events.setField,
-  events.closeAddModal,
-  events.createUser,
-)
+$createUserStatus.reset(setField, closeAddModal, createUser)
 
+// When createUser emits, place value of
+// $addForm in effects.createUser
 sample({
-  source: stores.$addForm,
-  clock: events.createUser,
+  source: $addForm,
+  clock: createUser,
   target: effects.createUser,
 })
+
+export const stores = {
+  $addForm,
+  $addModal,
+  $groups,
+  $users,
+  $createUserStatus,
+}
+
+export const events = {
+  createUser,
+  openAddModal,
+  closeAddModal,
+  fieldValueChange,
+}
