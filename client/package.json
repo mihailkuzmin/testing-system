@@ -10,6 +10,8 @@
     "effector": "^20.13.4",
     "effector-react": "^20.6.3",
     "ky": "^0.19.0",
+    "nanoid": "^3.0.2",
+    "notistack": "^0.9.9",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0"

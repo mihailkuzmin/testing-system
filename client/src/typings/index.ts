@@ -1,5 +1,6 @@
-import { WindowLocation, NavigateFn } from 'reach__router'
 import React from 'react'
+import { WindowLocation, NavigateFn } from 'reach__router'
+import { OptionsObject } from 'notistack'
 
 // Used for @reach-router
 export interface IPageProps {
@@ -47,4 +48,24 @@ export interface Request {
 export interface Response<T> {
   payload: T
   message: string
+}
+
+export enum MessageType {
+  Default = 'default',
+  Error = 'error',
+  Success = 'success',
+  Warning = 'warning',
+  Info = 'info',
+}
+
+export interface NewMessage {
+  type: MessageType
+  text: string
+}
+
+export interface Message extends OptionsObject {
+  key: string
+  options: any
+  message: string
+  displayed: boolean
 }
