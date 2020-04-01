@@ -20,4 +20,4 @@ export const createMessage = newMessage.prepend(
 )
 
 export const setDisplayed = createEvent<string>()
-export const removeMessage = createEvent<any>()
+export const removeMessage = createEvent<string>()

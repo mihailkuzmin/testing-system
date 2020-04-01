@@ -18,12 +18,10 @@ $messages.on(removeMessage, (state, removeKey) => {
   return state.filter(({ key }) => key !== removeKey)
 })
 
-export const stores = {
+// export public api
+export const app = {
   $messages,
   $isAuth,
-}
-
-export const events = {
   createMessage,
   removeMessage,
   setDisplayed,

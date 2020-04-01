@@ -5,13 +5,13 @@ import { MappedSelect, Item } from '../../../components/MappedSelect'
 import { Linear } from '../../../components/Loaders'
 import { MappedInput } from '../../../components'
 import { AddForm } from '../model/typings'
-import { stores, events } from '../model'
+import { users } from '../model'
 import { Status } from '../../../typings'
 import styles from './AddUser.module.css'
 
 export const AddUser = () => {
-  const groups = useStore(stores.$groups)
-  const createUserStatus = useStore(stores.$createUserStatus)
+  const groups = useStore(users.$groups)
+  const createUserStatus = useStore(users.$createUserStatus)
 
   return (
     <div className={styles.addUser}>
@@ -21,14 +21,14 @@ export const AddUser = () => {
           <MappedInput<AddForm>
             name='name'
             label='ФИО'
-            store={stores.$addForm}
-            onChange={events.fieldValueChange}
+            store={users.$addForm}
+            onChange={users.fieldValueChange}
           />
           <MappedSelect<AddForm>
             name='group'
             label='Группа'
-            store={stores.$addForm}
-            onChange={events.fieldValueChange}
+            store={users.$addForm}
+            onChange={users.fieldValueChange}
           >
             {groups.map(({ id, name }) => (
               <Item key={id} value={id}>
@@ -39,14 +39,14 @@ export const AddUser = () => {
           <MappedInput<AddForm>
             name='login'
             label='Логин'
-            store={stores.$addForm}
-            onChange={events.fieldValueChange}
+            store={users.$addForm}
+            onChange={users.fieldValueChange}
           />
           <MappedInput<AddForm>
             name='password'
             label='Пароль'
-            store={stores.$addForm}
-            onChange={events.fieldValueChange}
+            store={users.$addForm}
+            onChange={users.fieldValueChange}
           />
         </div>
         {createUserStatus === Status.Pending ? (
@@ -55,8 +55,8 @@ export const AddUser = () => {
           </div>
         ) : (
           <div className={styles.actions}>
-            <PrimaryButton onClick={events.createUser}>Добавить</PrimaryButton>
-            <SecondaryButton onClick={events.closeAddModal}>
+            <PrimaryButton onClick={users.createUser}>Добавить</PrimaryButton>
+            <SecondaryButton onClick={users.closeAddModal}>
               Отменить
             </SecondaryButton>
           </div>

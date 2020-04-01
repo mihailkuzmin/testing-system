@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSnackbar } from 'notistack'
 import { useStore } from 'effector-react'
-import { stores, events } from './model'
+import { app } from './model'
 
 export const Notifier = () => {
-  const notifications = useStore(stores.$messages)
+  const notifications = useStore(app.$messages)
   const { enqueueSnackbar } = useSnackbar()
 
   React.useEffect(() => {
@@ -16,10 +16,10 @@ export const Notifier = () => {
       enqueueSnackbar(message, {
         key,
         ...options,
-        onExited: (_, key) => events.removeMessage(key),
+        onExited: (_, key) => app.removeMessage(key as string),
       })
 
-      events.setDisplayed(key)
+      app.setDisplayed(key)
     })
   }, [notifications, enqueueSnackbar])
 
