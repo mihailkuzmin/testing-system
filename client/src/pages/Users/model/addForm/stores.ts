@@ -13,4 +13,6 @@ export const $addForm = createStore<AddForm>(addForm)
 
 export const $createUserStatus = createStore<Status>(Status.Idle)
 
-export const $groups = createStore<Group[]>([{ name: 'АП-31', id: 1 }])
+export const $getAllGroupsStatus = createStore<Status>(Status.Pending)
+
+export const $groups = createStore<Group[]>([])

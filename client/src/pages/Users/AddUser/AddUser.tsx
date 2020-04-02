@@ -2,16 +2,35 @@ import React from 'react'
 import { useStore } from 'effector-react'
 import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
 import { MappedSelect, Item } from '../../../components/MappedSelect'
-import { Linear } from '../../../components/Loaders'
 import { MappedInput } from '../../../components'
+import { Linear } from '../../../components/Loaders'
 import { AddForm } from '../model/addForm/typings'
 import { addForm, addModal } from '../model'
-import { Status } from '../../../typings'
+import { Status as S } from '../../../typings'
 import styles from './AddUser.module.css'
+
+const getGroupSelectLabel = (status: S) => {
+  switch (status) {
+    case S.Pending:
+      return 'Загружаем список групп'
+    case S.Fail:
+      return 'Ошибка'
+    case S.Done:
+      return 'Группа'
+    default:
+      return ''
+  }
+}
 
 export const AddUser = () => {
   const groups = useStore(addForm.$groups)
   const createUserStatus = useStore(addForm.$createUserStatus)
+  const groupsSelectStatus = useStore(addForm.$getAllGroupsStatus)
+
+  const buttonsAreHidden = createUserStatus === S.Pending
+  const addButtonDisabled = [S.Pending, S.Fail].includes(groupsSelectStatus)
+  const groupSelectDisabled = addButtonDisabled
+  const groupSelectLabel = getGroupSelectLabel(groupsSelectStatus)
 
   return (
     <div className={styles.addUser}>
@@ -26,9 +45,10 @@ export const AddUser = () => {
           />
           <MappedSelect<AddForm>
             name='group'
-            label='Группа'
+            label={groupSelectLabel}
             store={addForm.$addForm}
             onChange={addForm.fieldValueChange}
+            disabled={groupSelectDisabled}
           >
             {groups.map(({ id, name }) => (
               <Item key={id} value={id}>
@@ -49,13 +69,18 @@ export const AddUser = () => {
             onChange={addForm.fieldValueChange}
           />
         </div>
-        {createUserStatus === Status.Pending ? (
+        {buttonsAreHidden ? (
           <div className={styles.loader}>
             <Linear />
           </div>
         ) : (
           <div className={styles.actions}>
-            <PrimaryButton onClick={addForm.createUser}>Добавить</PrimaryButton>
+            <PrimaryButton
+              disabled={addButtonDisabled}
+              onClick={addForm.createUser}
+            >
+              Добавить
+            </PrimaryButton>
             <SecondaryButton onClick={addModal.closeAddModal}>
               Отменить
             </SecondaryButton>
