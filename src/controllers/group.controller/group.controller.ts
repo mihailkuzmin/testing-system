@@ -1,10 +1,14 @@
-import { IController } from '../typings/controller'
-import { Group } from '../models'
+import { IController, Response } from '../../typings'
+import { Group } from '../../models'
+import * as Payload from './typings/payloads'
+import * as Messages from './typings/messages'
 
 export const groupController: IController = (app, options, done) => {
   app.get('/', async (request, reply) => {
     const result = await Group.getAll()
-    reply.send(result)
+
+    const response: Response<Payload.GetAll> = { payload: result, message: Messages.GetAll }
+    reply.send(response)
   })
 
   app.post('/', async (request, reply) => {
