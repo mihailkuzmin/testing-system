@@ -1,5 +1,5 @@
 import { createEvent } from 'effector'
-import { NewMessage, Message } from '../typings'
+import { NewMessage, Message } from '../../typings'
 import { nanoid } from 'nanoid'
 
 export const createMessage = createEvent<NewMessage>()

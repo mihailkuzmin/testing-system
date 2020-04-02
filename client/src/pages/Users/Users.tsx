@@ -4,18 +4,19 @@ import { IPageProps } from '../../typings'
 import { Layout, Modal } from '../../components'
 import { UsersTable } from './UsersTable'
 import { AddUser } from './AddUser'
-import { users } from './model'
+import { addModal, usersTable } from './model'
 
 export const Users = (props: IPageProps) => {
-  const usersList = useStore(users.$users)
-  const addModal = useStore(users.$addModal)
+  React.useEffect(() => usersTable.getAllUsers(), [])
+  const usersList = useStore(usersTable.$users)
+  const { open } = useStore(addModal.$addModal)
 
   return (
     <Layout>
-      <Modal open={addModal.open} onClose={users.closeAddModal}>
+      <Modal open={open} onClose={addModal.closeAddModal}>
         <AddUser />
       </Modal>
-      <UsersTable users={usersList} onAddClick={users.openAddModal} />
+      <UsersTable users={usersList} onAddClick={addModal.openAddModal} />
     </Layout>
   )
 }

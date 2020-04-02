@@ -4,14 +4,14 @@ import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
 import { MappedSelect, Item } from '../../../components/MappedSelect'
 import { Linear } from '../../../components/Loaders'
 import { MappedInput } from '../../../components'
-import { AddForm } from '../model/typings'
-import { users } from '../model'
+import { AddForm } from '../model/addForm/typings'
+import { addForm, addModal } from '../model'
 import { Status } from '../../../typings'
 import styles from './AddUser.module.css'
 
 export const AddUser = () => {
-  const groups = useStore(users.$groups)
-  const createUserStatus = useStore(users.$createUserStatus)
+  const groups = useStore(addForm.$groups)
+  const createUserStatus = useStore(addForm.$createUserStatus)
 
   return (
     <div className={styles.addUser}>
@@ -21,14 +21,14 @@ export const AddUser = () => {
           <MappedInput<AddForm>
             name='name'
             label='ФИО'
-            store={users.$addForm}
-            onChange={users.fieldValueChange}
+            store={addForm.$addForm}
+            onChange={addForm.fieldValueChange}
           />
           <MappedSelect<AddForm>
             name='group'
             label='Группа'
-            store={users.$addForm}
-            onChange={users.fieldValueChange}
+            store={addForm.$addForm}
+            onChange={addForm.fieldValueChange}
           >
             {groups.map(({ id, name }) => (
               <Item key={id} value={id}>
@@ -39,14 +39,14 @@ export const AddUser = () => {
           <MappedInput<AddForm>
             name='login'
             label='Логин'
-            store={users.$addForm}
-            onChange={users.fieldValueChange}
+            store={addForm.$addForm}
+            onChange={addForm.fieldValueChange}
           />
           <MappedInput<AddForm>
             name='password'
             label='Пароль'
-            store={users.$addForm}
-            onChange={users.fieldValueChange}
+            store={addForm.$addForm}
+            onChange={addForm.fieldValueChange}
           />
         </div>
         {createUserStatus === Status.Pending ? (
@@ -55,8 +55,8 @@ export const AddUser = () => {
           </div>
         ) : (
           <div className={styles.actions}>
-            <PrimaryButton onClick={users.createUser}>Добавить</PrimaryButton>
-            <SecondaryButton onClick={users.closeAddModal}>
+            <PrimaryButton onClick={addForm.createUser}>Добавить</PrimaryButton>
+            <SecondaryButton onClick={addModal.closeAddModal}>
               Отменить
             </SecondaryButton>
           </div>

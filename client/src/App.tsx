@@ -5,10 +5,10 @@ import { Header } from './components'
 import { usePages, useNavigation } from './hooks'
 import { routesConfig } from './routes'
 import { Notifier } from './Notifier'
-import { app } from './model'
+import { auth } from './model'
 
 function App() {
-  const isAuth = useStore(app.$isAuth)
+  const isAuth = useStore(auth.$isAuth)
   const pages = usePages(isAuth, routesConfig)
   const navigation = useNavigation(isAuth, routesConfig)
 

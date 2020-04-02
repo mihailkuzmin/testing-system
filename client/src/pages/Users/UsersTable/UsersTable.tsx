@@ -16,7 +16,7 @@ import {
   DeleteButton,
 } from '../../../components/Buttons'
 import { Table } from '../../../components/Table'
-import { User } from '../model/typings'
+import { User } from '../model/usersTable/typings'
 import styles from './UsersTable.module.css'
 
 interface IUsersTableProps {
