@@ -17,6 +17,7 @@ interface IMappedSelectProps<T> {
   className?: string
   onChange: any
   children?: React.ReactNode
+  disabled?: boolean
 }
 
 export const MappedSelect = <T extends {}>(props: IMappedSelectProps<T>) => {
@@ -36,6 +37,7 @@ export const MappedSelect = <T extends {}>(props: IMappedSelectProps<T>) => {
         value={value}
         onChange={props.onChange}
         label={props.label}
+        disabled={props.disabled}
       >
         <MenuItem disabled value=''>
           {props.label}
