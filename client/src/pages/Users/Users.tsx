@@ -1,19 +1,29 @@
 import React from 'react'
-import { useStore } from 'effector-react'
-import { IPageProps } from '../../typings'
-import { Layout, Modal } from '../../components'
+import { useStore, useGate } from 'effector-react'
+import { IPageProps, Status } from '../../typings'
+import { Layout, Modal, FullScreenError } from '../../components'
+import { FullScreenLoader } from '../../components/Loaders'
 import { UsersTable } from './UsersTable'
 import { AddUser } from './AddUser'
-import { addModal, usersTable } from './model'
+import { addModal, usersTable, UsersPage } from './model'
 
 export const Users = (props: IPageProps) => {
-  React.useEffect(() => usersTable.getAllUsers(), [])
+  useGate(UsersPage)
   const usersList = useStore(usersTable.$users)
-  const { open } = useStore(addModal.$addModal)
+  const getAllUsersStatus = useStore(usersTable.$getAllUsersStatus)
+  const modal = useStore(addModal.$addModal)
+
+  if (getAllUsersStatus === Status.Pending) {
+    return <FullScreenLoader />
+  }
+
+  if (getAllUsersStatus === Status.Fail) {
+    return <FullScreenError />
+  }
 
   return (
     <Layout>
-      <Modal open={open} onClose={addModal.closeAddModal}>
+      <Modal open={modal.open} onClose={addModal.closeAddModal}>
         <AddUser />
       </Modal>
       <UsersTable users={usersList} onAddClick={addModal.openAddModal} />
