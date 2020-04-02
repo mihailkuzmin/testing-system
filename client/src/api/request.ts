@@ -5,7 +5,7 @@ const timeout = (time: number): Promise<void> =>
   new Promise((r) => setTimeout(r, time))
 
 const HOST = 'http://localhost:5000/api/'
-const TIMEOUT = 1000
+const TIMEOUT = 500
 
 const api = ky.extend({
   hooks: {
