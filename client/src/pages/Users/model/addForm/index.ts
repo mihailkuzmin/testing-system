@@ -5,7 +5,7 @@ import {
   $createUserStatus,
   $getAllGroupsStatus,
 } from './stores'
-import { setField, fieldValueChange, createUser } from './events'
+import { setField, fieldValueChange, createUser, userCreated } from './events'
 import { createUserFx, getAllGroupsFx } from './effects'
 import { Status, MessageType } from '../../../../typings'
 import { addModal } from '../addModal'
@@ -37,6 +37,7 @@ createUserFx.failData.watch(({ message }) => {
 })
 
 forward({ from: addModal.openAddModal, to: getAllGroupsFx })
+forward({ from: createUserFx.done, to: userCreated })
 
 $getAllGroupsStatus.on(getAllGroupsFx.done, () => Status.Done)
 $getAllGroupsStatus.on(getAllGroupsFx.fail, () => Status.Fail)
@@ -45,7 +46,7 @@ $getAllGroupsStatus.on(getAllGroupsFx.pending, (s, p) =>
 )
 $getAllGroupsStatus.reset(addModal.closeAddModal)
 
-$groups.on(getAllGroupsFx.doneData, (_, {payload}) => payload)
+$groups.on(getAllGroupsFx.doneData, (_, { payload }) => payload)
 $groups.reset(addModal.closeAddModal)
 
 export const addForm = {

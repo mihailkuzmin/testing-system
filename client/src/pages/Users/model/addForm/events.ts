@@ -12,3 +12,5 @@ export const fieldValueChange = setField.prepend(
 )
 
 export const createUser = createEvent<AddForm>()
+
+export const userCreated = createEvent()
