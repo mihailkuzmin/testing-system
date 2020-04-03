@@ -17,3 +17,8 @@ body {
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif !important;
 }
+
+/* group select styles override */
+ul.MuiMenu-list[aria-labelledby="group-select"] {
+  max-height: 250px;
+}
