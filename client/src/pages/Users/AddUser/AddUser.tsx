@@ -6,31 +6,19 @@ import { MappedInput } from '../../../components'
 import { Linear } from '../../../components/Loaders'
 import { AddForm } from '../model/addForm/typings'
 import { addForm, addModal } from '../model'
-import { Status as S } from '../../../typings'
+import { Status } from '../../../typings'
+import { SelectLabel as SLabel } from './typings'
 import styles from './AddUser.module.css'
-
-const getGroupSelectLabel = (status: S) => {
-  switch (status) {
-    case S.Pending:
-      return 'Загружаем список групп'
-    case S.Fail:
-      return 'Ошибка'
-    case S.Done:
-      return 'Группа'
-    default:
-      return ''
-  }
-}
 
 export const AddUser = () => {
   const groups = useStore(addForm.$groups)
   const createUserStatus = useStore(addForm.$createUserStatus)
-  const groupsSelectStatus = useStore(addForm.$getAllGroupsStatus)
+  const selectStatus = useStore(addForm.$getAllGroupsStatus)
 
-  const buttonsAreHidden = createUserStatus === S.Pending
-  const addButtonDisabled = [S.Pending, S.Fail].includes(groupsSelectStatus)
-  const groupSelectDisabled = addButtonDisabled
-  const groupSelectLabel = getGroupSelectLabel(groupsSelectStatus)
+  const actionsAreHidden = createUserStatus === Status.Pending
+  const selectDisabled = [Status.Pending, Status.Fail].includes(selectStatus)
+  const addButtonDisabled = selectDisabled
+  const selectLabel = [SLabel.Done, SLabel.Fail, SLabel.Pending][selectStatus]
 
   return (
     <div className={styles.addUser}>
@@ -45,10 +33,10 @@ export const AddUser = () => {
           />
           <MappedSelect<AddForm>
             name='group'
-            label={groupSelectLabel}
+            label={selectLabel}
             store={addForm.$addForm}
             onChange={addForm.fieldValueChange}
-            disabled={groupSelectDisabled}
+            disabled={selectDisabled}
           >
             {groups.map(({ id, name }) => (
               <Item key={id} value={id}>
@@ -67,9 +55,10 @@ export const AddUser = () => {
             label='Пароль'
             store={addForm.$addForm}
             onChange={addForm.fieldValueChange}
+            type='password'
           />
         </div>
-        {buttonsAreHidden ? (
+        {actionsAreHidden ? (
           <div className={styles.loader}>
             <Linear />
           </div>
