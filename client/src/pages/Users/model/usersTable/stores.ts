@@ -1,9 +1,20 @@
 import { createStore } from 'effector'
-import { UsersTableRow } from '../../../../typings'
+import { UsersTableRow, UsersTableGroup } from '../../../../typings'
 import { Status } from '../../../../typings'
 
-const users: UsersTableRow[] = []
+export const $users = createStore<UsersTableRow[]>([])
 
-export const $users = createStore<UsersTableRow[]>(users)
+export const $groups = createStore<UsersTableGroup[]>([])
+
+export const $groupSelectMinWidth = $groups.map((groups) => {
+  const names = groups.map((g) => g.name)
+  const maxName = names.reduce((a, b) => {
+    return b.length > a.length ? b : a
+  }, '')
+  return `${maxName.length - 0.5}rem`
+})
+
+export const $groupSelectValue = createStore<number | string>('')
 
 export const $getAllUsersStatus = createStore<Status>(Status.Pending)
+export const $getGroupsStatus = createStore<Status>(Status.Pending)
