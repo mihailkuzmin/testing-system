@@ -12,6 +12,7 @@ interface Mapped<T> {
   store: Store<T>
   onChange: any
   className?: string
+  type?: string
 }
 
 export const MappedInput = <T extends {}>(props: Mapped<T>) => {
@@ -29,6 +30,7 @@ export const MappedInput = <T extends {}>(props: Mapped<T>) => {
       value={value}
       onChange={props.onChange}
       className={props.className}
+      type={props.type}
     />
   )
 }
