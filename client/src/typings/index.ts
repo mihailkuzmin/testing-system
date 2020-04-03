@@ -76,3 +76,8 @@ export interface UsersTableRow {
   group: string
   login: string
 }
+
+export interface UsersTableGroup {
+  id: number
+  name: string
+}
