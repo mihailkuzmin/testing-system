@@ -8,7 +8,9 @@ export class Group {
     try {
       const { rows } = await db.query(
         `
-        SELECT * FROM StudentGroup WHERE StudentGroup.id = ($1)
+        SELECT * 
+        FROM StudentGroup AS S
+        WHERE StudentGroup.id = ($1)
       `,
         [id],
       )
@@ -22,7 +24,9 @@ export class Group {
   static async getAll(): Promise<GroupQueryResult[]> {
     try {
       const { rows } = await db.query(`
-        SELECT * from StudentGroup
+        SELECT * 
+        FROM StudentGroup AS S
+        ORDER BY S.name
       `)
       return rows
     } catch (e) {
