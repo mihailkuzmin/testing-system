@@ -1,14 +1,15 @@
 import { request } from '../request'
 import { Response } from '../../typings'
-import { User, CreateUser } from './typings'
+import { CreateUser } from './typings'
+import { UsersTableRow } from '../../typings'
 
-const getAll = async (): Promise<Response<User[]>> => {
-  const result = await request.get<User[]>('student')
+const getAll = async (): Promise<Response<UsersTableRow[]>> => {
+  const result = await request.get<UsersTableRow[]>('student')
   return result
 }
 
-const create = async (user: CreateUser): Promise<Response<User>> => {
-  const result = await request.post<CreateUser, User>('student', user)
+const create = async (user: CreateUser): Promise<Response<UsersTableRow>> => {
+  const result = await request.post<CreateUser, UsersTableRow>('student', user)
   return result
 }
 

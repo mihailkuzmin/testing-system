@@ -1,9 +1,9 @@
 import { createStore } from 'effector'
-import { User } from './typings'
+import { UsersTableRow } from '../../../../typings'
 import { Status } from '../../../../typings'
 
-const users: User[] = []
+const users: UsersTableRow[] = []
 
-export const $users = createStore<User[]>(users)
+export const $users = createStore<UsersTableRow[]>(users)
 
 export const $getAllUsersStatus = createStore<Status>(Status.Pending)

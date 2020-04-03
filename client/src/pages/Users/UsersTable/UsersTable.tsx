@@ -16,11 +16,11 @@ import {
   DeleteButton,
 } from '../../../components/Buttons'
 import { Table } from '../../../components/Table'
-import { User } from '../model/usersTable/typings'
+import { UsersTableRow } from '../../../typings'
 import styles from './UsersTable.module.css'
 
 interface IUsersTableProps {
-  users?: User[]
+  users?: UsersTableRow[]
   onAddClick: any
 }
 

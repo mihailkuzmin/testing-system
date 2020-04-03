@@ -69,3 +69,10 @@ export interface Message extends OptionsObject {
   message: string
   displayed: boolean
 }
+
+export interface UsersTableRow {
+  id: number
+  name: string
+  group: string
+  login: string
+}
