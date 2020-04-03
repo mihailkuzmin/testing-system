@@ -18,7 +18,12 @@ body {
   sans-serif !important;
 }
 
-/* group select styles override */
+/* add user form: group select styles override */
 ul.MuiMenu-list[aria-labelledby="group-select"] {
+  max-height: 250px;
+}
+
+/* users table: group select styles override */
+ul.MuiMenu-list[aria-labelledby="table-group-select"] {
   max-height: 250px;
 }
