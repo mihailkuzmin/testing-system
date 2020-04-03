@@ -4,8 +4,9 @@ import styles from './Table.module.css'
 
 interface ITableProps {
   children?: React.ReactNode
+  className?: string
 }
 
-export const Table = ({ children }: ITableProps) => {
-  return <MaterialTable className={styles.table}>{children}</MaterialTable>
+export const Table = (props: ITableProps) => {
+  return <MaterialTable className={`${styles.table} ${props.className}`}>{props.children}</MaterialTable>
 }
