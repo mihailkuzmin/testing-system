@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStore, useGate } from 'effector-react'
+import { useStore } from 'effector-react'
 import { IPageProps, Status } from '../../typings'
 import { Layout, Modal, FullScreenError } from '../../components'
 import { FullScreenLoader } from '../../components/Loaders'
@@ -8,16 +8,20 @@ import { AddUser } from './AddUser'
 import { addModal, usersTable, UsersPage } from './model'
 
 export const Users = (props: IPageProps) => {
-  useGate(UsersPage)
-  const usersList = useStore(usersTable.$users)
-  const getAllUsersStatus = useStore(usersTable.$getAllUsersStatus)
+  React.useEffect(UsersPage.onMount, [])
+
+  const { usersList, groupsList } = useStore(usersTable.$usersTable)
+  const { tableStatus, selectStatus } = useStore(usersTable.$status)
   const modal = useStore(addModal.$addModal)
 
-  if (getAllUsersStatus === Status.Pending) {
+  const isLoading = [tableStatus, selectStatus].includes(Status.Pending)
+  const isFail = [tableStatus, selectStatus].includes(Status.Fail)
+
+  if (isLoading) {
     return <FullScreenLoader />
   }
 
-  if (getAllUsersStatus === Status.Fail) {
+  if (isFail) {
     return <FullScreenError />
   }
 
@@ -26,7 +30,11 @@ export const Users = (props: IPageProps) => {
       <Modal open={modal.open} onClose={addModal.closeAddModal}>
         <AddUser />
       </Modal>
-      <UsersTable users={usersList} onAddClick={addModal.openAddModal} />
+      <UsersTable
+        groups={groupsList}
+        users={usersList}
+        onAddClick={addModal.openAddModal}
+      />
     </Layout>
   )
 }
