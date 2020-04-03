@@ -30,6 +30,7 @@ export class Student {
         SELECT S.id, S.name, G.name AS group, S.login
         FROM Student AS S, StudentGroup AS G
         WHERE G.id = S.group_id
+        ORDER BY G.name, S.name
       `)
       return rows
     } catch (e) {
