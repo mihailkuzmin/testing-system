@@ -14,6 +14,10 @@ export const newMessage = messageWithText.map<Message>(({ type, text }) => {
       autoHideDuration: 2000,
       disableWindowBlurListener: true,
       variant: type,
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'right',
+      }
     },
     displayed: false,
   }
