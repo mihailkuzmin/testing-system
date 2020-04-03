@@ -1,3 +1,11 @@
-import { createGate } from 'effector-react'
+import { createEvent } from 'effector'
 
-export const UsersPage = createGate('Users page')
+const open = createEvent()
+const close = createEvent()
+
+const onMount = () => {
+  open()
+  return () => close()
+}
+
+export const UsersPage = { open, close, onMount }
