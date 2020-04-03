@@ -17,7 +17,7 @@ export const newMessage = messageWithText.map<Message>(({ type, text }) => {
       anchorOrigin: {
         vertical: 'top',
         horizontal: 'right',
-      }
+      },
     },
     displayed: false,
   }
