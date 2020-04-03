@@ -27,7 +27,9 @@ export class Student {
   static async getAll(): Promise<StudentQueryResult[]> {
     try {
       const { rows } = await db.query(`
-        SELECT id, name, group_id as group, login from Student
+        SELECT S.id, S.name, G.name AS group, S.login
+        FROM Student AS S, StudentGroup AS G
+        WHERE G.id = S.group_id
       `)
       return rows
     } catch (e) {
