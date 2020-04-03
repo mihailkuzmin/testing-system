@@ -8,5 +8,9 @@ interface ITableProps {
 }
 
 export const Table = (props: ITableProps) => {
-  return <MaterialTable className={`${styles.table} ${props.className}`}>{props.children}</MaterialTable>
+  return (
+    <MaterialTable className={`${styles.table} ${props.className}`}>
+      {props.children}
+    </MaterialTable>
+  )
 }
