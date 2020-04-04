@@ -1,3 +1,9 @@
+.table {
+  width: 65%;
+  max-width: 800px;
+  min-width: 510px;
+}
+
 .row:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
