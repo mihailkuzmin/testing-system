@@ -13,7 +13,20 @@ export class Student {
     try {
       const { rows } = await db.query(
         `
-        SELECT id, name, group_id as group, login FROM Student as S WHERE S.id = ($1)
+        SELECT S.id, S.name, G.name as group, S.login
+        FROM Student as S
+        JOIN StudentGroup as G ON (G.id = S.group_id)
+        WHERE S.id = ($1)
+      `,
+        [id],
+      )
+      const [result] = rows
+      return result
+    } catch (e) {
+      throw e
+    }
+  }
+
       `,
         [id],
       )
