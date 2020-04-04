@@ -69,8 +69,10 @@ export interface Message extends OptionsObject {
   displayed: boolean
 }
 
+export type UsersTableRowId = number
+
 export interface UsersTableRow {
-  id: number
+  id: UsersTableRowId
   name: string
   group: string
   login: string
