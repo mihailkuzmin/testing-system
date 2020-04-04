@@ -5,6 +5,7 @@ interface IPrimaryButtonProps {
   onClick?: any
   children?: React.ReactNode
   disabled?: boolean
+  type?: 'button' | 'submit' | 'reset'
 }
 
 export const PrimaryButton = (props: IPrimaryButtonProps) => {
@@ -14,6 +15,7 @@ export const PrimaryButton = (props: IPrimaryButtonProps) => {
       variant='outlined'
       color='primary'
       onClick={props.onClick}
+      type={props.type}
     >
       {props.children}
     </Button>
