@@ -11,6 +11,15 @@ export const studentController: IController = (app, options, done) => {
     reply.send(response)
   })
 
+  app.get('/:id', async (request, reply) => {
+    const { id } = request.params
+
+    const result = await Student.getById(id)
+
+    const response: Response<Payload.GetById> = { payload: result, message: Messages.GetById }
+    reply.send(response)
+  })
+
   app.post('/', async (request, reply) => {
     const { name, group, login, password } = request.body
 
@@ -21,12 +30,12 @@ export const studentController: IController = (app, options, done) => {
     reply.send(response)
   })
 
-  app.get('/:id', async (request, reply) => {
+  app.delete('/:id', async (request, reply) => {
     const { id } = request.params
 
-    const result = await Student.getById(id)
+    const result = await Student.removeById(id)
 
-    const response: Response<Payload.GetById> = { payload: result, message: Messages.GetById }
+    const response: Response<Payload.RemoveById> = { payload: result, message: Messages.RemoveById }
     reply.send(response)
   })
 
