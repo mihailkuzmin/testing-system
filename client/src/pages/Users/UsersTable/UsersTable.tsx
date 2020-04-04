@@ -81,7 +81,9 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
                 <Cell>
                   <div className={styles.rowActions}>
                     <EditButton />
-                    <DeleteButton />
+                    <DeleteButton
+                      onClick={() => usersTable.deleteUser({ id, name })}
+                    />
                   </div>
                 </Cell>
               </Row>
