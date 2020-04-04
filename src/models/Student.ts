@@ -11,7 +11,8 @@ export class Student {
 
   static async getById(id: number | string): Promise<StudentQueryResult> {
     try {
-      const { rows } = await db.query(`
+      const { rows } = await db.query(
+        `
         SELECT S.id, S.name, G.name as group, S.login
         FROM Student as S
         JOIN StudentGroup as G ON (G.id = S.group_id)
@@ -28,7 +29,8 @@ export class Student {
 
   static async removeById(id: number | string): Promise<StudentQueryResult> {
     try {
-      const { rows } = await db.query(`
+      const { rows } = await db.query(
+        `
         DELETE FROM Student as S
         USING StudentGroup as G
         WHERE (S.id = ($1)) and (G.id = S.group_id)
@@ -59,7 +61,8 @@ export class Student {
 
   public async save(): Promise<StudentQueryResult> {
     try {
-      const { rows } = await db.query(`
+      const { rows } = await db.query(
+        `
         INSERT INTO Student(name, group_id, login, password) VALUES($1, $2, $3, $4)
         RETURNING id, name, group_id as group, login
       `,
