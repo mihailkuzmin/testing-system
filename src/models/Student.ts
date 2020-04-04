@@ -4,6 +4,7 @@ import { StudentQueryResult } from '../typings/queries/student'
 export class Student {
   constructor(
     private name: string,
+    private bookNumber: string,
     private groupId: number,
     private login: string,
     private password: string,
@@ -13,7 +14,7 @@ export class Student {
     try {
       const { rows } = await db.query(
         `
-        SELECT S.id, S.name, G.name as group, S.login
+        SELECT S.id, S.name, S.book_number as bookNumber, G.name as group, S.login
         FROM Student as S
         JOIN StudentGroup as G ON (G.id = S.group_id)
         WHERE S.id = ($1)
@@ -34,7 +35,7 @@ export class Student {
         DELETE FROM Student as S
         USING StudentGroup as G
         WHERE (S.id = ($1)) and (G.id = S.group_id)
-        RETURNING S.id, S.name, G.name as group, S.login
+        RETURNING S.id, S.name, S.book_number as bookNumber, G.name as group, S.login
       `,
         [id],
       )
@@ -48,7 +49,7 @@ export class Student {
   static async getAll(): Promise<StudentQueryResult[]> {
     try {
       const { rows } = await db.query(`
-        SELECT S.id, S.name, G.name AS group, S.login
+        SELECT S.id, S.name, S.book_number as "bookNumber", G.name AS group, S.login
         FROM Student AS S, StudentGroup AS G
         WHERE G.id = S.group_id
         ORDER BY G.name, S.name
@@ -63,10 +64,10 @@ export class Student {
     try {
       const { rows } = await db.query(
         `
-        INSERT INTO Student(name, group_id, login, password) VALUES($1, $2, $3, $4)
-        RETURNING id, name, group_id as group, login
+        INSERT INTO Student(name, book_number, group_id, login, password) VALUES($1, $2, $3, $4, $5)
+        RETURNING id, name, book_number, group_id as group, login
       `,
-        [this.name, this.groupId, this.login, this.password],
+        [this.name, this.bookNumber, this.groupId, this.login, this.password],
       )
       const [result] = rows
       return result
