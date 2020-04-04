@@ -18,6 +18,11 @@ body {
   sans-serif !important;
 }
 
+/* notifications styles rewrite */
+.MuiSnackbarContent-message {
+  width: 250px;
+}
+
 /* add user form: group select styles override */
 ul.MuiMenu-list[aria-labelledby="group-select"] {
   max-height: 250px;
