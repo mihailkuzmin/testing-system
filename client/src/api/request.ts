@@ -25,4 +25,9 @@ export const request: Request = {
     const res: Response<R> = await api.post(url, { json: payload }).json()
     return res
   },
+
+  delete: async <P, R>(url: string, payload: P) => {
+    const res: Response<R> = await api.delete(url, { json: payload }).json()
+    return res
+  },
 }
