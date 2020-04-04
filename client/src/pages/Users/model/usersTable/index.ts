@@ -66,7 +66,7 @@ $getGroupsStatus.on(getGroupsFx.done, (_, __) => Status.Idle)
 $getGroupsStatus.on(getGroupsFx.fail, (_, __) => Status.Fail)
 $getGroupsStatus.reset(UsersPage.close)
 
-getAllUsersFx.failData.watch(({message}) => {
+getAllUsersFx.failData.watch(({ message }) => {
   notifications.createMessage({ type: MessageType.Error, text: message })
 })
 
