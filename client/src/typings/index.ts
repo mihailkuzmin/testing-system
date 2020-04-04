@@ -75,6 +75,7 @@ export interface UsersTableRow {
   id: UsersTableRowId
   name: string
   group: string
+  bookNumber: string
   login: string
 }
 

@@ -36,7 +36,7 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
     <Table className={styles.table}>
       <Head className={styles.head}>
         <Row>
-          <Cell colSpan={4}>
+          <Cell colSpan={5}>
             <TableHeader>
               <TableTitle>Пользователи</TableTitle>
               <TableHeaderActions>
@@ -62,6 +62,7 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
               ))}
             </GroupSelect>
           </Cell>
+          <Cell>Номер зачетной книжки</Cell>
           <Cell>Логин</Cell>
           <Cell>Действия</Cell>
         </Row>
@@ -69,14 +70,16 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
       <Body>
         {usersEmpty ? (
           <Row className={styles.row}>
-            <Cell colSpan={4}>В этой группе ещё нет людей</Cell>
+            <Cell>В этой группе ещё нет людей</Cell>
+            <Cell colSpan={4}></Cell>
           </Row>
         ) : (
-          users?.map(({ id, name, group, login }) => {
+          users?.map(({ id, name, group, bookNumber, login }) => {
             return (
               <Row key={id} className={styles.row}>
                 <Cell>{name}</Cell>
                 <Cell>{group}</Cell>
+                <Cell>{bookNumber}</Cell>
                 <Cell>{login}</Cell>
                 <Cell>
                   <div className={styles.rowActions}>

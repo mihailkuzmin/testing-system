@@ -1,5 +1,8 @@
 export interface AddForm {
-  name: string
+  firstName: string
+  lastName: string
+  patronymic: string
+  bookNumber: string
   group: number | string
   login: string
   password: string

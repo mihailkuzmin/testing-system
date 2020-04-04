@@ -3,8 +3,11 @@ import { AddForm, Group } from './typings'
 import { Status } from '../../../../typings'
 
 const addForm: AddForm = {
-  name: '',
+  firstName: '',
+  lastName: '',
+  patronymic: '',
   group: '',
+  bookNumber: '',
   login: '',
   password: '',
 }

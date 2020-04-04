@@ -21,6 +21,10 @@ sample({
   source: $addForm,
   clock: createUser,
   target: createUserFx,
+  fn: ({ firstName, lastName, patronymic, ...others }) => {
+    const name = `${lastName} ${firstName} ${patronymic}`
+    return { name, ...others }
+  },
 })
 
 $createUserStatus.on(createUserFx.done, () => Status.Done)

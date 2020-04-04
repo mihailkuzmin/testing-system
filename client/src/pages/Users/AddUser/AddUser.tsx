@@ -26,8 +26,20 @@ export const AddUser = () => {
         <h3 className={styles.title}>Добавить пользователя</h3>
         <div className={styles.fields}>
           <MappedInput<AddForm>
-            name='name'
-            label='ФИО'
+            name='lastName'
+            label='Фамилия'
+            store={addForm.$addForm}
+            onChange={addForm.fieldValueChange}
+          />
+          <MappedInput<AddForm>
+            name='firstName'
+            label='Имя'
+            store={addForm.$addForm}
+            onChange={addForm.fieldValueChange}
+          />
+          <MappedInput<AddForm>
+            name='patronymic'
+            label='Отчество'
             store={addForm.$addForm}
             onChange={addForm.fieldValueChange}
           />
@@ -47,6 +59,12 @@ export const AddUser = () => {
           <MappedInput<AddForm>
             name='login'
             label='Логин'
+            store={addForm.$addForm}
+            onChange={addForm.fieldValueChange}
+          />
+          <MappedInput<AddForm>
+            name='bookNumber'
+            label='Номер зачетной книжки'
             store={addForm.$addForm}
             onChange={addForm.fieldValueChange}
           />

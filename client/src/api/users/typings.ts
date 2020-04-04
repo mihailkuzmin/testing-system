@@ -10,6 +10,7 @@ export interface User {
 export interface CreateUser {
   name: string
   group: number | string
+  bookNumber: string
   login: string
   password: string
 }
