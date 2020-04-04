@@ -74,10 +74,10 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
             <Cell colSpan={4}></Cell>
           </Row>
         ) : (
-          users?.map(({ id, name, group, bookNumber, login }) => {
+          users?.map(({ id, group, bookNumber, login, ...name }) => {
             return (
               <Row key={id} className={styles.row}>
-                <Cell>{name}</Cell>
+                <Cell>{Object.values(name).join(' ')}</Cell>
                 <Cell>{group}</Cell>
                 <Cell>{bookNumber}</Cell>
                 <Cell>{login}</Cell>
@@ -85,7 +85,7 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
                   <div className={styles.rowActions}>
                     <EditButton />
                     <DeleteButton
-                      onClick={() => usersTable.deleteUser({ id, name })}
+                      onClick={() => usersTable.deleteUser({ id, ...name })}
                     />
                   </div>
                 </Cell>

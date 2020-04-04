@@ -16,5 +16,5 @@ export const onGroupSelectChange = groupSelectChange.prepend(
 export const groupsRefreshed = createEvent<Response<UsersTableGroup[]>>()
 export const usersRefreshed = createEvent<Response<UsersTableRow[]>>()
 
-export const deleteUser = createEvent<{ id: UsersTableRowId; name: string }>()
+export const deleteUser = createEvent<{ id: UsersTableRowId; lastName: string, firstName: string, patronymic: string }>()
 export const userDeleted = createEvent<Response<UsersTableRow>>()

@@ -73,7 +73,9 @@ export type UsersTableRowId = number
 
 export interface UsersTableRow {
   id: UsersTableRowId
-  name: string
+  lastName: string
+  firstName: string
+  patronymic: string
   group: string
   bookNumber: string
   login: string

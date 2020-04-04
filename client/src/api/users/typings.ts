@@ -8,7 +8,9 @@ export interface User {
 }
 
 export interface CreateUser {
-  name: string
+  lastName: string
+  firstName: string
+  patronymic: string
   group: number | string
   bookNumber: string
   login: string

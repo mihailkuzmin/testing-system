@@ -26,11 +26,11 @@ forward({ from: userCreated, to: getAllUsersFx })
 
 // when delete clicked from ui - call delete effect
 // and create info notification
-deleteUser.watch(({ id, name }) => {
+deleteUser.watch(({ id, lastName, firstName, patronymic }) => {
   deleteUserFx(id)
   notifications.createMessage({
     type: MessageType.Info,
-    text: `Удаление пользователя ${name}`,
+    text: `Удаление пользователя ${lastName} ${firstName} ${patronymic}`,
   })
 })
 
