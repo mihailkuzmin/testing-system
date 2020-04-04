@@ -1,5 +1,5 @@
 import { createEvent } from 'effector'
-import { AddFormNewValue, AddForm } from './typings'
+import { AddFormNewValue } from './typings'
 
 export const setField = createEvent<AddFormNewValue>()
 export const fieldValueChange = setField.prepend(
@@ -11,6 +11,6 @@ export const fieldValueChange = setField.prepend(
   },
 )
 
-export const createUser = createEvent<AddForm>()
+export const createUser = createEvent()
 
 export const userCreated = createEvent()

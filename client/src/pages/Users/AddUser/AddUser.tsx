@@ -20,9 +20,14 @@ export const AddUser = () => {
   const addButtonDisabled = selectDisabled
   const selectLabel = [SLabel.Done, SLabel.Fail, SLabel.Pending][selectStatus]
 
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    addForm.createUser()
+  }
+
   return (
     <div className={styles.addUser}>
-      <form noValidate autoComplete='off'>
+      <form onSubmit={onSubmit} noValidate autoComplete='off'>
         <h3 className={styles.title}>Добавить пользователя</h3>
         <div className={styles.fields}>
           <MappedInput<AddForm>
@@ -82,10 +87,7 @@ export const AddUser = () => {
           </div>
         ) : (
           <div className={styles.actions}>
-            <PrimaryButton
-              disabled={addButtonDisabled}
-              onClick={addForm.createUser}
-            >
+            <PrimaryButton type='submit' disabled={addButtonDisabled}>
               Добавить
             </PrimaryButton>
             <SecondaryButton onClick={addModal.closeAddModal}>
