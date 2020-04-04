@@ -12,6 +12,7 @@ const api = ky.extend({
     beforeRequest: [async (req) => await timeout(TIMEOUT)],
   },
   prefixUrl: HOST,
+  retry: 0
 })
 
 export const request: Request = {
