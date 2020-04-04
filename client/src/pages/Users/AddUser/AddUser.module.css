@@ -2,17 +2,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 500px;
-  padding: 0rem 1rem 1rem 1rem;
+  padding: 0rem 0.7rem 1rem 0.7rem;
+  --fields-margin: 0.3rem;
 }
 
 .fields {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .fields > * {
-  margin: 0.3rem 0 !important;
+  margin: var(--fields-margin) !important;
+}
+
+/* merge 2 last cells only if count of child is odd */
+.fields > *:last-child:nth-of-type(odd) {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  width: 50%;
+  margin: var(--fields-margin) auto !important;
 }
 
 .title {
@@ -22,12 +30,17 @@
 .actions {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 0.3rem;
+  justify-content: center;
+  margin-top: var(--fields-margin);
+}
+
+.actions > button {
+  margin: 0 var(--fields-margin);
 }
 
 .loader {
-  margin-top: 0.3rem;
+  margin: auto;
+  margin-top: var(--fields-margin);
   padding: 16px 0;
+  width: 50%;
 }
