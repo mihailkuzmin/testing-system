@@ -25,13 +25,11 @@ export interface IRoutesConfig {
 }
 
 /*
-  Status for operation
-  success/error/etc - material-ui alert prop type
-  Using info & warning for types compatibility
+  Async operation status
   Done - operation successfull
   Fail - operation fails with error
   Pending - wait for server response
-  Idle - initial state
+  Idle - standby - waiting for user action
 */
 export enum Status {
   Done,

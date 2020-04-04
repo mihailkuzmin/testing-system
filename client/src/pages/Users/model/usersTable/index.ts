@@ -29,6 +29,7 @@ $users.reset(UsersPage.close)
 $groups.on(groupsRefreshed, (_, { payload }) => payload)
 $groups.reset(UsersPage.close)
 
+// when groups list was loaded - select the first group in list
 $groupSelectValue.on(groupsRefreshed, (_, { payload }) => {
   const [first] = payload
   return first.id
@@ -36,6 +37,7 @@ $groupSelectValue.on(groupsRefreshed, (_, { payload }) => {
 $groupSelectValue.on(groupSelectChange, (_, value) => value)
 $groupSelectValue.reset(UsersPage.close)
 
+// when select change - update filter
 const $groupFilter = sample({
   source: $groups,
   clock: $groupSelectValue,
@@ -43,9 +45,11 @@ const $groupFilter = sample({
     return groups.find(({ id }) => id === selectedId) || null
   },
 })
+// trigger update of a table when new user added
 $groupFilter.on(usersRefreshed, (state, _) => (state ? { ...state } : null))
 $groupFilter.reset(UsersPage.close)
 
+// when group filter change - filter users store by group name
 const $filteredUsers = sample({
   source: $users,
   clock: $groupFilter,
