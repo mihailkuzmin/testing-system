@@ -15,7 +15,8 @@ import {
 } from './events'
 import { getAllUsersFx, getGroupsFx } from './effects'
 import { userCreated } from '../addForm/events'
-import { Status } from '../../../../typings'
+import { Status, MessageType } from '../../../../typings'
+import { notifications } from '../../../../model'
 import { UsersPage } from '../page'
 
 forward({ from: UsersPage.open, to: [getAllUsersFx, getGroupsFx] })
@@ -64,6 +65,10 @@ $getAllUsersStatus.reset(UsersPage.close)
 $getGroupsStatus.on(getGroupsFx.done, (_, __) => Status.Idle)
 $getGroupsStatus.on(getGroupsFx.fail, (_, __) => Status.Fail)
 $getGroupsStatus.reset(UsersPage.close)
+
+getAllUsersFx.failData.watch(({message}) => {
+  notifications.createMessage({ type: MessageType.Error, text: message })
+})
 
 const $usersTable = combine({ usersList: $filteredUsers, groupsList: $groups })
 const $groupSelect = combine({
