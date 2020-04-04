@@ -12,8 +12,10 @@ import {
   groupSelectChange,
   usersRefreshed,
   groupsRefreshed,
+  deleteUser,
+  userDeleted,
 } from './events'
-import { getAllUsersFx, getGroupsFx } from './effects'
+import { getAllUsersFx, getGroupsFx, deleteUserFx } from './effects'
 import { userCreated } from '../addForm/events'
 import { Status, MessageType } from '../../../../typings'
 import { notifications } from '../../../../model'
@@ -21,8 +23,22 @@ import { UsersPage } from '../page'
 
 forward({ from: UsersPage.open, to: [getAllUsersFx, getGroupsFx] })
 forward({ from: userCreated, to: getAllUsersFx })
+
+// when delete clicked from ui - call delete effect
+// and create info notification
+deleteUser.watch(({ id, name }) => {
+  deleteUserFx(id)
+  notifications.createMessage({
+    type: MessageType.Info,
+    text: `Удаление пользователя ${name}`,
+  })
+})
+
+// bind effects to events
 forward({ from: getAllUsersFx.doneData, to: usersRefreshed })
 forward({ from: getGroupsFx.doneData, to: groupsRefreshed })
+forward({ from: deleteUserFx.doneData, to: userDeleted })
+forward({ from: userDeleted, to: getAllUsersFx })
 
 $users.on(usersRefreshed, (_, { payload }) => payload)
 $users.reset(UsersPage.close)
@@ -66,6 +82,14 @@ $getGroupsStatus.on(getGroupsFx.done, (_, __) => Status.Idle)
 $getGroupsStatus.on(getGroupsFx.fail, (_, __) => Status.Fail)
 $getGroupsStatus.reset(UsersPage.close)
 
+deleteUserFx.doneData.watch(({ message }) => {
+  notifications.createMessage({ type: MessageType.Success, text: message })
+})
+
+deleteUserFx.failData.watch(({ message }) => {
+  notifications.createMessage({ type: MessageType.Error, text: message })
+})
+
 getAllUsersFx.failData.watch(({ message }) => {
   notifications.createMessage({ type: MessageType.Error, text: message })
 })
@@ -85,4 +109,5 @@ export const usersTable = {
   $groupSelect,
   $status,
   onGroupSelectChange,
+  deleteUser,
 }
