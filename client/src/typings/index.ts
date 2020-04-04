@@ -40,8 +40,8 @@ export enum Status {
 
 export interface Request {
   get: <R>(url: string) => Promise<Response<R>>
-  post: <P, R>(url: string, payload: P) => Promise<Response<R>>
-  delete: <P, R>(url: string, payload: P) => Promise<Response<R>>
+  post: <P, R>(url: string, payload?: P) => Promise<Response<R>>
+  delete: <P, R>(url: string, payload?: P) => Promise<Response<R>>
 }
 
 export interface Response<T> {
