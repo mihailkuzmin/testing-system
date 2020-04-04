@@ -11,7 +11,7 @@ export const newMessage = messageWithText.map<Message>(({ type, text }) => {
     key: nanoid(),
     message: text,
     options: {
-      autoHideDuration: 2000,
+      autoHideDuration: 2500,
       disableWindowBlurListener: true,
       variant: type,
       anchorOrigin: {
