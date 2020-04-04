@@ -1,6 +1,8 @@
 export interface StudentQueryResult {
   id: number
-  name: string
+  lastName: string
+  firstName: string
+  patronymic: string
   bookNumber: string
   group: string
   login: string

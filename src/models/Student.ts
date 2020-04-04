@@ -3,7 +3,9 @@ import { StudentQueryResult } from '../typings/queries/student'
 
 export class Student {
   constructor(
-    private name: string,
+    private lastName: string,
+    private firstName: string,
+    private patronymic: string,
     private bookNumber: string,
     private groupId: number,
     private login: string,
@@ -14,7 +16,9 @@ export class Student {
     try {
       const { rows } = await db.query(
         `
-        SELECT S.id, S.name, S.book_number as bookNumber, G.name as group, S.login
+        SELECT 
+          S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
+          S.book_number as bookNumber, G.name as group, S.login
         FROM Student as S
         JOIN StudentGroup as G ON (G.id = S.group_id)
         WHERE S.id = ($1)
@@ -35,7 +39,9 @@ export class Student {
         DELETE FROM Student as S
         USING StudentGroup as G
         WHERE (S.id = ($1)) and (G.id = S.group_id)
-        RETURNING S.id, S.name, S.book_number as bookNumber, G.name as group, S.login
+        RETURNING 
+          S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
+          S.book_number as bookNumber, G.name as group, S.login
       `,
         [id],
       )
@@ -49,10 +55,12 @@ export class Student {
   static async getAll(): Promise<StudentQueryResult[]> {
     try {
       const { rows } = await db.query(`
-        SELECT S.id, S.name, S.book_number as "bookNumber", G.name AS group, S.login
+        SELECT
+          S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
+          S.book_number as "bookNumber", G.name AS group, S.login
         FROM Student AS S, StudentGroup AS G
         WHERE G.id = S.group_id
-        ORDER BY G.name, S.name
+        ORDER BY G.name, S.last_Name, S.first_name, S.patronymic
       `)
       return rows
     } catch (e) {
@@ -64,10 +72,22 @@ export class Student {
     try {
       const { rows } = await db.query(
         `
-        INSERT INTO Student(name, book_number, group_id, login, password) VALUES($1, $2, $3, $4, $5)
-        RETURNING id, name, book_number, group_id as group, login
+        INSERT INTO Student(
+          last_name, first_name, patronymic, book_number, group_id, login, password
+        ) VALUES($1, $2, $3, $4, $5, $6, $7)
+        RETURNING
+          id, last_name as "lastName", first_name as "firstName", patronymic,
+          book_number, group_id as group, login
       `,
-        [this.name, this.bookNumber, this.groupId, this.login, this.password],
+        [
+          this.lastName,
+          this.firstName,
+          this.patronymic,
+          this.bookNumber,
+          this.groupId,
+          this.login,
+          this.password,
+        ],
       )
       const [result] = rows
       return result
