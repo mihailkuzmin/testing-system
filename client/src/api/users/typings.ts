@@ -1,5 +1,7 @@
+export type UserId = number
+
 export interface User {
-  id: number
+  id: UserId
   name: string
   group: number | string
   login: string
