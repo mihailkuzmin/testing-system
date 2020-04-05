@@ -22,7 +22,7 @@ import { Table } from '../../../components/Table'
 import { GroupSelect, Item } from './GroupSelect'
 import { AddUser } from './AddUser'
 import { DeleteUser } from './DeleteUser'
-import { usersTable, addModal } from '../model'
+import { usersTable, addModal, deleteModal } from '../model'
 import styles from './UsersTable.module.css'
 
 interface IUsersTableProps {
@@ -34,7 +34,8 @@ interface IUsersTableProps {
 export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
   const { value, minWidth } = useStore(usersTable.$groupSelect)
   const addUserModal = useStore(addModal.$addModal)
-  const deleteUserModal = useStore(usersTable.$deleteUserModal)
+  const deleteUserModal = useStore(deleteModal.$deleteModal)
+  const selectedForDelete = useStore(usersTable.$selectedForDelete)
 
   const usersEmpty = users?.length === 0
 
@@ -43,8 +44,8 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
       <Modal open={addUserModal.open} onClose={addModal.closeAddModal}>
         <AddUser groups={groups} />
       </Modal>
-      <Modal open={deleteUserModal.open} onClose={usersTable.cancelDelete}>
-        <DeleteUser user={deleteUserModal.user} />
+      <Modal open={deleteUserModal.open} onClose={deleteModal.closeDeleteModal}>
+        <DeleteUser user={selectedForDelete} />
       </Modal>
       <Head className={styles.head}>
         <Row>

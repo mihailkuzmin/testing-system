@@ -1,8 +1,16 @@
-import { $addModal } from './stores'
-import { openAddModal, closeAddModal } from './events'
+import { createStore, createEvent } from 'effector'
+
+interface AddModal {
+  open: boolean
+}
+
+export const $addModal = createStore<AddModal>({ open: false })
+
+const openAddModal = createEvent()
+const closeAddModal = createEvent()
 
 $addModal.on(openAddModal, () => ({ open: true }))
-$addModal.on(closeAddModal, () => ({ open: false }))
+$addModal.reset(closeAddModal)
 
 export const addModal = {
   $addModal,

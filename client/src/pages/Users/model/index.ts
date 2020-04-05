@@ -1,4 +1,5 @@
 export { usersTable } from './usersTable'
 export { addModal } from './addModal'
+export { deleteModal } from './deleteModal'
 export { addForm } from './addForm'
 export { UsersPage } from './page'

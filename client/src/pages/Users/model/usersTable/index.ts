@@ -7,7 +7,6 @@ import {
   $groupSelectMinWidth,
   $getGroupsStatus,
   $selectedForDelete,
-  $deleteConfirmationModal,
 } from './stores'
 import {
   onGroupSelectChange,
@@ -23,6 +22,7 @@ import { getAllUsersFx, getGroupsFx, deleteUserFx } from './effects'
 import { userCreated } from '../addForm/events'
 import { Status, MessageType } from '../../../../typings'
 import { notifications } from '../../../../model'
+import { deleteModal } from '../deleteModal'
 import { UsersPage } from '../page'
 
 forward({ from: UsersPage.open, to: [getAllUsersFx, getGroupsFx] })
@@ -49,6 +49,7 @@ $groupSelectValue.on(groupSelectChange, (_, value) => value)
 $groupSelectValue.reset(UsersPage.close)
 
 // when select change - update filter
+// trigger update of a table when new user added
 const $groupFilter = sample({
   source: $groups,
   clock: $groupSelectValue,
@@ -56,7 +57,6 @@ const $groupFilter = sample({
     return groups.find(({ id }) => id === selectedId) || null
   },
 })
-// trigger update of a table when new user added
 $groupFilter.on(usersRefreshed, (state) => (state ? { ...state } : null))
 $groupFilter.reset(UsersPage.close)
 
@@ -68,7 +68,13 @@ const $filteredUsers = sample({
 })
 $filteredUsers.reset(UsersPage.close)
 
-// when click on delete - set user in store and open confirmation modal
+// bind confirm/cancel to modal open/close events
+forward({ from: selectForDelete, to: deleteModal.openDeleteModal })
+forward({
+  from: [confirmDelete, cancelDelete],
+  to: deleteModal.closeDeleteModal,
+})
+
 $selectedForDelete.on(selectForDelete, (_, user) => user)
 $selectedForDelete.reset(cancelDelete)
 $selectedForDelete.watch(confirmDelete, (user) => {
@@ -80,9 +86,6 @@ $selectedForDelete.watch(confirmDelete, (user) => {
     })
   }
 })
-
-$deleteConfirmationModal.on(selectForDelete, () => ({ open: true }))
-$deleteConfirmationModal.reset(confirmDelete, cancelDelete)
 
 $getAllUsersStatus.on(getAllUsersFx.done, () => Status.Idle)
 $getAllUsersStatus.on(getAllUsersFx.fail, () => Status.Fail)
@@ -113,18 +116,12 @@ const $status = combine({
   tableStatus: $getAllUsersStatus,
   selectStatus: $getGroupsStatus,
 })
-const $deleteUserModal = combine(
-  { user: $selectedForDelete, modal: $deleteConfirmationModal },
-  ({ user, modal }) => {
-    return { user, ...modal }
-  },
-)
 
 export const usersTable = {
   $usersTable,
   $groupSelect,
   $status,
-  $deleteUserModal,
+  $selectedForDelete,
   onGroupSelectChange,
   selectForDelete,
   confirmDelete,
