@@ -1,26 +1,31 @@
 import { sample, forward } from 'effector'
-import {
-  $addForm,
-  $groups,
-  $createUserStatus,
-  $getAllGroupsStatus,
-} from './stores'
+import { $addForm, $createUserStatus } from './stores'
 import { setField, fieldValueChange, createUser, userCreated } from './events'
-import { createUserFx, getAllGroupsFx } from './effects'
+import { createUserFx } from './effects'
 import { Status, MessageType } from '../../../../typings'
-import { addModal } from '../addModal'
 import { notifications } from '../../../../model'
+import { addModal } from '../addModal'
+import { usersTable } from '../usersTable'
+
+forward({ from: createUserFx.done, to: userCreated })
+
+const initialSelectValue = sample({
+  source: usersTable.$groupSelect,
+  clock: addModal.openAddModal,
+  fn: ({ value }) => value,
+})
 
 $addForm.on(setField, (state, { key, value }) => ({
   ...state,
   [key]: value,
 }))
+$addForm.on(initialSelectValue, (state, group) => ({ ...state, group }))
 $addForm.reset(addModal.closeAddModal, createUserFx.done)
 
 sample({
   source: $addForm,
   clock: createUser,
-  target: createUserFx
+  target: createUserFx,
 })
 
 $createUserStatus.on(createUserFx.done, () => Status.Done)
@@ -36,24 +41,9 @@ createUserFx.failData.watch(({ message }) => {
   notifications.createMessage({ type: MessageType.Error, text: message })
 })
 
-forward({ from: addModal.openAddModal, to: getAllGroupsFx })
-forward({ from: createUserFx.done, to: userCreated })
-
-$getAllGroupsStatus.on(getAllGroupsFx.done, () => Status.Done)
-$getAllGroupsStatus.on(getAllGroupsFx.fail, () => Status.Fail)
-$getAllGroupsStatus.on(getAllGroupsFx.pending, (s, p) =>
-  p ? Status.Pending : s,
-)
-$getAllGroupsStatus.reset(addModal.closeAddModal)
-
-$groups.on(getAllGroupsFx.doneData, (_, { payload }) => payload)
-$groups.reset(addModal.closeAddModal)
-
 export const addForm = {
   $addForm,
-  $groups,
   $createUserStatus,
-  $getAllGroupsStatus,
   fieldValueChange,
   createUser,
 }

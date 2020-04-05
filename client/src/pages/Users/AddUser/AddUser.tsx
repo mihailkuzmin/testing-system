@@ -1,24 +1,21 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
+import { PrimaryButton as Add, SecondaryButton as Cancel } from '../../../components/Buttons'
 import { MappedSelect, Item } from '../../../components/MappedSelect'
-import { MappedInput } from '../../../components'
 import { Linear } from '../../../components/Loaders'
-import { AddForm } from '../model/addForm/typings'
+import { MappedInput } from '../../../components'
+import { AddForm, Group } from '../model/addForm/typings'
 import { addForm, addModal } from '../model'
 import { Status } from '../../../typings'
-import { SelectLabel as SLabel } from './typings'
 import styles from './AddUser.module.css'
 
-export const AddUser = () => {
-  const groups = useStore(addForm.$groups)
-  const createUserStatus = useStore(addForm.$createUserStatus)
-  const selectStatus = useStore(addForm.$getAllGroupsStatus)
+interface IAddUserProps {
+  groups: Group[]
+}
 
-  const actionsAreHidden = createUserStatus === Status.Pending
-  const selectDisabled = [Status.Pending, Status.Fail].includes(selectStatus)
-  const addButtonDisabled = selectDisabled
-  const selectLabel = [SLabel.Done, SLabel.Fail, SLabel.Pending][selectStatus]
+export const AddUser = ({ groups }: IAddUserProps) => {
+  const createUserStatus = useStore(addForm.$createUserStatus)
+  const isPending = createUserStatus === Status.Pending
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,10 +47,9 @@ export const AddUser = () => {
           />
           <MappedSelect<AddForm>
             name='group'
-            label={selectLabel}
+            label='Группа'
             store={addForm.$addForm}
             onChange={addForm.fieldValueChange}
-            disabled={selectDisabled}
           >
             {groups.map(({ id, name }) => (
               <Item key={id} value={id}>
@@ -68,31 +64,29 @@ export const AddUser = () => {
             onChange={addForm.fieldValueChange}
           />
           <MappedInput<AddForm>
-            name='bookNumber'
-            label='Номер зачетной книжки'
-            store={addForm.$addForm}
-            onChange={addForm.fieldValueChange}
-          />
-          <MappedInput<AddForm>
             name='password'
             label='Пароль'
             store={addForm.$addForm}
             onChange={addForm.fieldValueChange}
             type='password'
           />
+          <MappedInput<AddForm>
+            name='bookNumber'
+            label='Номер зачетной книжки'
+            store={addForm.$addForm}
+            onChange={addForm.fieldValueChange}
+          />
         </div>
-        {actionsAreHidden ? (
+        {isPending ? (
           <div className={styles.loader}>
             <Linear />
           </div>
         ) : (
           <div className={styles.actions}>
-            <PrimaryButton type='submit' disabled={addButtonDisabled}>
-              Добавить
-            </PrimaryButton>
-            <SecondaryButton onClick={addModal.closeAddModal}>
+            <Add type='submit'>Добавить</Add>
+            <Cancel onClick={addModal.closeAddModal}>
               Отменить
-            </SecondaryButton>
+            </Cancel>
           </div>
         )}
       </form>

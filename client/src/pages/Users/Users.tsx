@@ -28,7 +28,7 @@ export const Users = (props: IPageProps) => {
   return (
     <Layout>
       <Modal open={modal.open} onClose={addModal.closeAddModal}>
-        <AddUser />
+        <AddUser groups={groupsList} />
       </Modal>
       <UsersTable
         groups={groupsList}
