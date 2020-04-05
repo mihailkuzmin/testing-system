@@ -1,6 +1,7 @@
 import { createStore } from 'effector'
 import { UsersTableRow, UsersTableGroup } from '../../../../typings'
 import { Status } from '../../../../typings'
+import { DeleteConfirmationModal } from './typings'
 
 export const $users = createStore<UsersTableRow[]>([])
 
@@ -18,3 +19,9 @@ export const $groupSelectValue = createStore<number | string>('')
 
 export const $getAllUsersStatus = createStore<Status>(Status.Pending)
 export const $getGroupsStatus = createStore<Status>(Status.Pending)
+
+export const $selectedForDelete = createStore<UsersTableRow | null>(null)
+
+export const $deleteConfirmationModal = createStore<DeleteConfirmationModal>({
+  open: false,
+})

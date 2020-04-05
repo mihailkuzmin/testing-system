@@ -6,13 +6,17 @@ import {
   $groupSelectValue,
   $groupSelectMinWidth,
   $getGroupsStatus,
+  $selectedForDelete,
+  $deleteConfirmationModal,
 } from './stores'
 import {
   onGroupSelectChange,
   groupSelectChange,
   usersRefreshed,
   groupsRefreshed,
-  deleteUser,
+  selectForDelete,
+  confirmDelete,
+  cancelDelete,
   userDeleted,
 } from './events'
 import { getAllUsersFx, getGroupsFx, deleteUserFx } from './effects'
@@ -23,16 +27,6 @@ import { UsersPage } from '../page'
 
 forward({ from: UsersPage.open, to: [getAllUsersFx, getGroupsFx] })
 forward({ from: userCreated, to: getAllUsersFx })
-
-// when delete clicked from ui - call delete effect
-// and create info notification
-deleteUser.watch(({ id, lastName, firstName, patronymic }) => {
-  deleteUserFx(id)
-  notifications.createMessage({
-    type: MessageType.Info,
-    text: `Удаление пользователя ${lastName} ${firstName} ${patronymic}`,
-  })
-})
 
 // bind effects to events
 forward({ from: getAllUsersFx.doneData, to: usersRefreshed })
@@ -63,7 +57,7 @@ const $groupFilter = sample({
   },
 })
 // trigger update of a table when new user added
-$groupFilter.on(usersRefreshed, (state, _) => (state ? { ...state } : null))
+$groupFilter.on(usersRefreshed, (state) => (state ? { ...state } : null))
 $groupFilter.reset(UsersPage.close)
 
 // when group filter change - filter users store by group name
@@ -74,12 +68,28 @@ const $filteredUsers = sample({
 })
 $filteredUsers.reset(UsersPage.close)
 
-$getAllUsersStatus.on(getAllUsersFx.done, (_, __) => Status.Idle)
-$getAllUsersStatus.on(getAllUsersFx.fail, (_, __) => Status.Fail)
+// when click on delete - set user in store and open confirmation modal
+$selectedForDelete.on(selectForDelete, (_, user) => user)
+$selectedForDelete.reset(cancelDelete)
+$selectedForDelete.watch(confirmDelete, (user) => {
+  if (user !== null) {
+    deleteUserFx(user.id)
+    notifications.createMessage({
+      type: MessageType.Info,
+      text: `Удаление пользователя ${user.lastName} ${user.firstName} ${user.patronymic}`,
+    })
+  }
+})
+
+$deleteConfirmationModal.on(selectForDelete, () => ({ open: true }))
+$deleteConfirmationModal.reset(confirmDelete, cancelDelete)
+
+$getAllUsersStatus.on(getAllUsersFx.done, () => Status.Idle)
+$getAllUsersStatus.on(getAllUsersFx.fail, () => Status.Fail)
 $getAllUsersStatus.reset(UsersPage.close)
 
-$getGroupsStatus.on(getGroupsFx.done, (_, __) => Status.Idle)
-$getGroupsStatus.on(getGroupsFx.fail, (_, __) => Status.Fail)
+$getGroupsStatus.on(getGroupsFx.done, () => Status.Idle)
+$getGroupsStatus.on(getGroupsFx.fail, () => Status.Fail)
 $getGroupsStatus.reset(UsersPage.close)
 
 deleteUserFx.doneData.watch(({ message }) => {
@@ -103,11 +113,20 @@ const $status = combine({
   tableStatus: $getAllUsersStatus,
   selectStatus: $getGroupsStatus,
 })
+const $deleteUserModal = combine(
+  { user: $selectedForDelete, modal: $deleteConfirmationModal },
+  ({ user, modal }) => {
+    return { user, ...modal }
+  },
+)
 
 export const usersTable = {
   $usersTable,
   $groupSelect,
   $status,
+  $deleteUserModal,
   onGroupSelectChange,
-  deleteUser,
+  selectForDelete,
+  confirmDelete,
+  cancelDelete,
 }

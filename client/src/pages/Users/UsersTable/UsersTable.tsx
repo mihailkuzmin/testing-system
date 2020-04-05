@@ -1,4 +1,5 @@
 import React from 'react'
+import { useStore } from 'effector-react'
 import {
   TableCell as Cell,
   TableHead as Head,
@@ -9,18 +10,20 @@ import {
   TableTitle,
   TableHeader,
   TableHeaderActions,
+  Modal,
 } from '../../../components'
 import {
   PrimaryButton,
   EditButton,
   DeleteButton,
 } from '../../../components/Buttons'
+import { UsersTableRow, UsersTableGroup } from '../../../typings'
 import { Table } from '../../../components/Table'
 import { GroupSelect, Item } from './GroupSelect'
-import { UsersTableRow, UsersTableGroup } from '../../../typings'
+import { AddUser } from './AddUser'
+import { DeleteUser } from './DeleteUser'
+import { usersTable, addModal } from '../model'
 import styles from './UsersTable.module.css'
-import { useStore } from 'effector-react'
-import { usersTable } from '../model'
 
 interface IUsersTableProps {
   users?: UsersTableRow[]
@@ -30,10 +33,19 @@ interface IUsersTableProps {
 
 export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
   const { value, minWidth } = useStore(usersTable.$groupSelect)
+  const addUserModal = useStore(addModal.$addModal)
+  const deleteUserModal = useStore(usersTable.$deleteUserModal)
+
   const usersEmpty = users?.length === 0
 
   return (
     <Table className={styles.table}>
+      <Modal open={addUserModal.open} onClose={addModal.closeAddModal}>
+        <AddUser groups={groups} />
+      </Modal>
+      <Modal open={deleteUserModal.open} onClose={usersTable.cancelDelete}>
+        <DeleteUser user={deleteUserModal.user} />
+      </Modal>
       <Head className={styles.head}>
         <Row>
           <Cell colSpan={5}>
@@ -74,18 +86,18 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
             <Cell colSpan={4}></Cell>
           </Row>
         ) : (
-          users?.map(({ id, group, bookNumber, login, ...name }) => {
+          users?.map((user) => {
             return (
-              <Row key={id} className={styles.row}>
-                <Cell>{Object.values(name).join(' ')}</Cell>
-                <Cell>{group}</Cell>
-                <Cell>{bookNumber}</Cell>
-                <Cell>{login}</Cell>
+              <Row key={user.id} className={styles.row}>
+                <Cell>{`${user.lastName} ${user.firstName} ${user.patronymic}`}</Cell>
+                <Cell>{user.group}</Cell>
+                <Cell>{user.bookNumber}</Cell>
+                <Cell>{user.login}</Cell>
                 <Cell>
                   <div className={styles.rowActions}>
                     <EditButton />
                     <DeleteButton
-                      onClick={() => usersTable.deleteUser({ id, ...name })}
+                      onClick={() => usersTable.selectForDelete(user)}
                     />
                   </div>
                 </Cell>

@@ -1,16 +1,19 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { PrimaryButton as Add, SecondaryButton as Cancel } from '../../../components/Buttons'
-import { MappedSelect, Item } from '../../../components/MappedSelect'
-import { Linear } from '../../../components/Loaders'
-import { MappedInput } from '../../../components'
-import { AddForm, Group } from '../model/addForm/typings'
-import { addForm, addModal } from '../model'
-import { Status } from '../../../typings'
+import {
+  PrimaryButton as Add,
+  SecondaryButton as Cancel,
+} from '../../../../components/Buttons'
+import { MappedSelect, Item } from '../../../../components/MappedSelect'
+import { Linear } from '../../../../components/Loaders'
+import { MappedInput } from '../../../../components'
+import { AddForm, Group } from '../../model/addForm/typings'
+import { addForm, addModal } from '../../model'
+import { Status } from '../../../../typings'
 import styles from './AddUser.module.css'
 
 interface IAddUserProps {
-  groups: Group[]
+  groups?: Group[]
 }
 
 export const AddUser = ({ groups }: IAddUserProps) => {
@@ -51,7 +54,7 @@ export const AddUser = ({ groups }: IAddUserProps) => {
             store={addForm.$addForm}
             onChange={addForm.fieldValueChange}
           >
-            {groups.map(({ id, name }) => (
+            {groups?.map(({ id, name }) => (
               <Item key={id} value={id}>
                 {name}
               </Item>
@@ -84,9 +87,7 @@ export const AddUser = ({ groups }: IAddUserProps) => {
         ) : (
           <div className={styles.actions}>
             <Add type='submit'>Добавить</Add>
-            <Cancel onClick={addModal.closeAddModal}>
-              Отменить
-            </Cancel>
+            <Cancel onClick={addModal.closeAddModal}>Отмена</Cancel>
           </div>
         )}
       </form>

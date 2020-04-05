@@ -1,8 +1,8 @@
 import { $addModal } from './stores'
 import { openAddModal, closeAddModal } from './events'
 
-$addModal.on(openAddModal, (_, __) => ({ open: true }))
-$addModal.on(closeAddModal, (_, __) => ({ open: false }))
+$addModal.on(openAddModal, () => ({ open: true }))
+$addModal.on(closeAddModal, () => ({ open: false }))
 
 export const addModal = {
   $addModal,
