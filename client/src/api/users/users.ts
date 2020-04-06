@@ -17,8 +17,8 @@ const deleteById = async (id: UserId): Promise<Response<User>> => {
   return result
 }
 
-const deleteById = async (id: UserId): Promise<Response<UsersTableRow>> => {
-  const result = await request.delete<void, UsersTableRow>(`student/${id}`)
+const update = async (user: UpdateUser): Promise<Response<User>> => {
+  const result = await request.put<UpdateUser, User>('student', user)
   return result
 }
 
@@ -26,4 +26,5 @@ export const usersApi = {
   create,
   getAll,
   deleteById,
+  update
 }
