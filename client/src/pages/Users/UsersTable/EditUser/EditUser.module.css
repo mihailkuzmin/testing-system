@@ -1,0 +1,38 @@
+.addUser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  --fields-gap: 0.6rem;
+  --column-width: 10rem;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, var(--column-width));
+  gap: var(--fields-gap);
+}
+
+/* merge 2 last cells only if count of child is odd */
+.fields > *:last-child:nth-of-type(odd) {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.title {
+  text-align: center;
+  margin-top: 0;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, var(--column-width));
+  gap: var(--fields-gap);
+  margin-top: var(--fields-gap);
+}
+
+.loader {
+  margin: auto;
+  margin-top: var(--fields-gap);
+  padding: 16px 0;
+}

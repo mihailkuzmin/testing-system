@@ -14,6 +14,7 @@ import {
   usersRefreshed,
   groupsRefreshed,
   selectForDelete,
+  selectForEdit,
   confirmDelete,
   cancelDelete,
   userDeleted,
@@ -124,6 +125,7 @@ export const usersTable = {
   $selectedForDelete,
   onGroupSelectChange,
   selectForDelete,
+  selectForEdit,
   confirmDelete,
   cancelDelete,
 }

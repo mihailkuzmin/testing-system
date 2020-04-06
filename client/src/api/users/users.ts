@@ -26,5 +26,5 @@ export const usersApi = {
   create,
   getAll,
   deleteById,
-  update
+  update,
 }

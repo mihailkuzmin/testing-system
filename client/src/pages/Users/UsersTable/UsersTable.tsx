@@ -22,7 +22,8 @@ import { Table } from '../../../components/Table'
 import { GroupSelect, Item } from './GroupSelect'
 import { AddUser } from './AddUser'
 import { DeleteUser } from './DeleteUser'
-import { usersTable, addModal, deleteModal } from '../model'
+import { EditUser } from './EditUser'
+import { usersTable, addModal, deleteModal, editModal } from '../model'
 import styles from './UsersTable.module.css'
 
 interface IUsersTableProps {
@@ -35,6 +36,7 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
   const { value, minWidth } = useStore(usersTable.$groupSelect)
   const addUserModal = useStore(addModal.$addModal)
   const deleteUserModal = useStore(deleteModal.$deleteModal)
+  const editUserModal = useStore(editModal.$editModal)
   const selectedForDelete = useStore(usersTable.$selectedForDelete)
 
   const usersEmpty = users?.length === 0
@@ -46,6 +48,9 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
       </Modal>
       <Modal open={deleteUserModal.open} onClose={deleteModal.closeDeleteModal}>
         <DeleteUser user={selectedForDelete} />
+      </Modal>
+      <Modal open={editUserModal.open} onClose={editModal.closeEditModal}>
+        <EditUser groups={groups} />
       </Modal>
       <Head className={styles.head}>
         <Row>
@@ -96,7 +101,9 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
                 <Cell>{user.login}</Cell>
                 <Cell>
                   <div className={styles.rowActions}>
-                    <EditButton />
+                    <EditButton
+                      onClick={() => usersTable.selectForEdit(user.id)}
+                    />
                     <DeleteButton
                       onClick={() => usersTable.selectForDelete(user)}
                     />
