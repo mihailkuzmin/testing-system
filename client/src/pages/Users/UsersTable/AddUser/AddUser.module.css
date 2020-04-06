@@ -2,45 +2,37 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0rem 0.7rem 1rem 0.7rem;
-  --fields-margin: 0.3rem;
+  padding: 1rem;
+  --fields-gap: 0.6rem;
+  --column-width: 10rem;
 }
 
 .fields {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.fields > * {
-  margin: var(--fields-margin) !important;
+  grid-template-columns: repeat(2, var(--column-width));
+  gap: var(--fields-gap);
 }
 
 /* merge 2 last cells only if count of child is odd */
 .fields > *:last-child:nth-of-type(odd) {
   grid-column-start: 1;
   grid-column-end: 3;
-  width: 50%;
-  margin: var(--fields-margin) auto !important;
 }
 
 .title {
   text-align: center;
+  margin-top: 0;
 }
 
 .actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: var(--fields-margin);
-}
-
-.actions > button {
-  margin: 0 var(--fields-margin);
+  display: grid;
+  grid-template-columns: repeat(2, var(--column-width));
+  gap: var(--fields-gap);
+  margin-top: var(--fields-gap);
 }
 
 .loader {
   margin: auto;
-  margin-top: var(--fields-margin);
+  margin-top: var(--fields-gap);
   padding: 16px 0;
-  width: 50%;
 }
