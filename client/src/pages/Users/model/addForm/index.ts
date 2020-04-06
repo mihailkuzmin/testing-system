@@ -1,5 +1,5 @@
 import { sample, forward } from 'effector'
-import { $addForm, $createUserStatus } from './stores'
+import { $addForm, addFormIntitialState, $createUserStatus } from './stores'
 import { setField, fieldValueChange, createUser, userCreated } from './events'
 import { createUserFx } from './effects'
 import { Status, MessageType } from '../../../../typings'
@@ -20,7 +20,8 @@ $addForm.on(setField, (state, { key, value }) => ({
   [key]: value,
 }))
 $addForm.on(initialSelectValue, (state, group) => ({ ...state, group }))
-$addForm.reset(addModal.closeAddModal, createUserFx.done)
+$addForm.on(userCreated, (form) => ({...addFormIntitialState, group: form.group}))
+$addForm.reset(addModal.closeAddModal)
 
 sample({
   source: $addForm,
