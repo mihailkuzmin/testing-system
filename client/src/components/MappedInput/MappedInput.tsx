@@ -13,6 +13,7 @@ interface Mapped<T> {
   onChange: any
   className?: string
   type?: string
+  disabled?: boolean
 }
 
 export const MappedInput = <T extends {}>(props: Mapped<T>) => {
@@ -31,6 +32,7 @@ export const MappedInput = <T extends {}>(props: Mapped<T>) => {
       onChange={props.onChange}
       className={props.className}
       type={props.type}
+      disabled={props.disabled}
     />
   )
 }
