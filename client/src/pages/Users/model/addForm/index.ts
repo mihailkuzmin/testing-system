@@ -20,7 +20,10 @@ $addForm.on(setField, (state, { key, value }) => ({
   [key]: value,
 }))
 $addForm.on(initialSelectValue, (state, group) => ({ ...state, group }))
-$addForm.on(userCreated, (form) => ({...addFormIntitialState, group: form.group}))
+$addForm.on(userCreated, (form) => ({
+  ...addFormIntitialState,
+  group: form.group,
+}))
 $addForm.reset(addModal.closeAddModal)
 
 sample({
