@@ -13,10 +13,16 @@
   gap: var(--fields-gap);
 }
 
-/* merge 2 last cells only if count of child is odd */
-.fields > *:last-child:nth-of-type(odd) {
+.fields > *:nth-last-child(1),
+.fields > *:nth-last-child(2) {
   grid-column-start: 1;
   grid-column-end: 3;
+}
+
+.fields > *:nth-last-child(1) {
+  display: flex;
+  justify-content: center;
+  margin: 0;
 }
 
 .title {
