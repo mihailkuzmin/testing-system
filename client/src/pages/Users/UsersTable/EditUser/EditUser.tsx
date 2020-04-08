@@ -1,12 +1,12 @@
 import React from 'react'
-import { useStore } from 'effector-react'
+import { useStore, useStoreMap } from 'effector-react'
 import {
   PrimaryButton as Save,
   SecondaryButton as Cancel,
 } from '../../../../components/Buttons'
 import { MappedSelect, Item } from '../../../../components/MappedSelect'
 import { Linear } from '../../../../components/Loaders'
-import { MappedInput } from '../../../../components'
+import { MappedInput, CheckBox } from '../../../../components'
 import { EditForm, Group } from '../../model/editForm/typings'
 import { editForm, editModal } from '../../model'
 import { Status } from '../../../../typings'
@@ -19,6 +19,12 @@ interface IEditUserProps {
 export const EditUser = ({ groups }: IEditUserProps) => {
   const editUserStatus = useStore(editForm.$editUserStatus)
   const isPending = editUserStatus === Status.Pending
+
+  const changePassword = useStoreMap({
+    store: editForm.$editForm,
+    keys: ['changePassword'],
+    fn: (values) => values['changePassword'],
+  })
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -72,12 +78,19 @@ export const EditUser = ({ groups }: IEditUserProps) => {
             store={editForm.$editForm}
             onChange={editForm.fieldValueChange}
             type='password'
+            disabled={!changePassword}
           />
           <MappedInput<EditForm>
             name='bookNumber'
             label='Номер зачетной книжки'
             store={editForm.$editForm}
             onChange={editForm.fieldValueChange}
+          />
+          <CheckBox
+            name='changePassword'
+            label='Задать новый пароль'
+            onChange={editForm.fieldValueChange}
+            value={changePassword}
           />
         </div>
         {isPending ? (
