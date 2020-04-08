@@ -7,12 +7,12 @@ export interface EditForm {
   group: number | string
   login: string
   changePassword: boolean
-  password?: string
+  password: string
 }
 
 export interface EditFormNewValue {
   key: string
-  value: number | string
+  value: number | string | boolean
 }
 
 export interface Group {
