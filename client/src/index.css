@@ -32,3 +32,13 @@ ul.MuiMenu-list[aria-labelledby="group-select"] {
 ul.MuiMenu-list[aria-labelledby="table-group-select"] {
   max-height: 250px;
 }
+
+/* override outlined input color */
+fieldset.MuiOutlinedInput-notchedOutline {
+  border-color: rgba(0, 0, 0, 0.35);
+}
+
+/* override outlined disabled input color */
+div.MuiOutlinedInput-root.Mui-disabled > fieldset.MuiOutlinedInput-notchedOutline {
+  border-color: rgba(0, 0, 0, 0.15);
+}
