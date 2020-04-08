@@ -10,9 +10,11 @@ export interface EditForm {
   password: string
 }
 
-export interface EditFormNewValue {
+export type EditFormValue = number | string | boolean
+
+export interface EditFormEvent {
   key: string
-  value: number | string | boolean
+  value: EditFormValue
 }
 
 export interface Group {

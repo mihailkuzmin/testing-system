@@ -1,9 +1,9 @@
 import { createEvent } from 'effector'
-import { EditFormNewValue } from './typings'
+import { EditFormEvent, EditFormValue } from './typings'
 
-export const setField = createEvent<EditFormNewValue>()
+export const setField = createEvent<EditFormEvent>()
 export const fieldValueChange = setField.prepend(
-  (e: React.ChangeEvent<{ name: string; value: number | string }>) => {
+  (e: React.ChangeEvent<{ name: string; value: EditFormValue }>) => {
     return {
       key: e.target.name,
       value: e.target.value,
