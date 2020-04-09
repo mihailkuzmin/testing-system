@@ -1,4 +1,4 @@
-import { Pool, QueryResult, PoolConfig } from 'pg'
+import { Pool, PoolConfig } from 'pg'
 
 class DB {
   private pool!: Pool
@@ -13,8 +13,9 @@ class DB {
     }
   }
 
-  public async query(text: string, values?: any[]): Promise<QueryResult<any>> {
-    return this.pool.query(text, values)
+  public async query(text: string, values?: any[]): Promise<any> {
+    const { rows } = await this.pool.query(text, values)
+    return rows
   }
 }
 
