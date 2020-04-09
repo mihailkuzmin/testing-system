@@ -22,9 +22,18 @@ export const studentController: IController = (app, options, done) => {
 
   app.post('/', async (request, reply) => {
     const { lastName, firstName, patronymic, bookNumber, group, login, password } = request.body
-    
+
     const student = new Student(lastName, firstName, patronymic, bookNumber, group, login, password)
     const result = await student.save()
+
+    const response: Response<Payload.Create> = { payload: result, message: Messages.Create }
+    reply.send(response)
+  })
+
+  app.put('/', async (request, reply) => {
+    const { id, lastName, firstName, patronymic, bookNumber, group, login, password, changePassword } = request.body
+
+    const result = await Student.update({id, lastName, firstName, patronymic, bookNumber, group, login, password, changePassword})
 
     const response: Response<Payload.Create> = { payload: result, message: Messages.Create }
     reply.send(response)
