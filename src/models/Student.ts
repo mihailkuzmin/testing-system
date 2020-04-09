@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { StudentQueryResult } from '../typings/student'
+import { StudentQueryResult, UpdateParams } from '../typings/student'
 
 export class Student {
   constructor(
@@ -52,25 +52,54 @@ export class Student {
     }
   }
 
-  // static async update(): Promise<StudentQueryResult> {
-  //   try {
-  //     const { rows } = await db.query(
-  //       `
-  //       DELETE FROM Student as S
-  //       USING StudentGroup as G
-  //       WHERE (S.id = ($1)) and (G.id = S.group_id)
-  //       RETURNING 
-  //         S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-  //         S.book_number as bookNumber, G.name as group, S.login
-  //     `,
-  //       [id],
-  //     )
-  //     const [result] = rows
-  //     return result
-  //   } catch (e) {
-  //     throw e
-  //   }
-  // }
+  static async update(s: UpdateParams): Promise<StudentQueryResult> {
+    try {
+      if (s.changePassword) {
+        const { rows } = await db.query(
+          `
+          UPDATE Student
+          SET
+            last_name = ($2),
+            first_name = ($3),
+            patronymic = ($4),
+            book_number = ($5),
+            group_id = ($6),
+            login = ($7),
+            password = ($8)
+          WHERE (id = ($1))
+          RETURNING
+            id, last_name as "lastName", first_name as "firstName", patronymic,
+            book_number as bookNumber, group_id as group, login, password
+        `,
+          [s.id, s.lastName, s.firstName, s.patronymic, s.bookNumber, s.group, s.login, s.password],
+        )
+        const [result] = rows
+        return result
+      }
+      
+      const { rows } = await db.query(
+        `
+        UPDATE Student
+        SET
+          last_name = ($2),
+          first_name = ($3),
+          patronymic = ($4),
+          book_number = ($5),
+          group_id = ($6),
+          login = ($7)
+        WHERE id = ($1)
+        RETURNING
+          id, last_name as "lastName", first_name as "firstName", patronymic,
+          book_number as bookNumber, group_id as group, login, password
+      `,
+        [s.id, s.lastName, s.firstName, s.patronymic, s.bookNumber, s.group, s.login],
+      )
+      const [result] = rows
+      return result
+    } catch (e) {
+      throw e
+    }
+  }
 
   static async getAll(): Promise<StudentQueryResult[]> {
     try {
