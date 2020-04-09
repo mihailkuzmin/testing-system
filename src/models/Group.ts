@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { GroupQueryResult } from '../typings/queries/group'
+import { GroupQueryResult } from '../typings/group'
 
 export class Group {
   constructor(private name: string) {}

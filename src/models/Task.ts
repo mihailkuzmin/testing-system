@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { TaskQueryResult } from '../typings/queries/task'
+import { TaskQueryResult } from '../typings/task'
 
 export class Task {
   constructor(

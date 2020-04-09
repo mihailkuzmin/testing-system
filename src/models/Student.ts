@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { StudentQueryResult } from '../typings/queries/student'
+import { StudentQueryResult } from '../typings/student'
 
 export class Student {
   constructor(
@@ -51,6 +51,26 @@ export class Student {
       throw e
     }
   }
+
+  // static async update(): Promise<StudentQueryResult> {
+  //   try {
+  //     const { rows } = await db.query(
+  //       `
+  //       DELETE FROM Student as S
+  //       USING StudentGroup as G
+  //       WHERE (S.id = ($1)) and (G.id = S.group_id)
+  //       RETURNING 
+  //         S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
+  //         S.book_number as bookNumber, G.name as group, S.login
+  //     `,
+  //       [id],
+  //     )
+  //     const [result] = rows
+  //     return result
+  //   } catch (e) {
+  //     throw e
+  //   }
+  // }
 
   static async getAll(): Promise<StudentQueryResult[]> {
     try {

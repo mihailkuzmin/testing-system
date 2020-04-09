@@ -1,4 +1,4 @@
-import { StudentQueryResult } from '../../../typings/queries/student'
+import { StudentQueryResult } from '../../../typings/student'
 
 export interface Create extends StudentQueryResult {}
 export interface GetAll extends Array<StudentQueryResult> {}

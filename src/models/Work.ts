@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { WorkQueryResult } from '../typings/queries/work'
+import { WorkQueryResult } from '../typings/work'
 
 export class Work {
   constructor(private name: string, private openAt: string, private closeAt: string) {}

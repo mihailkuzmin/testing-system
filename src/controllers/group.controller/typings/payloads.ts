@@ -1,3 +1,3 @@
-import { GroupQueryResult } from '../../../typings/queries/group'
+import { GroupQueryResult } from '../../../typings/group'
 
 export interface GetAll extends Array<GroupQueryResult> {}
