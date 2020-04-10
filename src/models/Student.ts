@@ -23,18 +23,19 @@ export class Student {
 
   static async removeById(id: number | string): Promise<StudentQueryResult> {
     try {
-      const [result] = await db.query(
+      const [student] = await db.query(
         `
         DELETE FROM Student as S
         USING StudentGroup as G
         WHERE (S.id = ($1)) and (G.id = S.group_id)
         RETURNING 
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-          S.book_number as bookNumber, G.name as group, S.login
+          S.book_number as bookNumber, (G.id, G.name) as group, S.login
       `,
         [id],
       )
-      return result
+      student.group = this._parseGroup(student.group)
+      return student
     } catch (e) {
       throw e
     }
