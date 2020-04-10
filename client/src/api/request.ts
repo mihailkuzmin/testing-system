@@ -27,7 +27,7 @@ export const request: Request = {
   },
 
   put: async <P, R>(url: string, payload: P) => {
-    const res: Response<R> = await api.post(url, { json: payload }).json()
+    const res: Response<R> = await api.put(url, { json: payload }).json()
     return res
   },
 
