@@ -7,6 +7,11 @@ const getAll = async (): Promise<Response<User[]>> => {
   return result
 }
 
+const getById = async (id: UserId): Promise<Response<User>> => {
+  const result = await request.get<User>(`student/${id}`)
+  return result
+}
+
 const create = async (user: CreateUser): Promise<Response<User>> => {
   const result = await request.post<CreateUser, User>('student', user)
   return result
@@ -25,6 +30,7 @@ const update = async (user: UpdateUser): Promise<Response<User>> => {
 export const usersApi = {
   create,
   getAll,
+  getById,
   deleteById,
   update,
 }
