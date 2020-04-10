@@ -1,6 +1,6 @@
 import { sample, forward } from 'effector'
-import { editUserFx } from './effects'
-import { $editForm, $editUserStatus } from './stores'
+import { editUserFx, getUserFx } from './effects'
+import { $editForm, $editUserStatus, $getUserStatus } from './stores'
 import { setField, fieldValueChange, editUser, userUpdated } from './events'
 import { Status, MessageType } from '../../../../typings'
 import { notifications } from '../../../../model'
@@ -8,13 +8,21 @@ import { editModal } from '../editModal'
 import { usersTable } from '../usersTable'
 
 forward({ from: editUserFx.done, to: userUpdated })
+forward({ from: userUpdated, to: usersTable.refreshUsers })
 forward({ from: usersTable.selectForEdit, to: editModal.openEditModal })
+
+// fetch user on edit click
+forward({ from: usersTable.selectForEdit, to: getUserFx })
 
 $editForm.on(setField, (state, { key, value }) => ({
   ...state,
   [key]: value,
 }))
-$editForm.reset(editModal.closeEditModal, editUserFx.done)
+$editForm.on(getUserFx.doneData, (state, { payload }) => {
+  const selectValue = payload.group.id
+  return { ...state, ...payload, group: selectValue }
+})
+$editForm.reset(editModal.closeEditModal)
 
 sample({
   source: $editForm,
@@ -27,6 +35,10 @@ $editUserStatus.on(editUserFx.fail, () => Status.Fail)
 $editUserStatus.on(editUserFx.pending, (s, p) => (p ? Status.Pending : s))
 $editUserStatus.reset(setField, userUpdated, editModal.closeEditModal)
 
+$getUserStatus.on(getUserFx.done, () => Status.Done)
+$getUserStatus.on(getUserFx.fail, () => Status.Fail)
+$getUserStatus.reset(editModal.closeEditModal)
+
 editUserFx.doneData.watch(({ message }) => {
   notifications.createMessage({ type: MessageType.Success, text: message })
 })
@@ -38,6 +50,7 @@ editUserFx.failData.watch(({ message }) => {
 export const editForm = {
   $editForm,
   $editUserStatus,
+  $getUserStatus,
   fieldValueChange,
   editUser,
 }

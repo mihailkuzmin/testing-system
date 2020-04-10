@@ -5,7 +5,7 @@ import {
   SecondaryButton as Cancel,
 } from '../../../../components/Buttons'
 import { MappedSelect, Item } from '../../../../components/MappedSelect'
-import { Linear } from '../../../../components/Loaders'
+import { Linear, Circular } from '../../../../components/Loaders'
 import { MappedInput, CheckBox } from '../../../../components'
 import { EditForm, Group } from '../../model/editForm/typings'
 import { editForm, editModal } from '../../model'
@@ -18,7 +18,10 @@ interface IEditUserProps {
 
 export const EditUser = ({ groups }: IEditUserProps) => {
   const editUserStatus = useStore(editForm.$editUserStatus)
-  const isPending = editUserStatus === Status.Pending
+  const getUserStatus = useStore(editForm.$getUserStatus)
+
+  const editIsPending = editUserStatus === Status.Pending
+  const loadIsPending = getUserStatus === Status.Pending
 
   const changePassword = useStoreMap({
     store: editForm.$editForm,
@@ -28,14 +31,20 @@ export const EditUser = ({ groups }: IEditUserProps) => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('edit form submit')
+    editForm.editUser()
   }
 
   return (
-    <div className={styles.addUser}>
+    <div className={styles.editUser}>
       <form onSubmit={onSubmit} noValidate autoComplete='off'>
         <h3 className={styles.title}>Редактировать пользователя</h3>
         <div className={styles.fields}>
+          {loadIsPending && (
+            <div className={styles.loadingOverlay}>
+              <Circular />
+              <p>Загружаем данные</p>
+            </div>
+          )}
           <MappedInput<EditForm>
             name='lastName'
             label='Фамилия'
@@ -93,13 +102,15 @@ export const EditUser = ({ groups }: IEditUserProps) => {
             value={changePassword}
           />
         </div>
-        {isPending ? (
+        {editIsPending ? (
           <div className={styles.loader}>
             <Linear />
           </div>
         ) : (
           <div className={styles.actions}>
-            <Save type='submit'>Сохранить</Save>
+            <Save disabled={loadIsPending} type='submit'>
+              Сохранить
+            </Save>
             <Cancel onClick={editModal.closeEditModal}>Отмена</Cancel>
           </div>
         )}
