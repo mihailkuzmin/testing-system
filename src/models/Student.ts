@@ -4,18 +4,18 @@ import { StudentQueryResult, UpdateStudent, CreateStudent } from '../typings/stu
 export class Student {
   static async getById(id: number | string): Promise<StudentQueryResult> {
     try {
-      const [result] = await db.query(
+      const [student] = await db.query(
         `
         SELECT 
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-          S.book_number as bookNumber, G.name as group, S.login
-        FROM Student as S
-        JOIN StudentGroup as G ON (G.id = S.group_id)
-        WHERE S.id = ($1)
+          S.book_number as "bookNumber", (G.id, G.name) as group, S.login
+        FROM Student S, StudentGroup G
+        WHERE (S.id = ($1) and S.group_id = G.id)
       `,
         [id],
       )
-      return result
+      student.group = this._parseGroup(student.group)
+      return student
     } catch (e) {
       throw e
     }
