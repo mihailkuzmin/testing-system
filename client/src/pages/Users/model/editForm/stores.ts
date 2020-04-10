@@ -17,3 +17,4 @@ const editForm: EditForm = {
 export const $editForm = createStore<EditForm>(editForm)
 
 export const $editUserStatus = createStore<Status>(Status.Idle)
+export const $getUserStatus = createStore<Status>(Status.Pending)
