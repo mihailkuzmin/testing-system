@@ -35,7 +35,7 @@ export const studentController: IController = (app, options, done) => {
 
     const result = await Student.update({id, lastName, firstName, patronymic, bookNumber, group, login, password, changePassword})
 
-    const response: Response<Payload.Create> = { payload: result, message: Messages.Create }
+    const response: Response<Payload.Update> = { payload: result, message: Messages.Update }
     reply.send(response)
   })
 
