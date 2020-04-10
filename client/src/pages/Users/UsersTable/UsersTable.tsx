@@ -96,7 +96,7 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
             return (
               <Row key={user.id} className={styles.row}>
                 <Cell>{`${user.lastName} ${user.firstName} ${user.patronymic}`}</Cell>
-                <Cell>{user.group}</Cell>
+                <Cell>{user.group.name}</Cell>
                 <Cell>{user.bookNumber}</Cell>
                 <Cell>{user.login}</Cell>
                 <Cell>

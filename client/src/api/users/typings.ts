@@ -5,7 +5,10 @@ export interface User {
   lastName: string
   firstName: string
   patronymic: string
-  group: string
+  group: {
+    id: number | string
+    name: string
+  }
   bookNumber: string
   login: string
 }
