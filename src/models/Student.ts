@@ -89,15 +89,19 @@ export class Student {
 
   static async getAll(): Promise<StudentQueryResult[]> {
     try {
-      const result = await db.query(`
+      const students = await db.query(`
         SELECT
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-          S.book_number as "bookNumber", G.name AS group, S.login
-        FROM Student AS S, StudentGroup AS G
+          S.book_number as "bookNumber", (G.id, G.name) as group, S.login
+        FROM Student S, StudentGroup G
         WHERE G.id = S.group_id
         ORDER BY G.name, S.last_Name, S.first_name, S.patronymic
       `)
-      return result
+      for (const student of students) {
+        student.group = this._parseGroup(student.group)
+      }
+
+      return students
     } catch (e) {
       throw e
     }
