@@ -65,7 +65,7 @@ $groupFilter.reset(UsersPage.close)
 const $filteredUsers = sample({
   source: $users,
   clock: $groupFilter,
-  fn: (users, group) => users.filter((user) => user.group === group?.name),
+  fn: (users, group) => users.filter((user) => user.group.id === group?.id),
 })
 $filteredUsers.reset(UsersPage.close)
 
