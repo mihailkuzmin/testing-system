@@ -41,11 +41,12 @@ export class Student {
   }
 
   static async update(s: UpdateStudent): Promise<StudentQueryResult> {
+    console.log(s)
     try {
       if (s.changePassword) {
-        const [result] = await db.query(
+        const [student] = await db.query(
           `
-          UPDATE Student
+          UPDATE Student S
           SET
             last_name = ($2),
             first_name = ($3),
@@ -54,19 +55,22 @@ export class Student {
             group_id = ($6),
             login = ($7),
             password = ($8)
-          WHERE (id = ($1))
+          WHERE (S.id = ($1))
           RETURNING
-            id, last_name as "lastName", first_name as "firstName", patronymic,
-            book_number as bookNumber, group_id as group, login, password
+            S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
+            S.book_number as "bookNumber", (S.group_id, (
+              SELECT G.name FROM StudentGroup G WHERE G.id = S.group_id
+            )) as group, S.login, S.password
         `,
           [s.id, s.lastName, s.firstName, s.patronymic, s.bookNumber, s.group, s.login, s.password],
         )
-        return result
+        student.group = this._parseGroup(student.group)
+        return student
       }
 
-      const [result] = await db.query(
+      const [student] = await db.query(
         `
-        UPDATE Student
+        UPDATE Student S
         SET
           last_name = ($2),
           first_name = ($3),
@@ -74,14 +78,17 @@ export class Student {
           book_number = ($5),
           group_id = ($6),
           login = ($7)
-        WHERE id = ($1)
+        WHERE (S.id = ($1))
         RETURNING
-          id, last_name as "lastName", first_name as "firstName", patronymic,
-          book_number as bookNumber, group_id as group, login, password
+          S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
+          S.book_number as "bookNumber", (S.group_id, (
+            SELECT G.name FROM StudentGroup G WHERE G.id = S.group_id
+          )) as group, S.login, S.password
       `,
         [s.id, s.lastName, s.firstName, s.patronymic, s.bookNumber, s.group, s.login],
       )
-      return result
+      student.group = this._parseGroup(student.group)
+      return student
     } catch (e) {
       throw e
     }
