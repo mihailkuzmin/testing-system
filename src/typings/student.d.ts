@@ -24,7 +24,7 @@ export interface UpdateStudent {
   firstName: string
   patronymic: string
   bookNumber: string
-  group: string
+  group: number | string
   login: string
   password: string
   changePassword: boolean
