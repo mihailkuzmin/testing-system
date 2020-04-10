@@ -129,4 +129,10 @@ export class Student {
       throw e
     }
   }
+
+  static _parseGroup(str: string) {
+    // parse string '($id, $name)' into object {id, name}
+    const [id, name] = str.slice(1, -1).split(',')
+    return { id: Number(id), name }
+  }
 }
