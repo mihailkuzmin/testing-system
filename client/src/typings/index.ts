@@ -77,12 +77,12 @@ export interface UsersTableRow {
   lastName: string
   firstName: string
   patronymic: string
-  group: string
+  group: UsersTableGroup
   bookNumber: string
   login: string
 }
 
 export interface UsersTableGroup {
-  id: number
+  id: number | string
   name: string
 }

@@ -18,6 +18,6 @@ export interface EditFormEvent {
 }
 
 export interface Group {
-  id: number
+  id: number | string
   name: string
 }
