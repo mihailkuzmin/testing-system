@@ -18,6 +18,7 @@ import {
   confirmDelete,
   cancelDelete,
   userDeleted,
+  refreshUsers,
 } from './events'
 import { getAllUsersFx, getGroupsFx, deleteUserFx } from './effects'
 import { userCreated } from '../addForm/events'
@@ -28,6 +29,7 @@ import { UsersPage } from '../page'
 
 forward({ from: UsersPage.open, to: [getAllUsersFx, getGroupsFx] })
 forward({ from: userCreated, to: getAllUsersFx })
+forward({ from: refreshUsers, to: getAllUsersFx })
 
 // bind effects to events
 forward({ from: getAllUsersFx.doneData, to: usersRefreshed })
@@ -128,4 +130,5 @@ export const usersTable = {
   selectForEdit,
   confirmDelete,
   cancelDelete,
+  refreshUsers,
 }
