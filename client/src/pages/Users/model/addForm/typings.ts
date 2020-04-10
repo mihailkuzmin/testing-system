@@ -14,6 +14,6 @@ export interface AddFormNewValue {
 }
 
 export interface Group {
-  id: number
+  id: number | string
   name: string
 }
