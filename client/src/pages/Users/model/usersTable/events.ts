@@ -13,6 +13,7 @@ export const onGroupSelectChange = groupSelectChange.prepend(
   },
 )
 
+export const refreshUsers = createEvent()
 export const groupsRefreshed = createEvent<Response<UsersTableGroup[]>>()
 export const usersRefreshed = createEvent<Response<UsersTableRow[]>>()
 
