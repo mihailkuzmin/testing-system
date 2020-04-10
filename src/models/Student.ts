@@ -1,17 +1,7 @@
 import { db } from '../db'
-import { StudentQueryResult, UpdateParams } from '../typings/student'
+import { StudentQueryResult, UpdateStudent, CreateStudent } from '../typings/student'
 
 export class Student {
-  constructor(
-    private lastName: string,
-    private firstName: string,
-    private patronymic: string,
-    private bookNumber: string,
-    private groupId: number,
-    private login: string,
-    private password: string,
-  ) {}
-
   static async getById(id: number | string): Promise<StudentQueryResult> {
     try {
       const { rows } = await db.query(
@@ -52,7 +42,7 @@ export class Student {
     }
   }
 
-  static async update(s: UpdateParams): Promise<StudentQueryResult> {
+  static async update(s: UpdateStudent): Promise<StudentQueryResult> {
     try {
       if (s.changePassword) {
         const { rows } = await db.query(
@@ -76,7 +66,7 @@ export class Student {
         const [result] = rows
         return result
       }
-      
+
       const { rows } = await db.query(
         `
         UPDATE Student
@@ -117,25 +107,25 @@ export class Student {
     }
   }
 
-  public async save(): Promise<StudentQueryResult> {
+  static async create(user: CreateStudent): Promise<StudentQueryResult> {
     try {
       const { rows } = await db.query(
         `
-        INSERT INTO Student(
-          last_name, first_name, patronymic, book_number, group_id, login, password
-        ) VALUES($1, $2, $3, $4, $5, $6, $7)
+        INSERT INTO Student
+          (last_name, first_name, patronymic, book_number, group_id, login, password)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING
           id, last_name as "lastName", first_name as "firstName", patronymic,
           book_number, group_id as group, login
       `,
         [
-          this.lastName,
-          this.firstName,
-          this.patronymic,
-          this.bookNumber,
-          this.groupId,
-          this.login,
-          this.password,
+          user.lastName,
+          user.firstName,
+          user.patronymic,
+          user.bookNumber,
+          user.group,
+          user.login,
+          user.password,
         ],
       )
       const [result] = rows

@@ -2,6 +2,7 @@ import { IController, Response } from '../../typings'
 import { Student } from '../../models'
 import * as Payload from './typings/payloads'
 import * as Messages from './typings/messages'
+import { CreateStudent, UpdateStudent } from '../../typings/student'
 
 export const studentController: IController = (app, options, done) => {
   app.get('/', async (request, reply) => {
@@ -12,7 +13,7 @@ export const studentController: IController = (app, options, done) => {
   })
 
   app.get('/:id', async (request, reply) => {
-    const { id } = request.params
+    const id: string = request.params.id
 
     const result = await Student.getById(id)
 
@@ -21,26 +22,25 @@ export const studentController: IController = (app, options, done) => {
   })
 
   app.post('/', async (request, reply) => {
-    const { lastName, firstName, patronymic, bookNumber, group, login, password } = request.body
+    const newStudent: CreateStudent = request.body
 
-    const student = new Student(lastName, firstName, patronymic, bookNumber, group, login, password)
-    const result = await student.save()
+    const result = await Student.create(newStudent)
 
     const response: Response<Payload.Create> = { payload: result, message: Messages.Create }
     reply.send(response)
   })
 
   app.put('/', async (request, reply) => {
-    const { id, lastName, firstName, patronymic, bookNumber, group, login, password, changePassword } = request.body
+    const user: UpdateStudent = request.body
 
-    const result = await Student.update({id, lastName, firstName, patronymic, bookNumber, group, login, password, changePassword})
+    const result = await Student.update(user)
 
     const response: Response<Payload.Update> = { payload: result, message: Messages.Update }
     reply.send(response)
   })
 
   app.delete('/:id', async (request, reply) => {
-    const { id } = request.params
+    const id: string = request.params.id
 
     const result = await Student.removeById(id)
 
