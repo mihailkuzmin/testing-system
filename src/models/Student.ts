@@ -105,14 +105,16 @@ export class Student {
 
   static async create(user: CreateStudent): Promise<StudentQueryResult> {
     try {
-      const [result] = await db.query(
+      const [student] = await db.query(
         `
-        INSERT INTO Student
+        INSERT INTO Student as S
           (last_name, first_name, patronymic, book_number, group_id, login, password)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING
-          id, last_name as "lastName", first_name as "firstName", patronymic,
-          book_number, group_id as group, login
+          S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
+          S.book_number as "bookNumber", (group_id, (
+            SELECT G.name FROM StudentGroup G WHERE G.id = group_id
+          )) as group, S.login
       `,
         [
           user.lastName,
@@ -124,7 +126,8 @@ export class Student {
           user.password,
         ],
       )
-      return result
+      student.group = this._parseGroup(student.group)
+      return student
     } catch (e) {
       throw e
     }
