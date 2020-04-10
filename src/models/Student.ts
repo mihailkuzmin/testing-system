@@ -4,7 +4,7 @@ import { StudentQueryResult, UpdateStudent, CreateStudent } from '../typings/stu
 export class Student {
   static async getById(id: number | string): Promise<StudentQueryResult> {
     try {
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         SELECT 
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
@@ -15,7 +15,6 @@ export class Student {
       `,
         [id],
       )
-      const [result] = rows
       return result
     } catch (e) {
       throw e
@@ -24,7 +23,7 @@ export class Student {
 
   static async removeById(id: number | string): Promise<StudentQueryResult> {
     try {
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         DELETE FROM Student as S
         USING StudentGroup as G
@@ -35,7 +34,6 @@ export class Student {
       `,
         [id],
       )
-      const [result] = rows
       return result
     } catch (e) {
       throw e
@@ -45,7 +43,7 @@ export class Student {
   static async update(s: UpdateStudent): Promise<StudentQueryResult> {
     try {
       if (s.changePassword) {
-        const { rows } = await db.query(
+        const [result] = await db.query(
           `
           UPDATE Student
           SET
@@ -63,11 +61,10 @@ export class Student {
         `,
           [s.id, s.lastName, s.firstName, s.patronymic, s.bookNumber, s.group, s.login, s.password],
         )
-        const [result] = rows
         return result
       }
 
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         UPDATE Student
         SET
@@ -84,7 +81,6 @@ export class Student {
       `,
         [s.id, s.lastName, s.firstName, s.patronymic, s.bookNumber, s.group, s.login],
       )
-      const [result] = rows
       return result
     } catch (e) {
       throw e
@@ -93,7 +89,7 @@ export class Student {
 
   static async getAll(): Promise<StudentQueryResult[]> {
     try {
-      const { rows } = await db.query(`
+      const result = await db.query(`
         SELECT
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
           S.book_number as "bookNumber", G.name AS group, S.login
@@ -101,7 +97,7 @@ export class Student {
         WHERE G.id = S.group_id
         ORDER BY G.name, S.last_Name, S.first_name, S.patronymic
       `)
-      return rows
+      return result
     } catch (e) {
       throw e
     }
@@ -109,7 +105,7 @@ export class Student {
 
   static async create(user: CreateStudent): Promise<StudentQueryResult> {
     try {
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         INSERT INTO Student
           (last_name, first_name, patronymic, book_number, group_id, login, password)
@@ -128,7 +124,6 @@ export class Student {
           user.password,
         ],
       )
-      const [result] = rows
       return result
     } catch (e) {
       throw e

@@ -13,13 +13,13 @@ export class Task {
 
   static async getById(id: number | string) {
     try {
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         SELECT * FROM Task WHERE Task.id = ($1)
       `,
         [id],
       )
-      return rows
+      return result
     } catch (e) {
       throw e
     }
@@ -27,10 +27,10 @@ export class Task {
 
   static async getAll(): Promise<TaskQueryResult[]> {
     try {
-      const { rows } = await db.query(`
+      const result = await db.query(`
         SELECT * from Task
       `)
-      return rows
+      return result
     } catch (e) {
       throw e
     }
@@ -38,7 +38,7 @@ export class Task {
 
   public async save(): Promise<TaskQueryResult> {
     try {
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         INSERT INTO Task(
           description,
@@ -58,7 +58,6 @@ export class Task {
           this.correctOutputFileName,
         ],
       )
-      const [result] = rows
       return result
     } catch (e) {
       throw e

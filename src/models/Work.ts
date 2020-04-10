@@ -6,14 +6,13 @@ export class Work {
 
   async save(): Promise<WorkQueryResult> {
     try {
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         INSERT INTO Work(name, open_at, close_at) VALUES($1, $2, $3)
         RETURNING *
       `,
         [this.name, this.openAt, this.closeAt],
       )
-      const [result] = rows
       return result
     } catch (e) {
       throw e
@@ -22,13 +21,13 @@ export class Work {
 
   static async getById(id: number | string) {
     try {
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         SELECT * FROM Work WHERE Work.id = ($1)
       `,
         [id],
       )
-      return rows
+      return result
     } catch (e) {
       throw e
     }
@@ -36,10 +35,10 @@ export class Work {
 
   static async getAll(): Promise<WorkQueryResult[]> {
     try {
-      const { rows } = await db.query(`
+      const result = await db.query(`
         SELECT * FROM Work
       `)
-      return rows
+      return result
     } catch (e) {
       throw e
     }

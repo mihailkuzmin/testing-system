@@ -6,7 +6,7 @@ export class Group {
 
   static async getById(id: number | string): Promise<GroupQueryResult> {
     try {
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         SELECT * 
         FROM StudentGroup AS S
@@ -14,7 +14,6 @@ export class Group {
       `,
         [id],
       )
-      const [result] = rows
       return result
     } catch (e) {
       throw e
@@ -23,12 +22,12 @@ export class Group {
 
   static async getAll(): Promise<GroupQueryResult[]> {
     try {
-      const { rows } = await db.query(`
+      const result = await db.query(`
         SELECT * 
         FROM StudentGroup AS S
         ORDER BY S.name
       `)
-      return rows
+      return result
     } catch (e) {
       throw e
     }
@@ -36,14 +35,13 @@ export class Group {
 
   public async save(): Promise<GroupQueryResult> {
     try {
-      const { rows } = await db.query(
+      const [result] = await db.query(
         `
         INSERT INTO StudentGroup(name) VALUES($1)
         RETURNING *
       `,
         [this.name],
       )
-      const [result] = rows
       return result
     } catch (e) {
       throw e
