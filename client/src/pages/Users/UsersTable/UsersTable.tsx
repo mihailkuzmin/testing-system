@@ -1,11 +1,5 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import {
-  TableCell as Cell,
-  TableHead as Head,
-  TableRow as Row,
-  TableBody as Body,
-} from '@material-ui/core'
 import { Modal } from '../../../components'
 import {
   PrimaryButton,
@@ -15,9 +9,13 @@ import {
 import { UsersTableRow, UsersTableGroup } from '../../../typings'
 import {
   Table,
-  TableTitle,
-  TableHeader,
-  TableHeaderActions,
+  Title,
+  Header,
+  Actions,
+  Cell,
+  Row,
+  Head,
+  Body
 } from '../../../components/Table'
 import { GroupSelect, Item } from './GroupSelect'
 import { AddUser } from './AddUser'
@@ -33,7 +31,7 @@ interface IUsersTableProps {
 }
 
 export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
-  const { value, minWidth } = useStore(usersTable.$groupSelect)
+  const select = useStore(usersTable.$groupSelect)
   const addUserModal = useStore(addModal.$addModal)
   const deleteUserModal = useStore(deleteModal.$deleteModal)
   const editUserModal = useStore(editModal.$editModal)
@@ -55,22 +53,22 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
       <Head className={styles.head}>
         <Row>
           <Cell colSpan={5}>
-            <TableHeader>
-              <TableTitle>Пользователи</TableTitle>
-              <TableHeaderActions>
+            <Header>
+              <Title>Пользователи</Title>
+              <Actions>
                 <PrimaryButton onClick={onAddClick}>Добавить</PrimaryButton>
-              </TableHeaderActions>
-            </TableHeader>
+              </Actions>
+            </Header>
           </Cell>
         </Row>
         <Row>
           <Cell>ФИО</Cell>
           <Cell>
             <GroupSelect
-              minWidth={minWidth}
+              minWidth={select.minWidth}
               label='Группа'
               name='table-group'
-              value={value}
+              value={select.value}
               onChange={usersTable.onGroupSelectChange}
             >
               {groups?.map(({ id, name }) => (
@@ -80,7 +78,7 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
               ))}
             </GroupSelect>
           </Cell>
-          <Cell>Номер зачетной книжки</Cell>
+          <Cell>Зачетная книжка</Cell>
           <Cell>Логин</Cell>
           <Cell>Действия</Cell>
         </Row>

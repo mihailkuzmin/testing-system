@@ -1,15 +1,13 @@
 import React from 'react'
 import {
-  TableCell as Cell,
-  TableHead as Head,
-  TableRow as Row,
-  TableBody as Body,
-} from '@material-ui/core'
-import {
   Table,
-  TableTitle,
-  TableHeader,
-  TableHeaderActions,
+  Title,
+  Header,
+  Actions,
+  Cell,
+  Row,
+  Head,
+  Body
 } from '../../../components/Table'
 import {
   PrimaryButton,
@@ -30,12 +28,12 @@ export const GroupsTable = ({ groups, onAddClick }: IGroupsTableProps) => {
       <Head className={styles.head}>
         <Row>
           <Cell colSpan={3}>
-            <TableHeader>
-              <TableTitle>Группы</TableTitle>
-              <TableHeaderActions>
+            <Header>
+              <Title>Группы</Title>
+              <Actions>
                 <PrimaryButton onClick={onAddClick}>Добавить</PrimaryButton>
-              </TableHeaderActions>
-            </TableHeader>
+              </Actions>
+            </Header>
           </Cell>
         </Row>
         <Row>
