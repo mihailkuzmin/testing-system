@@ -6,19 +6,19 @@ import {
   TableRow as Row,
   TableBody as Body,
 } from '@material-ui/core'
-import {
-  TableTitle,
-  TableHeader,
-  TableHeaderActions,
-  Modal,
-} from '../../../components'
+import { Modal } from '../../../components'
 import {
   PrimaryButton,
   EditButton,
   DeleteButton,
 } from '../../../components/Buttons'
 import { UsersTableRow, UsersTableGroup } from '../../../typings'
-import { Table } from '../../../components/Table'
+import {
+  Table,
+  TableTitle,
+  TableHeader,
+  TableHeaderActions,
+} from '../../../components/Table'
 import { GroupSelect, Item } from './GroupSelect'
 import { AddUser } from './AddUser'
 import { DeleteUser } from './DeleteUser'

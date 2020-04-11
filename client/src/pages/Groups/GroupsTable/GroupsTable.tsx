@@ -6,11 +6,11 @@ import {
   TableBody as Body,
 } from '@material-ui/core'
 import {
+  Table,
   TableTitle,
   TableHeader,
   TableHeaderActions,
-} from '../../../components'
-import { Table } from '../../../components/Table'
+} from '../../../components/Table'
 import {
   PrimaryButton,
   EditButton,
