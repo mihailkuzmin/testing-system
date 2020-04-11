@@ -4,11 +4,9 @@ import { TaskQueryResult } from '../typings/task'
 export class Task {
   constructor(
     private description: string,
-    private inputFileName: string,
-    private outputFileName: string,
-    private exampleInputFileName: string,
-    private exampleOutputFileName: string,
-    private correctOutputFileName: string,
+    private exampleInput: string,
+    private exampleOutput: string,
+    private correctOutput: string,
   ) {}
 
   static async getById(id: number | string) {
@@ -42,21 +40,13 @@ export class Task {
         `
         INSERT INTO Task(
           description,
-          input_name,
-          output_name,
           example_input,
           example_output,
-          correct_output) VALUES($1, $2, $3, $4, $5, $6)
+          correct_output
+        ) VALUES($1, $2, $3, $4)
         RETURNING *
       `,
-        [
-          this.description,
-          this.inputFileName,
-          this.outputFileName,
-          this.exampleInputFileName,
-          this.exampleOutputFileName,
-          this.correctOutputFileName,
-        ],
+        [this.description, this.exampleInput, this.exampleOutput, this.correctOutput],
       )
       return result
     } catch (e) {
