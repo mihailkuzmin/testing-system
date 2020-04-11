@@ -1,9 +1,9 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { IPageProps, Status } from '../../typings'
-import { Layout } from '../../components'
 import { FullScreenLoader, FullScreenError } from '../../components/Loaders'
-import { addModal, usersTable, UsersPage } from './model'
+import { Layout } from '../../components'
+import { usersTable, UsersPage } from './model'
 import { UsersTable } from './UsersTable'
 
 export const Users = (props: IPageProps) => {
@@ -25,11 +25,7 @@ export const Users = (props: IPageProps) => {
 
   return (
     <Layout>
-      <UsersTable
-        groups={groupsList}
-        users={usersList}
-        onAddClick={addModal.openAddModal}
-      />
+      <UsersTable groups={groupsList} users={usersList} />
     </Layout>
   )
 }

@@ -1,8 +1,5 @@
 import { createEvent } from 'effector'
-import { AddFormNewValue } from './typings'
-
-export const openAddModal = createEvent()
-export const closeAddModal = createEvent()
+import { AddFormNewValue } from '../typings'
 
 export const setField = createEvent<AddFormNewValue>()
 export const fieldValueChange = setField.prepend(

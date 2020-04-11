@@ -1,3 +1,3 @@
-export { $page } from './init'
-export { $addForm, $groups } from './stores'
-export { openAddModal, closeAddModal, fieldValueChange } from './events'
+export { addForm } from './addForm'
+export { addModal } from './addModal'
+export { groupsTable } from './groupsTable'

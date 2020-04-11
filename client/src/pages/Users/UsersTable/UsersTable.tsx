@@ -2,21 +2,12 @@ import React from 'react'
 import { useStore } from 'effector-react'
 import { Modal } from '../../../components'
 import {
-  PrimaryButton,
-  EditButton,
-  DeleteButton,
+  PrimaryButton as Add,
+  EditButton as Edit,
+  DeleteButton as Delete,
 } from '../../../components/Buttons'
 import { UsersTableRow, UsersTableGroup } from '../../../typings'
-import {
-  Table,
-  Title,
-  Header,
-  Actions,
-  Cell,
-  Row,
-  Head,
-  Body
-} from '../../../components/Table'
+import * as T from '../../../components/Table'
 import { GroupSelect, Item } from './GroupSelect'
 import { AddUser } from './AddUser'
 import { DeleteUser } from './DeleteUser'
@@ -27,10 +18,9 @@ import styles from './UsersTable.module.css'
 interface IUsersTableProps {
   users?: UsersTableRow[]
   groups?: UsersTableGroup[]
-  onAddClick: any
 }
 
-export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
+export const UsersTable = ({ users, groups }: IUsersTableProps) => {
   const select = useStore(usersTable.$groupSelect)
   const addUserModal = useStore(addModal.$addModal)
   const deleteUserModal = useStore(deleteModal.$deleteModal)
@@ -40,7 +30,7 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
   const usersEmpty = users?.length === 0
 
   return (
-    <Table className={styles.table}>
+    <T.Table className={styles.table}>
       <Modal open={addUserModal.open} onClose={addModal.closeAddModal}>
         <AddUser groups={groups} />
       </Modal>
@@ -50,20 +40,20 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
       <Modal open={editUserModal.open} onClose={editModal.closeEditModal}>
         <EditUser groups={groups} />
       </Modal>
-      <Head className={styles.head}>
-        <Row>
-          <Cell colSpan={5}>
-            <Header>
-              <Title>Пользователи</Title>
-              <Actions>
-                <PrimaryButton onClick={onAddClick}>Добавить</PrimaryButton>
-              </Actions>
-            </Header>
-          </Cell>
-        </Row>
-        <Row>
-          <Cell>ФИО</Cell>
-          <Cell>
+      <T.Head className={styles.head}>
+        <T.Row>
+          <T.Cell colSpan={5}>
+            <T.Header>
+              <T.Title>Пользователи</T.Title>
+              <T.Actions>
+                <Add onClick={addModal.openAddModal}>Добавить</Add>
+              </T.Actions>
+            </T.Header>
+          </T.Cell>
+        </T.Row>
+        <T.Row>
+          <T.Cell>ФИО</T.Cell>
+          <T.Cell>
             <GroupSelect
               minWidth={select.minWidth}
               label='Группа'
@@ -77,41 +67,37 @@ export const UsersTable = ({ users, groups, onAddClick }: IUsersTableProps) => {
                 </Item>
               ))}
             </GroupSelect>
-          </Cell>
-          <Cell>Зачетная книжка</Cell>
-          <Cell>Логин</Cell>
-          <Cell>Действия</Cell>
-        </Row>
-      </Head>
-      <Body>
+          </T.Cell>
+          <T.Cell>Зачетная книжка</T.Cell>
+          <T.Cell>Логин</T.Cell>
+          <T.Cell>Действия</T.Cell>
+        </T.Row>
+      </T.Head>
+      <T.Body>
         {usersEmpty ? (
-          <Row className={styles.row}>
-            <Cell>В этой группе ещё нет людей</Cell>
-            <Cell colSpan={4}></Cell>
-          </Row>
+          <T.Row className={styles.row}>
+            <T.Cell>В этой группе ещё нет людей</T.Cell>
+            <T.Cell colSpan={4}></T.Cell>
+          </T.Row>
         ) : (
           users?.map((user) => {
             return (
-              <Row key={user.id} className={styles.row}>
-                <Cell>{`${user.lastName} ${user.firstName} ${user.patronymic}`}</Cell>
-                <Cell>{user.group.name}</Cell>
-                <Cell>{user.bookNumber}</Cell>
-                <Cell>{user.login}</Cell>
-                <Cell>
+              <T.Row key={user.id} className={styles.row}>
+                <T.Cell>{`${user.lastName} ${user.firstName} ${user.patronymic}`}</T.Cell>
+                <T.Cell>{user.group.name}</T.Cell>
+                <T.Cell>{user.bookNumber}</T.Cell>
+                <T.Cell>{user.login}</T.Cell>
+                <T.Cell>
                   <div className={styles.rowActions}>
-                    <EditButton
-                      onClick={() => usersTable.selectForEdit(user.id)}
-                    />
-                    <DeleteButton
-                      onClick={() => usersTable.selectForDelete(user)}
-                    />
+                    <Edit onClick={() => usersTable.selectForEdit(user.id)} />
+                    <Delete onClick={() => usersTable.selectForDelete(user)} />
                   </div>
-                </Cell>
-              </Row>
+                </T.Cell>
+              </T.Row>
             )
           })
         )}
-      </Body>
-    </Table>
+      </T.Body>
+    </T.Table>
   )
 }
