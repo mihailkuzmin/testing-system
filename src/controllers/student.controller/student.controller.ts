@@ -1,8 +1,8 @@
 import { IController, Response } from '../../typings'
 import { Student } from '../../models'
+import { CreateStudent, UpdateStudent } from '../../typings/student'
 import * as Payload from './typings/payloads'
 import * as Messages from './typings/messages'
-import { CreateStudent, UpdateStudent } from '../../typings/student'
 
 export const studentController: IController = (app, options, done) => {
   app.get('/', async (request, reply) => {
