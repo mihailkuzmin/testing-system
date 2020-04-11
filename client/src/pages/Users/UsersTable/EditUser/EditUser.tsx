@@ -4,9 +4,9 @@ import {
   PrimaryButton as Save,
   SecondaryButton as Cancel,
 } from '../../../../components/Buttons'
-import { MappedSelect, Item } from '../../../../components/MappedSelect'
+import { MappedSelect, Item } from '../../../../components/Inputs/MappedSelect'
+import { MappedInput, CheckBox } from '../../../../components/Inputs'
 import { Linear, Circular } from '../../../../components/Loaders'
-import { MappedInput, CheckBox } from '../../../../components'
 import { EditForm, Group } from '../../model/editForm/typings'
 import { editForm, editModal } from '../../model'
 import { Status } from '../../../../typings'

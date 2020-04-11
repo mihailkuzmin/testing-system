@@ -1,6 +1,3 @@
 export { Header } from './Header'
 export { Layout } from './Layout'
 export { Modal } from './Modal'
-export { MappedInput } from './MappedInput'
-export { FullScreenError } from './FullScreenError'
-export { CheckBox } from './CheckBox'

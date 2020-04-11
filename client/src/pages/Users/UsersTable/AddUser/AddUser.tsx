@@ -4,9 +4,9 @@ import {
   PrimaryButton as Add,
   SecondaryButton as Cancel,
 } from '../../../../components/Buttons'
-import { MappedSelect, Item } from '../../../../components/MappedSelect'
+import { MappedSelect, Item } from '../../../../components/Inputs/MappedSelect'
+import { MappedInput } from '../../../../components/Inputs'
 import { Linear } from '../../../../components/Loaders'
-import { MappedInput } from '../../../../components'
 import { AddForm, Group } from '../../model/addForm/typings'
 import { addForm, addModal } from '../../model'
 import { Status } from '../../../../typings'

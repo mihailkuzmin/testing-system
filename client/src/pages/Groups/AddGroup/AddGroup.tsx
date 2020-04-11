@@ -1,6 +1,6 @@
 import React from 'react'
 import { PrimaryButton, SecondaryButton } from '../../../components/Buttons'
-import { MappedInput } from '../../../components'
+import { MappedInput } from '../../../components/Inputs'
 import { $addForm, closeAddModal, fieldValueChange } from '../model'
 import { AddForm } from '../model/typings'
 import styles from './AddGroup.module.css'

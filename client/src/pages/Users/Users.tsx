@@ -1,10 +1,10 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { IPageProps, Status } from '../../typings'
-import { Layout, FullScreenError } from '../../components'
-import { FullScreenLoader } from '../../components/Loaders'
-import { UsersTable } from './UsersTable'
+import { Layout } from '../../components'
+import { FullScreenLoader, FullScreenError } from '../../components/Loaders'
 import { addModal, usersTable, UsersPage } from './model'
+import { UsersTable } from './UsersTable'
 
 export const Users = (props: IPageProps) => {
   React.useEffect(UsersPage.onMount, [])
