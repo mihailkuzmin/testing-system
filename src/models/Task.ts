@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { TaskQueryResult } from '../typings/task'
+import { TaskQueryResult, CreateTask } from '../typings/task'
 
 export class Task {
   constructor(
@@ -34,19 +34,21 @@ export class Task {
     }
   }
 
-  public async save(): Promise<TaskQueryResult> {
+  static async create(t: CreateTask): Promise<TaskQueryResult> {
     try {
       const [result] = await db.query(
         `
-        INSERT INTO Task(
+        INSERT INTO Task as T (
           description,
           example_input,
           example_output,
           correct_output
         ) VALUES($1, $2, $3, $4)
-        RETURNING *
+        RETURNING
+          T.id, T.description, T.example_input as "exampleInput",
+          T.example_output as "exampleOutput", T.correct_output as "correctOutput"
       `,
-        [this.description, this.exampleInput, this.exampleOutput, this.correctOutput],
+        [t.description, t.exampleInput, t.exampleOutput, t.correctOutput],
       )
       return result
     } catch (e) {
