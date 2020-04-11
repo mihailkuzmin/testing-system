@@ -1,6 +1,5 @@
 import React from 'react'
-import { NavLink } from '../components'
-import { List, Item as ListItem } from '../components/Navigation'
+import { List, Item as ListItem, NavLink } from '../components/Navigation'
 import { IRoutesConfig } from '../typings'
 
 interface INavItem {
