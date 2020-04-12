@@ -7,13 +7,18 @@ export class Group {
       const [result] = await db.query(
         `
         SELECT
-          *
-        FROM StudentGroup S
-        WHERE S.id = ($1)
+  static async removeById(id: GroupId): Promise<GroupQueryResult> {
+    try {
+      const [group] = await db.query(
+        `
+        DELETE FROM StudentGroup as G
+        WHERE (G.id = ($1))
+        RETURNING
+          G.id, G.name
       `,
         [id],
       )
-      return result
+      return group
     } catch (e) {
       throw e
     }
