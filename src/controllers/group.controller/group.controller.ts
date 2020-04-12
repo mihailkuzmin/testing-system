@@ -30,5 +30,14 @@ export const groupController: IController = (app, options, done) => {
     reply.send(response)
   })
 
+  app.delete('/:id', async (request, reply) => {
+    const id: number = request.params.id
+
+    const result = await Group.removeById(id)
+
+    const response: Response<Payload.RemoveById> = { payload: result, message: Messages.RemoveById }
+    reply.send(response)
+  })
+
   done()
 }
