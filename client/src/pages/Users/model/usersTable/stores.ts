@@ -12,7 +12,7 @@ export const $groupSelectMinWidth = $groups.map((groups) => {
   const maxName = names.reduce((a, b) => {
     return b.length > a.length ? b : a
   }, '')
-  return `${maxName.length - 0.5}rem`
+  return `${maxName.length - 1.2}rem`
 })
 
 export const $groupSelectValue = createStore<number | string>('')
