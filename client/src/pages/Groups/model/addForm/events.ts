@@ -10,3 +10,6 @@ export const fieldValueChange = setField.prepend(
     }
   },
 )
+
+export const createGroup = createEvent()
+export const groupCreated = createEvent()
