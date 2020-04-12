@@ -17,7 +17,7 @@ export const refreshUsers = createEvent()
 export const groupsRefreshed = createEvent<Response<UsersTableGroup[]>>()
 export const usersRefreshed = createEvent<Response<UsersTableRow[]>>()
 
-export const selectForDelete = createEvent<UsersTableRow>()
+export const selectForDelete = createEvent<UsersTableRowId>()
 export const selectForEdit = createEvent<UsersTableRowId>()
 export const deleteUser = createEvent()
 export const userDeleted = createEvent<Response<UsersTableRow>>()

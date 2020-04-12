@@ -81,8 +81,14 @@ forward({
   to: deleteModal.closeDeleteModal,
 })
 
-$selectedForDelete.on(selectForDelete, (_, user) => user)
-$selectedForDelete.reset(cancelDelete)
+sample({
+  source: $filteredUsers,
+  clock: selectForDelete,
+  target: $selectedForDelete,
+  fn: (users, userId) => users.find((user) => user.id === userId) || null,
+})
+
+$selectedForDelete.reset(cancelDelete, userDeleted)
 $selectedForDelete.watch(confirmDelete, (user) => {
   if (user !== null) {
     deleteUserFx(user.id)
