@@ -8,7 +8,8 @@ import {
 } from '../../../components/Buttons'
 import { Modal } from '../../../components'
 import { AddGroup } from './AddGroup'
-import { addModal } from '../model'
+import { DeleteGroup } from './DeleteGroup'
+import { addModal, groupsTable, deleteModal } from '../model'
 import { Group } from '../model/typings'
 import styles from './GroupsTable.module.css'
 
@@ -18,11 +19,18 @@ interface IGroupsTableProps {
 
 export const GroupsTable = ({ groups }: IGroupsTableProps) => {
   const addGroupModal = useStore(addModal.$addModal)
+  const deleteGroupModal = useStore(deleteModal.$deleteModal)
 
   return (
     <T.Table className={styles.table}>
       <Modal open={addGroupModal.open} onClose={addModal.closeAddModal}>
         <AddGroup />
+      </Modal>
+      <Modal
+        open={deleteGroupModal.open}
+        onClose={deleteModal.closeDeleteModal}
+      >
+        <DeleteGroup />
       </Modal>
       <T.Head className={styles.head}>
         <T.Row>
@@ -42,15 +50,17 @@ export const GroupsTable = ({ groups }: IGroupsTableProps) => {
         </T.Row>
       </T.Head>
       <T.Body>
-        {groups?.map(({ id, name }) => {
+        {groups?.map((group) => {
           return (
-            <T.Row key={id} className={styles.row}>
-              <T.Cell>{id}</T.Cell>
-              <T.Cell>{name}</T.Cell>
+            <T.Row key={group.id} className={styles.row}>
+              <T.Cell>{group.id}</T.Cell>
+              <T.Cell>{group.name}</T.Cell>
               <T.Cell>
                 <div className={styles.rowActions}>
-                  <Edit />
-                  <Delete />
+                  <Edit onClick={() => {}} />
+                  <Delete
+                    onClick={() => groupsTable.selectForDelete(group.id)}
+                  />
                 </div>
               </T.Cell>
             </T.Row>
