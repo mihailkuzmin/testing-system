@@ -1,4 +1,4 @@
-import { createEffect } from 'effector'
+import { createReEffect } from 'effector-reeffect'
 import { groupsApi } from '../../../../api'
 
-export const getGroupsFx = createEffect({ handler: groupsApi.getAll })
+export const getGroupsFx = createReEffect({ handler: groupsApi.getAll })

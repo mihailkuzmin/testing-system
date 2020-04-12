@@ -7,6 +7,7 @@ import { Status } from '../.././../../typings'
 
 forward({ from: [GroupsPage.open, addForm.groupCreated], to: getGroupsFx })
 forward({ from: addForm.groupCreated, to: getGroupsFx })
+forward({ from: GroupsPage.close, to: getGroupsFx.cancel })
 
 $groups.on(getGroupsFx.doneData, (_, { payload }) => payload)
 $groups.reset(GroupsPage.close)

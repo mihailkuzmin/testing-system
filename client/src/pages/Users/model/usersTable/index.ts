@@ -28,6 +28,10 @@ import { deleteModal } from '../deleteModal'
 import { UsersPage } from '../page'
 
 forward({ from: UsersPage.open, to: [getAllUsersFx, getGroupsFx] })
+forward({
+  from: UsersPage.close,
+  to: [getAllUsersFx.cancel, getGroupsFx.cancel],
+})
 forward({ from: [userCreated, refreshUsers], to: getAllUsersFx })
 
 // bind effects to events
