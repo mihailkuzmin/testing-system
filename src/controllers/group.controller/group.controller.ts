@@ -1,4 +1,5 @@
 import { IController, Response } from '../../typings'
+import { CreateGroup } from '../../typings/group'
 import { Group } from '../../models'
 import * as Payload from './typings/payloads'
 import * as Messages from './typings/messages'
@@ -12,18 +13,21 @@ export const groupController: IController = (app, options, done) => {
   })
 
   app.post('/', async (request, reply) => {
-    const { name } = request.body
+    const newGroup: CreateGroup = request.body
 
-    const group = new Group(name)
-    const result = await group.save()
+    const result = await Group.create(newGroup)
 
-    reply.send(result)
+    const response: Response<Payload.Create> = { payload: result, message: Messages.Create }
+    reply.send(response)
   })
 
   app.get('/:id', async (request, reply) => {
-    const { id } = request.params
+    const id: number = request.params.id
+
     const result = await Group.getById(id)
-    reply.send(result)
+
+    const response: Response<Payload.GetById> = { payload: result, message: Messages.GetById }
+    reply.send(response)
   })
 
   done()
