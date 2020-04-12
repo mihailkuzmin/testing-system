@@ -4,7 +4,7 @@ import { setField, fieldValueChange, createGroup, groupCreated } from './events'
 import { createGroupFx } from './effects'
 import { addModal } from '../addModal'
 import { Status, MessageType } from '../../../../typings'
-import {notifications} from '../../../../model'
+import { notifications } from '../../../../model'
 
 forward({ from: createGroupFx.done, to: groupCreated })
 
@@ -38,5 +38,5 @@ export const addForm = {
   $createGroupStatus,
   fieldValueChange,
   createGroup,
-  groupCreated
+  groupCreated,
 }

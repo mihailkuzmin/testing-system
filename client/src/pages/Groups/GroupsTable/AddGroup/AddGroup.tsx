@@ -23,7 +23,7 @@ export const AddGroup = () => {
   return (
     <div className={styles.addGroup}>
       <form onSubmit={onSubmit} noValidate autoComplete='off'>
-      <h3 className={styles.title}>Добавить группу</h3>
+        <h3 className={styles.title}>Добавить группу</h3>
         <div className={styles.fields}>
           <MappedInput<AddForm>
             name='name'
@@ -33,17 +33,17 @@ export const AddGroup = () => {
           />
         </div>
         {isPending ? (
-        <div className={styles.loader}>
-          <Linear />
-        </div>
-      ) : (
-        <div className={styles.actions}>
-          <Add type='submit' onClick={addForm.createGroup}>
-            Добавить
-          </Add>
-          <Cancel onClick={addModal.closeAddModal}>Отменить</Cancel>
-        </div>
-      )}
+          <div className={styles.loader}>
+            <Linear />
+          </div>
+        ) : (
+          <div className={styles.actions}>
+            <Add type='submit' onClick={addForm.createGroup}>
+              Добавить
+            </Add>
+            <Cancel onClick={addModal.closeAddModal}>Отменить</Cancel>
+          </div>
+        )}
       </form>
     </div>
   )
