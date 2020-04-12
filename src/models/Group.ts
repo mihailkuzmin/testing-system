@@ -1,16 +1,15 @@
 import { db } from '../db'
-import { GroupQueryResult } from '../typings/group'
+import { GroupQueryResult, CreateGroup } from '../typings/group'
 
 export class Group {
-  constructor(private name: string) {}
-
   static async getById(id: number | string): Promise<GroupQueryResult> {
     try {
       const [result] = await db.query(
         `
-        SELECT * 
-        FROM StudentGroup AS S
-        WHERE StudentGroup.id = ($1)
+        SELECT
+          *
+        FROM StudentGroup S
+        WHERE S.id = ($1)
       `,
         [id],
       )
@@ -23,8 +22,9 @@ export class Group {
   static async getAll(): Promise<GroupQueryResult[]> {
     try {
       const result = await db.query(`
-        SELECT * 
-        FROM StudentGroup AS S
+        SELECT
+          * 
+        FROM StudentGroup S
         ORDER BY S.name
       `)
       return result
@@ -33,14 +33,16 @@ export class Group {
     }
   }
 
-  public async save(): Promise<GroupQueryResult> {
+  static async create(g: CreateGroup): Promise<GroupQueryResult> {
     try {
       const [result] = await db.query(
         `
-        INSERT INTO StudentGroup(name) VALUES($1)
+        INSERT INTO StudentGroup (
+          name
+        ) VALUES($1)
         RETURNING *
       `,
-        [this.name],
+        [g.name],
       )
       return result
     } catch (e) {
