@@ -1,5 +1,7 @@
+export type GroupId = number
+
 export interface GroupQueryResult {
-  id: number
+  id: GroupId
   name: string
 }
 
