@@ -14,7 +14,7 @@ CREATE TABLE Student (
 	first_name varchar(30) NOT NULL,
 	patronymic varchar(30) NOT NULL,
 	book_number varchar(100) NOT NULL,
-	group_id INT REFERENCES StudentGroup(id) NOT NULL,
+	group_id INT NOT NULL REFERENCES StudentGroup(id) ON DELETE CASCADE,
 	login varchar(100) NOT NULL,
 	password varchar(100) NOT NULL
 );
