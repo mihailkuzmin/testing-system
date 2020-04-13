@@ -8,3 +8,8 @@ export interface Group {
 export interface CreateGroup {
   name: string
 }
+
+export interface UpdateGroup {
+  id: GroupId
+  name: string
+}
