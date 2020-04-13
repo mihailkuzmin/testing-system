@@ -24,6 +24,7 @@ import { getAllUsersFx, getGroupsFx, deleteUserFx } from './effects'
 import { userCreated } from '../addForm/events'
 import { Status, MessageType } from '../../../../typings'
 import { notifications } from '../../../../model'
+import { editModal } from '../editModal'
 import { deleteModal } from '../deleteModal'
 import { UsersPage } from '../page'
 
@@ -33,6 +34,7 @@ forward({
   to: [getAllUsersFx.cancel, getGroupsFx.cancel],
 })
 forward({ from: [userCreated, refreshUsers], to: getAllUsersFx })
+forward({ from: selectForEdit, to: editModal.openEditModal })
 
 // bind effects to events
 forward({ from: getAllUsersFx.doneData, to: usersRefreshed })

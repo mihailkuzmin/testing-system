@@ -1,5 +1,7 @@
 export { addForm } from './addForm'
+export { editForm } from './editForm'
 export { addModal } from './addModal'
 export { deleteModal } from './deleteModal'
+export { editModal } from './editModal'
 export { groupsTable } from './groupsTable'
 export { GroupsPage } from './page'

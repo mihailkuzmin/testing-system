@@ -42,7 +42,7 @@ export const EditUser = ({ groups }: IEditUserProps) => {
           {loadIsPending && (
             <div className={styles.loadingOverlay}>
               <Circular />
-              <p>Загружаем данные</p>
+              <span>Загружаем данные</span>
             </div>
           )}
           <MappedInput<EditForm>

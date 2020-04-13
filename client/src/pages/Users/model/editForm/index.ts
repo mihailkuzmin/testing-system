@@ -8,8 +8,10 @@ import { editModal } from '../editModal'
 import { usersTable } from '../usersTable'
 
 forward({ from: editUserFx.done, to: userUpdated })
-forward({ from: userUpdated, to: usersTable.refreshUsers })
-forward({ from: usersTable.selectForEdit, to: editModal.openEditModal })
+forward({
+  from: userUpdated,
+  to: [editModal.closeEditModal, usersTable.refreshUsers],
+})
 
 // fetch user on edit click
 forward({ from: usersTable.selectForEdit, to: getUserFx })

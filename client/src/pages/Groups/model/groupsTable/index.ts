@@ -3,21 +3,26 @@ import { $groups, $getGroupsStatus, $selectedForDelete } from './stores'
 import { getGroupsFx, deleteGroupFx } from './effects'
 import {
   selectForDelete,
+  selectForEdit,
   confirmDelete,
   cancelDelete,
   groupDeleted,
+  refreshGroups,
 } from './events'
 import { GroupsPage } from '../page'
 import { addForm } from '../addForm'
 import { deleteModal } from '../deleteModal'
+import { editModal } from '../editModal'
 import { notifications } from '../../../../model'
 import { Status, MessageType } from '../.././../../typings'
 
-forward({ from: [GroupsPage.open, addForm.groupCreated], to: getGroupsFx })
-forward({ from: addForm.groupCreated, to: getGroupsFx })
+forward({ from: refreshGroups, to: getGroupsFx })
+forward({ from: [GroupsPage.open, addForm.groupCreated], to: refreshGroups })
 forward({ from: GroupsPage.close, to: getGroupsFx.cancel })
 forward({ from: deleteGroupFx.doneData, to: groupDeleted })
-forward({ from: groupDeleted, to: getGroupsFx })
+forward({ from: groupDeleted, to: refreshGroups })
+
+forward({ from: selectForEdit, to: editModal.openEditModal })
 
 $groups.on(getGroupsFx.doneData, (_, { payload }) => payload)
 $groups.reset(GroupsPage.close)
@@ -62,6 +67,8 @@ export const groupsTable = {
   $getGroupsStatus,
   $selectedForDelete,
   selectForDelete,
+  selectForEdit,
   confirmDelete,
   cancelDelete,
+  refreshGroups,
 }
