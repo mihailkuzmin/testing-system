@@ -1,6 +1,7 @@
-import { GroupQueryResult } from '../../../typings/group'
+import { IGroup } from '../../../typings/group'
 
-export interface GetAll extends Array<GroupQueryResult> {}
-export interface GetById extends GroupQueryResult {}
-export interface Create extends GroupQueryResult {}
-export interface RemoveById extends GroupQueryResult {}
+export interface GetAll extends Array<IGroup> {}
+export interface GetById extends IGroup {}
+export interface Create extends IGroup {}
+export interface RemoveById extends IGroup {}
+export interface Update extends IGroup {}
