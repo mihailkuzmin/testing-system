@@ -67,4 +67,23 @@ export class Group {
       throw e
     }
   }
+
+  static async update(g: UpdateGroup): Promise<IGroup> {
+    try {
+      const [group] = await db.query(
+        `
+        UPDATE StudentGroup G
+        SET
+          name = ($2)
+        WHERE (G.id = ($1))
+        RETURNING
+          G.id, G.name
+      `,
+        [g.id, g.name],
+      )
+      return group
+    } catch (e) {
+      throw e
+    }
+  }
 }
