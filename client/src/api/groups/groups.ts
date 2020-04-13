@@ -1,9 +1,14 @@
 import { request } from '../request'
 import { Response } from '../../typings'
-import { Group, CreateGroup, GroupId } from './typings'
+import { Group, CreateGroup, UpdateGroup, GroupId } from './typings'
 
 const getAll = async (): Promise<Response<Group[]>> => {
   const result = await request.get<Group[]>('group')
+  return result
+}
+
+const getById = async (id: GroupId): Promise<Response<Group>> => {
+  const result = await request.get<Group>(`group/${id}`)
   return result
 }
 
@@ -21,4 +26,5 @@ export const groupsApi = {
   getAll,
   create,
   deleteById,
+  getById,
 }
