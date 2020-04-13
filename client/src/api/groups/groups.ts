@@ -17,6 +17,11 @@ const create = async (group: CreateGroup): Promise<Response<Group>> => {
   return result
 }
 
+const update = async (group: UpdateGroup): Promise<Response<Group>> => {
+  const result = await request.put<UpdateGroup, Group>('group', group)
+  return result
+}
+
 const deleteById = async (id: GroupId): Promise<Response<Group>> => {
   const result = await request.delete<void, Group>(`group/${id}`)
   return result
@@ -27,4 +32,5 @@ export const groupsApi = {
   create,
   deleteById,
   getById,
+  update,
 }
