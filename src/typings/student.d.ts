@@ -1,4 +1,4 @@
-export interface StudentQueryResult {
+export interface IStudent {
   id: number
   lastName: string
   firstName: string

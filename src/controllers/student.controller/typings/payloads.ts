@@ -1,7 +1,7 @@
-import { StudentQueryResult } from '../../../typings/student'
+import { IStudent } from '../../../typings/student'
 
-export interface Create extends StudentQueryResult {}
-export interface GetAll extends Array<StudentQueryResult> {}
-export interface GetById extends StudentQueryResult {}
-export interface RemoveById extends StudentQueryResult {}
-export interface Update extends StudentQueryResult {}
+export interface Create extends IStudent {}
+export interface GetAll extends Array<IStudent> {}
+export interface GetById extends IStudent {}
+export interface RemoveById extends IStudent {}
+export interface Update extends IStudent {}

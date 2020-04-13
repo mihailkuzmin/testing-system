@@ -1,8 +1,8 @@
 import { db } from '../db'
-import { StudentQueryResult, UpdateStudent, CreateStudent } from '../typings/student'
+import { IStudent, UpdateStudent, CreateStudent } from '../typings/student'
 
 export class Student {
-  static async getById(id: number | string): Promise<StudentQueryResult> {
+  static async getById(id: number | string): Promise<IStudent> {
     try {
       const [student] = await db.query(
         `
@@ -21,7 +21,7 @@ export class Student {
     }
   }
 
-  static async removeById(id: number | string): Promise<StudentQueryResult> {
+  static async removeById(id: number | string): Promise<IStudent> {
     try {
       const [student] = await db.query(
         `
@@ -41,8 +41,7 @@ export class Student {
     }
   }
 
-  static async update(s: UpdateStudent): Promise<StudentQueryResult> {
-    console.log(s)
+  static async update(s: UpdateStudent): Promise<IStudent> {
     try {
       if (s.changePassword) {
         const [student] = await db.query(
@@ -95,7 +94,7 @@ export class Student {
     }
   }
 
-  static async getAll(): Promise<StudentQueryResult[]> {
+  static async getAll(): Promise<IStudent[]> {
     try {
       const students = await db.query(`
         SELECT
@@ -115,7 +114,7 @@ export class Student {
     }
   }
 
-  static async create(user: CreateStudent): Promise<StudentQueryResult> {
+  static async create(user: CreateStudent): Promise<IStudent> {
     try {
       const [student] = await db.query(
         `
