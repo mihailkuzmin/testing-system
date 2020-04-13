@@ -1,5 +1,5 @@
 import { IController, Response } from '../../typings'
-import { CreateGroup } from '../../typings/group'
+import { CreateGroup, UpdateGroup, GroupId } from '../../typings/group'
 import { Group } from '../../models'
 import * as Payload from './typings/payloads'
 import * as Messages from './typings/messages'
@@ -22,7 +22,7 @@ export const groupController: IController = (app, options, done) => {
   })
 
   app.get('/:id', async (request, reply) => {
-    const id: number = request.params.id
+    const id: GroupId = request.params.id
 
     const result = await Group.getById(id)
 
@@ -31,11 +31,20 @@ export const groupController: IController = (app, options, done) => {
   })
 
   app.delete('/:id', async (request, reply) => {
-    const id: number = request.params.id
+    const id: GroupId = request.params.id
 
     const result = await Group.removeById(id)
 
     const response: Response<Payload.RemoveById> = { payload: result, message: Messages.RemoveById }
+    reply.send(response)
+  })
+
+  app.put('/', async (request, reply) => {
+    const group: UpdateGroup = request.body
+
+    const result = await Group.update(group)
+
+    const response: Response<Payload.Update> = { payload: result, message: Messages.Update }
     reply.send(response)
   })
 
