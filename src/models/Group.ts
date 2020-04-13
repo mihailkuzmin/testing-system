@@ -1,8 +1,8 @@
 import { db } from '../db'
-import { GroupQueryResult, CreateGroup, GroupId } from '../typings/group'
+import { IGroup, CreateGroup, GroupId, UpdateGroup } from '../typings/group'
 
 export class Group {
-  static async getById(id: GroupId): Promise<GroupQueryResult> {
+  static async getById(id: GroupId): Promise<IGroup> {
     try {
       const [group] = await db.query(
         `
@@ -19,7 +19,7 @@ export class Group {
     }
   }
 
-  static async removeById(id: GroupId): Promise<GroupQueryResult> {
+  static async removeById(id: GroupId): Promise<IGroup> {
     try {
       const [group] = await db.query(
         `
@@ -36,7 +36,7 @@ export class Group {
     }
   }
 
-  static async getAll(): Promise<GroupQueryResult[]> {
+  static async getAll(): Promise<IGroup[]> {
     try {
       const groups = await db.query(`
         SELECT
@@ -50,7 +50,7 @@ export class Group {
     }
   }
 
-  static async create(g: CreateGroup): Promise<GroupQueryResult> {
+  static async create(g: CreateGroup): Promise<IGroup> {
     try {
       const [result] = await db.query(
         `
