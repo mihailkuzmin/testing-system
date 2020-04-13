@@ -1,6 +1,6 @@
 export type GroupId = number
 
-export interface GroupQueryResult {
+export interface IGroup {
   id: GroupId
   name: string
 }
