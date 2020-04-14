@@ -1,6 +1,6 @@
 import { IController, Response } from '../../typings'
 import { Task } from '../../models'
-import { CreateTask, TaskId } from '../../typings/task'
+import { CreateTask, UpdateTask, TaskId } from '../../typings/task'
 import * as Payload from './typings/payloads'
 import * as Messages from './typings/messages'
 
@@ -27,6 +27,15 @@ export const taskController: IController = (app, options, done) => {
     const result = await Task.getById(id)
 
     const response: Response<Payload.GetById> = { payload: result, message: Messages.GetById }
+    reply.send(response)
+  })
+
+  app.put('/', async (request, reply) => {
+    const task: UpdateTask = request.body
+
+    const result = await Task.update(task)
+
+    const response: Response<Payload.Update> = { payload: result, message: Messages.Update }
     reply.send(response)
   })
 
