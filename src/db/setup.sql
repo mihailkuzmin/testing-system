@@ -36,7 +36,7 @@ CREATE TABLE Task (
 
 CREATE TABLE Test (
 	id SERIAL PRIMARY KEY,
-	task_id INT REFERENCES Task(id) NOT NULL,
+	task_id INT NOT NULL REFERENCES Task(id) ON DELETE CASCADE,
 	input text NOT NULL,
 	output text NOT NULL
 );
