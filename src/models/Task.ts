@@ -56,4 +56,27 @@ export class Task {
       throw e
     }
   }
+
+  static async update(t: UpdateTask): Promise<ITask> {
+    try {
+      const [task] = await db.query(
+        `
+        UPDATE Task T
+        SET
+          description = ($2),
+          example_input = ($3),
+          example_output = ($4),
+          correct_output = ($5)
+        WHERE (T.id = ($1))
+        RETURNING
+          T.id, T.description, T.example_input as "exampleInput",
+          T.example_output as "exampleOutput", T.correct_output as "correctOutput"
+      `,
+        [t.id, t.description, t.exampleInput, t.exampleOutput, t.correctOutput],
+      )
+      return task
+    } catch (e) {
+      throw e
+    }
+  }
 }
