@@ -79,4 +79,22 @@ export class Task {
       throw e
     }
   }
+
+  static async removeById(id: TaskId): Promise<ITask> {
+    try {
+      const [task] = await db.query(
+        `
+        DELETE FROM Task as T
+        WHERE (T.id = ($1))
+        RETURNING
+          T.id, T.description, T.example_input as "exampleInput",
+          T.example_output as "exampleOutput", T.correct_output as "correctOutput"
+      `,
+        [id],
+      )
+      return task
+    } catch (e) {
+      throw e
+    }
+  }
 }
