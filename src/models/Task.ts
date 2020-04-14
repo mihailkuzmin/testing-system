@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { TaskQueryResult, CreateTask, TaskId } from '../typings/task'
+import { ITask, CreateTask, UpdateTask, TaskId } from '../typings/task'
 
 export class Task {
   static async getById(id: TaskId) {
@@ -20,7 +20,7 @@ export class Task {
     }
   }
 
-  static async getAll(): Promise<TaskQueryResult[]> {
+  static async getAll(): Promise<ITask[]> {
     try {
       const result = await db.query(`
         SELECT
@@ -34,7 +34,7 @@ export class Task {
     }
   }
 
-  static async create(t: CreateTask): Promise<TaskQueryResult> {
+  static async create(t: CreateTask): Promise<ITask> {
     try {
       const [result] = await db.query(
         `

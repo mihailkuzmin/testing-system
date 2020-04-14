@@ -1,13 +1,11 @@
 export type TaskId = number
 
-export interface TaskQueryResult {
+export interface ITask {
   id: TaskId
   description: string
-  input_name: string
-  output_name: string
-  example_intput: string
-  example_output: string
-  correct_output: string
+  exampleInput: string
+  exampleOutput: string
+  correctOutput: string
 }
 
 export interface CreateTask {
