@@ -1,6 +1,6 @@
 import { IController, Response } from '../../typings'
 import { Student } from '../../models'
-import { CreateStudent, UpdateStudent } from '../../typings/student'
+import { CreateStudent, UpdateStudent, StudentId } from '../../typings/student'
 import * as Payload from './typings/payloads'
 import * as Messages from './typings/messages'
 
@@ -13,7 +13,7 @@ export const studentController: IController = (app, options, done) => {
   })
 
   app.get('/:id', async (request, reply) => {
-    const id: string = request.params.id
+    const id: StudentId = request.params.id
 
     const result = await Student.getById(id)
 
@@ -40,7 +40,7 @@ export const studentController: IController = (app, options, done) => {
   })
 
   app.delete('/:id', async (request, reply) => {
-    const id: string = request.params.id
+    const id: StudentId = request.params.id
 
     const result = await Student.removeById(id)
 

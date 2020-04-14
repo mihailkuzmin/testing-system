@@ -1,5 +1,7 @@
+export type StudentId = number
+
 export interface IStudent {
-  id: number
+  id: StudentId
   lastName: string
   firstName: string
   patronymic: string
@@ -19,7 +21,7 @@ export interface CreateStudent {
 }
 
 export interface UpdateStudent {
-  id: number
+  id: StudentId
   lastName: string
   firstName: string
   patronymic: string

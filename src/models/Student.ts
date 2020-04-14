@@ -1,8 +1,8 @@
 import { db } from '../db'
-import { IStudent, UpdateStudent, CreateStudent } from '../typings/student'
+import { IStudent, UpdateStudent, CreateStudent, StudentId } from '../typings/student'
 
 export class Student {
-  static async getById(id: number | string): Promise<IStudent> {
+  static async getById(id: StudentId): Promise<IStudent> {
     try {
       const [student] = await db.query(
         `
@@ -21,7 +21,7 @@ export class Student {
     }
   }
 
-  static async removeById(id: number | string): Promise<IStudent> {
+  static async removeById(id: StudentId): Promise<IStudent> {
     try {
       const [student] = await db.query(
         `
