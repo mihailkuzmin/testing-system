@@ -39,5 +39,14 @@ export const taskController: IController = (app, options, done) => {
     reply.send(response)
   })
 
+  app.delete('/:id', async (request, reply) => {
+    const id: TaskId = request.params.id
+
+    const result = await Task.removeById(id)
+
+    const response: Response<Payload.RemoveById> = { payload: result, message: Messages.RemoveById }
+    reply.send(response)
+  })
+
   done()
 }
