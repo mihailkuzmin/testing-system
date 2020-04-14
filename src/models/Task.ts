@@ -1,8 +1,8 @@
 import { db } from '../db'
-import { TaskQueryResult, CreateTask } from '../typings/task'
+import { TaskQueryResult, CreateTask, TaskId } from '../typings/task'
 
 export class Task {
-  static async getById(id: number | string) {
+  static async getById(id: TaskId) {
     try {
       const [result] = await db.query(
         `

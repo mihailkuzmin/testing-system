@@ -1,5 +1,7 @@
+export type TaskId = number
+
 export interface TaskQueryResult {
-  id: number
+  id: TaskId
   description: string
   input_name: string
   output_name: string
