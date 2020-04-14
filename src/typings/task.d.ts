@@ -14,3 +14,11 @@ export interface CreateTask {
   exampleOutput: string
   correctOutput: string
 }
+
+export interface UpdateTask {
+  id: TaskId
+  description: string
+  exampleInput: string
+  exampleOutput: string
+  correctOutput: string
+}
