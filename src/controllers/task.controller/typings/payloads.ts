@@ -1,5 +1,5 @@
-import { TaskQueryResult } from '../../../typings/task'
+import { ITask } from '../../../typings/task'
 
-export interface Create extends TaskQueryResult {}
-export interface GetAll extends Array<TaskQueryResult> {}
-export interface GetById extends TaskQueryResult {}
+export interface Create extends ITask {}
+export interface GetAll extends Array<ITask> {}
+export interface GetById extends ITask {}
