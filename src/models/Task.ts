@@ -26,7 +26,8 @@ export class Task {
         SELECT
           T.id, T.description, T.example_input as "exampleInput",
           T.example_output as "exampleOutput", T.correct_output as "correctOutput"
-        from Task T
+        FROM Task T
+        ORDER BY T.id
       `)
       return result
     } catch (e) {
