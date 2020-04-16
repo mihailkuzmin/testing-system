@@ -1,0 +1,19 @@
+table.table {
+  width: 70%;
+  max-width: 950px;
+  min-width: 500px;
+}
+
+.row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.head th {
+  font-weight: 600;
+}
+
+.rowActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
