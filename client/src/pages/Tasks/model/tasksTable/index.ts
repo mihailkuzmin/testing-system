@@ -1,7 +1,7 @@
 import { forward } from 'effector'
 import { getTasksFx, deleteTaskFx } from './effects'
 import { $tasks } from './stores'
-import { deleteTask } from './events'
+import { deleteTask, editTask, addTask } from './events'
 import { TasksPage } from '../page'
 import { notifications } from '../../../../model'
 import { MessageType } from '../../../../typings'
@@ -21,6 +21,9 @@ deleteTask.watch((taskId) => {
   })
 })
 
+editTask.watch((taskId) => console.log(`Edit task ${taskId}`))
+addTask.watch(() => console.log('Add task'))
+
 deleteTaskFx.doneData.watch(({ message }) => {
   notifications.createMessage({ text: message, type: MessageType.Success })
 })
@@ -28,4 +31,6 @@ deleteTaskFx.doneData.watch(({ message }) => {
 export const tasksTable = {
   $tasks,
   deleteTask,
+  editTask,
+  addTask,
 }
