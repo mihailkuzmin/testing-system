@@ -41,6 +41,10 @@ deleteTaskFx.doneData.watch(({ message }) => {
   notifications.createMessage({ text: message, type: MessageType.Success })
 })
 
+deleteTaskFx.failData.watch(({ message }) => {
+  notifications.createMessage({ text: message, type: MessageType.Error })
+})
+
 export const tasksTable = {
   $tasks,
   $taskForDelete,
