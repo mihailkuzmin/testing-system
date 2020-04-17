@@ -1,28 +1,41 @@
-import { forward } from 'effector'
+import { forward, sample } from 'effector'
 import { getTasksFx, deleteTaskFx } from './effects'
-import { $tasks } from './stores'
-import { deleteTask, editTask, addTask } from './events'
+import { $tasks, $selectedForDelete as $taskForDelete } from './stores'
+import {
+  editTask,
+  addTask,
+  selectForDelete,
+  cancelDelete,
+  confirmDelete,
+} from './events'
 import { TasksPage } from '../page'
 import { notifications } from '../../../../model'
 import { MessageType } from '../../../../typings'
 
 forward({ from: TasksPage.close, to: getTasksFx.cancel })
 forward({ from: TasksPage.open, to: getTasksFx })
-
-forward({ from: deleteTask, to: deleteTaskFx })
 forward({ from: deleteTaskFx.done, to: getTasksFx })
 
 $tasks.on(getTasksFx.doneData, (_, { payload }) => payload)
+$tasks.reset(TasksPage.close)
 
-deleteTask.watch((taskId) => {
-  notifications.createMessage({
-    text: `Удаление задания ${taskId}`,
-    type: MessageType.Info,
-  })
+sample({
+  source: $tasks,
+  clock: selectForDelete,
+  target: $taskForDelete,
+  fn: (tasks, taskId) => tasks.find((task) => task.id === taskId) || null,
 })
 
-editTask.watch((taskId) => console.log(`Edit task ${taskId}`))
-addTask.watch(() => console.log('Add task'))
+$taskForDelete.watch(confirmDelete, (task) => {
+  if (task !== null) {
+    deleteTaskFx(task.id)
+    notifications.createMessage({
+      text: `Удаление задания ${task.id}`,
+      type: MessageType.Info,
+    })
+  }
+})
+$taskForDelete.reset(TasksPage.close, deleteTaskFx, cancelDelete)
 
 deleteTaskFx.doneData.watch(({ message }) => {
   notifications.createMessage({ text: message, type: MessageType.Success })
@@ -30,7 +43,10 @@ deleteTaskFx.doneData.watch(({ message }) => {
 
 export const tasksTable = {
   $tasks,
-  deleteTask,
+  $taskForDelete,
+  confirmDelete,
+  cancelDelete,
+  selectForDelete,
   editTask,
   addTask,
 }
