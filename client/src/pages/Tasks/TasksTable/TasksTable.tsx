@@ -6,15 +6,23 @@ import {
   EditButton as Edit,
   DeleteButton as Delete,
 } from '../../../components/Buttons'
+import { Modal } from '../../../components'
+import { DeleteTask } from './DeleteTask'
 import { tasksTable } from '../model'
 import styles from './TasksTable.module.css'
 
 export const TasksTable = () => {
   const tasks = useStore(tasksTable.$tasks)
-  const isEmpty = tasks.length === 0
+  const taskForDelete = useStore(tasksTable.$taskForDelete)
+
+  const deleteTaskExists = taskForDelete !== null
+  const tasksisEmpty = tasks.length === 0
 
   return (
     <T.Table className={styles.table}>
+      <Modal open={deleteTaskExists} onClose={tasksTable.cancelDelete}>
+        <DeleteTask />
+      </Modal>
       <T.Head className={styles.head}>
         <T.Row>
           <T.Cell colSpan={5}>
@@ -35,7 +43,7 @@ export const TasksTable = () => {
         </T.Row>
       </T.Head>
       <T.Body>
-        {isEmpty ? (
+        {tasksisEmpty ? (
           <T.Row>
             <T.Cell>Список заданий пока пуст</T.Cell>
             <T.Cell colSpan={4}></T.Cell>
@@ -49,7 +57,7 @@ export const TasksTable = () => {
               <T.Cell>{task.exampleOutput}</T.Cell>
               <T.Cell className={styles.actions}>
                 <Edit onClick={() => tasksTable.editTask(task.id)} />
-                <Delete onClick={() => tasksTable.deleteTask(task.id)} />
+                <Delete onClick={() => tasksTable.selectForDelete(task.id)} />
               </T.Cell>
             </T.Row>
           ))
