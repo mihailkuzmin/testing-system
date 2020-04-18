@@ -13,7 +13,9 @@ forward({
   to: [editModal.closeEditModal, groupsTable.refreshGroups],
 })
 
-// fetch group on edit click
+// prevent display old data when modal closed before content loaded
+forward({ from: editModal.closeEditModal, to: getGroupFx.cancel })
+
 forward({ from: groupsTable.selectForEdit, to: getGroupFx })
 
 $editForm.on(setField, (state, { key, value }) => ({

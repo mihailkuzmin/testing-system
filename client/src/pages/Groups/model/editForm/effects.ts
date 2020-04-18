@@ -1,5 +1,5 @@
-import { createEffect } from 'effector'
+import { createReEffect } from 'effector-reeffect'
 import { groupsApi } from '../../../../api'
 
-export const editGroupFx = createEffect({ handler: groupsApi.update })
-export const getGroupFx = createEffect({ handler: groupsApi.getById })
+export const editGroupFx = createReEffect({ handler: groupsApi.update })
+export const getGroupFx = createReEffect({ handler: groupsApi.getById })
