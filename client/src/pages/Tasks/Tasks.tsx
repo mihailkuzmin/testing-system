@@ -10,7 +10,7 @@ export const Tasks = (props: IPageProps) => {
   React.useEffect(TasksPage.onMount, [])
 
   const { isLoading, isFail } = useStore(TasksPage.$status)
-  
+
   if (isLoading) {
     return <PageLoader />
   }
