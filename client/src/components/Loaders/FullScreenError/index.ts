@@ -1,1 +1,0 @@
-export { FullScreenError } from './FullScreenError'

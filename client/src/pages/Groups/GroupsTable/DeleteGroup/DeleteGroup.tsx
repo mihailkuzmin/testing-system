@@ -13,7 +13,7 @@ export const DeleteGroup = () => {
   return (
     <div className={styles.deleteGroup}>
       <h3 className={styles.title}>Удалить группу</h3>
-      <p>Вы уверены, что хотите удалить группу {group?.name} ?</p>
+      <p>Вы уверены, что хотите удалить группу {group?.name}?</p>
       <p>Также будут удалены все студенты этой группы</p>
       <div className={styles.actions}>
         <Confirm onClick={groupsTable.confirmDelete}>Удалить</Confirm>

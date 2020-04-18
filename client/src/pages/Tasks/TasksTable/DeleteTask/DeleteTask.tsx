@@ -13,7 +13,7 @@ export const DeleteTask = () => {
   return (
     <div className={styles.deleteTask}>
       <h3 className={styles.title}>Удалить задание</h3>
-      <p>Вы уверены, что хотите удалить задание {task?.id} ?</p>
+      <p>Вы уверены, что хотите удалить задание {task?.id}?</p>
       <div className={styles.actions}>
         <Confirm onClick={tasksTable.confirmDelete}>Удалить</Confirm>
         <Cancel onClick={tasksTable.cancelDelete}>Отмена</Cancel>

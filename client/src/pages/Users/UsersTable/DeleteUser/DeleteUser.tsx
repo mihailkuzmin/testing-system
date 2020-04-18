@@ -16,7 +16,7 @@ export const DeleteUser = ({ user }: IAddUserProps) => {
     <div className={styles.deleteUser}>
       <h3 className={styles.title}>Удалить пользователя</h3>
       <p>Вы уверены, что хотите удалить пользователя</p>
-      <p>{`${user?.lastName} ${user?.firstName} ${user?.patronymic} `}?</p>
+      <p>{`${user?.lastName} ${user?.firstName} ${user?.patronymic}`}?</p>
       <div className={styles.actions}>
         <Confirm onClick={usersTable.confirmDelete}>Удалить</Confirm>
         <Cancel onClick={usersTable.cancelDelete}>Отмена</Cancel>

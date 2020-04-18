@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { IPageProps, Status } from '../../typings'
-import { FullScreenLoader, FullScreenError } from '../../components/Loaders'
+import { PageLoader, PageError } from '../../components/Loaders'
 import { Layout } from '../../components'
 import { usersTable, UsersPage } from './model'
 import { UsersTable } from './UsersTable'
@@ -16,11 +16,11 @@ export const Users = (props: IPageProps) => {
   const isFail = [tableStatus, selectStatus].includes(Status.Fail)
 
   if (isLoading) {
-    return <FullScreenLoader />
+    return <PageLoader />
   }
 
   if (isFail) {
-    return <FullScreenError />
+    return <PageError />
   }
 
   return (

@@ -1,4 +1,4 @@
 export { Linear } from './Linear'
 export { Circular } from './Circular'
-export { FullScreenLoader } from './FullScreenLoader'
-export { FullScreenError } from './FullScreenError'
+export { PageLoader } from './PageLoader'
+export { PageError } from './PageError'
