@@ -1,5 +1,5 @@
-import { createEffect } from 'effector'
+import { createReEffect } from 'effector-reeffect'
 import { usersApi } from '../../../../api'
 
-export const editUserFx = createEffect({ handler: usersApi.update })
-export const getUserFx = createEffect({ handler: usersApi.getById })
+export const editUserFx = createReEffect({ handler: usersApi.update })
+export const getUserFx = createReEffect({ handler: usersApi.getById })

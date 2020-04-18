@@ -13,7 +13,9 @@ forward({
   to: [editModal.closeEditModal, usersTable.refreshUsers],
 })
 
-// fetch user on edit click
+// prevent display old data when modal closed before content loaded
+forward({ from: editModal.closeEditModal, to: getUserFx.cancel })
+
 forward({ from: usersTable.selectForEdit, to: getUserFx })
 
 $editForm.on(setField, (state, { key, value }) => ({
