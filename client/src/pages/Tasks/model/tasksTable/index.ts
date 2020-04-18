@@ -23,7 +23,7 @@ sample({
   source: $tasks,
   clock: selectForDelete,
   target: $taskForDelete,
-  fn: (tasks, taskId) => tasks.find((task) => task.id === taskId) || null,
+  fn: (tasks, taskId) => tasks.find((task) => task.id === taskId) ?? null,
 })
 
 $taskForDelete.watch(confirmDelete, (task) => {
