@@ -7,12 +7,11 @@ interface NavLinkProps extends LinkProps {
   text?: string
 }
 
-export const NavLink = ({ Icon, to, text, children }: NavLinkProps) => {
+export const NavLink = ({ Icon, to, text }: NavLinkProps) => {
   return (
-    <Link className={styles.link} to={to}>
+    <Link draggable={false} className={styles.link} to={to}>
       {Icon && <Icon />}
       {text}
-      {children}
     </Link>
   )
 }
