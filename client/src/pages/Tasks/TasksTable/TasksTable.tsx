@@ -56,7 +56,7 @@ export const TasksTable = () => {
               <T.Cell>{task.exampleInput}</T.Cell>
               <T.Cell>{task.exampleOutput}</T.Cell>
               <T.Cell className={styles.actions}>
-                <Edit onClick={() => tasksTable.editTask(task.id)} />
+                <Edit onClick={() => tasksTable.selectForEdit(task.id)} />
                 <Delete onClick={() => tasksTable.selectForDelete(task.id)} />
               </T.Cell>
             </T.Row>

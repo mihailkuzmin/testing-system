@@ -1,12 +1,11 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { IPageProps, Status } from '../../typings'
-import { Layout } from '../../components'
+import { PageProps, Status } from '../../typings'
 import { PageLoader, PageError } from '../../components/Loaders'
 import { GroupsTable } from './GroupsTable'
 import { groupsTable, GroupsPage } from './model'
 
-export const Groups = (props: IPageProps) => {
+export const Groups = (props: PageProps) => {
   React.useEffect(GroupsPage.onMount, [])
   const groups = useStore(groupsTable.$groups)
   const groupsStatus = useStore(groupsTable.$getGroupsStatus)
@@ -21,9 +20,5 @@ export const Groups = (props: IPageProps) => {
   if (isFail) {
     return <PageError />
   }
-  return (
-    <Layout>
-      <GroupsTable groups={groups} />
-    </Layout>
-  )
+  return <GroupsTable groups={groups} />
 }

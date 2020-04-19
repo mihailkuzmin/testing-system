@@ -1,12 +1,11 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { IPageProps } from '../../typings'
-import { Layout } from '../../components'
+import { PageProps } from '../../typings'
 import { PageLoader, PageError } from '../../components/Loaders'
 import { TasksTable } from './TasksTable'
 import { TasksPage } from './model'
 
-export const Tasks = (props: IPageProps) => {
+export const Tasks = (props: PageProps) => {
   React.useEffect(TasksPage.onMount, [])
 
   const { isLoading, isFail } = useStore(TasksPage.$status)
@@ -19,9 +18,5 @@ export const Tasks = (props: IPageProps) => {
     return <PageError />
   }
 
-  return (
-    <Layout>
-      <TasksTable />
-    </Layout>
-  )
+  return <TasksTable />
 }

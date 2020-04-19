@@ -1,7 +1,4 @@
 import React from 'react'
-import { IPageProps } from '../../typings'
-import { Layout } from '../../components'
+import { PageProps } from '../../typings'
 
-export const Works = (props: IPageProps) => {
-  return <Layout>Works</Layout>
-}
+export const Works = (props: PageProps) => <div>Works</div>

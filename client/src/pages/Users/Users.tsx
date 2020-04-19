@@ -1,12 +1,11 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { IPageProps, Status } from '../../typings'
+import { PageProps, Status } from '../../typings'
 import { PageLoader, PageError } from '../../components/Loaders'
-import { Layout } from '../../components'
 import { usersTable, UsersPage } from './model'
 import { UsersTable } from './UsersTable'
 
-export const Users = (props: IPageProps) => {
+export const Users = (props: PageProps) => {
   React.useEffect(UsersPage.onMount, [])
 
   const { usersList, groupsList } = useStore(usersTable.$usersTable)
@@ -23,9 +22,5 @@ export const Users = (props: IPageProps) => {
     return <PageError />
   }
 
-  return (
-    <Layout>
-      <UsersTable groups={groupsList} users={usersList} />
-    </Layout>
-  )
+  return <UsersTable groups={groupsList} users={usersList} />
 }

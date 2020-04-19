@@ -1,8 +1,8 @@
 import { forward, sample } from 'effector'
 import { getTasksFx, deleteTaskFx } from './effects'
-import { $tasks, $selectedForDelete as $taskForDelete } from './stores'
+import { $tasks, $taskForDelete } from './stores'
 import {
-  editTask,
+  selectForEdit,
   addTask,
   selectForDelete,
   cancelDelete,
@@ -51,6 +51,6 @@ export const tasksTable = {
   confirmDelete,
   cancelDelete,
   selectForDelete,
-  editTask,
+  selectForEdit,
   addTask,
 }

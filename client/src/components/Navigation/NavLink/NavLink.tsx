@@ -1,14 +1,17 @@
 import React from 'react'
-import { Link, LinkProps, LinkGetProps } from '@reach/router'
+import { Link, LinkProps } from 'react-router-dom'
 import styles from './NavLink.module.css'
 
-const isActive = ({ isCurrent }: LinkGetProps) => {
-  return isCurrent ? { className: `${styles.link} ${styles.active}` } : {}
+interface NavLinkProps extends LinkProps {
+  Icon?: () => JSX.Element
+  text?: string
 }
 
-export const NavLink = ({ to, children }: LinkProps<{}>) => {
+export const NavLink = ({ Icon, to, text, children }: NavLinkProps) => {
   return (
-    <Link className={styles.link} to={to} getProps={isActive}>
+    <Link className={styles.link} to={to}>
+      {Icon && <Icon />}
+      {text}
       {children}
     </Link>
   )
