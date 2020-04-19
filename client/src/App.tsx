@@ -1,37 +1,29 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { useRoutes } from 'hookrouter'
 import { SnackbarProvider } from 'notistack'
 import { Navigation, NavLink } from './components/Navigation'
 import * as Icons from './components/Icons'
 import { Header, Layout } from './components'
 import { Notifier } from './Notifier'
-import * as Pages from './pages'
+import { routes } from './routes'
 
 function App() {
+  const pages = useRoutes(routes)
+
   return (
     <div className='App'>
       <SnackbarProvider maxSnack={4}>
-        <Router>
-          <Notifier />
-          <Header>
-            <Navigation>
-              <NavLink to='/' text='Главная' Icon={Icons.Home} />
-              <NavLink to='/groups' text='Группы' Icon={Icons.Groups} />
-              <NavLink to='/users' text='Пользователи' Icon={Icons.Users} />
-              <NavLink to='/tasks' text='Задания' Icon={Icons.Tasks} />
-              <NavLink to='/works' text='Работы' Icon={Icons.Works} />
-            </Navigation>
-          </Header>
-          <Switch>
-            <Layout>
-              <Route exact path='/' component={Pages.Main} />
-              <Route path='/groups' component={Pages.Groups} />
-              <Route path='/users' component={Pages.Users} />
-              <Route path='/tasks' component={Pages.Tasks} />
-              <Route path='/works' component={Pages.Works} />
-            </Layout>
-          </Switch>
-        </Router>
+        <Notifier />
+        <Header>
+          <Navigation>
+            <NavLink href='/' text='Главная' icon={Icons.Home} />
+            <NavLink href='/groups' text='Группы' icon={Icons.Groups} />
+            <NavLink href='/users' text='Пользователи' icon={Icons.Users} />
+            <NavLink href='/tasks' text='Задания' icon={Icons.Tasks} />
+            <NavLink href='/works' text='Работы' icon={Icons.Works} />
+          </Navigation>
+        </Header>
+        <Layout>{pages}</Layout>
       </SnackbarProvider>
     </div>
   )

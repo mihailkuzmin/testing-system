@@ -1,17 +1,27 @@
 import React from 'react'
-import { Link, LinkProps } from 'react-router-dom'
+import { usePath, A } from 'hookrouter'
 import styles from './NavLink.module.css'
 
-interface NavLinkProps extends LinkProps {
-  Icon?: () => JSX.Element
+interface NavLinkProps {
+  icon?: () => JSX.Element
   text?: string
+  href: string
 }
 
-export const NavLink = ({ Icon, to, text }: NavLinkProps) => {
+export const NavLink = (props: NavLinkProps) => {
+  const path = usePath()
+  const isActive = path === props.href
+
+  const Icon = props.icon
+
   return (
-    <Link draggable={false} className={styles.link} to={to}>
+    <A
+      draggable={false}
+      className={`${styles.link} ${isActive ? styles.active : ''}`}
+      href={props.href}
+    >
       {Icon && <Icon />}
-      {text}
-    </Link>
+      {props.text}
+    </A>
   )
 }
