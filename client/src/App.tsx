@@ -9,9 +9,9 @@ import * as Pages from './pages'
 
 function App() {
   return (
-    <SnackbarProvider maxSnack={4}>
-      <Router>
-        <div className='App'>
+    <div className='App'>
+      <SnackbarProvider maxSnack={4}>
+        <Router>
           <Notifier />
           <Header>
             <Navigation>
@@ -22,18 +22,18 @@ function App() {
               <NavLink to='/works' text='Работы' Icon={Icons.Works} />
             </Navigation>
           </Header>
-          <Layout>
-            <Switch>
+          <Switch>
+            <Layout>
               <Route exact path='/' component={Pages.Main} />
               <Route path='/groups' component={Pages.Groups} />
               <Route path='/users' component={Pages.Users} />
               <Route path='/tasks' component={Pages.Tasks} />
               <Route path='/works' component={Pages.Works} />
-            </Switch>
-          </Layout>
-        </div>
-      </Router>
-    </SnackbarProvider>
+            </Layout>
+          </Switch>
+        </Router>
+      </SnackbarProvider>
+    </div>
   )
 }
 
