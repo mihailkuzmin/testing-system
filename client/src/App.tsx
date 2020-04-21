@@ -16,7 +16,7 @@ function App() {
         <Notifier />
         <Header>
           <Navigation>
-            <NavLink href='/' text='Главная' icon={Icons.Home} />
+            <NavLink href='/' strict text='Главная' icon={Icons.Home} />
             <NavLink href='/groups' text='Группы' icon={Icons.Groups} />
             <NavLink href='/users' text='Пользователи' icon={Icons.Users} />
             <NavLink href='/tasks' text='Задания' icon={Icons.Tasks} />

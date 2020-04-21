@@ -6,11 +6,18 @@ interface NavLinkProps {
   icon?: () => JSX.Element
   text?: string
   href: string
+  strict?: boolean
 }
 
 export const NavLink = (props: NavLinkProps) => {
   const path = usePath()
-  const isActive = path === props.href
+  /*
+    strict = true, path = '/', href = '/' -> active
+    path = '/users/add', href = '/users/' -> active
+  */
+  const isActive = props.strict
+    ? path === props.href
+    : path.startsWith(props.href)
 
   const Icon = props.icon
 
