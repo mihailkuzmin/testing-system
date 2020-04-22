@@ -31,7 +31,6 @@ CREATE TABLE Task (
 	description text NOT NULL,
 	example_input varchar(70) NOT NULL,
 	example_output varchar(70) NOT NULL,
-	correct_output varchar(70) NOT NULL
 );
 
 CREATE TABLE Test (
