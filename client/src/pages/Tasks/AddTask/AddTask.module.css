@@ -1,0 +1,37 @@
+.addTask {
+  width: 70%;
+  max-width: 70%;
+}
+
+.addForm {
+  padding: 1rem;
+}
+
+.title {
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.testsControl {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.testsControl > span {
+  margin-right: 0.5rem;
+}

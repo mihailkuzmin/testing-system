@@ -12,11 +12,11 @@ import { addForm, addModal } from '../../model'
 import { Status } from '../../../../typings'
 import styles from './AddUser.module.css'
 
-interface IAddUserProps {
+type AddUserProps = {
   groups?: Group[]
 }
 
-export const AddUser = ({ groups }: IAddUserProps) => {
+export const AddUser = ({ groups }: AddUserProps) => {
   const createUserStatus = useStore(addForm.$createUserStatus)
   const isPending = createUserStatus === Status.Pending
 

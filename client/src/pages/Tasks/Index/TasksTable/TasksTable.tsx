@@ -1,14 +1,15 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import * as T from '../../../components/Table'
+import { navigate } from 'hookrouter'
+import * as T from '../../../../components/Table'
 import {
   PrimaryButton as Add,
   EditButton as Edit,
   DeleteButton as Delete,
-} from '../../../components/Buttons'
-import { Modal } from '../../../components'
+} from '../../../../components/Buttons'
+import { Modal } from '../../../../components'
 import { DeleteTask } from './DeleteTask'
-import { tasksTable } from '../model'
+import { tasksTable } from '../../model'
 import styles from './TasksTable.module.css'
 
 export const TasksTable = () => {
@@ -29,7 +30,7 @@ export const TasksTable = () => {
             <T.Header>
               <T.Title>Задания</T.Title>
               <T.Actions>
-                <Add onClick={tasksTable.addTask}>Добавить</Add>
+                <Add onClick={() => navigate('/tasks/add')}>Добавить</Add>
               </T.Actions>
             </T.Header>
           </T.Cell>

@@ -1,4 +1,4 @@
-import { Tasks as Index } from './Tasks'
+import { Index } from './Index'
 import { AddTask } from './AddTask'
 
 export const Tasks = { Index, AddTask }

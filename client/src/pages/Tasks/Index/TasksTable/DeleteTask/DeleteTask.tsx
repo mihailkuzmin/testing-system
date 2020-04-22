@@ -3,8 +3,8 @@ import { useStore } from 'effector-react'
 import {
   PrimaryButton as Confirm,
   SecondaryButton as Cancel,
-} from '../../../../components/Buttons'
-import { tasksTable } from '../../model'
+} from '../../../../../components/Buttons'
+import { tasksTable } from '../../../model'
 import styles from './DeleteTask.module.css'
 
 export const DeleteTask = () => {
