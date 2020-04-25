@@ -1,9 +1,12 @@
 import React from 'react'
-// import {RouteComponentProps} from 'react-router-dom'
 import { OptionsObject } from 'notistack'
 
 export interface PageProps {
   children?: React.ReactNode
+}
+
+export type QueryParams = {
+  [key: string]: any
 }
 
 /*
