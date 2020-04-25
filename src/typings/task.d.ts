@@ -7,16 +7,19 @@ export interface Test {
 }
 
 export interface CreateTask {
+  name: string
   description: string
   tests: Test[]
 }
 
 export interface ITask {
   id: TaskId
+  name: string
   description: string
 }
 
 export interface UpdateTask {
   id: TaskId
+  name: string
   description: string
 }
