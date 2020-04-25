@@ -28,6 +28,7 @@ CREATE TABLE Work (
 
 CREATE TABLE Task (
 	id SERIAL PRIMARY KEY,
+	name varchar(100) NOT NULL,
 	description text NOT NULL
 );
 
