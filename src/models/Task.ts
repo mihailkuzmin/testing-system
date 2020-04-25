@@ -1,5 +1,6 @@
 import { db } from '../db'
-import { ITask, CreateTask, UpdateTask, TaskId } from '../typings/task'
+import format from 'pg-format'
+import { ITask, CreateTask, UpdateTask, TaskId, Test } from '../typings/task'
 
 export class Task {
   static async getById(id: TaskId) {
@@ -7,8 +8,7 @@ export class Task {
       const [result] = await db.query(
         `
         SELECT
-          T.id, T.description, T.example_input as "exampleInput",
-          T.example_output as "exampleOutput", T.correct_output as "correctOutput"
+          T.id, T.description
         FROM Task T
         WHERE T.id = ($1)
       `,
@@ -24,8 +24,7 @@ export class Task {
     try {
       const result = await db.query(`
         SELECT
-          T.id, T.description, T.example_input as "exampleInput",
-          T.example_output as "exampleOutput", T.correct_output as "correctOutput"
+          T.id, T.description
         FROM Task T
         ORDER BY T.id
       `)
@@ -63,16 +62,12 @@ export class Task {
         `
         UPDATE Task T
         SET
-          description = ($2),
-          example_input = ($3),
-          example_output = ($4),
-          correct_output = ($5)
+          description = ($2)
         WHERE (T.id = ($1))
         RETURNING
-          T.id, T.description, T.example_input as "exampleInput",
-          T.example_output as "exampleOutput", T.correct_output as "correctOutput"
+          T.id, T.description
       `,
-        [t.id, t.description, t.exampleInput, t.exampleOutput, t.correctOutput],
+        [t.id, t.description],
       )
       return task
     } catch (e) {
@@ -87,8 +82,7 @@ export class Task {
         DELETE FROM Task as T
         WHERE (T.id = ($1))
         RETURNING
-          T.id, T.description, T.example_input as "exampleInput",
-          T.example_output as "exampleOutput", T.correct_output as "correctOutput"
+          T.id, T.description
       `,
         [id],
       )
