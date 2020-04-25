@@ -37,21 +37,21 @@ export class Task {
 
   static async create(t: CreateTask): Promise<ITask> {
     try {
-      const [result] = await db.query(
+      const [task] = await db.query(
         `
         INSERT INTO Task as T (
-          description,
-          example_input,
-          example_output,
-          correct_output
-        ) VALUES($1, $2, $3, $4)
+          description
+        ) VALUES ($1)
         RETURNING
-          T.id, T.description, T.example_input as "exampleInput",
-          T.example_output as "exampleOutput", T.correct_output as "correctOutput"
+          T.id, T.description
       `,
-        [t.description, t.exampleInput, t.exampleOutput, t.correctOutput],
+        [t.description],
       )
-      return result
+
+      const tests = t.tests.map((test) => [task.id, ...Object.values(test)])
+      await db.query(format(`INSERT INTO Test as T (task_id, input, output) VALUES %L`, tests))
+
+      return task
     } catch (e) {
       throw e
     }
