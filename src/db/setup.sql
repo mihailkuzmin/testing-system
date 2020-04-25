@@ -28,9 +28,7 @@ CREATE TABLE Work (
 
 CREATE TABLE Task (
 	id SERIAL PRIMARY KEY,
-	description text NOT NULL,
-	example_input varchar(70) NOT NULL,
-	example_output varchar(70) NOT NULL,
+	description text NOT NULL
 );
 
 CREATE TABLE Test (

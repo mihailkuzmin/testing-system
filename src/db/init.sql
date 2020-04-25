@@ -13,14 +13,14 @@ INSERT INTO Work VALUES (DEFAULT, 'Работа 2. ИТ', '2020-03-01 03:00', '2
 INSERT INTO Work VALUES (DEFAULT, 'Работа 1. Программирование', '2020-03-01 03:00', '2020-03-20 03:00');
 INSERT INTO Work VALUES (DEFAULT, 'Работа 2. Программирование', '2020-03-15 00:00', '2020-03-18 00:00');
 
-INSERT INTO Task VALUES (DEFAULT, 'Task 1 desc', 'Example input 1', 'Example output 1', 'Correct output 1');
-INSERT INTO Task VALUES (DEFAULT, 'Task 2 desc', 'Example input 2', 'Example output 2', 'Correct output 2');
-INSERT INTO Task VALUES (DEFAULT, 'Task 3 desc', 'Example input 3', 'Example output 3', 'Correct output 3');
-INSERT INTO Task VALUES (DEFAULT, 'Task 4 desc', 'Example input 4', 'Example output 4', 'Correct output 4');
-INSERT INTO Task VALUES (DEFAULT, 'Task 5 desc', 'Example input 5', 'Example output 5', 'Correct output 5');
-INSERT INTO Task VALUES (DEFAULT, 'Task 6 desc', 'Example input 6', 'Example output 6', 'Correct output 6');
-INSERT INTO Task VALUES (DEFAULT, 'Task 7 desc', 'Example input 7', 'Example output 7', 'Correct output 7');
-INSERT INTO Task VALUES (DEFAULT, 'Task 8 desc', 'Example input 8', 'Example output 8', 'Correct output 8');
+INSERT INTO Task VALUES (DEFAULT, 'Task 1 desc');
+INSERT INTO Task VALUES (DEFAULT, 'Task 2 desc');
+INSERT INTO Task VALUES (DEFAULT, 'Task 3 desc');
+INSERT INTO Task VALUES (DEFAULT, 'Task 4 desc');
+INSERT INTO Task VALUES (DEFAULT, 'Task 5 desc');
+INSERT INTO Task VALUES (DEFAULT, 'Task 6 desc');
+INSERT INTO Task VALUES (DEFAULT, 'Task 7 desc');
+INSERT INTO Task VALUES (DEFAULT, 'Task 8 desc');
 
 INSERT INTO Test VALUES (DEFAULT, 1, 'Test 1 Input', 'Test 1 Output');
 INSERT INTO Test VALUES (DEFAULT, 2, 'Test 2 Input', 'Test 2 Output');
