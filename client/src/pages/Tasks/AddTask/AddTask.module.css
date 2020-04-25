@@ -4,6 +4,11 @@
   padding: 1rem;
 }
 
+.addTask h2,
+.addTask h3 {
+  margin: 0;
+}
+
 .addForm {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -26,10 +31,6 @@
 
 .testsControl > span {
   margin-right: 0.5rem;
-}
-
-h2, h3 {
-  margin: 0;
 }
 
 .header {
