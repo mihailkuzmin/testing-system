@@ -1,24 +1,22 @@
 export type TaskId = number
+export type TestId = number
 
-export interface ITask {
-  id: TaskId
-  description: string
-  exampleInput: string
-  exampleOutput: string
-  correctOutput: string
+export interface Test {
+  input: string
+  output: string
 }
 
 export interface CreateTask {
   description: string
-  exampleInput: string
-  exampleOutput: string
-  correctOutput: string
+  tests: Test[]
+}
+
+export interface ITask {
+  id: TaskId
+  description: string
 }
 
 export interface UpdateTask {
   id: TaskId
   description: string
-  exampleInput: string
-  exampleOutput: string
-  correctOutput: string
 }
