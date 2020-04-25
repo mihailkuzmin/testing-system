@@ -61,6 +61,10 @@ createTaskFx.doneData.watch(({ message }) => {
   notifications.createMessage({ text: message, type: MessageType.Success })
 })
 
+createTaskFx.failData.watch(({ message }) => {
+  notifications.createMessage({ text: message, type: MessageType.Error })
+})
+
 export const addTask = {
   $name,
   $description,
