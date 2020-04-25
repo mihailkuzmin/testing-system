@@ -1,0 +1,19 @@
+.preview {
+  padding: 1.5rem;
+}
+
+.preview > h2 {
+  margin-top: 0;
+}
+
+.description {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.description > span {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 14px;
+  font-weight: 400;
+}
