@@ -1,28 +1,22 @@
 .addTask {
   width: 70%;
   max-width: 70%;
+  padding: 1rem;
 }
 
 .addForm {
-  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
-.title {
-  margin: 0;
+.addForm > *:nth-child(1),
+.addForm > *:nth-child(2) {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
-
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-}
-
-.testsCounter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.addForm > *:nth-child(4) {
+  justify-self: end;
 }
 
 .testsControl {
@@ -34,8 +28,13 @@
   margin-right: 0.5rem;
 }
 
-.tests {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+h2, h3 {
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
 }

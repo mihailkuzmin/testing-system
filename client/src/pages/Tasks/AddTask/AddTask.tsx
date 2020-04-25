@@ -12,8 +12,6 @@ import { addTask } from '../model/addTask'
 import styles from './AddTask.module.css'
 
 export const AddTask = () => {
-  const desc = useStore(addTask.$description)
-
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     addTask.createTask()
@@ -22,17 +20,16 @@ export const AddTask = () => {
   return (
     <Paper className={styles.addTask}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Добавить задание</h2>
+        <h2>Добавить задание</h2>
         <Save form='addTaskForm' type='submit'>
           Сохранить
         </Save>
       </div>
       <form id='addTaskForm' className={styles.addForm} onSubmit={onSubmit}>
-        <Editor content={desc} onChange={addTask.descriptionChange} />
-        <div className={styles.testsCounter}>
-          <h3>Добавьте тесты к заданию</h3>
-          <TestControl onAdd={addTask.addTest} onRemove={addTask.removeTest} />
-        </div>
+        <NameInput />
+        <DescriptionInput />
+        <h3>Добавьте тесты к заданию</h3>
+        <TestControl onAdd={addTask.addTest} onRemove={addTask.removeTest} />
         <Tests />
       </form>
     </Paper>
@@ -63,7 +60,7 @@ const Tests = () => {
     </React.Fragment>
   ))
 
-  return <div className={styles.tests}>{tests}</div>
+  return tests
 }
 
 type ExampleInputProps = { id: number }
@@ -101,4 +98,22 @@ const ExampleOutput = ({ id }: ExampleOutputProps) => {
       multiline
     />
   )
+}
+
+const NameInput = () => {
+  const name = useStore(addTask.$name)
+
+  return (
+    <Input
+      value={name}
+      onChange={(e) => addTask.nameChange(e.target.value)}
+      label='Название задания'
+    />
+  )
+}
+
+const DescriptionInput = () => {
+  const description = useStore(addTask.$description)
+
+  return <Editor content={description} onChange={addTask.descriptionChange} />
 }
