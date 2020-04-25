@@ -52,7 +52,7 @@ export const TasksTable = () => {
           tasks.map((task) => (
             <T.Row key={task.id}>
               <T.Cell>{task.id}</T.Cell>
-              <T.Cell>Название</T.Cell>
+              <T.Cell>{task.name}</T.Cell>
               <T.Cell>
                 <div className={styles.actions}>
                   <Preview />
