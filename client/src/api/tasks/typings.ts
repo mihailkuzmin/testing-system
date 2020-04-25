@@ -8,15 +8,18 @@ export type Test = {
 
 export interface Task {
   id: TaskId
+  name: string
   description: string
 }
 
 export interface CreateTask {
+  name: string
   description: string
   tests: Test[]
 }
 
 export interface UpdateTask {
   id: TaskId
+  name: string
   description: string
 }

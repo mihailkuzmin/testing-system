@@ -6,6 +6,7 @@ export type Test = {
 }
 
 export type Task = {
+  name: string
   description: string
   tests: Test[]
 }

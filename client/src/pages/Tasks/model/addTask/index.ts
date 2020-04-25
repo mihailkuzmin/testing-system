@@ -1,5 +1,5 @@
 import { sample } from 'effector'
-import { $description, $tests, $testsCount, $form } from './stores'
+import { $description, $tests, $testsCount, $name, $form } from './stores'
 import {
   descriptionChange,
   inputChange,
@@ -7,6 +7,7 @@ import {
   addTest,
   removeTest,
   createTask,
+  nameChange,
 } from './events'
 import { createTaskFx } from './effects'
 import { notifications } from '../../../../model'
@@ -14,6 +15,9 @@ import { MessageType } from '../../../../typings'
 
 $description.on(descriptionChange, (_, desc) => desc)
 $description.reset(createTaskFx.done)
+
+$name.on(nameChange, (_, name) => name)
+$name.reset(createTaskFx.done)
 
 $tests.on(inputChange, (tests, { id, value }) => {
   return tests.map((test) => {
@@ -43,9 +47,9 @@ sample({
   source: $form,
   clock: createTask,
   target: createTaskFx,
-  fn: ({ description, tests }) => ({
-    description,
-    tests: tests.map(({ input, output }) => ({ input, output })),
+  fn: (task) => ({
+    ...task,
+    tests: task.tests.map(({ input, output }) => ({ input, output })),
   }),
 })
 
@@ -58,6 +62,7 @@ createTaskFx.doneData.watch(({ message }) => {
 })
 
 export const addTask = {
+  $name,
   $description,
   $tests,
   $testsCount,
@@ -67,4 +72,5 @@ export const addTask = {
   inputChange,
   outputChange,
   descriptionChange,
+  nameChange,
 }
