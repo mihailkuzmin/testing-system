@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  PrimaryButton as Confirm,
-  SecondaryButton as Cancel,
-} from '../../../../components/Buttons'
+import { PrimaryButton as Confirm, SecondaryButton as Cancel } from '../../../../components/Buttons'
 import { UsersTableRow } from '../../../../typings'
 import { usersTable } from '../../model'
 import styles from './DeleteUser.module.css'

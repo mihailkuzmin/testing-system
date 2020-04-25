@@ -94,10 +94,6 @@ $selectedForDelete.reset(cancelDelete, userDeleted)
 $selectedForDelete.watch(confirmDelete, (user) => {
   if (user !== null) {
     deleteUserFx(user.id)
-    notifications.createMessage({
-      type: MessageType.Info,
-      text: `Удаление пользователя ${user.lastName} ${user.firstName} ${user.patronymic}`,
-    })
   }
 })
 
@@ -108,6 +104,10 @@ $getAllUsersStatus.reset(UsersPage.close)
 $getGroupsStatus.on(getGroupsFx.done, () => Status.Idle)
 $getGroupsStatus.on(getGroupsFx.fail, () => Status.Fail)
 $getGroupsStatus.reset(UsersPage.close)
+
+deleteUserFx.watch(() => {
+  notifications.createMessage({ text: 'Выполняется', type: MessageType.Info })
+})
 
 deleteUserFx.doneData.watch(({ message }) => {
   notifications.createMessage({ type: MessageType.Success, text: message })

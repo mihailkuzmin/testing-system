@@ -15,9 +15,7 @@ export const NavLink = (props: NavLinkProps) => {
     strict = true, path = '/', href = '/' -> active
     path = '/users/add', href = '/users/' -> active
   */
-  const isActive = props.strict
-    ? path === props.href
-    : path.startsWith(props.href)
+  const isActive = props.strict ? path === props.href : path.startsWith(props.href)
 
   const Icon = props.icon
 

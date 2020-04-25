@@ -13,13 +13,9 @@ interface NavigationProps {
   children?: React.ReactNode
 }
 
-const Item = ({ children }: ItemProps) => (
-  <li className={styles.item}>{children}</li>
-)
+const Item = ({ children }: ItemProps) => <li className={styles.item}>{children}</li>
 
-const List = ({ children }: ListProps) => (
-  <ul className={styles.list}>{children}</ul>
-)
+const List = ({ children }: ListProps) => <ul className={styles.list}>{children}</ul>
 
 export const Navigation = ({ children }: NavigationProps) => (
   <List>

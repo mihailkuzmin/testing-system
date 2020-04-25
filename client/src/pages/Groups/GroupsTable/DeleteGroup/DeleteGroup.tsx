@@ -1,9 +1,6 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import {
-  PrimaryButton as Confirm,
-  SecondaryButton as Cancel,
-} from '../../../../components/Buttons'
+import { PrimaryButton as Confirm, SecondaryButton as Cancel } from '../../../../components/Buttons'
 import { groupsTable } from '../../model'
 import styles from './DeleteGroup.module.css'
 

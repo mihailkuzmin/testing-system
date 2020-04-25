@@ -1,10 +1,5 @@
 import { createEvent } from 'effector'
-import {
-  Response,
-  UsersTableRow,
-  UsersTableGroup,
-  UsersTableRowId,
-} from '../../../../typings'
+import { Response, UsersTableRow, UsersTableGroup, UsersTableRowId } from '../../../../typings'
 
 export const groupSelectChange = createEvent<number>()
 export const onGroupSelectChange = groupSelectChange.prepend(

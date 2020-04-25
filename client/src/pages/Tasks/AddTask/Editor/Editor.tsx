@@ -1,52 +1,41 @@
 import React from 'react'
 import SunEditor from 'suneditor-react'
-import {
-  font,
-  fontSize,
-  align,
-  list,
-  table,
-  image,
-} from 'suneditor/src/plugins'
+import { font, fontSize, align, list, table, image } from 'suneditor/src/plugins'
 import 'suneditor/dist/css/suneditor.min.css'
 
-interface EditorProps {
+type EditorProps = {
   name?: string
+  content?: string
   onChange?: (content: string) => void
 }
 
-const defaultState =
-  '<p style="font-size: 16px">Добавьте описание задания здесь</p>'
-
-export const Editor = (props: EditorProps) => {
-  return (
-    <div>
-      <SunEditor
-        setOptions={{
-          plugins: [font, fontSize, align, list, table, image],
-          buttonList: [
-            [
-              'undo',
-              'redo',
-              'font',
-              'fontSize',
-              'bold',
-              'underline',
-              'italic',
-              'strike',
-              'subscript',
-              'superscript',
-              'align',
-              'list',
-              'table',
-              'image',
-            ],
+export const Editor = React.memo((props: EditorProps) => (
+  <div>
+    <SunEditor
+      setOptions={{
+        plugins: [font, fontSize, align, list, table, image],
+        buttonList: [
+          [
+            'undo',
+            'redo',
+            'font',
+            'fontSize',
+            'bold',
+            'underline',
+            'italic',
+            'strike',
+            'subscript',
+            'superscript',
+            'align',
+            'list',
+            'table',
+            'image',
           ],
-        }}
-        setContents={defaultState}
-        name={props.name}
-        onChange={props.onChange}
-      />
-    </div>
-  )
-}
+        ],
+      }}
+      setContents={props.content ?? ''}
+      name={props.name ?? ''}
+      onBlur={(_, content) => props.onChange && props.onChange(content)}
+    />
+  </div>
+))

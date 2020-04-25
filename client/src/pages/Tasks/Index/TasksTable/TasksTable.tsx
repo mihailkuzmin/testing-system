@@ -9,7 +9,7 @@ import {
 } from '../../../../components/Buttons'
 import { Modal } from '../../../../components'
 import { DeleteTask } from './DeleteTask'
-import { tasksTable } from '../../model'
+import { tasksTable } from '../../model/index'
 import styles from './TasksTable.module.css'
 
 export const TasksTable = () => {
@@ -38,8 +38,6 @@ export const TasksTable = () => {
         <T.Row>
           <T.Cell>id</T.Cell>
           <T.Cell>Описание</T.Cell>
-          <T.Cell>Пример входных данных</T.Cell>
-          <T.Cell>Пример выходных данных</T.Cell>
           <T.Cell>Действия</T.Cell>
         </T.Row>
       </T.Head>
@@ -54,8 +52,6 @@ export const TasksTable = () => {
             <T.Row key={task.id}>
               <T.Cell>{task.id}</T.Cell>
               <T.Cell>{task.description}</T.Cell>
-              <T.Cell>{task.exampleInput}</T.Cell>
-              <T.Cell>{task.exampleOutput}</T.Cell>
               <T.Cell className={styles.actions}>
                 <Edit onClick={() => tasksTable.selectForEdit(task.id)} />
                 <Delete onClick={() => tasksTable.selectForDelete(task.id)} />

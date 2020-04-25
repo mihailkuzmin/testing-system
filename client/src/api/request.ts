@@ -1,8 +1,7 @@
 import { Request, Response } from '../typings'
 import ky from 'ky'
 
-const timeout = (time: number): Promise<void> =>
-  new Promise((r) => setTimeout(r, time))
+const timeout = (time: number): Promise<void> => new Promise((r) => setTimeout(r, time))
 
 const HOST = 'http://localhost:5000/api/'
 const TIMEOUT = 500

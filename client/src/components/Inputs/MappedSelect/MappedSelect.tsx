@@ -1,12 +1,7 @@
 import React from 'react'
 import { Store } from 'effector'
 import { useStoreMap } from 'effector-react'
-import {
-  Select as MaterialSelect,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from '@material-ui/core'
+import { Select as MaterialSelect, MenuItem, FormControl, InputLabel } from '@material-ui/core'
 
 export { MenuItem as Item }
 

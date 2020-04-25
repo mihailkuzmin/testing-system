@@ -1,16 +1,10 @@
 import { forward, sample } from 'effector'
 import { getTasksFx, deleteTaskFx } from './effects'
 import { $tasks, $taskForDelete } from './stores'
-import {
-  selectForEdit,
-  addTask,
-  selectForDelete,
-  cancelDelete,
-  confirmDelete,
-} from './events'
+import { selectForEdit, addTask, selectForDelete, cancelDelete, confirmDelete } from './events'
 import { TasksPage } from '../page'
-import { notifications } from '../../../../model'
-import { MessageType } from '../../../../typings'
+import { notifications } from '../../../../../model'
+import { MessageType } from '../../../../../typings'
 
 forward({ from: TasksPage.close, to: getTasksFx.cancel })
 forward({ from: TasksPage.open, to: getTasksFx })
@@ -29,13 +23,13 @@ sample({
 $taskForDelete.watch(confirmDelete, (task) => {
   if (task !== null) {
     deleteTaskFx(task.id)
-    notifications.createMessage({
-      text: `Удаление задания ${task.id}`,
-      type: MessageType.Info,
-    })
   }
 })
 $taskForDelete.reset(TasksPage.close, deleteTaskFx, cancelDelete)
+
+deleteTaskFx.watch(() => {
+  notifications.createMessage({ text: 'Выполняется', type: MessageType.Info })
+})
 
 deleteTaskFx.doneData.watch(({ message }) => {
   notifications.createMessage({ text: message, type: MessageType.Success })

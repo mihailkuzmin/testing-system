@@ -11,11 +11,7 @@ interface IModalProps {
 
 export const Modal = (props: IModalProps) => {
   return (
-    <MaterialModal
-      className={styles.modal}
-      open={props.open}
-      onClose={props.onClose}
-    >
+    <MaterialModal className={styles.modal} open={props.open} onClose={props.onClose}>
       <Paper style={{ outline: 'none' }} className={props.className}>
         {props.children}
       </Paper>

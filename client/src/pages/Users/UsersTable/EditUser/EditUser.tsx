@@ -1,9 +1,6 @@
 import React from 'react'
 import { useStore, useStoreMap } from 'effector-react'
-import {
-  PrimaryButton as Save,
-  SecondaryButton as Cancel,
-} from '../../../../components/Buttons'
+import { PrimaryButton as Save, SecondaryButton as Cancel } from '../../../../components/Buttons'
 import { MappedSelect, Item } from '../../../../components/Inputs/MappedSelect'
 import { MappedInput, CheckBox } from '../../../../components/Inputs'
 import { Linear, Circular } from '../../../../components/Loaders'

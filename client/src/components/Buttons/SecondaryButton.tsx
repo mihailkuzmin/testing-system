@@ -9,12 +9,7 @@ interface ISecondaryButtonProps {
 
 export const SecondaryButton = (props: ISecondaryButtonProps) => {
   return (
-    <Button
-      disabled={props.disabled}
-      variant='outlined'
-      color='secondary'
-      onClick={props.onClick}
-    >
+    <Button disabled={props.disabled} variant='outlined' color='secondary' onClick={props.onClick}>
       {props.children}
     </Button>
   )

@@ -16,22 +16,26 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  padding: 1rem;
 }
 
-.fields {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+.testsCounter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .testsControl {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
   align-items: center;
 }
 
 .testsControl > span {
   margin-right: 0.5rem;
+}
+
+.tests {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }

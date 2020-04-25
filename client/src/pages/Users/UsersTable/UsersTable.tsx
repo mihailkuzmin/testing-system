@@ -90,9 +90,7 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
                 <T.Cell>
                   <div className={styles.rowActions}>
                     <Edit onClick={() => usersTable.selectForEdit(user.id)} />
-                    <Delete
-                      onClick={() => usersTable.selectForDelete(user.id)}
-                    />
+                    <Delete onClick={() => usersTable.selectForDelete(user.id)} />
                   </div>
                 </T.Cell>
               </T.Row>

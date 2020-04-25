@@ -31,10 +31,7 @@ export const GroupsTable = ({ groups }: IGroupsTableProps) => {
       <Modal open={editGroupModal.open} onClose={editModal.closeEditModal}>
         <EditGroup />
       </Modal>
-      <Modal
-        open={deleteGroupModal.open}
-        onClose={deleteModal.closeDeleteModal}
-      >
+      <Modal open={deleteGroupModal.open} onClose={deleteModal.closeDeleteModal}>
         <DeleteGroup />
       </Modal>
       <T.Head className={styles.head}>
@@ -63,9 +60,7 @@ export const GroupsTable = ({ groups }: IGroupsTableProps) => {
               <T.Cell>
                 <div className={styles.rowActions}>
                   <Edit onClick={() => groupsTable.selectForEdit(group.id)} />
-                  <Delete
-                    onClick={() => groupsTable.selectForDelete(group.id)}
-                  />
+                  <Delete onClick={() => groupsTable.selectForDelete(group.id)} />
                 </div>
               </T.Cell>
             </T.Row>

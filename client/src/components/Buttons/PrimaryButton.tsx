@@ -1,23 +1,11 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import { Button, ButtonProps } from '@material-ui/core'
 
-interface IPrimaryButtonProps {
+type onClick = {
   onClick?: any
-  children?: React.ReactNode
-  disabled?: boolean
-  type?: 'button' | 'submit' | 'reset'
 }
+type PrimaryButtonProps = Omit<ButtonProps, 'onClick'> & onClick
 
-export const PrimaryButton = (props: IPrimaryButtonProps) => {
-  return (
-    <Button
-      disabled={props.disabled}
-      variant='outlined'
-      color='primary'
-      onClick={props.onClick}
-      type={props.type}
-    >
-      {props.children}
-    </Button>
-  )
+export const PrimaryButton = (props: PrimaryButtonProps) => {
+  return <Button {...props} variant='outlined' color='primary' />
 }

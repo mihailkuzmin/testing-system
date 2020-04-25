@@ -4,7 +4,7 @@ import {
   PrimaryButton as Confirm,
   SecondaryButton as Cancel,
 } from '../../../../../components/Buttons'
-import { tasksTable } from '../../../model'
+import { tasksTable } from '../../../model/index'
 import styles from './DeleteTask.module.css'
 
 export const DeleteTask = () => {

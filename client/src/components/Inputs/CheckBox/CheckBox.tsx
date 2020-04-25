@@ -20,12 +20,7 @@ export const CheckBox = (props: ICheckboxProps) => {
   return (
     <FormControlLabel
       control={
-        <Checkbox
-          checked={props.checked}
-          onChange={onChange}
-          name={props.name}
-          color='primary'
-        />
+        <Checkbox checked={props.checked} onChange={onChange} name={props.name} color='primary' />
       }
       label={props.label}
     />

@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  FormControl,
-  Select as MaterialSelect,
-  MenuItem,
-} from '@material-ui/core'
+import { FormControl, Select as MaterialSelect, MenuItem } from '@material-ui/core'
 export { MenuItem as Item }
 
 interface ISelectProps {

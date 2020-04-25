@@ -1,10 +1,5 @@
 import { $notifications } from './stores'
-import {
-  newMessage,
-  createMessage,
-  setDisplayed,
-  removeMessage,
-} from './events'
+import { newMessage, createMessage, setDisplayed, removeMessage } from './events'
 
 $notifications.on(newMessage, (state, message) => {
   return [...state, message]
