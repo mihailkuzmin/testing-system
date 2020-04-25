@@ -1,6 +1,6 @@
 import { db } from '../db'
 import format from 'pg-format'
-import { ITask, CreateTask, UpdateTask, TaskId, Test } from '../typings/task'
+import { ITask, CreateTask, UpdateTask, TaskId } from '../typings/task'
 
 export class Task {
   static async getById(id: TaskId) {
