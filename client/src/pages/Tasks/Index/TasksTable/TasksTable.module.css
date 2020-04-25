@@ -1,7 +1,5 @@
 table.table {
-  width: 70%;
-  max-width: 950px;
-  min-width: 500px;
+  width: auto;
 }
 
 .row:hover {

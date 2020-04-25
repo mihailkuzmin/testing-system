@@ -6,6 +6,7 @@ import {
   PrimaryButton as Add,
   EditButton as Edit,
   DeleteButton as Delete,
+  PreviewButton as Preview,
 } from '../../../../components/Buttons'
 import { Modal } from '../../../../components'
 import { DeleteTask } from './DeleteTask'
@@ -26,7 +27,7 @@ export const TasksTable = () => {
       </Modal>
       <T.Head className={styles.head}>
         <T.Row>
-          <T.Cell colSpan={5}>
+          <T.Cell colSpan={3}>
             <T.Header>
               <T.Title>Задания</T.Title>
               <T.Actions>
@@ -36,8 +37,8 @@ export const TasksTable = () => {
           </T.Cell>
         </T.Row>
         <T.Row>
-          <T.Cell>id</T.Cell>
-          <T.Cell>Описание</T.Cell>
+          <T.Cell>№</T.Cell>
+          <T.Cell>Название</T.Cell>
           <T.Cell>Действия</T.Cell>
         </T.Row>
       </T.Head>
@@ -45,16 +46,19 @@ export const TasksTable = () => {
         {tasksisEmpty ? (
           <T.Row>
             <T.Cell>Список заданий пока пуст</T.Cell>
-            <T.Cell colSpan={4}></T.Cell>
+            <T.Cell colSpan={2}></T.Cell>
           </T.Row>
         ) : (
           tasks.map((task) => (
             <T.Row key={task.id}>
               <T.Cell>{task.id}</T.Cell>
-              <T.Cell>{task.description}</T.Cell>
-              <T.Cell className={styles.actions}>
-                <Edit onClick={() => tasksTable.selectForEdit(task.id)} />
-                <Delete onClick={() => tasksTable.selectForDelete(task.id)} />
+              <T.Cell>Название</T.Cell>
+              <T.Cell>
+                <div className={styles.actions}>
+                  <Preview />
+                  <Edit onClick={() => tasksTable.selectForEdit(task.id)} />
+                  <Delete onClick={() => tasksTable.selectForDelete(task.id)} />
+                </div>
               </T.Cell>
             </T.Row>
           ))
