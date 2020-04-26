@@ -55,9 +55,9 @@ $tests.on(outputChange, (tests, { id, value }) => {
 })
 
 /*
-  to prevent race condition we need to cancel request:
-  when checkbox goes from false to true -> fetch tests
-  when checkbox goes from true to false -> cancel fetch
+  to prevent race condition we need to cancel effect:
+  when checkbox goes from false to true -> call effect
+  when checkbox goes from true to false -> cancel effect
 */
 const fetchTests = guard({
   source: $editTests,
