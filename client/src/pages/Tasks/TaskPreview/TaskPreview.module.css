@@ -1,5 +1,8 @@
 .preview {
-  padding: 1.5rem;
+  padding: 1.2rem;
+  width: auto;
+  max-width: 800px;
+  min-width: 500px;
 }
 
 .preview > h2 {
