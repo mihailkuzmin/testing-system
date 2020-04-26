@@ -31,10 +31,10 @@ $description.reset(EditPage.close)
 $editTests.on(toggleEditTests, (_, newState) => newState)
 $editTests.reset(EditPage.close)
 
-$tests.on(addTest, (tests) => [...tests, { id: tests.length + 1, input: '', output: '' }])
+$tests.on(addTest, (tests) => [...tests, { id: Math.random(), input: '', output: '' }])
 $tests.on(removeTest, (tests) => {
   if (tests.length > 1) {
-    return tests.filter((test) => test.id !== tests.length)
+    return tests.slice(0, -1)
   }
 })
 $tests.on(inputChange, (tests, { id, value }) => {
