@@ -23,6 +23,8 @@ export const GroupsTable = ({ groups }: IGroupsTableProps) => {
   const editGroupModal = useStore(editModal.$editModal)
   const deleteGroupModal = useStore(deleteModal.$deleteModal)
 
+  const groupsIsEmpty = groups?.length === 0
+
   return (
     <T.Table className={styles.table}>
       <Modal open={addGroupModal.open} onClose={addModal.closeAddModal}>
@@ -46,16 +48,20 @@ export const GroupsTable = ({ groups }: IGroupsTableProps) => {
           </T.Cell>
         </T.Row>
         <T.Row>
-          <T.Cell>id</T.Cell>
+          <T.Cell>№</T.Cell>
           <T.Cell>Название</T.Cell>
           <T.Cell>Действия</T.Cell>
         </T.Row>
       </T.Head>
       <T.Body>
-        {groups?.map((group) => {
-          return (
+        {groupsIsEmpty ? (
+          <T.Row>
+            <T.Cell colSpan={3}>Групп пока нет</T.Cell>
+          </T.Row>
+        ) : (
+          groups?.map((group, index) => (
             <T.Row key={group.id} className={styles.row}>
-              <T.Cell>{group.id}</T.Cell>
+              <T.Cell>{index + 1}</T.Cell>
               <T.Cell>{group.name}</T.Cell>
               <T.Cell>
                 <div className={styles.rowActions}>
@@ -64,8 +70,8 @@ export const GroupsTable = ({ groups }: IGroupsTableProps) => {
                 </div>
               </T.Cell>
             </T.Row>
-          )
-        })}
+          ))
+        )}
       </T.Body>
     </T.Table>
   )
