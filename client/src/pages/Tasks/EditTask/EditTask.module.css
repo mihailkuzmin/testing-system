@@ -1,3 +1,38 @@
-.edit {
-  min-width: 500px;
+.editTask {
+  width: 70%;
+  max-width: 70%;
+  padding: 1rem;
+}
+
+.editTask h2,
+.editTask h3 {
+  margin: 0;
+}
+
+.editForm {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.editForm > *:nth-child(1),
+.editForm > *:nth-child(2) {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.editForm > *:nth-child(4) {
+  justify-self: end;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.editTestsBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
