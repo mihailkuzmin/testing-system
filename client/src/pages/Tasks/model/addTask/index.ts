@@ -38,7 +38,7 @@ $tests.on(outputChange, (tests, { id, value }) => {
 $tests.on(addTest, (tests) => [...tests, { id: tests.length + 1, input: '', output: '' }])
 $tests.on(removeTest, (tests) => {
   if (tests.length > 1) {
-    return tests.filter((test) => test.id !== tests.length)
+    return tests.slice(0, -1)
   }
 })
 $tests.on(createTaskFx.done, () => [{ id: 1, input: '', output: '' }])
