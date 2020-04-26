@@ -3,29 +3,24 @@ import { IStudent, UpdateStudent, CreateStudent, StudentId } from '../typings/st
 
 export class Student {
   static async getById(id: StudentId): Promise<IStudent> {
-    try {
-      const [student] = await db.query(
-        `
+    const [student] = await db.query(
+      `
         SELECT 
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
           S.book_number as "bookNumber", (G.id, G.name) as group, S.login
         FROM Student S, StudentGroup G
         WHERE (S.id = %L and S.group_id = G.id)
       `,
-        id,
-      )
+      id,
+    )
 
-      student.group = this._parseGroup(student.group)
-      return student
-    } catch (e) {
-      throw e
-    }
+    student.group = this._parseGroup(student.group)
+    return student
   }
 
   static async removeById(id: StudentId): Promise<IStudent> {
-    try {
-      const [student] = await db.query(
-        `
+    const [student] = await db.query(
+      `
         DELETE FROM Student as S
         USING StudentGroup as G
         WHERE (S.id = %L) and (G.id = S.group_id)
@@ -33,20 +28,16 @@ export class Student {
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
           S.book_number as bookNumber, (G.id, G.name) as group, S.login
       `,
-        id,
-      )
-      student.group = this._parseGroup(student.group)
-      return student
-    } catch (e) {
-      throw e
-    }
+      id,
+    )
+    student.group = this._parseGroup(student.group)
+    return student
   }
 
   static async update(s: UpdateStudent): Promise<IStudent> {
-    try {
-      if (s.changePassword) {
-        const [student] = await db.query(
-          `
+    if (s.changePassword) {
+      const [student] = await db.query(
+        `
           UPDATE Student S
           SET
             last_name = %L,
@@ -63,21 +54,21 @@ export class Student {
               SELECT G.name FROM StudentGroup G WHERE G.id = S.group_id
             )) as group, S.login, S.password
         `,
-          s.lastName,
-          s.firstName,
-          s.patronymic,
-          s.bookNumber,
-          s.group,
-          s.login,
-          s.password,
-          s.id,
-        )
-        student.group = this._parseGroup(student.group)
-        return student
-      }
+        s.lastName,
+        s.firstName,
+        s.patronymic,
+        s.bookNumber,
+        s.group,
+        s.login,
+        s.password,
+        s.id,
+      )
+      student.group = this._parseGroup(student.group)
+      return student
+    }
 
-      const [student] = await db.query(
-        `
+    const [student] = await db.query(
+      `
         UPDATE Student S
         SET
           last_name = %L,
@@ -93,24 +84,20 @@ export class Student {
             SELECT G.name FROM StudentGroup G WHERE G.id = S.group_id
           )) as group, S.login, S.password
       `,
-        s.lastName,
-        s.firstName,
-        s.patronymic,
-        s.bookNumber,
-        s.group,
-        s.login,
-        s.id,
-      )
-      student.group = this._parseGroup(student.group)
-      return student
-    } catch (e) {
-      throw e
-    }
+      s.lastName,
+      s.firstName,
+      s.patronymic,
+      s.bookNumber,
+      s.group,
+      s.login,
+      s.id,
+    )
+    student.group = this._parseGroup(student.group)
+    return student
   }
 
   static async getAll(): Promise<IStudent[]> {
-    try {
-      const students = await db.query(`
+    const students = await db.query(`
         SELECT
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
           S.book_number as "bookNumber", (G.id, G.name) as group, S.login
@@ -118,20 +105,16 @@ export class Student {
         WHERE G.id = S.group_id
         ORDER BY G.name, S.last_Name, S.first_name, S.patronymic
       `)
-      for (const student of students) {
-        student.group = this._parseGroup(student.group)
-      }
-
-      return students
-    } catch (e) {
-      throw e
+    for (const student of students) {
+      student.group = this._parseGroup(student.group)
     }
+
+    return students
   }
 
   static async create(user: CreateStudent): Promise<IStudent> {
-    try {
-      const [student] = await db.query(
-        `
+    const [student] = await db.query(
+      `
         INSERT INTO Student as S
           (last_name, first_name, patronymic, book_number, group_id, login, password)
         VALUES (%L)
@@ -141,21 +124,18 @@ export class Student {
             SELECT G.name FROM StudentGroup G WHERE G.id = group_id
           )) as group, S.login
       `,
-        [
-          user.lastName,
-          user.firstName,
-          user.patronymic,
-          user.bookNumber,
-          user.group,
-          user.login,
-          user.password,
-        ],
-      )
-      student.group = this._parseGroup(student.group)
-      return student
-    } catch (e) {
-      throw e
-    }
+      [
+        user.lastName,
+        user.firstName,
+        user.patronymic,
+        user.bookNumber,
+        user.group,
+        user.login,
+        user.password,
+      ],
+    )
+    student.group = this._parseGroup(student.group)
+    return student
   }
 
   static _parseGroup(str: string) {
