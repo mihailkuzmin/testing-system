@@ -1,13 +1,12 @@
 import React from 'react'
 import { useStore, useList, useStoreMap } from 'effector-react'
-import { Paper } from '../../../components'
+import { Paper, Editor } from '../../../components'
 import { Input } from '../../../components/Inputs'
 import {
-  PrimaryButton as Save,
+  PrimaryButton as Button,
   PlusButton as Add,
   MinusButton as Remove,
 } from '../../../components/Buttons'
-import { Editor } from './Editor'
 import { addTask } from '../model/addTask'
 import styles from './AddTask.module.css'
 
@@ -21,9 +20,9 @@ export const AddTask = () => {
     <Paper className={styles.addTask}>
       <div className={styles.header}>
         <h2>Добавить задание</h2>
-        <Save form='addTaskForm' type='submit'>
-          Сохранить
-        </Save>
+        <Button form='addTaskForm' type='submit'>
+          Добавить
+        </Button>
       </div>
       <form id='addTaskForm' className={styles.addForm} onSubmit={onSubmit}>
         <NameInput />
