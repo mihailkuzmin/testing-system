@@ -16,6 +16,19 @@ export class Task {
     return result
   }
 
+  static async getTestsById(id: TaskId) {
+    const tests = await db.query(
+      `
+        SELECT
+          T.id, T.input, T.output
+        FROM Test T
+        WHERE (T.task_id = %L)
+      `,
+      id,
+    )
+    return tests
+  }
+
   static async getAll(): Promise<ITask[]> {
     const result = await db.query(`
         SELECT
