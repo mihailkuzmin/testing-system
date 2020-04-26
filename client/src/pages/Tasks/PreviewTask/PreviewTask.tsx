@@ -2,14 +2,14 @@ import React from 'react'
 import { useStore } from 'effector-react'
 import { PageLoader, PageError } from '../../../components/Loaders'
 import { Paper } from '../../../components'
-import { PreviewPage, task } from '../model/taskPreview'
-import styles from './TaskPreview.module.css'
+import { PreviewPage, task } from '../model/previewTask'
+import styles from './PreviewTask.module.css'
 
-type TaskPreviewProps = {
+type PreviewTaskProps = {
   id: number
 }
 
-export const TaskPreview = ({ id }: TaskPreviewProps) => {
+export const PreviewTask = ({ id }: PreviewTaskProps) => {
   React.useEffect(() => PreviewPage.onMount(id), [id])
 
   const { isLoading, isFail } = useStore(PreviewPage.$status)
