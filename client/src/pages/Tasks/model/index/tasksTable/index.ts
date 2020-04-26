@@ -1,7 +1,7 @@
 import { forward, sample } from 'effector'
 import { getTasksFx, deleteTaskFx } from './effects'
 import { $tasks, $taskForDelete } from './stores'
-import { selectForEdit, addTask, selectForDelete, cancelDelete, confirmDelete } from './events'
+import { addTask, selectForDelete, cancelDelete, confirmDelete } from './events'
 import { TasksPage } from '../page'
 import { notifications } from '../../../../../model'
 import { MessageType } from '../../../../../typings'
@@ -45,6 +45,5 @@ export const tasksTable = {
   confirmDelete,
   cancelDelete,
   selectForDelete,
-  selectForEdit,
   addTask,
 }

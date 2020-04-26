@@ -5,7 +5,6 @@ export const selectForDelete = createEvent<TaskId>()
 export const confirmDelete = createEvent<TaskId>()
 export const cancelDelete = createEvent()
 
-export const selectForEdit = createEvent<TaskId>()
 export const confirmEdit = createEvent()
 export const cancelEdit = createEvent()
 

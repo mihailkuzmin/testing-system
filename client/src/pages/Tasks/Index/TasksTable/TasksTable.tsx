@@ -59,7 +59,7 @@ export const TasksTable = () => {
                     prompt='Просмотреть описание'
                     onClick={() => navigate(`/tasks/preview/${task.id}`)}
                   />
-                  <Edit onClick={() => tasksTable.selectForEdit(task.id)} />
+                  <Edit onClick={() => navigate(`/tasks/edit/${task.id}`)} />
                   <Delete onClick={() => tasksTable.selectForDelete(task.id)} />
                 </div>
               </T.Cell>
