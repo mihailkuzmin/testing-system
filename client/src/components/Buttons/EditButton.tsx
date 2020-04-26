@@ -8,7 +8,7 @@ interface IEditButtonProps {
 }
 
 export const EditButton = (props: IEditButtonProps) => (
-  <Tooltip title={props.prompt ?? 'Редактировать'}>
+  <Tooltip title={props.prompt ?? 'Изменить'}>
     <IconButton onClick={props.onClick} size='small'>
       <EditIcon />
     </IconButton>
