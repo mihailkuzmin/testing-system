@@ -49,9 +49,9 @@ export const TasksTable = () => {
             <T.Cell colSpan={2}></T.Cell>
           </T.Row>
         ) : (
-          tasks.map((task) => (
+          tasks.map((task, index) => (
             <T.Row key={task.id}>
-              <T.Cell>{task.id}</T.Cell>
+              <T.Cell>{index + 1}</T.Cell>
               <T.Cell>{task.name}</T.Cell>
               <T.Cell>
                 <div className={styles.actions}>
