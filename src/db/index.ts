@@ -1,4 +1,5 @@
 import { Pool, PoolConfig } from 'pg'
+import format from 'pg-format'
 
 class DB {
   private pool!: Pool
@@ -13,10 +14,11 @@ class DB {
     }
   }
 
-  public async query(text: string, values?: any[]): Promise<any> {
-    const { rows } = await this.pool.query(text, values)
+  public async query(text: string, ...values: any[]): Promise<any> {
+    const query = format(text, ...values)
+    const { rows } = await this.pool.query(query)
     return rows
   }
 }
 
-export const db: DB = new DB()
+export const db = new DB()
