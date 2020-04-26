@@ -1,44 +1,49 @@
 import { db } from '../db'
-import { WorkQueryResult } from '../typings/work'
+import { IWork, CreateWork, WorkId } from '../typings/work'
 
 export class Work {
-  constructor(private name: string, private openAt: string, private closeAt: string) {}
-
-  async save(): Promise<WorkQueryResult> {
+  static async create(w: CreateWork): Promise<IWork> {
     try {
-      const [result] = await db.query(
+      const [work] = await db.query(
         `
-        INSERT INTO Work(name, open_at, close_at) VALUES($1, $2, $3)
-        RETURNING *
+        INSERT INTO Work as W (name, open_at, close_at) VALUES (%L)
+        RETURNING
+          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
       `,
-        [this.name, this.openAt, this.closeAt],
+        [w.name, w.openAt, w.closeAt],
       )
-      return result
+      return work
     } catch (e) {
       throw e
     }
   }
 
-  static async getById(id: number | string) {
+  static async getById(id: WorkId): Promise<IWork> {
     try {
-      const [result] = await db.query(
+      const [work] = await db.query(
         `
-        SELECT * FROM Work WHERE Work.id = ($1)
+        SELECT
+          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
+        FROM Work W
+        WHERE
+          (W.id = %L)
       `,
-        [id],
+        id,
       )
-      return result
+      return work
     } catch (e) {
       throw e
     }
   }
 
-  static async getAll(): Promise<WorkQueryResult[]> {
+  static async getAll(): Promise<IWork[]> {
     try {
-      const result = await db.query(`
-        SELECT * FROM Work
+      const works = await db.query(`
+        SELECT
+          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
+        FROM Work W
       `)
-      return result
+      return works
     } catch (e) {
       throw e
     }

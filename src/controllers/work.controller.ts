@@ -1,4 +1,5 @@
 import { IController } from '../typings/controller'
+import { IWork, WorkId } from '../typings/work'
 import { Work } from '../models'
 
 export const workController: IController = (app, options, done) => {
@@ -8,17 +9,18 @@ export const workController: IController = (app, options, done) => {
   })
 
   app.post('/', async (request, reply) => {
-    const { name, openAt, closeAt } = request.body
+    const newWork: IWork = request.body
 
-    const work = new Work(name, openAt, closeAt)
-    const result = await work.save()
+    const result = await Work.create(newWork)
 
     reply.send(result)
   })
 
   app.get('/:id', async (request, reply) => {
-    const { id } = request.params
+    const id: WorkId = request.params.id
+
     const result = await Work.getById(id)
+
     reply.send(result)
   })
 
