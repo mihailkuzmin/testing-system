@@ -56,7 +56,7 @@ export const GroupsTable = ({ groups }: IGroupsTableProps) => {
       <T.Body>
         {groupsIsEmpty ? (
           <T.Row>
-            <T.Cell colSpan={3}>Групп пока нет</T.Cell>
+            <T.Cell colSpan={3}>Список групп пока пуст</T.Cell>
           </T.Row>
         ) : (
           groups?.map((group, index) => (
