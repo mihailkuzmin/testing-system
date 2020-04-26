@@ -10,9 +10,9 @@ export class Task {
         SELECT
           T.id, T.name, T.description
         FROM Task T
-        WHERE T.id = ($1)
+        WHERE (T.id = %L)
       `,
-        [id],
+        id,
       )
       return result
     } catch (e) {
@@ -41,7 +41,7 @@ export class Task {
         INSERT INTO Task as T (
           name,
           description
-        ) VALUES ($1, $2)
+        ) VALUES (%L)
         RETURNING
           T.id, T.description
       `,
@@ -49,7 +49,7 @@ export class Task {
       )
 
       const tests = t.tests.map((test) => [task.id, ...Object.values(test)])
-      await db.query(format(`INSERT INTO Test as T (task_id, input, output) VALUES %L`, tests))
+      await db.query(`INSERT INTO Test as T (task_id, input, output) VALUES %L`, tests)
 
       return task
     } catch (e) {
@@ -63,13 +63,15 @@ export class Task {
         `
         UPDATE Task T
         SET
-          name = ($2)
-          description = ($3)
-        WHERE (T.id = ($1))
+          name = %L,
+          description = %L
+        WHERE (T.id = %L)
         RETURNING
           T.id, T.name, T.description
       `,
-        [t.id, t.name, t.description],
+        t.name,
+        t.description,
+        t.id,
       )
       return task
     } catch (e) {
@@ -82,11 +84,11 @@ export class Task {
       const [task] = await db.query(
         `
         DELETE FROM Task as T
-        WHERE (T.id = ($1))
+        WHERE (T.id = %L)
         RETURNING
           T.id, T.name, T.description
       `,
-        [id],
+        id,
       )
       return task
     } catch (e) {
