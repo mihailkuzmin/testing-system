@@ -30,6 +30,18 @@ export const taskController: IController = (app, options, done) => {
     reply.send(response)
   })
 
+  app.get('/tests/:id', async (request, reply) => {
+    const id: TaskId = request.params.id
+
+    const tests = await Task.getTestsById(id)
+
+    const response: Response<Payload.GetTestsById> = {
+      payload: tests,
+      message: Messages.GetTestsById,
+    }
+    reply.send(response)
+  })
+
   app.put('/', async (request, reply) => {
     const task: UpdateTask = request.body
 
