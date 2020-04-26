@@ -10,10 +10,11 @@ export class Student {
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
           S.book_number as "bookNumber", (G.id, G.name) as group, S.login
         FROM Student S, StudentGroup G
-        WHERE (S.id = ($1) and S.group_id = G.id)
+        WHERE (S.id = %L and S.group_id = G.id)
       `,
-        [id],
+        id,
       )
+
       student.group = this._parseGroup(student.group)
       return student
     } catch (e) {
@@ -27,12 +28,12 @@ export class Student {
         `
         DELETE FROM Student as S
         USING StudentGroup as G
-        WHERE (S.id = ($1)) and (G.id = S.group_id)
+        WHERE (S.id = %L) and (G.id = S.group_id)
         RETURNING 
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
           S.book_number as bookNumber, (G.id, G.name) as group, S.login
       `,
-        [id],
+        id,
       )
       student.group = this._parseGroup(student.group)
       return student
@@ -48,21 +49,28 @@ export class Student {
           `
           UPDATE Student S
           SET
-            last_name = ($2),
-            first_name = ($3),
-            patronymic = ($4),
-            book_number = ($5),
-            group_id = ($6),
-            login = ($7),
-            password = ($8)
-          WHERE (S.id = ($1))
+            last_name = %L,
+            first_name = %L,
+            patronymic = %L,
+            book_number = %L,
+            group_id = %L,
+            login = %L,
+            password = %L
+          WHERE (S.id = %L)
           RETURNING
             S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
             S.book_number as "bookNumber", (S.group_id, (
               SELECT G.name FROM StudentGroup G WHERE G.id = S.group_id
             )) as group, S.login, S.password
         `,
-          [s.id, s.lastName, s.firstName, s.patronymic, s.bookNumber, s.group, s.login, s.password],
+          s.lastName,
+          s.firstName,
+          s.patronymic,
+          s.bookNumber,
+          s.group,
+          s.login,
+          s.password,
+          s.id,
         )
         student.group = this._parseGroup(student.group)
         return student
@@ -72,20 +80,26 @@ export class Student {
         `
         UPDATE Student S
         SET
-          last_name = ($2),
-          first_name = ($3),
-          patronymic = ($4),
-          book_number = ($5),
-          group_id = ($6),
-          login = ($7)
-        WHERE (S.id = ($1))
+          last_name = %L,
+          first_name = %L,
+          patronymic = %L,
+          book_number = %L,
+          group_id = %L,
+          login = %L
+        WHERE (S.id = %L)
         RETURNING
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
           S.book_number as "bookNumber", (S.group_id, (
             SELECT G.name FROM StudentGroup G WHERE G.id = S.group_id
           )) as group, S.login, S.password
       `,
-        [s.id, s.lastName, s.firstName, s.patronymic, s.bookNumber, s.group, s.login],
+        s.lastName,
+        s.firstName,
+        s.patronymic,
+        s.bookNumber,
+        s.group,
+        s.login,
+        s.id,
       )
       student.group = this._parseGroup(student.group)
       return student
@@ -120,7 +134,7 @@ export class Student {
         `
         INSERT INTO Student as S
           (last_name, first_name, patronymic, book_number, group_id, login, password)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        VALUES (%L)
         RETURNING
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
           S.book_number as "bookNumber", (group_id, (
