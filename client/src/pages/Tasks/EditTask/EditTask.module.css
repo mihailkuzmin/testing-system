@@ -20,9 +20,6 @@
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.editForm > *:nth-child(4) {
-  justify-self: end;
-}
 
 .header {
   display: flex;
@@ -35,4 +32,27 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.editTestsBox > h3 {
+  margin-left: -1rem;
+}
+
+.testsControl {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+}
+
+.testsControl > span {
+  margin-right: 0.5rem;
+}
+
+.testsLoader {
+  padding: 0 0.5rem;
+}
+
+.testsLoader > div {
+  height: 30px !important;
+  width: 30px !important;
 }
