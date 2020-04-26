@@ -27,7 +27,7 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
   const editUserModal = useStore(editModal.$editModal)
   const selectedForDelete = useStore(usersTable.$selectedForDelete)
 
-  const usersEmpty = users?.length === 0
+  const usersAreEmpty = users?.length === 0
 
   return (
     <T.Table className={styles.table}>
@@ -75,7 +75,7 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
         </T.Row>
       </T.Head>
       <T.Body>
-        {usersEmpty ? (
+        {usersAreEmpty ? (
           <T.Row className={styles.row}>
             <T.Cell colSpan={6}>В этой группе ещё нет людей</T.Cell>
           </T.Row>
