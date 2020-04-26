@@ -28,6 +28,7 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
   const selectedForDelete = useStore(usersTable.$selectedForDelete)
 
   const usersAreEmpty = users?.length === 0
+  const groupsAreEmpty = groups?.length === 0
 
   return (
     <T.Table className={styles.table}>
@@ -59,14 +60,18 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
               minWidth={select.minWidth}
               label='Группа'
               name='table-group'
-              value={select.value}
+              value={groupsAreEmpty ? 'Группа' : select.value}
               onChange={usersTable.onGroupSelectChange}
             >
-              {groups?.map(({ id, name }) => (
-                <Item key={id} value={id}>
-                  {name}
-                </Item>
-              ))}
+              {groupsAreEmpty ? (
+                <Item value='Группа'>Группа</Item>
+              ) : (
+                groups?.map((group) => (
+                  <Item key={group.id} value={group.id}>
+                    {group.name}
+                  </Item>
+                ))
+              )}
             </GroupSelect>
           </T.Cell>
           <T.Cell>Зачетная книжка</T.Cell>
@@ -80,23 +85,21 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
             <T.Cell colSpan={6}>В этой группе ещё нет людей</T.Cell>
           </T.Row>
         ) : (
-          users?.map((user, index) => {
-            return (
-              <T.Row key={user.id} className={styles.row}>
-                <T.Cell>{index + 1}</T.Cell>
-                <T.Cell>{`${user.lastName} ${user.firstName} ${user.patronymic}`}</T.Cell>
-                <T.Cell>{user.group.name}</T.Cell>
-                <T.Cell>{user.bookNumber}</T.Cell>
-                <T.Cell>{user.login}</T.Cell>
-                <T.Cell>
-                  <div className={styles.rowActions}>
-                    <Edit onClick={() => usersTable.selectForEdit(user.id)} />
-                    <Delete onClick={() => usersTable.selectForDelete(user.id)} />
-                  </div>
-                </T.Cell>
-              </T.Row>
-            )
-          })
+          users?.map((user, index) => (
+            <T.Row key={user.id} className={styles.row}>
+              <T.Cell>{index + 1}</T.Cell>
+              <T.Cell>{`${user.lastName} ${user.firstName} ${user.patronymic}`}</T.Cell>
+              <T.Cell>{user.group.name}</T.Cell>
+              <T.Cell>{user.bookNumber}</T.Cell>
+              <T.Cell>{user.login}</T.Cell>
+              <T.Cell>
+                <div className={styles.rowActions}>
+                  <Edit onClick={() => usersTable.selectForEdit(user.id)} />
+                  <Delete onClick={() => usersTable.selectForDelete(user.id)} />
+                </div>
+              </T.Cell>
+            </T.Row>
+          ))
         )}
       </T.Body>
     </T.Table>
