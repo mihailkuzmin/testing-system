@@ -9,9 +9,9 @@ export class Group {
         SELECT
           G.id, G.name
         FROM StudentGroup G
-        WHERE G.id = ($1)
+        WHERE G.id = %L
       `,
-        [id],
+        id,
       )
       return group
     } catch (e) {
@@ -24,11 +24,11 @@ export class Group {
       const [group] = await db.query(
         `
         DELETE FROM StudentGroup as G
-        WHERE (G.id = ($1))
+        WHERE (G.id = %L)
         RETURNING
           G.id, G.name
       `,
-        [id],
+        id,
       )
       return group
     } catch (e) {
@@ -56,11 +56,11 @@ export class Group {
         `
         INSERT INTO StudentGroup as G (
           name
-        ) VALUES($1)
+        ) VALUES (%L)
         RETURNING
           G.id, G.name
       `,
-        [g.name],
+        g.name,
       )
       return result
     } catch (e) {
@@ -74,12 +74,13 @@ export class Group {
         `
         UPDATE StudentGroup G
         SET
-          name = ($2)
-        WHERE (G.id = ($1))
+          name = %L
+        WHERE (G.id = %L)
         RETURNING
           G.id, G.name
       `,
-        [g.id, g.name],
+        g.name,
+        g.id,
       )
       return group
     } catch (e) {
