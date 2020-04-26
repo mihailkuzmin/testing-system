@@ -42,7 +42,7 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
       </Modal>
       <T.Head className={styles.head}>
         <T.Row>
-          <T.Cell colSpan={5}>
+          <T.Cell colSpan={6}>
             <T.Header>
               <T.Title>Пользователи</T.Title>
               <T.Actions>
@@ -52,6 +52,7 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
           </T.Cell>
         </T.Row>
         <T.Row>
+          <T.Cell>№</T.Cell>
           <T.Cell>ФИО</T.Cell>
           <T.Cell>
             <GroupSelect
@@ -76,13 +77,13 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
       <T.Body>
         {usersEmpty ? (
           <T.Row className={styles.row}>
-            <T.Cell>В этой группе ещё нет людей</T.Cell>
-            <T.Cell colSpan={4}></T.Cell>
+            <T.Cell colSpan={6}>В этой группе ещё нет людей</T.Cell>
           </T.Row>
         ) : (
-          users?.map((user) => {
+          users?.map((user, index) => {
             return (
               <T.Row key={user.id} className={styles.row}>
+                <T.Cell>{index + 1}</T.Cell>
                 <T.Cell>{`${user.lastName} ${user.firstName} ${user.patronymic}`}</T.Cell>
                 <T.Cell>{user.group.name}</T.Cell>
                 <T.Cell>{user.bookNumber}</T.Cell>
