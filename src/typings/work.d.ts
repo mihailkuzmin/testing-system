@@ -1,6 +1,14 @@
-export interface WorkQueryResult {
-  id: number
+export type WorkId = number
+
+export interface IWork {
+  id: WorkId
   name: string
-  open_at: string
-  close_at: string
+  openAt: string
+  closeAt: string
+}
+
+export interface CreateWork {
+  name: string
+  openAt: string
+  closeAt: string
 }
