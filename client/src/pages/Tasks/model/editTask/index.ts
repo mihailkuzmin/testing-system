@@ -1,2 +1,2 @@
 export { EditPage } from './page'
-export { editForm } from './editForm'
+export { editForm, tests } from './editForm'

@@ -4,7 +4,7 @@ import {
   toggleEditTests,
   descriptionChange,
   nameChange,
-  editTask,
+  saveChanges,
   inputChange,
   outputChange,
   addTest,
@@ -33,7 +33,7 @@ $editTests.on(toggleEditTests, (_, newState) => newState)
 $editTests.reset(EditPage.close)
 
 $tests.on(getTestsFx.doneData, (_, { payload }) => payload.map((test) => ({ ...test, old: true })))
-$tests.on(removeTest, (tests) => (tests.length > 1 ? tests.slice(0, -1) : tests))
+$tests.on(removeTest, (tests, testId) => tests.filter((test) => test.id !== testId))
 $tests.on(addTest, (tests) => [...tests, { id: nanoid(), input: '', output: '', old: false }])
 $tests.on(inputChange, (tests, { id, value }) =>
   tests.map((test) => (test.id === id ? { ...test, input: value } : test)),
@@ -69,16 +69,19 @@ guard({
 export const editForm = {
   $name,
   $description,
+  nameChange,
+  descriptionChange,
+  saveChanges,
+}
+
+export const tests = {
   $tests,
   $testsCount,
   $testsAreLoading: getTestsFx.pending,
   $editTests,
   toggleEditTests,
-  nameChange,
-  descriptionChange,
   inputChange,
   outputChange,
-  editTask,
   addTest,
   removeTest,
 }

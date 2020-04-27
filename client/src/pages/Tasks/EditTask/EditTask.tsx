@@ -5,10 +5,10 @@ import { Input, CheckBox } from '../../../components/Inputs'
 import {
   PrimaryButton as Save,
   PlusButton as Add,
-  MinusButton as Remove,
+  DeleteButton as Delete,
 } from '../../../components/Buttons'
 import { Circular, PageLoader, PageError } from '../../../components/Loaders'
-import { EditPage, editForm } from '../model/editTask'
+import { EditPage, editForm, tests } from '../model/editTask'
 import { UpdateTestId, TaskId } from '../model/editTask/editForm/typings'
 import styles from './EditTask.module.css'
 
@@ -17,18 +17,20 @@ type EditTaskProps = { id: TaskId }
 type ExampleInputProps = { id: UpdateTestId }
 type ExampleOutputProps = { id: UpdateTestId }
 
-type TestControlProps = { onAdd: any; onRemove: any }
-
 export const EditTask = ({ id }: EditTaskProps) => {
   React.useEffect(() => EditPage.onMount(id), [id])
 
   const { isLoading, isFail } = useStore(EditPage.$status)
-  const editTests = useStore(editForm.$editTests)
-  const testsAreLoading = useStore(editForm.$testsAreLoading)
+  const editTests = useStore(tests.$editTests)
+  const testsAreLoading = useStore(tests.$testsAreLoading)
+  const testsCount = useStore(tests.$testsCount)
+
+  const showTests = editTests && !testsAreLoading && testsCount > 0
+  const showCounter = editTests && !testsAreLoading
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    editForm.editTask()
+    editForm.saveChanges()
   }
 
   if (isLoading) {
@@ -50,24 +52,28 @@ export const EditTask = ({ id }: EditTaskProps) => {
       <form id='editTaskForm' className={styles.editForm} onSubmit={onSubmit}>
         <NameInput />
         <DescriptionInput />
-        <div
-          className={styles.editTestsBox}
-          style={!editTests ? { gridColumnStart: 1, gridColumnEnd: 3 } : {}}
-        >
-          <CheckBox checked={editTests} onChange={() => editForm.toggleEditTests(!editTests)} />
-          <h3>Редактировать тесты</h3>
-          {testsAreLoading && <TestsLoader />}
+        <div className={styles.testsControl}>
+          <div className={styles.editControl}>
+            <CheckBox checked={editTests} onChange={() => tests.toggleEditTests(!editTests)} />
+            <h3>Редактировать тесты</h3>
+            {testsAreLoading && <Loader />}
+          </div>
+          {showCounter && <TestsCounter count={testsCount} onClick={() => tests.addTest()} />}
         </div>
-        {editTests && !testsAreLoading && (
-          <>
-            <TestControl onAdd={editForm.addTest} onRemove={editForm.removeTest} />
-            <Tests />
-          </>
-        )}
+        {showTests && <Tests />}
       </form>
     </Paper>
   )
 }
+
+type TestsCounterProps = { count: number; onClick: () => void }
+
+const TestsCounter = ({ count, onClick }: TestsCounterProps) => (
+  <div className={styles.testsCounter}>
+    <span>Тестов: {count}</span>
+    <Add onClick={onClick} />
+  </div>
+)
 
 const DescriptionInput = () => {
   const description = useStore(editForm.$description)
@@ -90,31 +96,20 @@ const NameInput = () => {
 }
 
 const Tests = () => {
-  const tests = useList(editForm.$tests, (test) => (
+  const list = useList(tests.$tests, (test) => (
     <React.Fragment key={test.id}>
       <ExampleInput id={test.id} />
       <ExampleOutput id={test.id} />
+      <Delete onClick={() => tests.removeTest(test.id)} />
     </React.Fragment>
   ))
 
-  return tests
-}
-
-const TestControl = ({ onAdd, onRemove }: TestControlProps) => {
-  const count = useStore(editForm.$testsCount)
-
-  return (
-    <div className={styles.testsControl}>
-      <span>Тестов: {count}</span>
-      <Add onClick={onAdd} />
-      <Remove onClick={onRemove} />
-    </div>
-  )
+  return <div className={styles.testsList}>{list}</div>
 }
 
 const ExampleInput = ({ id }: ExampleInputProps) => {
   const value = useStoreMap({
-    store: editForm.$tests,
+    store: tests.$tests,
     keys: [id],
     fn: (tests, [id]) => tests.find((test) => test.id === id)?.input || '',
   })
@@ -122,7 +117,7 @@ const ExampleInput = ({ id }: ExampleInputProps) => {
   return (
     <Input
       value={value}
-      onChange={(e) => editForm.inputChange({ id, value: e.target.value })}
+      onChange={(e) => tests.inputChange({ id, value: e.target.value })}
       label='Пример входных данных'
       multiline
     />
@@ -131,7 +126,7 @@ const ExampleInput = ({ id }: ExampleInputProps) => {
 
 const ExampleOutput = ({ id }: ExampleOutputProps) => {
   const value = useStoreMap({
-    store: editForm.$tests,
+    store: tests.$tests,
     keys: [id],
     fn: (tests, [id]) => tests.find((test) => test.id === id)?.output || '',
   })
@@ -139,14 +134,14 @@ const ExampleOutput = ({ id }: ExampleOutputProps) => {
   return (
     <Input
       value={value}
-      onChange={(e) => editForm.outputChange({ id, value: e.target.value })}
+      onChange={(e) => tests.outputChange({ id, value: e.target.value })}
       label='Пример выходных данных'
       multiline
     />
   )
 }
 
-const TestsLoader = () => (
+const Loader = () => (
   <div className={styles.testsLoader}>
     <Circular />
   </div>

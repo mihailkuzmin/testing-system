@@ -9,16 +9,12 @@
   margin: 0;
 }
 
-.editForm {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+.editForm > *:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
-.editForm > *:nth-child(1),
-.editForm > *:nth-child(2) {
-  grid-column-start: 1;
-  grid-column-end: 3;
+.editForm > *:nth-child(1) {
+  width: 100%;
 }
 
 .header {
@@ -28,23 +24,22 @@
   padding-bottom: 1rem;
 }
 
-.editTestsBox {
+.testsControl {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 }
 
-.editTestsBox > h3 {
+.editControl {
+  display: flex;
+  align-items: center;
+}
+
+.editControl > h3 {
   margin-left: -1rem;
 }
 
-.testsControl {
-  display: flex;
-  align-items: center;
-  justify-self: end;
-}
-
-.testsControl > span {
+.editControl > span {
   margin-right: 0.5rem;
 }
 
@@ -55,4 +50,24 @@
 .testsLoader > div {
   height: 30px !important;
   width: 30px !important;
+}
+
+.testsCounter {
+  display: flex;
+  align-items: center;
+}
+
+.testsCounter > span {
+  margin-right: 0.5rem;
+}
+
+.testsList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) 1.8rem;
+  gap: 1rem;
+}
+
+.testsList > button {
+  align-self: center;
+  justify-self: center;
 }

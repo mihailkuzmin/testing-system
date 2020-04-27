@@ -9,6 +9,6 @@ export const nameChange = createEvent<string>()
 export const descriptionChange = createEvent<string>()
 
 export const addTest = createEvent()
-export const removeTest = createEvent()
+export const removeTest = createEvent<UpdateTestId>()
 
-export const editTask = createEvent()
+export const saveChanges = createEvent()
