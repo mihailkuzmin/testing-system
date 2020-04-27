@@ -1,5 +1,6 @@
 export type TaskId = number
 export type TestId = number
+export type UpdateTestId = number | string
 
 export type Task = {
   id: TaskId
@@ -7,8 +8,9 @@ export type Task = {
   description: string
 }
 
-export type Test = {
-  id: TestId
+export type UpdateTest = {
+  id: UpdateTestId
   input: string
   output: string
+  old: boolean
 }

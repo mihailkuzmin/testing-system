@@ -9,17 +9,15 @@ import {
 } from '../../../components/Buttons'
 import { Circular, PageLoader, PageError } from '../../../components/Loaders'
 import { EditPage, editForm } from '../model/editTask'
+import { UpdateTestId, TaskId } from '../model/editTask/editForm/typings'
 import styles from './EditTask.module.css'
 
-type EditTaskProps = { id: number }
+type EditTaskProps = { id: TaskId }
 
-type TestControlProps = {
-  onAdd: any
-  onRemove: any
-}
+type ExampleInputProps = { id: UpdateTestId }
+type ExampleOutputProps = { id: UpdateTestId }
 
-type ExampleInputProps = { id: number }
-type ExampleOutputProps = ExampleInputProps
+type TestControlProps = { onAdd: any; onRemove: any }
 
 export const EditTask = ({ id }: EditTaskProps) => {
   React.useEffect(() => EditPage.onMount(id), [id])

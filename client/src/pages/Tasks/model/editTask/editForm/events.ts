@@ -1,10 +1,10 @@
 import { createEvent } from 'effector'
-import { TestId } from './typings'
+import { UpdateTestId } from './typings'
 
 export const toggleEditTests = createEvent<boolean>()
 
-export const inputChange = createEvent<{ id: TestId; value: string }>()
-export const outputChange = createEvent<{ id: TestId; value: string }>()
+export const inputChange = createEvent<{ id: UpdateTestId; value: string }>()
+export const outputChange = createEvent<{ id: UpdateTestId; value: string }>()
 export const nameChange = createEvent<string>()
 export const descriptionChange = createEvent<string>()
 

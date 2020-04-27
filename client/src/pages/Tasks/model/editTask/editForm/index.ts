@@ -12,6 +12,7 @@ import {
 } from './events'
 import { getTaskFx, getTestsFx } from './effects'
 import { EditPage } from '../page'
+import { nanoid } from 'nanoid'
 
 forward({ from: EditPage.open, to: getTaskFx })
 forward({ from: EditPage.close, to: [getTaskFx.cancel, getTestsFx.cancel] })
@@ -31,12 +32,8 @@ $description.reset(EditPage.close)
 $editTests.on(toggleEditTests, (_, newState) => newState)
 $editTests.reset(EditPage.close)
 
-$tests.on(addTest, (tests) => [...tests, { id: Math.random(), input: '', output: '' }])
-$tests.on(removeTest, (tests) => {
-  if (tests.length > 1) {
-    return tests.slice(0, -1)
-  }
-})
+$tests.on(removeTest, (tests) => (tests.length > 1 ? tests.slice(0, -1) : tests))
+$tests.on(addTest, (tests) => [...tests, { id: nanoid(), input: '', output: '', old: false }])
 $tests.on(inputChange, (tests, { id, value }) => {
   return tests.map((test) => {
     if (test.id === id) {
@@ -78,7 +75,7 @@ guard({
 })
 
 // working with tests
-$tests.on(getTestsFx.doneData, (_, { payload }) => payload)
+$tests.on(getTestsFx.doneData, (_, { payload }) => payload.map((test) => ({ ...test, old: true })))
 $tests.reset(EditPage.close, toggleEditTests)
 
 export const editForm = {
