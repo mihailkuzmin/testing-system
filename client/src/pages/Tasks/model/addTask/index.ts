@@ -12,6 +12,7 @@ import {
 import { createTaskFx } from './effects'
 import { notifications } from '../../../../model'
 import { MessageType } from '../../../../typings'
+import { nanoid } from 'nanoid'
 
 $description.on(descriptionChange, (_, desc) => desc)
 $description.reset(createTaskFx.done)
@@ -19,29 +20,15 @@ $description.reset(createTaskFx.done)
 $name.on(nameChange, (_, name) => name)
 $name.reset(createTaskFx.done)
 
-$tests.on(inputChange, (tests, { id, value }) => {
-  return tests.map((test) => {
-    if (test.id === id) {
-      test.input = value
-    }
-    return test
-  })
-})
-$tests.on(outputChange, (tests, { id, value }) => {
-  return tests.map((test) => {
-    if (test.id === id) {
-      test.output = value
-    }
-    return test
-  })
-})
-$tests.on(addTest, (tests) => [...tests, { id: tests.length + 1, input: '', output: '' }])
-$tests.on(removeTest, (tests) => {
-  if (tests.length > 1) {
-    return tests.slice(0, -1)
-  }
-})
-$tests.on(createTaskFx.done, () => [{ id: 1, input: '', output: '' }])
+$tests.on(inputChange, (tests, { id, value }) =>
+  tests.map((test) => (test.id === id ? { ...test, input: value } : test)),
+)
+$tests.on(outputChange, (tests, { id, value }) =>
+  tests.map((test) => (test.id === id ? { ...test, output: value } : test)),
+)
+$tests.on(addTest, (tests) => [...tests, { id: nanoid(), input: '', output: '' }])
+$tests.on(removeTest, (tests) => (tests.length > 1 ? tests.slice(0, -1) : tests))
+$tests.on(createTaskFx.done, () => [{ id: nanoid(), input: '', output: '' }])
 
 sample({
   source: $form,

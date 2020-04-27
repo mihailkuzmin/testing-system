@@ -1,4 +1,4 @@
-export type TestId = number
+export type TestId = number | string
 export type Test = {
   id: TestId
   input: string

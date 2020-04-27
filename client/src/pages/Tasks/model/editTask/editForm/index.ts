@@ -32,29 +32,21 @@ $description.reset(EditPage.close)
 $editTests.on(toggleEditTests, (_, newState) => newState)
 $editTests.reset(EditPage.close)
 
+$tests.on(getTestsFx.doneData, (_, { payload }) => payload.map((test) => ({ ...test, old: true })))
 $tests.on(removeTest, (tests) => (tests.length > 1 ? tests.slice(0, -1) : tests))
 $tests.on(addTest, (tests) => [...tests, { id: nanoid(), input: '', output: '', old: false }])
-$tests.on(inputChange, (tests, { id, value }) => {
-  return tests.map((test) => {
-    if (test.id === id) {
-      test.input = value
-    }
-    return test
-  })
-})
-$tests.on(outputChange, (tests, { id, value }) => {
-  return tests.map((test) => {
-    if (test.id === id) {
-      test.output = value
-    }
-    return test
-  })
-})
+$tests.on(inputChange, (tests, { id, value }) =>
+  tests.map((test) => (test.id === id ? { ...test, input: value } : test)),
+)
+$tests.on(outputChange, (tests, { id, value }) =>
+  tests.map((test) => (test.id === id ? { ...test, output: value } : test)),
+)
+$tests.reset(EditPage.close, toggleEditTests)
 
 /*
-  to prevent race condition we need to cancel effect:
-  when checkbox goes from false to true -> call effect
-  when checkbox goes from true to false -> cancel effect
+to prevent race condition we need to cancel effect:
+when checkbox goes from false to true -> call effect
+when checkbox goes from true to false -> cancel effect
 */
 const fetchTests = guard({
   source: $editTests,
@@ -73,10 +65,6 @@ guard({
   filter: (edit) => !edit,
   target: getTestsFx.cancel,
 })
-
-// working with tests
-$tests.on(getTestsFx.doneData, (_, { payload }) => payload.map((test) => ({ ...test, old: true })))
-$tests.reset(EditPage.close, toggleEditTests)
 
 export const editForm = {
   $name,

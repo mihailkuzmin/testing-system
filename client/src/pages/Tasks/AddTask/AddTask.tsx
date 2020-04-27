@@ -8,7 +8,13 @@ import {
   MinusButton as Remove,
 } from '../../../components/Buttons'
 import { addTask } from '../model/addTask'
+import { TestId } from '../model/addTask/typings'
 import styles from './AddTask.module.css'
+
+type ExampleInputProps = { id: TestId }
+type ExampleOutputProps = ExampleInputProps
+
+type TestControlProps = { onAdd: any; onRemove: any }
 
 export const AddTask = () => {
   const onSubmit = (e: React.FormEvent) => {
@@ -35,11 +41,6 @@ export const AddTask = () => {
   )
 }
 
-type TestControlProps = {
-  onAdd: any
-  onRemove: any
-}
-
 const TestControl = ({ onAdd, onRemove }: TestControlProps) => {
   const count = useStore(addTask.$testsCount)
   return (
@@ -61,9 +62,6 @@ const Tests = () => {
 
   return tests
 }
-
-type ExampleInputProps = { id: number }
-type ExampleOutputProps = ExampleInputProps
 
 const ExampleInput = ({ id }: ExampleInputProps) => {
   const value = useStoreMap({
