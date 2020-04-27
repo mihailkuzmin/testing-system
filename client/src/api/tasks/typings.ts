@@ -1,5 +1,6 @@
 export type TestId = number
 export type TaskId = number
+export type UpdateTestId = number | string
 
 export type Test = {
   id: TestId
@@ -12,22 +13,29 @@ export type CreateTest = {
   output: string
 }
 
-export interface Task {
+export type UpdateTest = {
+  id: UpdateTestId
+  input: string
+  output: string
+  old: boolean
+}
+
+export type Task = {
   id: TaskId
   name: string
   description: string
 }
 
-export interface CreateTask {
+export type CreateTask = {
   name: string
   description: string
   tests: CreateTest[]
 }
 
-export interface UpdateTask {
+export type UpdateTask = {
   id: TaskId
   name: string
   description: string
   changeTests: boolean
-  tests: Test[]
+  tests: UpdateTest[]
 }
