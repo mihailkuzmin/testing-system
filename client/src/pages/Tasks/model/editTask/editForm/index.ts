@@ -1,5 +1,13 @@
 import { forward, guard, sample } from 'effector'
-import { $name, $description, $tests, $testsCount, $editTests, $taskId } from './stores'
+import {
+  $name,
+  $description,
+  $tests,
+  $testsCount,
+  $editTests,
+  $oldTestsForDelete,
+  $taskId,
+} from './stores'
 import {
   toggleEditTests,
   descriptionChange,
@@ -9,6 +17,7 @@ import {
   outputChange,
   addTest,
   removeTest,
+  removeOldTest,
 } from './events'
 import { getTaskFx, getTestsFx } from './effects'
 import { EditPage } from '../page'
@@ -32,8 +41,11 @@ $description.reset(EditPage.close)
 $editTests.on(toggleEditTests, (_, newState) => newState)
 $editTests.reset(EditPage.close)
 
+$oldTestsForDelete.on(removeOldTest, (tests, { id }) => [...tests, id])
+$oldTestsForDelete.reset(EditPage.close, toggleEditTests)
+
 $tests.on(getTestsFx.doneData, (_, { payload }) => payload.map((test) => ({ ...test, old: true })))
-$tests.on(removeTest, (tests, testId) => tests.filter((test) => test.id !== testId))
+$tests.on(removeTest, (tests, { id }) => tests.filter((test) => test.id !== id))
 $tests.on(addTest, (tests) => [...tests, { id: nanoid(), input: '', output: '', old: false }])
 $tests.on(inputChange, (tests, { id, value }) =>
   tests.map((test) => (test.id === id ? { ...test, input: value } : test)),

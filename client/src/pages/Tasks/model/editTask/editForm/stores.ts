@@ -1,5 +1,5 @@
 import { createStore, combine } from 'effector'
-import { UpdateTest, TaskId } from './typings'
+import { UpdateTest, TaskId, UpdateTestId } from './typings'
 
 export const $taskId = createStore<TaskId | null>(null)
 
@@ -10,6 +10,8 @@ export const $description = createStore('')
 export const $tests = createStore<UpdateTest[]>([])
 export const $testsCount = $tests.map((tests) => tests.length)
 
+export const $oldTestsForDelete = createStore<UpdateTestId[]>([])
+
 export const $editTests = createStore(false)
 
 export const $form = combine({
@@ -17,5 +19,6 @@ export const $form = combine({
   name: $name,
   description: $description,
   tests: $tests,
+  testsForDelete: $oldTestsForDelete,
   editTests: $editTests,
 })

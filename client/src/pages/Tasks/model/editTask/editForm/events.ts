@@ -9,6 +9,7 @@ export const nameChange = createEvent<string>()
 export const descriptionChange = createEvent<string>()
 
 export const addTest = createEvent()
-export const removeTest = createEvent<UpdateTestId>()
+export const removeTest = createEvent<{ id: UpdateTestId; old: boolean }>()
+export const removeOldTest = removeTest.filter({ fn: ({ old }) => old })
 
 export const saveChanges = createEvent()
