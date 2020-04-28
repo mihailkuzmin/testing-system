@@ -39,7 +39,7 @@ export const TasksTable = () => {
         <T.Row>
           <T.Cell>№</T.Cell>
           <T.Cell>Название</T.Cell>
-          <T.Cell>Действия</T.Cell>
+          <T.Cell align='center'>Действия</T.Cell>
         </T.Row>
       </T.Head>
       <T.Body>

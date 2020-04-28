@@ -1,7 +1,10 @@
-table.table {
-  width: 25%;
+.table {
   min-width: 300px;
   max-width: 500px;
+}
+
+.table td {
+  word-break: break-all;
 }
 
 .row:hover {
@@ -14,6 +17,5 @@ table.table {
 
 .actions {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
