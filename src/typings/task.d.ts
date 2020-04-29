@@ -6,6 +6,10 @@ export interface Test {
   output: string
 }
 
+export type UpdateTest = Test & {
+  id: TestId
+}
+
 export interface CreateTask {
   name: string
   description: string
@@ -18,8 +22,12 @@ export interface ITask {
   description: string
 }
 
-export interface UpdateTask {
+export type UpdateTask = {
   id: TaskId
   name: string
   description: string
+  editTests: boolean
+  testsForDelete: TestId[]
+  testsForUpdate: UpdateTest[]
+  testsForInsert: UpdateTest[]
 }
