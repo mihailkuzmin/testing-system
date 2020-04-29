@@ -14,11 +14,20 @@ export const $oldTestsForDelete = createStore<UpdateTestId[]>([])
 
 export const $editTests = createStore(false)
 
-export const $form = combine({
-  id: $taskId,
-  name: $name,
-  description: $description,
-  tests: $tests,
-  testsForDelete: $oldTestsForDelete,
-  editTests: $editTests,
-})
+export const $form = combine(
+  {
+    id: $taskId,
+    name: $name,
+    description: $description,
+    tests: $tests,
+    testsForDelete: $oldTestsForDelete,
+    editTests: $editTests,
+  },
+  ({ tests, ...form }) => {
+    return {
+      ...form,
+      testsForUpdate: tests.filter((test) => test.old),
+      testsForInsert: tests.filter((test) => !test.old),
+    }
+  },
+)
