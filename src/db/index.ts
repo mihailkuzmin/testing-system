@@ -19,6 +19,10 @@ class DB {
     const { rows } = await this.pool.query(query)
     return rows
   }
+
+  public createQueryString(text: string, ...values: any[]): string {
+    return format(text, ...values)
+  }
 }
 
 export const db = new DB()
