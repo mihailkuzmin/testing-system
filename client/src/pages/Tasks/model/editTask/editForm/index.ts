@@ -1,26 +1,29 @@
 import { forward, guard, sample } from 'effector'
 import {
-  $name,
   $description,
-  $tests,
-  $testsCount,
   $editTests,
+  $form,
+  $name,
   $oldTestsForDelete,
   $taskId,
+  $tests,
+  $testsCount,
 } from './stores'
 import {
-  toggleEditTests,
   descriptionChange,
-  nameChange,
-  saveChanges,
   inputChange,
+  nameChange,
   outputChange,
   addTest,
-  removeTest,
   removeOldTest,
+  removeTest,
+  saveChanges,
+  toggleEditTests,
 } from './events'
-import { getTaskFx, getTestsFx } from './effects'
+import { getTaskFx, getTestsFx, updateTaskFx } from './effects'
 import { EditPage } from '../page'
+import { notifications } from '../../../../../model/notifications'
+import { MessageType } from '../../../../../typings'
 import { nanoid } from 'nanoid'
 
 forward({ from: EditPage.open, to: getTaskFx })
@@ -76,6 +79,26 @@ guard({
   source: $editTests,
   filter: (edit) => !edit,
   target: getTestsFx.cancel,
+})
+
+// update task
+sample({
+  source: $form,
+  clock: saveChanges,
+  target: updateTaskFx,
+  fn: (form) => ({ ...form, id: form.id! }),
+})
+
+updateTaskFx.watch(() => {
+  notifications.createMessage({ text: 'Выполняется', type: MessageType.Info })
+})
+
+updateTaskFx.doneData.watch(({ message }) => {
+  notifications.createMessage({ text: message, type: MessageType.Success })
+})
+
+updateTaskFx.failData.watch(({ message }) => {
+  notifications.createMessage({ text: message, type: MessageType.Error })
 })
 
 export const editForm = {
