@@ -1,11 +1,11 @@
 import React from 'react'
-import { useStore, useList, useStoreMap } from 'effector-react'
-import { Paper, Editor } from '../../../components'
+import { useList, useStore, useStoreMap } from 'effector-react'
+import { Editor, Paper } from '../../../components'
 import { Input } from '../../../components/Inputs'
 import {
-  PrimaryButton as Button,
-  PlusButton as Add,
   MinusButton as Remove,
+  PlusButton as Add,
+  PrimaryButton as Button,
 } from '../../../components/Buttons'
 import { addTask } from '../model/addTask'
 import { TestId } from '../model/addTask/typings'
@@ -17,6 +17,7 @@ type ExampleOutputProps = ExampleInputProps
 type TestControlProps = { onAdd: any; onRemove: any }
 
 export const AddTask = () => {
+  // TODO: add on mount event
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     addTask.createTask()
@@ -53,14 +54,12 @@ const TestControl = ({ onAdd, onRemove }: TestControlProps) => {
 }
 
 const Tests = () => {
-  const tests = useList(addTask.$tests, (test) => (
+  return useList(addTask.$tests, (test) => (
     <React.Fragment key={test.id}>
       <ExampleInput id={test.id} />
       <ExampleOutput id={test.id} />
     </React.Fragment>
   ))
-
-  return tests
 }
 
 const ExampleInput = ({ id }: ExampleInputProps) => {
