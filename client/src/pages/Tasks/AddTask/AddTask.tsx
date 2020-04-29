@@ -3,9 +3,9 @@ import { useList, useStore, useStoreMap } from 'effector-react'
 import { Editor, Paper } from '../../../components'
 import { Input } from '../../../components/Inputs'
 import {
-  MinusButton as Remove,
+  DeleteButton as Delete,
   PlusButton as Add,
-  PrimaryButton as Button,
+  PrimaryButton as Save,
 } from '../../../components/Buttons'
 import { addTask } from '../model/addTask'
 import { TestId } from '../model/addTask/typings'
@@ -14,9 +14,11 @@ import styles from './AddTask.module.css'
 type ExampleInputProps = { id: TestId }
 type ExampleOutputProps = ExampleInputProps
 
-type TestControlProps = { onAdd: any; onRemove: any }
+type TestCounterProps = { count: number; onClick: () => void }
 
 export const AddTask = () => {
+  const testsCount = useStore(addTask.$testsCount)
+
   // TODO: add on mount event
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -27,39 +29,40 @@ export const AddTask = () => {
     <Paper className={styles.addTask}>
       <div className={styles.header}>
         <h2>Добавить задание</h2>
-        <Button form='addTaskForm' type='submit'>
-          Добавить
-        </Button>
+        <Save form='addTaskForm' type='submit'>
+          Сохранить
+        </Save>
       </div>
       <form id='addTaskForm' className={styles.addForm} onSubmit={onSubmit}>
         <NameInput />
         <DescriptionInput />
-        <h3>Добавьте тесты к заданию</h3>
-        <TestControl onAdd={addTask.addTest} onRemove={addTask.removeTest} />
+        <div className={styles.testsControl}>
+          <h3>Добавьте тесты к заданию</h3>
+          <TestsCounter count={testsCount} onClick={() => addTask.addTest()} />
+        </div>
         <Tests />
       </form>
     </Paper>
   )
 }
 
-const TestControl = ({ onAdd, onRemove }: TestControlProps) => {
-  const count = useStore(addTask.$testsCount)
-  return (
-    <div className={styles.testsControl}>
-      <span>Тестов: {count}</span>
-      <Add onClick={onAdd} />
-      <Remove onClick={onRemove} />
-    </div>
-  )
-}
+const TestsCounter = ({ count, onClick }: TestCounterProps) => (
+  <div className={styles.testsCounter}>
+    <span>Тестов: {count}</span>
+    <Add onClick={onClick} />
+  </div>
+)
 
 const Tests = () => {
-  return useList(addTask.$tests, (test) => (
+  const list = useList(addTask.$tests, (test) => (
     <React.Fragment key={test.id}>
       <ExampleInput id={test.id} />
       <ExampleOutput id={test.id} />
+      <Delete />
     </React.Fragment>
   ))
+
+  return <div className={styles.testsList}>{list}</div>
 }
 
 const ExampleInput = ({ id }: ExampleInputProps) => {

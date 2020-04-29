@@ -9,28 +9,12 @@
   margin: 0;
 }
 
-.addForm {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+.addForm > *:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
-.addForm > *:nth-child(1),
-.addForm > *:nth-child(2) {
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-.addForm > *:nth-child(4) {
-  justify-self: end;
-}
-
-.testsControl {
-  display: flex;
-  align-items: center;
-}
-
-.testsControl > span {
-  margin-right: 0.5rem;
+.addForm > *:nth-child(1) {
+  width: 100%;
 }
 
 .header {
@@ -38,4 +22,30 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1rem;
+}
+
+.testsControl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.testsCounter {
+  display: flex;
+  align-items: center;
+}
+
+.testsCounter > span {
+  margin-right: 0.5rem;
+}
+
+.testsList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) 1.8rem;
+  gap: 1rem;
+}
+
+.testsList > button {
+  align-self: center;
+  justify-self: center;
 }
