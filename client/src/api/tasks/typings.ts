@@ -36,6 +36,7 @@ export type UpdateTask = {
   id: TaskId
   name: string
   description: string
-  changeTests: boolean
   tests: UpdateTest[]
+  testsForDelete: UpdateTestId[]
+  editTests: boolean
 }
