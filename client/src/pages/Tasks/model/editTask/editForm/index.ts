@@ -26,8 +26,10 @@ import { notifications } from '../../../../../model/notifications'
 import { MessageType } from '../../../../../typings'
 import { nanoid } from 'nanoid'
 
+//bind open/close/done events
 forward({ from: EditPage.open, to: getTaskFx })
 forward({ from: EditPage.close, to: [getTaskFx.cancel, getTestsFx.cancel] })
+updateTaskFx.doneData.watch(({ payload: { id } }) => getTaskFx(id))
 
 // working with inputs
 $taskId.on(getTaskFx.doneData, (_, { payload }) => payload.id)
