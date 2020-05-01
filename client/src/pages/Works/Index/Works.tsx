@@ -1,3 +1,4 @@
 import React from 'react'
+import { WorksTable } from './WorksTable'
 
-export const Works = () => <div>Works index</div>
+export const Works = () => <WorksTable />

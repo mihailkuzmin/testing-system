@@ -1,0 +1,21 @@
+.table {
+  min-width: 300px;
+  max-width: 600px;
+}
+
+.table td {
+  word-break: break-all;
+}
+
+.row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.head th {
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
