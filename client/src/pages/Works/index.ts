@@ -1,3 +1,4 @@
-import { Works as Index } from './Works'
+import { Index } from './Index'
+import { AddWork } from './AddWork'
 
-export const Works = { Index }
+export const Works = { Index, AddWork }
