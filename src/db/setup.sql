@@ -26,6 +26,12 @@ CREATE TABLE Work (
 	close_at timestamp NOT NULL
 );
 
+
+CREATE TABLE TaskTopic (
+    id SERIAL PRIMARY KEY,
+    name varchar(30) NOT NULL
+);
+
 CREATE TABLE Task (
 	id SERIAL PRIMARY KEY,
 	name varchar(100) NOT NULL,
