@@ -9,12 +9,25 @@
   margin: 0;
 }
 
-.addForm > *:not(:last-child) {
-  margin-bottom: 1rem;
+.addForm {
+  display: grid;
+  grid-template-columns: 1fr 15rem;
+  gap: 1rem;
+}
+
+.addForm > * {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .addForm > *:nth-child(1) {
-  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.addForm > *:nth-child(2) {
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 
 .header {
