@@ -1,5 +1,5 @@
-import { sample } from 'effector'
-import { $description, $tests, $testsCount, $name, $form } from './stores'
+import { forward, sample } from 'effector'
+import { $description, $tests, $testsCount, $name, $form, $topics, $selectedTopic } from './stores'
 import {
   descriptionChange,
   inputChange,
@@ -8,18 +8,34 @@ import {
   removeTest,
   createTask,
   nameChange,
+  topicChange,
 } from './events'
-import { createTaskFx } from './effects'
+import { createTaskFx, getTopicsFx } from './effects'
 import { AddTaskPage } from '../page'
 import { notifications } from '../../../../../model'
 import { MessageType } from '../../../../../typings'
 import { nanoid } from 'nanoid'
+
+forward({ from: AddTaskPage.open, to: getTopicsFx })
+forward({ from: AddTaskPage.close, to: getTopicsFx.cancel })
 
 $description.on(descriptionChange, (_, desc) => desc)
 $description.reset(AddTaskPage.close, createTaskFx.done)
 
 $name.on(nameChange, (_, name) => name)
 $name.reset(AddTaskPage.close, createTaskFx.done)
+
+$selectedTopic.on(getTopicsFx.doneData, (_, { payload }) => {
+  if (payload.length > 0) {
+    const [first] = payload
+    return first.id
+  }
+})
+$selectedTopic.on(topicChange, (_, topic) => topic)
+$selectedTopic.reset(AddTaskPage.close)
+
+$topics.on(getTopicsFx.doneData, (_, { payload }) => payload)
+$topics.reset(AddTaskPage.close)
 
 $tests.on(inputChange, (tests, { id, value }) =>
   tests.map((test) => (test.id === id ? { ...test, input: value } : test)),
@@ -45,6 +61,7 @@ sample({
   fn: (task) => ({
     ...task,
     tests: task.tests.map(({ input, output }) => ({ input, output })),
+    topicId: task.topicId!,
   }),
 })
 
@@ -65,6 +82,8 @@ export const addForm = {
   $description,
   $tests,
   $testsCount,
+  $topics,
+  $selectedTopic,
   addTest,
   removeTest,
   createTask,
@@ -72,4 +91,5 @@ export const addForm = {
   outputChange,
   descriptionChange,
   nameChange,
+  topicChange,
 }

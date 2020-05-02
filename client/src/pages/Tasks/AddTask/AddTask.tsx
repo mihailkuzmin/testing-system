@@ -2,14 +2,16 @@ import React from 'react'
 import { useList, useStore, useStoreMap } from 'effector-react'
 import { Editor, Paper } from '../../../components'
 import { Input } from '../../../components/Inputs'
+import { Select, Item } from '../../../components/Inputs/Select'
 import {
   DeleteButton as Delete,
   PlusButton as Add,
   PrimaryButton as Save,
 } from '../../../components/Buttons'
 import { addForm, AddTaskPage } from '../model/addTask'
-import { TestId } from '../model/addTask/addForm/typings'
+import { TestId, TopicId } from '../model/addTask/addForm/typings'
 import styles from './AddTask.module.css'
+import { PageLoader, PageError } from '../../../components/Loaders'
 
 type ExampleInputProps = { id: TestId }
 type ExampleOutputProps = ExampleInputProps
@@ -19,11 +21,20 @@ type TestCounterProps = { count: number; onClick: () => void }
 export const AddTask = () => {
   React.useEffect(AddTaskPage.onMount, [])
 
+  const { isLoading, isFail } = useStore(AddTaskPage.$status)
   const testsCount = useStore(addForm.$testsCount)
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     addForm.createTask()
+  }
+
+  if (isLoading) {
+    return <PageLoader />
+  }
+
+  if (isFail) {
+    return <PageError />
   }
 
   return (
@@ -36,6 +47,7 @@ export const AddTask = () => {
       </div>
       <form id='addTaskForm' className={styles.addForm} onSubmit={onSubmit}>
         <NameInput />
+        <TopicSelect />
         <DescriptionInput />
         <div className={styles.testsControl}>
           <h3>Добавьте тесты к заданию</h3>
@@ -64,6 +76,25 @@ const Tests = () => {
   ))
 
   return <div className={styles.testsList}>{list}</div>
+}
+
+const TopicSelect = () => {
+  const topics = useStore(addForm.$topics)
+  const value = useStore(addForm.$selectedTopic)
+
+  return (
+    <Select
+      label='Тема'
+      value={value}
+      onChange={(e) => addForm.topicChange(e.target.value as TopicId)}
+    >
+      {topics.map((topic) => (
+        <Item key={topic.id} value={topic.id}>
+          {topic.name}
+        </Item>
+      ))}
+    </Select>
+  )
 }
 
 const ExampleInput = ({ id }: ExampleInputProps) => {

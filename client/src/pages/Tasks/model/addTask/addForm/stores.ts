@@ -1,5 +1,5 @@
 import { createStore, combine } from 'effector'
-import { Test } from './typings'
+import { Test, Topic, TopicId } from './typings'
 import { nanoid } from 'nanoid'
 
 export const $name = createStore('')
@@ -12,8 +12,15 @@ export const $tests = createStore<Test[]>([{ id: nanoid(), input: '', output: ''
 
 export const $testsCount = $tests.map((tests) => tests.length)
 
-//TODO FIX TOPIC
-export const $form = combine({ name: $name, description: $description, tests: $tests }, (kek) => ({
-  ...kek,
-  topicId: 1,
-}))
+export const $topics = createStore<Topic[]>([])
+
+export const $selectedTopic = createStore<TopicId | null>(null)
+
+export const $form = combine({
+  name: $name,
+  description: $description,
+  tests: $tests,
+  topicId: $selectedTopic,
+})
+
+$form.watch(console.log)
