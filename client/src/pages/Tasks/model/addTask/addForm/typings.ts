@@ -1,4 +1,6 @@
 export type TestId = number | string
+export type TopicId = number | string
+
 export type Test = {
   id: TestId
   input: string
@@ -8,5 +10,6 @@ export type Test = {
 export type Task = {
   name: string
   description: string
+  topicId: TopicId
   tests: Test[]
 }

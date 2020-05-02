@@ -83,12 +83,13 @@ guard({
   target: getTestsFx.cancel,
 })
 
+//TODO FIX TOPIC
 // update task
 sample({
   source: $form,
   clock: saveChanges,
   target: updateTaskFx,
-  fn: (form) => ({ ...form, id: form.id! }),
+  fn: (form) => ({ ...form, id: form.id!, topicId: 1 }),
 })
 
 updateTaskFx.watch(() => {

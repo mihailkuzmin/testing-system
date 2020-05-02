@@ -12,4 +12,8 @@ export const $tests = createStore<Test[]>([{ id: nanoid(), input: '', output: ''
 
 export const $testsCount = $tests.map((tests) => tests.length)
 
-export const $form = combine({ name: $name, description: $description, tests: $tests })
+//TODO FIX TOPIC
+export const $form = combine({ name: $name, description: $description, tests: $tests }, (kek) => ({
+  ...kek,
+  topicId: 1,
+}))
