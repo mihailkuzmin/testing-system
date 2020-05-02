@@ -9,6 +9,8 @@ export type Test = {
   output: string
 }
 
+export type Topic = { id: TopicId; name: string }
+
 export type CreateTest = { input: string; output: string }
 
 export type UpdateTest = {
@@ -22,7 +24,7 @@ export type Task = {
   id: TaskId
   name: string
   description: string
-  topic: { id: TopicId; name: string }
+  topic: Topic
 }
 
 export type CreateTask = {
