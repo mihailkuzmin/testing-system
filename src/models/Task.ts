@@ -35,6 +35,7 @@ export class Task {
       SELECT
         T.id, T.name
       FROM TaskTopic T
+      ORDER BY T.name
     `)
 
     return topics
@@ -46,7 +47,7 @@ export class Task {
         T.id, T.name, T.description, jsonb_build_object('id', Topic.id, 'name', Topic.name) as topic
       FROM Task T, TaskTopic Topic
       WHERE (T.topic_id = Topic.id)
-      ORDER BY T.id
+      ORDER BY Topic.name
     `)
 
     return tasks
