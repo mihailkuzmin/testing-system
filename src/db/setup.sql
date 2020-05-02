@@ -28,8 +28,8 @@ CREATE TABLE Work (
 
 
 CREATE TABLE TaskTopic (
-    id SERIAL PRIMARY KEY,
-    name varchar(30) NOT NULL
+	id SERIAL PRIMARY KEY,
+	name varchar(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE Task (
