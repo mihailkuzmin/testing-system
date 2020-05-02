@@ -3,26 +3,28 @@ import { ITask, CreateTask, UpdateTask, TaskId } from '../typings/task'
 
 export class Task {
   static async getById(id: TaskId) {
-    const [result] = await db.query(
+    const [task] = await db.query(
       `
-        SELECT
-          T.id, T.name, T.description
-        FROM Task T
-        WHERE (T.id = %L)
+      SELECT
+        T.id, T.name, T.description, jsonb_build_object('id', Topic.id, 'name', Topic.name) as topic
+      FROM Task T, TaskTopic Topic
+      WHERE (T.id = %L and  T.topic_id = Topic.id)
       `,
       id,
     )
-    return result
+    console.log(task)
+    // task.topic = this._parseTopic(task.topic)
+    return task
   }
 
   static async getTestsById(id: TaskId) {
     const tests = await db.query(
       `
-        SELECT
-          T.id, T.input, T.output
-        FROM Test T
-        WHERE (T.task_id = %L)
-        ORDER BY T.id 
+      SELECT
+        T.id, T.input, T.output
+      FROM Test T
+      WHERE (T.task_id = %L)
+      ORDER BY T.id 
       `,
       id,
     )
@@ -30,26 +32,31 @@ export class Task {
   }
 
   static async getAll(): Promise<ITask[]> {
-    const result = await db.query(`
-        SELECT
-          T.id, T.name, T.description
-        FROM Task T
-        ORDER BY T.id
-      `)
-    return result
+    const tasks = await db.query(`
+      SELECT
+        T.id, T.name, T.description, jsonb_build_object('id', Topic.id, 'name', Topic.name) as topic
+      FROM Task T, TaskTopic Topic
+      WHERE (T.topic_id = Topic.id)
+      ORDER BY T.id
+    `)
+
+    return tasks
   }
 
   static async create(t: CreateTask): Promise<ITask> {
     const [task] = await db.query(
       `
-        INSERT INTO Task as T (
-          name,
-          description
-        ) VALUES (%L)
+        INSERT INTO Task as T
+          (name, description, topic_id)
+        VALUES (%L)
         RETURNING
-          T.id, T.description
+          T.id, T.name, T.description,
+          jsonb_build_object(
+            'id', topic_id, 'name', 
+            (SELECT Topic.name FROM TaskTopic Topic WHERE Topic.id = topic_id)
+          ) as topic
       `,
-      [t.name, t.description],
+      [t.name, t.description, t.topicId],
     )
 
     const tests = t.tests.map((test) => [task.id, ...Object.values(test)])
@@ -64,13 +71,19 @@ export class Task {
         UPDATE Task T
         SET
           name = %L,
-          description = %L
+          description = %L,
+          topic_id = %L
         WHERE (T.id = %L)
         RETURNING
-          T.id, T.name, T.description
+          T.id, T.name, T.description,
+          jsonb_build_object(
+            'id', topic_id, 'name', 
+            (SELECT Topic.name FROM TaskTopic Topic WHERE Topic.id = topic_id)
+          ) as topic
       `,
       t.name,
       t.description,
+      t.topicId,
       t.id,
     )
 
@@ -135,7 +148,11 @@ export class Task {
         DELETE FROM Task as T
         WHERE (T.id = %L)
         RETURNING
-          T.id, T.name, T.description
+          T.id, T.name, T.description,
+          jsonb_build_object(
+            'id', topic_id, 'name', 
+            (SELECT Topic.name FROM TaskTopic Topic WHERE Topic.id = topic_id)
+          ) as topic
       `,
       id,
     )
