@@ -12,8 +12,7 @@ export class Task {
       `,
       id,
     )
-    console.log(task)
-    // task.topic = this._parseTopic(task.topic)
+
     return task
   }
 
@@ -29,6 +28,16 @@ export class Task {
       id,
     )
     return tests
+  }
+
+  static async getTopics() {
+    const topics = await db.query(`
+      SELECT
+        T.id, T.name
+      FROM TaskTopic T
+    `)
+
+    return topics
   }
 
   static async getAll(): Promise<ITask[]> {
