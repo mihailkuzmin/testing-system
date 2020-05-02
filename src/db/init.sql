@@ -15,11 +15,7 @@ INSERT INTO Work VALUES (DEFAULT, 'Работа 2. Программирован�
 
 INSERT INTO TaskTopic
     (name)
-VALUES
-    ('Topic 1'),
-    ('Topic 2'),
-    ('Topic 3'),
-    ('Topic 4');
+VALUES ('Массивы'), ('Строки'), ('Рекурсия'), ('Графы'), ('Деревья');
 
 INSERT INTO Task
     (name, description, topic_id)
