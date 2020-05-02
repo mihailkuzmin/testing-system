@@ -13,6 +13,7 @@ const onMount = (id: number) => {
 
 const $isLoading = createStore(true)
 $isLoading.on(getTaskFx.done, () => false)
+$isLoading.on(getTaskFx.fail, () => false)
 $isLoading.reset(close)
 
 const $isFail = createStore(false)
