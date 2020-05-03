@@ -9,12 +9,25 @@
   margin: 0;
 }
 
-.editForm > *:not(:last-child) {
-  margin-bottom: 1rem;
+.editForm {
+  display: grid;
+  grid-template-columns: 1fr 15rem;
+  gap: 1rem;
+}
+
+.editForm > * {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .editForm > *:nth-child(1) {
-  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.editForm > *:nth-child(2) {
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 
 .header {
