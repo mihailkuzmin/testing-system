@@ -1,4 +1,4 @@
-import { ITask, Test, Topic } from '../../../typings/task'
+import { ITask, TaskPreview, Test, Topic } from '../../../typings/task'
 
 export interface Create extends ITask {}
 export interface GetAll extends Array<ITask> {}
@@ -7,3 +7,4 @@ export type GetTestsById = Test[]
 export interface Update extends ITask {}
 export interface RemoveById extends ITask {}
 export type GetTopics = Topic[]
+export type GetPreviewById = TaskPreview
