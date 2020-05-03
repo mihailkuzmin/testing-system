@@ -5,12 +5,13 @@ import { CheckBox } from '../../../components/Inputs'
 import { PrimaryButton as Save } from '../../../components/Buttons'
 import { PageLoader, PageError } from '../../../components/Loaders'
 import { EditPage, editForm, tests } from '../model/editTask'
-import { TaskId } from '../model/editTask/editForm/typings'
+import { TaskId, TopicId } from '../model/editTask/editForm/typings'
 import { NameInput, DescriptionInput } from './Inputs'
 import { TestsCounter } from './TestsCounter'
 import { Loader } from './Loader'
 import { Tests } from './Tests'
 import styles from './EditTask.module.css'
+import { Item, Select } from '../../../components/Inputs/Select'
 
 type EditTaskProps = { id: TaskId }
 
@@ -48,6 +49,7 @@ export const EditTask = ({ id }: EditTaskProps) => {
       </div>
       <form id='editTaskForm' className={styles.editForm} onSubmit={onSubmit}>
         <NameInput />
+        <TopicSelect />
         <DescriptionInput />
         <div className={styles.testsControl}>
           <div className={styles.editControl}>
@@ -60,5 +62,24 @@ export const EditTask = ({ id }: EditTaskProps) => {
         {showTests && <Tests />}
       </form>
     </Paper>
+  )
+}
+
+const TopicSelect = () => {
+  const topics = useStore(editForm.$topics)
+  const value = useStore(editForm.$selectedTopic)
+
+  return (
+    <Select
+      label='Тема'
+      value={value}
+      onChange={(e) => editForm.topicChange(e.target.value as TopicId)}
+    >
+      {topics.map((topic) => (
+        <Item key={topic.id} value={topic.id}>
+          {topic.name}
+        </Item>
+      ))}
+    </Select>
   )
 }

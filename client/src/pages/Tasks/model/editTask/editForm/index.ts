@@ -5,9 +5,11 @@ import {
   $form,
   $name,
   $oldTestsForDelete,
+  $selectedTopic,
   $taskId,
   $tests,
   $testsCount,
+  $topics,
 } from './stores'
 import {
   descriptionChange,
@@ -19,16 +21,17 @@ import {
   removeTest,
   saveChanges,
   toggleEditTests,
+  topicChange,
 } from './events'
-import { getTaskFx, getTestsFx, updateTaskFx } from './effects'
+import { getTaskFx, getTestsFx, getTopicsFx, updateTaskFx } from './effects'
 import { EditPage } from '../page'
 import { notifications } from '../../../../../model/notifications'
 import { MessageType } from '../../../../../typings'
 import { nanoid } from 'nanoid'
 
 //bind open/close/done events
-forward({ from: EditPage.open, to: getTaskFx })
-forward({ from: EditPage.close, to: [getTaskFx.cancel, getTestsFx.cancel] })
+forward({ from: EditPage.open, to: [getTaskFx, getTopicsFx] })
+forward({ from: EditPage.close, to: [getTaskFx.cancel, getTestsFx.cancel, getTopicsFx.cancel] })
 updateTaskFx.doneData.watch(({ payload: { id } }) => getTaskFx(id))
 
 // working with inputs
@@ -42,6 +45,13 @@ $name.reset(EditPage.close)
 $description.on(getTaskFx.doneData, (_, { payload }) => payload.description)
 $description.on(descriptionChange, (_, desc) => desc)
 $description.reset(EditPage.close)
+
+$topics.on(getTopicsFx.doneData, (_, { payload }) => payload)
+$topics.reset(EditPage.close)
+
+$selectedTopic.on(getTaskFx.doneData, (_, { payload }) => payload.topic.id)
+$selectedTopic.on(topicChange, (_, topic) => topic)
+$selectedTopic.reset(EditPage.close)
 
 $editTests.on(toggleEditTests, (_, newState) => newState)
 $editTests.reset(EditPage.close)
@@ -83,13 +93,12 @@ guard({
   target: getTestsFx.cancel,
 })
 
-//TODO FIX TOPIC
 // update task
 sample({
   source: $form,
   clock: saveChanges,
   target: updateTaskFx,
-  fn: (form) => ({ ...form, id: form.id!, topicId: 1 }),
+  fn: (form) => ({ ...form, id: form.id!, topicId: form.topicId! }),
 })
 
 updateTaskFx.watch(() => {
@@ -107,9 +116,12 @@ updateTaskFx.failData.watch(({ message }) => {
 export const editForm = {
   $name,
   $description,
+  $topics,
+  $selectedTopic,
   nameChange,
   descriptionChange,
   saveChanges,
+  topicChange,
 }
 
 export const tests = {

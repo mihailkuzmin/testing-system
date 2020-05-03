@@ -1,5 +1,5 @@
 import { createEvent, createStore, combine } from 'effector'
-import { getTaskFx } from '../editForm/effects'
+import { getTaskFx, getTopicsFx } from '../editForm/effects'
 
 type TaskId = number
 
@@ -11,13 +11,19 @@ const onMount = (id: number) => {
   return () => close()
 }
 
+const effectsLoading = combine(
+  getTaskFx.pending,
+  getTopicsFx.pending,
+  (tasks, topics) => tasks || topics,
+)
+
 const $isLoading = createStore(true)
-$isLoading.on(getTaskFx.done, () => false)
-$isLoading.on(getTaskFx.fail, () => false)
+$isLoading.on(effectsLoading, (_, loading) => loading)
 $isLoading.reset(close)
 
 const $isFail = createStore(false)
 $isFail.on(getTaskFx.fail, () => true)
+$isFail.on(getTopicsFx.fail, () => true)
 $isFail.reset(close)
 
 const $status = combine({ isLoading: $isLoading, isFail: $isFail })
