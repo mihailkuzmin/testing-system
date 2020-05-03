@@ -25,7 +25,6 @@ export const PreviewTask = ({ id }: PreviewTaskProps) => {
     <Paper className={styles.preview}>
       <h2>Задание "{preview?.name}"</h2>
       <span>Тема: {preview?.topic}</span>
-      {/*<div className={styles.grid}>*/}
       <div className={styles.card}>
         <span>Описание</span>
         <div dangerouslySetInnerHTML={{ __html: preview?.description ?? '' }}></div>
@@ -38,7 +37,6 @@ export const PreviewTask = ({ id }: PreviewTaskProps) => {
         <span>Пример выходных данных</span>
         <div className={styles.test}>{preview?.test.output}</div>
       </div>
-      {/*</div>*/}
     </Paper>
   )
 }
