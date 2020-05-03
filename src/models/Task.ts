@@ -30,7 +30,7 @@ export class Task {
     return tests
   }
 
-  static async getTopics() {
+  static async getTopics(): Promise<Topic[]> {
     const topics = await db.query(`
       SELECT
         T.id, T.name
