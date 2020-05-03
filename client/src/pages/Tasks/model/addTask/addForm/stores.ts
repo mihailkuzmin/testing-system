@@ -22,5 +22,3 @@ export const $form = combine({
   tests: $tests,
   topicId: $selectedTopic,
 })
-
-$form.watch(console.log)
