@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { ITask, CreateTask, UpdateTask, TaskId } from '../typings/task'
+import { ITask, CreateTask, UpdateTask, TaskId, Topic, TaskPreview } from '../typings/task'
 
 export class Task {
   static async getById(id: TaskId) {
@@ -39,6 +39,26 @@ export class Task {
     `)
 
     return topics
+  }
+
+  static async getPreviewById(id: TaskId): Promise<TaskPreview> {
+    const [preview] = await db.query(
+      `
+      SELECT
+        T.id, T.name, T.description, Topic.name,
+        (
+          SELECT jsonb_build_object('input', input, 'output', output)
+          FROM Test
+          WHERE Test.task_id = T.id
+          ORDER BY id LIMIT 1
+        ) as test
+      FROM Task T, TaskTopic Topic, Test
+      WHERE (T.id = %L and  T.topic_id = Topic.id and Test.task_id = T.id)
+    `,
+      id,
+    )
+
+    return preview
   }
 
   static async getAll(): Promise<ITask[]> {
