@@ -1,14 +1,14 @@
 import { forward } from 'effector'
-import { $task } from './stores'
-import { getTaskFx } from './effects'
+import { $taskPreview } from './stores'
+import { getTaskPreviewFx } from './effects'
 import { PreviewPage } from '../page'
 
-forward({ from: PreviewPage.open, to: getTaskFx })
-forward({ from: PreviewPage.close, to: getTaskFx.cancel })
+forward({ from: PreviewPage.open, to: getTaskPreviewFx })
+forward({ from: PreviewPage.close, to: getTaskPreviewFx.cancel })
 
-$task.on(getTaskFx.doneData, (_, { payload }) => payload)
-$task.reset(PreviewPage.close)
+$taskPreview.on(getTaskPreviewFx.doneData, (_, { payload }) => payload)
+$taskPreview.reset(PreviewPage.close)
 
-export const task = {
-  $task,
+export const taskPreview = {
+  $taskPreview,
 }

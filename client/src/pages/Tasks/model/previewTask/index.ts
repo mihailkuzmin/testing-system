@@ -1,2 +1,2 @@
 export { PreviewPage } from './page'
-export { task } from './task'
+export { taskPreview } from './task'

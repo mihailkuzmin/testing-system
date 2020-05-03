@@ -1,5 +1,5 @@
 import { createEvent, createStore, combine } from 'effector'
-import { getTaskFx } from '../task/effects'
+import { getTaskPreviewFx } from '../task/effects'
 
 type TaskId = number
 
@@ -12,11 +12,12 @@ const onMount = (id: number) => {
 }
 
 const $isLoading = createStore(true)
-$isLoading.on(getTaskFx.done, () => false)
+$isLoading.on(getTaskPreviewFx.done, () => false)
+$isLoading.on(getTaskPreviewFx.fail, () => false)
 $isLoading.reset(close)
 
 const $isFail = createStore(false)
-$isFail.on(getTaskFx.fail, () => true)
+$isFail.on(getTaskPreviewFx.fail, () => true)
 $isFail.reset(close)
 
 const $status = combine({ isLoading: $isLoading, isFail: $isFail })
