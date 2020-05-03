@@ -42,6 +42,18 @@ export const taskController: IController = (app, options, done) => {
     reply.send(response)
   })
 
+  app.get('/preview/:id', async (request, reply) => {
+    const id: TaskId = request.params.id
+
+    const taskPreview = await Task.getPreviewById(id)
+
+    const response: Response<Payload.GetPreviewById> = {
+      payload: taskPreview,
+      message: Messages.GetPreviewById,
+    }
+    reply.send(response)
+  })
+
   app.get('/topic', async (request, reply) => {
     const topics = await Task.getTopics()
 
