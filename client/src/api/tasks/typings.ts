@@ -44,3 +44,11 @@ export type UpdateTask = {
   testsForUpdate: UpdateTest[]
   testsForInsert: UpdateTest[]
 }
+
+export type TaskPreview = {
+  id: TaskId
+  name: string
+  description: string
+  topic: string
+  test: Test
+}
