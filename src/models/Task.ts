@@ -45,7 +45,7 @@ export class Task {
     const [preview] = await db.query(
       `
       SELECT
-        T.id, T.name, T.description, Topic.name,
+        T.id, T.name, T.description, Topic.name as topic,
         (
           SELECT jsonb_build_object('input', input, 'output', output)
           FROM Test
