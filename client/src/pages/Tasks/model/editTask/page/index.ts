@@ -11,14 +11,9 @@ const onMount = (id: number) => {
   return () => close()
 }
 
-const effectsLoading = combine(
-  getTaskFx.pending,
-  getTopicsFx.pending,
-  (tasks, topics) => tasks || topics,
-)
-
-const $isLoading = createStore(true)
-$isLoading.on(effectsLoading, (_, loading) => loading)
+const $isLoading = createStore(2)
+$isLoading.on(getTaskFx.done, (count) => (count > 0 ? count - 1 : count))
+$isLoading.on(getTopicsFx.done, (count) => (count > 0 ? count - 1 : count))
 $isLoading.reset(close)
 
 const $isFail = createStore(false)
@@ -26,6 +21,9 @@ $isFail.on(getTaskFx.fail, () => true)
 $isFail.on(getTopicsFx.fail, () => true)
 $isFail.reset(close)
 
-const $status = combine({ isLoading: $isLoading, isFail: $isFail })
+const $status = combine({ isLoading: $isLoading, isFail: $isFail }, (status) => ({
+  ...status,
+  isLoading: Boolean(status.isLoading),
+}))
 
 export const EditPage = { open, close, onMount, $status }
