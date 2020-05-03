@@ -17,7 +17,6 @@ import {
   nameChange,
   outputChange,
   addTest,
-  removeOldTest,
   removeTest,
   saveChanges,
   toggleEditTests,
@@ -56,11 +55,18 @@ $selectedTopic.reset(EditPage.close)
 $editTests.on(toggleEditTests, (_, newState) => newState)
 $editTests.reset(EditPage.close)
 
+const deleteTest = guard({
+  source: removeTest,
+  filter: $testsCount.map((count) => count > 1),
+})
+
+const removeOldTest = deleteTest.filter({ fn: ({ old }) => old })
+
 $oldTestsForDelete.on(removeOldTest, (tests, { id }) => [...tests, id])
 $oldTestsForDelete.reset(EditPage.close, toggleEditTests)
 
 $tests.on(getTestsFx.doneData, (_, { payload }) => payload.map((test) => ({ ...test, old: true })))
-$tests.on(removeTest, (tests, { id }) => tests.filter((test) => test.id !== id))
+$tests.on(deleteTest, (tests, { id }) => tests.filter((test) => test.id !== id))
 $tests.on(addTest, (tests) => [...tests, { id: nanoid(), input: '', output: '', old: false }])
 $tests.on(inputChange, (tests, { id, value }) =>
   tests.map((test) => (test.id === id ? { ...test, input: value } : test)),
