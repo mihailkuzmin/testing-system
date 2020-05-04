@@ -7,11 +7,12 @@ import {
   DeleteButton as Delete,
 } from '../../../../components/Buttons'
 import styles from './WorksTable.module.css'
+import { useStore } from 'effector-react'
+import { worksTable } from '../../model/index'
 
 export const WorksTable = () => {
-  const worksIsEmpty = false
-  const date = new Date().toLocaleString()
-  const works = [{ id: 1, name: 'Работа 1', openAt: date, closeAt: date }]
+  const works = useStore(worksTable.$works)
+  const worksIsEmpty = works.length === 0
 
   return (
     <T.Table className={styles.table}>
