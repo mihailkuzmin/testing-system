@@ -1,5 +1,6 @@
 import { db } from '../db'
 import { IWork, CreateWork, WorkId } from '../typings/work'
+import { ITask, TaskId } from '../typings/task'
 
 export class Work {
   static async create(w: CreateWork): Promise<IWork> {
@@ -30,10 +31,23 @@ export class Work {
 
   static async getAll(): Promise<IWork[]> {
     const works = await db.query(`
-        SELECT
+        SELECT 
           W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
         FROM Work W
       `)
     return works
+  }
+
+  static async removeById(id: WorkId): Promise<IWork> {
+    const [work] = await db.query(
+      `
+        DELETE FROM Work as W
+        WHERE (W.id = %L)
+        RETURNING
+          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
+      `,
+      id,
+    )
+    return work
   }
 }
