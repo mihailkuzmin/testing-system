@@ -3,10 +3,30 @@ import { useStore, useStoreMap } from 'effector-react'
 import { Input } from '../../../../components/Inputs'
 import { Editor } from '../../../../components'
 import { tests, editForm } from '../../model/editTask'
-import { UpdateTestId } from '../../model/editTask/editForm/typings'
+import { TopicId, UpdateTestId } from '../../model/editTask/editForm/typings'
+import { Item, Select } from '../../../../components/Inputs/Select'
 
 type ExampleInputProps = { id: UpdateTestId }
 type ExampleOutputProps = { id: UpdateTestId }
+
+export const TopicSelect = () => {
+  const topics = useStore(editForm.$topics)
+  const value = useStore(editForm.$selectedTopic)
+
+  return (
+    <Select
+      label='Тема'
+      value={value}
+      onChange={(e) => editForm.topicChange(e.target.value as TopicId)}
+    >
+      {topics.map((topic) => (
+        <Item key={topic.id} value={topic.id}>
+          {topic.name}
+        </Item>
+      ))}
+    </Select>
+  )
+}
 
 export const ExampleInput = React.memo(({ id }: ExampleInputProps) => {
   const value = useStoreMap({

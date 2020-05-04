@@ -1,1 +1,1 @@
-export { ExampleInput, ExampleOutput, DescriptionInput, NameInput } from './Inputs'
+export { ExampleInput, ExampleOutput, DescriptionInput, NameInput, TopicSelect } from './Inputs'
