@@ -1,5 +1,5 @@
 import { forward, sample } from 'effector'
-import { $groups, $getGroupsStatus, $selectedForDelete } from './stores'
+import { $groups, $getGroupsStatus, $selectedForDelete, $deleteDialogIsOpen } from './stores'
 import { getGroupsFx, deleteGroupFx } from './effects'
 import {
   selectForDelete,
@@ -11,7 +11,6 @@ import {
 } from './events'
 import { GroupsPage } from '../page'
 import { addForm } from '../addForm'
-import { deleteModal } from '../deleteModal'
 import { editModal } from '../editModal'
 import { notifications } from '../../../../model'
 import { Status, MessageType } from '../.././../../typings'
@@ -26,12 +25,6 @@ forward({ from: selectForEdit, to: editModal.openEditModal })
 
 $groups.on(getGroupsFx.doneData, (_, { payload }) => payload)
 $groups.reset(GroupsPage.close)
-
-forward({ from: selectForDelete, to: deleteModal.openDeleteModal })
-forward({
-  from: [confirmDelete, cancelDelete],
-  to: deleteModal.closeDeleteModal,
-})
 
 sample({
   source: $groups,
@@ -66,6 +59,7 @@ export const groupsTable = {
   $groups,
   $getGroupsStatus,
   $selectedForDelete,
+  $deleteDialogIsOpen,
   selectForDelete,
   selectForEdit,
   confirmDelete,

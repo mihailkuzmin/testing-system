@@ -10,7 +10,7 @@ import { Modal } from '../../../components'
 import { AddGroup } from './AddGroup'
 import { EditGroup } from './EditGroup'
 import { DeleteGroup } from './DeleteGroup'
-import { addModal, editModal, deleteModal, groupsTable } from '../model'
+import { addModal, editModal, groupsTable } from '../model'
 import { Group } from '../model/typings'
 import styles from './GroupsTable.module.css'
 
@@ -21,7 +21,6 @@ interface IGroupsTableProps {
 export const GroupsTable = ({ groups }: IGroupsTableProps) => {
   const addGroupModal = useStore(addModal.$addModal)
   const editGroupModal = useStore(editModal.$editModal)
-  const deleteGroupModal = useStore(deleteModal.$deleteModal)
 
   const groupsIsEmpty = groups?.length === 0
 
@@ -33,9 +32,7 @@ export const GroupsTable = ({ groups }: IGroupsTableProps) => {
       <Modal open={editGroupModal.open} onClose={editModal.closeEditModal}>
         <EditGroup />
       </Modal>
-      <Modal open={deleteGroupModal.open} onClose={deleteModal.closeDeleteModal}>
-        <DeleteGroup />
-      </Modal>
+      <DeleteGroup />
       <T.Head className={styles.head}>
         <T.Row>
           <T.Cell colSpan={3}>
