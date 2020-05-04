@@ -21,5 +21,14 @@ export const workController: IController = (app, options, done) => {
     reply.send(response)
   })
 
+  app.delete('/:id', async (request, reply) => {
+    const id: WorkId = request.params.id
+
+    const result = await Work.removeById(id)
+
+    const response: Response<Payload.RemoveById> = { payload: result, message: Messages.RemoveById }
+    reply.send(response)
+  })
+
   done()
 }
