@@ -1,4 +1,5 @@
 import React from 'react'
+import { useStore } from 'effector-react'
 import { navigate } from 'hookrouter'
 import * as T from '../../../../components/Table'
 import {
@@ -7,8 +8,8 @@ import {
   DeleteButton as Delete,
 } from '../../../../components/Buttons'
 import styles from './WorksTable.module.css'
-import { useStore } from 'effector-react'
 import { worksTable } from '../../model/index'
+import { DeleteWork } from './DeleteWork'
 
 export const WorksTable = () => {
   const works = useStore(worksTable.$works)
@@ -16,6 +17,7 @@ export const WorksTable = () => {
 
   return (
     <T.Table className={styles.table}>
+      <DeleteWork />
       <T.Head className={styles.head}>
         <T.Row>
           <T.Cell colSpan={5}>
@@ -51,7 +53,7 @@ export const WorksTable = () => {
               <T.Cell>
                 <div className={styles.actions}>
                   <Edit onClick={() => {}} />
-                  <Delete onClick={() => {}} />
+                  <Delete onClick={() => worksTable.selectForDelete(work.id)} />
                 </div>
               </T.Cell>
             </T.Row>
