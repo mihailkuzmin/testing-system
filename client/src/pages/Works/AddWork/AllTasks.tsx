@@ -9,11 +9,11 @@ import styles from './AddWork.module.css'
 
 const TopicSelect = () => {
   const topics = useStore(addForm.$topics)
-  const value = useStore(addForm.$selectedTopic)
+  const selected = useStore(addForm.$selectedTopic)
 
   return (
     <Select
-      value={value}
+      value={selected?.id ?? ''}
       label='Тема'
       onChange={(e) => addForm.topicChange(e.target.value as TopicId)}
     >

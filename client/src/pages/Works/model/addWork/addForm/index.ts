@@ -16,16 +16,24 @@ $topics.reset(AddWorkPage.close)
 $selectedTopic.on(getTopicsFx.doneData, (_, { payload }) => {
   if (payload.length) {
     const [first] = payload
-    return first.id
+    return first
   }
 })
-$selectedTopic.on(topicChange, (_, topicId) => topicId)
+//trigger filter when tasks updates
+$selectedTopic.on($tasks.updates, (state) => (state ? { ...state } : state))
+
+sample({
+  source: $topics,
+  clock: topicChange,
+  target: $selectedTopic,
+  fn: (topics, topicId) => topics.find((topic) => topic.id === topicId) ?? null,
+})
 $selectedTopic.reset(AddWorkPage.close)
 
 const $filteredTasks = sample({
   source: $tasks,
   clock: $selectedTopic,
-  fn: (tasks, topicId) => tasks.filter((task) => task.topic.id === topicId),
+  fn: (tasks, selected) => tasks.filter((task) => task.topic.id === selected?.id),
 })
 $filteredTasks.reset(AddWorkPage.close)
 
