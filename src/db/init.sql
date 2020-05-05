@@ -25,7 +25,6 @@ VALUES
     ('Task 3 name', 'Task 3 desc', 2),
     ('Task 4 name', 'Task 4 desc', 2),
     ('Task 5 name', 'Task 5 desc', 3),
-    ('Task 5 name', 'Task 5 desc', 3),
     ('Task 6 name', 'Task 6 desc', 4),
     ('Task 7 name', 'Task 7 desc', 4),
     ('Task 8 name', 'Task 8 desc', 4);
