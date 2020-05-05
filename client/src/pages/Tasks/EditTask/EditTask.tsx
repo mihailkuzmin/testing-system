@@ -46,11 +46,16 @@ export const EditTask = ({ id }: EditTaskProps) => {
           Сохранить
         </Save>
       </div>
+
+      <Divider />
+
       <form id='editTaskForm' className={styles.editForm} onSubmit={onSubmit}>
         <NameInput />
         <TopicSelect />
         <DescriptionInput />
+
         <Divider />
+
         <div className={styles.testsControl}>
           <div className={styles.editControl}>
             <CheckBox checked={editTests} onChange={() => tests.toggleEditTests(!editTests)} />
