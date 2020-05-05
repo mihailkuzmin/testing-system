@@ -8,23 +8,17 @@ import {
   DeleteButton as Delete,
   PreviewButton as Preview,
 } from '../../../../components/Buttons'
-import { Modal } from '../../../../components'
 import { DeleteTask } from './DeleteTask'
 import { tasksTable } from '../../model/index'
 import styles from './TasksTable.module.css'
 
 export const TasksTable = () => {
   const tasks = useStore(tasksTable.$tasks)
-  const taskForDelete = useStore(tasksTable.$taskForDelete)
-
-  const deleteTaskExists = taskForDelete !== null
-  const tasksisEmpty = tasks.length === 0
+  const tasksIsEmpty = tasks.length === 0
 
   return (
     <T.Table className={styles.table}>
-      <Modal open={deleteTaskExists} onClose={tasksTable.cancelDelete}>
-        <DeleteTask />
-      </Modal>
+      <DeleteTask />
       <T.Head className={styles.head}>
         <T.Row>
           <T.Cell colSpan={4}>
@@ -44,7 +38,7 @@ export const TasksTable = () => {
         </T.Row>
       </T.Head>
       <T.Body>
-        {tasksisEmpty ? (
+        {tasksIsEmpty ? (
           <T.Row>
             <T.Cell>Список заданий пока пуст</T.Cell>
             <T.Cell colSpan={3}></T.Cell>

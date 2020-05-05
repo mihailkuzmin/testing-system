@@ -1,1 +1,0 @@
-export { DeleteGroup } from './DeleteGroup'

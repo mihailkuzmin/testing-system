@@ -20,12 +20,16 @@ sample({
   fn: (tasks, taskId) => tasks.find((task) => task.id === taskId) ?? null,
 })
 
-$taskForDelete.watch(confirmDelete, (task) => {
-  if (task !== null) {
-    deleteTaskFx(task.id)
-  }
+sample({
+  source: $taskForDelete,
+  clock: confirmDelete,
+  target: deleteTaskFx,
+  fn: (task) => task!.id,
 })
+
 $taskForDelete.reset(TasksPage.close, deleteTaskFx, cancelDelete)
+
+const $deleteDialogIsOpen = $taskForDelete.map(Boolean)
 
 deleteTaskFx.watch(() => {
   notifications.createMessage({ text: 'Выполняется', type: MessageType.Info })
@@ -42,6 +46,7 @@ deleteTaskFx.failData.watch(({ message }) => {
 export const tasksTable = {
   $tasks,
   $taskForDelete,
+  $deleteDialogIsOpen,
   confirmDelete,
   cancelDelete,
   selectForDelete,
