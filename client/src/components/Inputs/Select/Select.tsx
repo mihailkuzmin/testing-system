@@ -11,9 +11,14 @@ export { MenuItem as Item }
 
 export const Select = (props: SelectProps) => {
   return (
-    <FormControl variant='outlined'>
+    <FormControl variant={props.variant ?? 'outlined'}>
       <InputLabel id={`${props.name}-select-label`}>{props.label}</InputLabel>
-      <MaterialSelect {...props} labelId={`${props.name}-select`} id={`${props.name}-select`}>
+      <MaterialSelect
+        {...props}
+        variant={props.variant ?? 'outlined'}
+        labelId={`${props.name}-select`}
+        id={`${props.name}-select`}
+      >
         <MenuItem disabled>{props.label}</MenuItem>
         {props.children}
       </MaterialSelect>
