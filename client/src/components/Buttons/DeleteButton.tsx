@@ -1,15 +1,14 @@
 import React from 'react'
-import { IconButton, Tooltip } from '@material-ui/core'
+import { IconButton, Tooltip, ButtonProps } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/DeleteOutlineOutlined'
 
-interface IDeleteButtonProps {
-  onClick?: any
+type DeleteButtonProps = ButtonProps & {
   prompt?: string
 }
 
-export const DeleteButton = (props: IDeleteButtonProps) => (
+export const DeleteButton = (props: DeleteButtonProps) => (
   <Tooltip title={props.prompt ?? 'Удалить'}>
-    <IconButton onClick={props.onClick} size='small'>
+    <IconButton {...props} size='small'>
       <DeleteIcon />
     </IconButton>
   </Tooltip>
