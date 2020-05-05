@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { Paper } from '../../../components'
+import { Paper, Divider } from '../../../components'
 import { PageLoader, PageError } from '../../../components/Loaders'
 import { PrimaryButton as Save } from '../../../components/Buttons'
 import { NameInput, DescriptionInput, TopicSelect } from './Inputs'
@@ -40,6 +40,7 @@ export const AddTask = () => {
         <NameInput />
         <TopicSelect />
         <DescriptionInput />
+        <Divider />
         <div className={styles.testsControl}>
           <h3>Добавьте тесты к заданию</h3>
           <TestsCounter count={testsCount} onClick={() => addForm.addTest()} />
