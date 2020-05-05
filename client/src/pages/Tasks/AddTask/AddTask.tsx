@@ -36,11 +36,16 @@ export const AddTask = () => {
           Сохранить
         </Save>
       </div>
+
+      <Divider />
+
       <form id='addTaskForm' className={styles.addForm} onSubmit={onSubmit}>
         <NameInput />
         <TopicSelect />
         <DescriptionInput />
+
         <Divider />
+
         <div className={styles.testsControl}>
           <h3>Добавьте тесты к заданию</h3>
           <TestsCounter count={testsCount} onClick={() => addForm.addTest()} />

@@ -1,4 +1,6 @@
 .addTask {
+  display: grid;
+  gap: 1rem;
   width: 70%;
   padding: 1rem;
 }
@@ -33,7 +35,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 1rem;
 }
 
 .testsControl {
