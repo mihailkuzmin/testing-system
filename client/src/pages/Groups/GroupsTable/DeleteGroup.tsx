@@ -15,8 +15,7 @@ export const DeleteGroup = () => {
       title='Удалить группу'
       confirmText='Удалить'
     >
-      <p>Вы уверены, что хотите удалить группу</p>
-      <p>{group?.name}?</p>
+      <p>Вы уверены, что хотите удалить группу {group?.name}?</p>
       <p>Также будут удалены все студенты этой группы</p>
     </ConfirmationDialog>
   )
