@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { Paper } from '../../../components'
+import { Paper, Divider } from '../../../components'
 import { CheckBox } from '../../../components/Inputs'
 import { PrimaryButton as Save } from '../../../components/Buttons'
 import { PageLoader, PageError } from '../../../components/Loaders'
@@ -50,6 +50,7 @@ export const EditTask = ({ id }: EditTaskProps) => {
         <NameInput />
         <TopicSelect />
         <DescriptionInput />
+        <Divider />
         <div className={styles.testsControl}>
           <div className={styles.editControl}>
             <CheckBox checked={editTests} onChange={() => tests.toggleEditTests(!editTests)} />
