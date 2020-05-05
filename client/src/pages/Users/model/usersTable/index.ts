@@ -25,7 +25,6 @@ import { userCreated } from '../addForm/events'
 import { Status, MessageType } from '../../../../typings'
 import { notifications } from '../../../../model'
 import { editModal } from '../editModal'
-import { deleteModal } from '../deleteModal'
 import { UsersPage } from '../page'
 
 forward({ from: UsersPage.open, to: [getAllUsersFx, getGroupsFx] })
@@ -76,13 +75,6 @@ const $filteredUsers = sample({
 })
 $filteredUsers.reset(UsersPage.close)
 
-// bind confirm/cancel to modal open/close events
-forward({ from: selectForDelete, to: deleteModal.openDeleteModal })
-forward({
-  from: [confirmDelete, cancelDelete],
-  to: deleteModal.closeDeleteModal,
-})
-
 sample({
   source: $filteredUsers,
   clock: selectForDelete,
@@ -90,12 +82,15 @@ sample({
   fn: (users, userId) => users.find((user) => user.id === userId) || null,
 })
 
-$selectedForDelete.reset(cancelDelete, userDeleted)
-$selectedForDelete.watch(confirmDelete, (user) => {
-  if (user !== null) {
-    deleteUserFx(user.id)
-  }
+sample({
+  source: $selectedForDelete,
+  clock: confirmDelete,
+  target: deleteUserFx,
+  fn: (user) => user!.id,
 })
+$selectedForDelete.reset(cancelDelete, deleteUserFx)
+
+const $deleteDialogIsOpen = $selectedForDelete.map(Boolean)
 
 $getAllUsersStatus.on(getAllUsersFx.done, () => Status.Idle)
 $getAllUsersStatus.on(getAllUsersFx.fail, () => Status.Fail)
@@ -136,6 +131,7 @@ export const usersTable = {
   $groupSelect,
   $status,
   $selectedForDelete,
+  $deleteDialogIsOpen,
   onGroupSelectChange,
   selectForDelete,
   selectForEdit,

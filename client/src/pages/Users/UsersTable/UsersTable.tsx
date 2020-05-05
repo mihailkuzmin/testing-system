@@ -12,20 +12,18 @@ import { GroupSelect, Item } from './GroupSelect'
 import { AddUser } from './AddUser'
 import { DeleteUser } from './DeleteUser'
 import { EditUser } from './EditUser'
-import { usersTable, addModal, deleteModal, editModal } from '../model'
+import { usersTable, addModal, editModal } from '../model'
 import styles from './UsersTable.module.css'
 
-interface IUsersTableProps {
+type UsersTableProps = {
   users?: UsersTableRow[]
   groups?: UsersTableGroup[]
 }
 
-export const UsersTable = ({ users, groups }: IUsersTableProps) => {
+export const UsersTable = ({ users, groups }: UsersTableProps) => {
   const select = useStore(usersTable.$groupSelect)
   const addUserModal = useStore(addModal.$addModal)
-  const deleteUserModal = useStore(deleteModal.$deleteModal)
   const editUserModal = useStore(editModal.$editModal)
-  const selectedForDelete = useStore(usersTable.$selectedForDelete)
 
   const usersAreEmpty = users?.length === 0
   const groupsAreEmpty = groups?.length === 0
@@ -35,9 +33,7 @@ export const UsersTable = ({ users, groups }: IUsersTableProps) => {
       <Modal open={addUserModal.open} onClose={addModal.closeAddModal}>
         <AddUser groups={groups} />
       </Modal>
-      <Modal open={deleteUserModal.open} onClose={deleteModal.closeDeleteModal}>
-        <DeleteUser user={selectedForDelete} />
-      </Modal>
+      <DeleteUser />
       <Modal open={editUserModal.open} onClose={editModal.closeEditModal}>
         <EditUser groups={groups} />
       </Modal>
