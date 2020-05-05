@@ -1,12 +1,36 @@
 import React from 'react'
+import { useStore } from 'effector-react'
 import { Task } from './Task'
 import { PlusButton as Add } from '../../../components/Buttons'
 import { Item, Select } from '../../../components/Inputs/Select'
+import { addForm } from '../model/addWork'
+import { TopicId } from '../model/addWork/addForm/typings'
 import styles from './AddWork.module.css'
 
-export const AllTasks = () => {
-  const tasks = [{ id: 4, name: 'Task 4', topic: 'Строки' }]
+const TopicSelect = () => {
+  const topics = useStore(addForm.$topics)
+  const value = useStore(addForm.$selectedTopic)
 
+  return (
+    <Select
+      value={value}
+      label='Тема'
+      onChange={(e) => addForm.topicChange(e.target.value as TopicId)}
+    >
+      {topics.map((topic) => (
+        <Item key={topic.id} value={topic.id}>
+          {topic.name}
+        </Item>
+      ))}
+    </Select>
+  )
+}
+
+export const AllTasks = () => {
+  const tasks = useStore(addForm.$filteredTasks)
+  const tasksIsEmpty = tasks.length === 0
+
+  //TODO bind to effector
   const onAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { id } = e.currentTarget.dataset
 
@@ -17,18 +41,18 @@ export const AllTasks = () => {
     <div className={styles.allTasks}>
       <div className={styles.flexBetween}>
         <h3>Все задания</h3>
-        <Select value={2} label='Тема'>
-          <Item value={0}>Массивы</Item>
-          <Item value={1}>Графы</Item>
-          <Item value={2}>Строки</Item>
-        </Select>
+        <TopicSelect />
       </div>
       <div className={styles.tasksList}>
-        {tasks.map((task) => (
-          <Task key={task.id} id={task.id} name={task.name} topic={task.topic}>
-            <Add data-id={4} onClick={onAddClick} />
-          </Task>
-        ))}
+        {tasksIsEmpty ? (
+          <p>Заданий на эту тему пока нет</p>
+        ) : (
+          tasks.map((task) => (
+            <Task key={task.id} id={task.id} name={task.name} topic={task.topic.name}>
+              <Add data-id={task.id} onClick={onAddClick} />
+            </Task>
+          ))
+        )}
       </div>
     </div>
   )
