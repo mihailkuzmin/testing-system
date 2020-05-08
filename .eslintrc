@@ -1,0 +1,8 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["kit/base", "kit/packs/react-typescript"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"]
+  }
+}
