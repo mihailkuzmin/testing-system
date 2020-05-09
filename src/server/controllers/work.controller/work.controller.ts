@@ -1,4 +1,5 @@
-import { Controller, Response } from '../../typings'
+import { Response } from '@common/typings'
+import { Controller } from '../../typings'
 import { Work } from '../../models'
 import { WorkId } from '../../typings/work'
 import * as Payload from './typings/payloads'

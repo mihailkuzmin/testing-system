@@ -1,4 +1,4 @@
-import { Controller } from '../typings/controller'
+import { Controller } from '../typings'
 import * as controllers from '../controllers'
 
 export const routes: Controller = (app, options, done) => {

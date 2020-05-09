@@ -1,4 +1,4 @@
-import { Controller } from '../typings/controller'
+import { Controller } from '../typings'
 
 export const authController: Controller = (app, options, done) => {
   app.post('/signin', async (request, reply) => {

@@ -1,4 +1,5 @@
-import { Controller, Response } from '../../typings'
+import { Response } from '@common/typings'
+import { Controller } from '../../typings'
 import { Student } from '../../models'
 import { CreateStudent, UpdateStudent, StudentId } from '../../typings/student'
 import * as Payload from './typings/payloads'

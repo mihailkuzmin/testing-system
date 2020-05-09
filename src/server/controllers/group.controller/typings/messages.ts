@@ -1,5 +1,0 @@
-export const GetAll = ''
-export const GetById = ''
-export const Create = 'Выполнено'
-export const RemoveById = 'Выполнено'
-export const Update = 'Выполнено'
