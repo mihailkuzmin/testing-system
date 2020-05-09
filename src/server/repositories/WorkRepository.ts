@@ -1,8 +1,8 @@
-import { db } from '../db'
-import { IWork, CreateWork, WorkId } from '../typings/work'
+import { db } from '@db'
+import { Work, CreateWork, WorkId } from '@common/typings/work'
 
-export class Work {
-  static async create(w: CreateWork): Promise<IWork> {
+export class WorkRepository {
+  static async create(w: CreateWork): Promise<Work> {
     const [work] = await db.query(
       `
         INSERT INTO Work as W (name, open_at, close_at) VALUES (%L)
@@ -14,7 +14,7 @@ export class Work {
     return work
   }
 
-  static async getById(id: WorkId): Promise<IWork> {
+  static async getById(id: WorkId): Promise<Work> {
     const [work] = await db.query(
       `
         SELECT
@@ -28,7 +28,7 @@ export class Work {
     return work
   }
 
-  static async getAll(): Promise<IWork[]> {
+  static async getAll(): Promise<Work[]> {
     const works = await db.query(`
         SELECT 
           W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
@@ -37,7 +37,7 @@ export class Work {
     return works
   }
 
-  static async removeById(id: WorkId): Promise<IWork> {
+  static async removeById(id: WorkId): Promise<Work> {
     const [work] = await db.query(
       `
         DELETE FROM Work as W

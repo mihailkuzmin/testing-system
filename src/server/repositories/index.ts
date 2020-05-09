@@ -1,4 +1,4 @@
 export { StudentRepository } from './StudentRepository'
-export { Work } from './Work'
+export { WorkRepository } from './WorkRepository'
 export { TaskRepository } from './TaskRepository'
 export { GroupRepository } from './GroupRepository'
