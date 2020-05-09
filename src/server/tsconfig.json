@@ -10,7 +10,9 @@
       "@repositories": ["server/repositories/index.ts"],
       "@repositories/*": ["server/repositories/*"],
       "@db": ["server/db/index.ts"],
-      "@db/*": ["server/db/*"]
+      "@db/*": ["server/db/*"],
+      "@controllers": ["server/controllers/index.ts"],
+      "@controllers/*": ["server/controllers/*"]
     },
     "outDir": "../../dist/server",
     "esModuleInterop": true,
