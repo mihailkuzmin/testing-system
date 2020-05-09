@@ -1,6 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": ["kit/base", "kit/packs/react-typescript"],
+  "extends": ["kit/base", "kit/node","kit/packs/react-typescript"],
+  "ignorePatterns": ["node_modules", "dist", "webpack*"],
   "rules": {
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/consistent-type-definitions": ["error", "type"]
