@@ -2,7 +2,7 @@ import React from 'react'
 import { useStore } from 'effector-react'
 import { PlusButton as Add } from '@components/Buttons'
 import { Item, Select } from '@components/Inputs/Select'
-import { TopicId } from '@common/typings/task'
+import { TaskId, TopicId } from '@common/typings/task'
 import { addForm } from '../model/addWork'
 import { Task } from './Task'
 import styles from './AddWork.module.css'
@@ -30,11 +30,10 @@ export const AllTasks = () => {
   const tasks = useStore(addForm.$filteredTasks)
   const tasksIsEmpty = tasks.length === 0
 
-  //TODO bind to effector
   const onAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { id } = e.currentTarget.dataset
+    const id = Number(e.currentTarget.dataset.id)
 
-    console.log({ add: id })
+    addForm.addTask(id as TaskId)
   }
 
   return (
