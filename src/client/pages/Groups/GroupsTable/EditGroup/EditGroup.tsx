@@ -3,9 +3,9 @@ import { useStore } from 'effector-react'
 import { PrimaryButton as Save, SecondaryButton as Cancel } from '@components/Buttons'
 import { MappedInput } from '@components/Inputs'
 import { Linear, Circular } from '@components/Loaders'
+import { Status } from '@typings'
 import { EditForm } from '../../model/editForm/typings'
 import { editForm, editModal } from '../../model'
-import { Status } from '@typings'
 import styles from './EditGroup.module.css'
 
 export const EditGroup = () => {

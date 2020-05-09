@@ -1,10 +1,10 @@
 import { sample, forward } from 'effector'
+import { Status, MessageType } from '@typings'
+import { notifications } from '@model'
+import { addModal } from '../addModal'
 import { $addForm, $createGroupStatus } from './stores'
 import { setField, fieldValueChange, createGroup, groupCreated } from './events'
 import { createGroupFx } from './effects'
-import { addModal } from '../addModal'
-import { Status, MessageType } from '@typings'
-import { notifications } from '@model'
 
 forward({ from: createGroupFx.done, to: groupCreated })
 

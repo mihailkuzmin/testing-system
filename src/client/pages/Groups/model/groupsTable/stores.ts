@@ -1,5 +1,5 @@
 import { createStore } from 'effector'
-import { Group } from '../typings'
+import { Group } from '@common/typings/group'
 import { Status } from '@typings'
 
 const groups: Group[] = []

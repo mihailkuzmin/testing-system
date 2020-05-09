@@ -1,24 +1,22 @@
 import React from 'react'
-import * as T from '@components/Table'
 import { useStore } from 'effector-react'
+import * as T from '@components/Table'
 import {
   PrimaryButton as Add,
   EditButton as Edit,
   DeleteButton as Delete,
 } from '@components/Buttons'
 import { Modal } from '@components'
+import { Group } from '@common/typings/group'
+import { addModal, editModal, groupsTable } from '../model'
 import { AddGroup } from './AddGroup'
 import { EditGroup } from './EditGroup'
 import { DeleteGroup } from './DeleteGroup'
-import { addModal, editModal, groupsTable } from '../model'
-import { Group } from '../model/typings'
 import styles from './GroupsTable.module.css'
 
-interface IGroupsTableProps {
-  groups?: Group[]
-}
+type GroupsTableProps = { groups?: Group[] }
 
-export const GroupsTable = ({ groups }: IGroupsTableProps) => {
+export const GroupsTable = ({ groups }: GroupsTableProps) => {
   const addGroupModal = useStore(addModal.$addModal)
   const editGroupModal = useStore(editModal.$editModal)
 

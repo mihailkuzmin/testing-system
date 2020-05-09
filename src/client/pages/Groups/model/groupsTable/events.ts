@@ -1,7 +1,6 @@
 import { createEvent } from 'effector'
-import { GroupId } from '../typings'
+import { GroupId } from '@common/typings/group'
 
-export const groupsRefreshed = createEvent()
 export const refreshGroups = createEvent()
 
 export const selectForDelete = createEvent<GroupId>()

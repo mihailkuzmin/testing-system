@@ -1,11 +1,11 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { PageProps, Status } from '@typings'
+import { Status } from '@typings'
 import { PageLoader, PageError } from '@components/Loaders'
 import { GroupsTable } from './GroupsTable'
 import { groupsTable, GroupsPage } from './model'
 
-export const Groups = (props: PageProps) => {
+export const Groups = () => {
   React.useEffect(GroupsPage.onMount, [])
   const groups = useStore(groupsTable.$groups)
   const groupsStatus = useStore(groupsTable.$getGroupsStatus)

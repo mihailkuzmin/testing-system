@@ -1,8 +1,6 @@
 import { createStore, createEvent } from 'effector'
 
-interface EditModal {
-  open: boolean
-}
+type EditModal = { open: boolean }
 
 export const $editModal = createStore<EditModal>({ open: false })
 

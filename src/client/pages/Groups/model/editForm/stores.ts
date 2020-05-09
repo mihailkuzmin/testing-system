@@ -1,6 +1,6 @@
 import { createStore } from 'effector'
-import { EditForm } from './typings'
 import { Status } from '@typings'
+import { EditForm } from './typings'
 
 const editForm: EditForm = {
   id: 0,

@@ -1,10 +1,8 @@
 import { createStore } from 'effector'
-import { AddForm } from '../typings'
 import { Status } from '@typings'
+import { AddForm } from '../typings'
 
-const addForm = {
-  name: '',
-}
+const addForm = { name: '' }
 
 export const $addForm = createStore<AddForm>(addForm)
 

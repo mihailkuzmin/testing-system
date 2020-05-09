@@ -3,9 +3,9 @@ import { useStore } from 'effector-react'
 import { PrimaryButton as Add, SecondaryButton as Cancel } from '@components/Buttons'
 import { MappedInput } from '@components/Inputs'
 import { Linear } from '@components/Loaders'
+import { Status } from '@typings'
 import { addForm, addModal } from '../../model'
 import { AddForm } from '../../model/typings'
-import { Status } from '@typings'
 import styles from './AddGroup.module.css'
 
 export const AddGroup = () => {

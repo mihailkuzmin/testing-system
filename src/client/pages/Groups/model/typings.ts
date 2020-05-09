@@ -1,19 +1,5 @@
-export type GroupId = number
+export type AddForm = { name: string }
 
-export interface Group {
-  id: GroupId
-  name: string
-}
+export type AddFormNewValue = { key: string; value: string }
 
-export interface AddForm {
-  name: string
-}
-
-export interface AddFormNewValue {
-  key: string
-  value: string
-}
-
-export interface AddModal {
-  open: boolean
-}
+export type AddModal = { open: boolean }

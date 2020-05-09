@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { groupsTable } from '../model'
 import { ConfirmationDialog } from '@components/ConfirmationDialog'
+import { groupsTable } from '../model'
 
 export const DeleteGroup = () => {
   const group = useStore(groupsTable.$selectedForDelete)

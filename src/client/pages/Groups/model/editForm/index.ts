@@ -1,11 +1,11 @@
 import { sample, forward } from 'effector'
-import { editGroupFx, getGroupFx } from './effects'
-import { $editForm, $editGroupStatus, $getGroupStatus } from './stores'
-import { setField, fieldValueChange, editGroup, groupUpdated } from './events'
 import { Status, MessageType } from '@typings'
 import { notifications } from '@model'
 import { editModal } from '../editModal'
 import { groupsTable } from '../groupsTable'
+import { editGroupFx, getGroupFx } from './effects'
+import { $editForm, $editGroupStatus, $getGroupStatus } from './stores'
+import { setField, fieldValueChange, editGroup, groupUpdated } from './events'
 
 forward({ from: editGroupFx.done, to: groupUpdated })
 forward({
