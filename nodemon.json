@@ -1,0 +1,7 @@
+{
+  "watch": ["src/server"],
+  "delay": 500,
+  "ext": "ts",
+  "ignore": ["node_modules", "dist", "*.sql"],
+  "exec": "eslint --cache ./src/server/ --ext .ts && ts-node -P tsconfig.build.server.json -r tsconfig-paths/register ./src/server/index.ts"
+}
