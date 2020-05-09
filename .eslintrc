@@ -1,4 +1,14 @@
 {
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
   "parser": "@typescript-eslint/parser",
   "extends": ["kit/base", "kit/node","kit/packs/react-typescript"],
   "ignorePatterns": ["node_modules", "dist", "webpack*"],
