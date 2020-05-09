@@ -1,5 +1,5 @@
-import { Controller } from '../typings'
-import * as controllers from '../controllers'
+import * as controllers from '@controllers'
+import { Controller } from '@typings'
 
 export const routes: Controller = (app, options, done) => {
   app.register(controllers.workController, { prefix: '/work' })
