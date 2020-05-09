@@ -1,5 +1,5 @@
 import { createStore } from 'effector'
-import { Task, Topic } from './typings'
+import { Task, Topic } from '@common/typings/task'
 
 export const $tasks = createStore<Task[]>([])
 export const $topics = createStore<Topic[]>([])

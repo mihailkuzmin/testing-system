@@ -1,10 +1,10 @@
 import { forward, sample } from 'effector'
-import { $deleteDialogIsOpen, $selectedForDelete, $works } from './stores'
-import { deleteWorkFx, getWorksFx } from './effects'
-import { WorksPage } from '../page'
-import { cancelDelete, confirmDelete, selectForDelete } from './events'
 import { notifications } from '@model'
 import { MessageType } from '@typings'
+import { WorksPage } from '../page'
+import { $deleteDialogIsOpen, $selectedForDelete, $works } from './stores'
+import { deleteWorkFx, getWorksFx } from './effects'
+import { cancelDelete, confirmDelete, selectForDelete } from './events'
 
 forward({ from: WorksPage.open, to: getWorksFx })
 forward({ from: WorksPage.close, to: getWorksFx.cancel })

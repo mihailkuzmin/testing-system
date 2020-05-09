@@ -1,8 +1,8 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { Task } from './Task'
 import { DeleteButton as Delete } from '@components/Buttons'
 import { addForm } from '../model/addWork/addForm'
+import { Task } from './Task'
 import styles from './AddWork.module.css'
 
 export const IncludedTasks = () => {

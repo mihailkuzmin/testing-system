@@ -1,10 +1,10 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { Task } from './Task'
 import { PlusButton as Add } from '@components/Buttons'
 import { Item, Select } from '@components/Inputs/Select'
+import { TopicId } from '@common/typings/task'
 import { addForm } from '../model/addWork'
-import { TopicId } from '../model/addWork/addForm/typings'
+import { Task } from './Task'
 import styles from './AddWork.module.css'
 
 const TopicSelect = () => {

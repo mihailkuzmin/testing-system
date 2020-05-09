@@ -7,8 +7,8 @@ import {
   EditButton as Edit,
   DeleteButton as Delete,
 } from '@components/Buttons'
-import styles from './WorksTable.module.css'
 import { worksTable } from '../../model/index'
+import styles from './WorksTable.module.css'
 import { DeleteWork } from './DeleteWork'
 
 export const WorksTable = () => {

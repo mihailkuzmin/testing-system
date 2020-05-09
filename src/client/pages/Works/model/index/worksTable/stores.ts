@@ -1,5 +1,5 @@
 import { createStore } from 'effector'
-import { Work } from './typings'
+import { Work } from '@common/typings/work'
 
 export const $works = createStore<Work[]>([])
 

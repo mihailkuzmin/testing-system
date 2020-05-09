@@ -1,4 +1,4 @@
 import { createEvent } from 'effector'
-import { TopicId } from './typings'
+import { TopicId } from '@common/typings/task'
 
 export const topicChange = createEvent<TopicId>()

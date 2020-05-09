@@ -1,8 +1,8 @@
 import { forward, sample } from 'effector'
+import { AddWorkPage } from '../page'
 import { getTopicsFx, getTasksFx } from './effects'
 import { $tasks, $selectedTasks, $topics, $selectedTopic } from './stores'
 import { topicChange } from './events'
-import { AddWorkPage } from '../page'
 
 forward({ from: AddWorkPage.open, to: [getTasksFx, getTopicsFx] })
 forward({ from: AddWorkPage.close, to: [getTasksFx.cancel, getTopicsFx.cancel] })

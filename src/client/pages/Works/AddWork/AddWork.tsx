@@ -3,9 +3,9 @@ import { useStore } from 'effector-react'
 import { PrimaryButton as Save } from '@components/Buttons'
 import { Paper, Divider } from '@components'
 import { PageLoader, PageError } from '@components/Loaders'
+import { AddWorkPage } from '../model/addWork'
 import { IncludedTasks } from './IncludedTasks'
 import { AllTasks } from './AllTasks'
-import { AddWorkPage } from '../model/addWork'
 import styles from './AddWork.module.css'
 
 export const AddWork = () => {
