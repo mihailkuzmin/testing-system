@@ -1,5 +1,5 @@
 {
-  "watch": ["src/server"],
+  "watch": ["src/server", "src/common"],
   "delay": 500,
   "ext": "ts",
   "ignore": ["node_modules", "dist", "*.sql"],
