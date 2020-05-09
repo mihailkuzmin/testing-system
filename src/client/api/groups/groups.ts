@@ -1,6 +1,6 @@
+import { Response } from '@common/typings'
+import { Group, CreateGroup, UpdateGroup, GroupId } from '@common/typings/group'
 import { request } from '../request'
-import { Response } from '../../typings'
-import { Group, CreateGroup, UpdateGroup, GroupId } from './typings'
 
 const getAll = async (): Promise<Response<Group[]>> => {
   const result = await request.get<Group[]>('group')
