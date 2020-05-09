@@ -1,13 +1,9 @@
 import React from 'react'
 import { OptionsObject } from 'notistack'
 
-export interface PageProps {
-  children?: React.ReactNode
-}
+export type PageProps = { children?: React.ReactNode }
 
-export type QueryParams = {
-  [key: string]: any
-}
+export type QueryParams = { [key: string]: any }
 
 /*
   Async operation status
@@ -23,17 +19,14 @@ export enum Status {
   Idle,
 }
 
-export interface Request {
+export type Request = {
   get: <R>(url: string) => Promise<Response<R>>
   post: <P, R>(url: string, payload?: P) => Promise<Response<R>>
   put: <P, R>(url: string, payload?: P) => Promise<Response<R>>
   delete: <P, R>(url: string, payload?: P) => Promise<Response<R>>
 }
 
-export interface Response<T> {
-  payload: T
-  message: string
-}
+export type Response<T> = { payload: T; message: string }
 
 export enum MessageType {
   Default = 'default',
@@ -43,12 +36,9 @@ export enum MessageType {
   Info = 'info',
 }
 
-export interface NewMessage {
-  type: MessageType
-  text: string
-}
+export type NewMessage = { type: MessageType; text: string }
 
-export interface Message extends OptionsObject {
+export type Message = OptionsObject & {
   key: string
   options: any
   message: string
@@ -57,7 +47,7 @@ export interface Message extends OptionsObject {
 
 export type UsersTableRowId = number
 
-export interface UsersTableRow {
+export type UsersTableRow = {
   id: UsersTableRowId
   lastName: string
   firstName: string
@@ -67,7 +57,4 @@ export interface UsersTableRow {
   login: string
 }
 
-export interface UsersTableGroup {
-  id: number | string
-  name: string
-}
+export type UsersTableGroup = { id: number | string; name: string }
