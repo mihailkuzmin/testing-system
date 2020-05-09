@@ -1,4 +1,3 @@
 import React from 'react'
-import { PageProps } from '@typings'
 
-export const Main = (props: PageProps) => <div>Main</div>
+export const Main = () => <div>Main</div>
