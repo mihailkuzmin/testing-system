@@ -7,8 +7,8 @@
       "@common/*": ["common/*"],
       "@typings": ["server/typings/index.ts"],
       "@typings/*": ["server/typings/*"],
-      "@repositories": ["server/models/index.ts"],
-      "@repositories/*": ["server/models/*"],
+      "@repositories": ["server/repositories/index.ts"],
+      "@repositories/*": ["server/repositories/*"],
       "@db": ["server/db/index.ts"],
       "@db/*": ["server/db/*"]
     },
