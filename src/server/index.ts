@@ -3,7 +3,7 @@ import fastifyCookie from 'fastify-cookie'
 import fastifyCors from 'fastify-cors'
 import { PoolConfig } from 'pg'
 import { db } from '@db'
-import { routes } from './routes'
+import { routes } from '@routes'
 import config from './dev.config.json'
 
 const app: FastifyInstance = fastify({ logger: config.logger })
