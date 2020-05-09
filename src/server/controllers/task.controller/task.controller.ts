@@ -1,44 +1,43 @@
+import { TaskRepository } from '@repositories'
 import { Response } from '@common/typings'
-import { Controller } from '../../typings'
-import { Task } from '../../models'
-import { CreateTask, UpdateTask, TaskId } from '../../typings/task'
-import * as Payload from './typings/payloads'
-import * as Messages from './typings/messages'
+import { Controller } from '@typings'
+import { Task, CreateTask, UpdateTask, TaskId, TaskPreview, Topic } from '@common/typings/task'
 
 export const taskController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
-    const result = await Task.getAll()
+    const result = await TaskRepository.getAll()
 
-    const response: Response<Payload.GetAll> = { payload: result, message: Messages.GetAll }
+    const response: Response<Task[]> = { payload: result, message: '' }
     reply.send(response)
   })
 
   app.post('/', async (request, reply) => {
     const newTask: CreateTask = request.body
 
-    const result = await Task.create(newTask)
+    const result = await TaskRepository.create(newTask)
 
-    const response: Response<Payload.Create> = { payload: result, message: Messages.Create }
+    const response: Response<Task> = { payload: result, message: 'Выполнено' }
     reply.send(response)
   })
 
   app.get('/:id', async (request, reply) => {
     const id: TaskId = request.params.id
 
-    const result = await Task.getById(id)
+    const result = await TaskRepository.getById(id)
 
-    const response: Response<Payload.GetById> = { payload: result, message: Messages.GetById }
+    const response: Response<Task> = { payload: result, message: '' }
     reply.send(response)
   })
 
   app.get('/tests/:id', async (request, reply) => {
     const id: TaskId = request.params.id
 
-    const tests = await Task.getTestsById(id)
+    const tests = await TaskRepository.getTestsById(id)
 
-    const response: Response<Payload.GetTestsById> = {
+    //TODO fix types
+    const response: Response<Array<{ id: number; input: string; output: string }>> = {
       payload: tests,
-      message: Messages.GetTestsById,
+      message: '',
     }
     reply.send(response)
   })
@@ -46,21 +45,21 @@ export const taskController: Controller = (app, options, done) => {
   app.get('/preview/:id', async (request, reply) => {
     const id: TaskId = request.params.id
 
-    const taskPreview = await Task.getPreviewById(id)
+    const taskPreview = await TaskRepository.getPreviewById(id)
 
-    const response: Response<Payload.GetPreviewById> = {
+    const response: Response<TaskPreview> = {
       payload: taskPreview,
-      message: Messages.GetPreviewById,
+      message: '',
     }
     reply.send(response)
   })
 
   app.get('/topic', async (request, reply) => {
-    const topics = await Task.getTopics()
+    const topics = await TaskRepository.getTopics()
 
-    const response: Response<Payload.GetTopics> = {
+    const response: Response<Topic[]> = {
       payload: topics,
-      message: Messages.GetTopics,
+      message: '',
     }
 
     reply.send(response)
@@ -69,18 +68,18 @@ export const taskController: Controller = (app, options, done) => {
   app.put('/', async (request, reply) => {
     const task: UpdateTask = request.body
 
-    const result = await Task.update(task)
+    const result = await TaskRepository.update(task)
 
-    const response: Response<Payload.Update> = { payload: result, message: Messages.Update }
+    const response: Response<Task> = { payload: result, message: 'Выполнено' }
     reply.send(response)
   })
 
   app.delete('/:id', async (request, reply) => {
     const id: TaskId = request.params.id
 
-    const result = await Task.removeById(id)
+    const result = await TaskRepository.removeById(id)
 
-    const response: Response<Payload.RemoveById> = { payload: result, message: Messages.RemoveById }
+    const response: Response<Task> = { payload: result, message: 'Выполнено' }
     reply.send(response)
   })
 

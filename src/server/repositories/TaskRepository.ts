@@ -1,8 +1,8 @@
-import { db } from '../db'
-import { ITask, CreateTask, UpdateTask, TaskId, Topic, TaskPreview } from '../typings/task'
+import { db } from '@db'
+import { Task, CreateTask, UpdateTask, TaskId, Topic, TaskPreview } from '@common/typings/task'
 
-export class Task {
-  static async getById(id: TaskId): Promise<ITask> {
+export class TaskRepository {
+  static async getById(id: TaskId): Promise<Task> {
     const [task] = await db.query(
       `
       SELECT
@@ -64,7 +64,7 @@ export class Task {
     return preview
   }
 
-  static async getAll(): Promise<ITask[]> {
+  static async getAll(): Promise<Task[]> {
     const tasks = await db.query(`
       SELECT
         T.id, T.name, T.description, jsonb_build_object('id', Topic.id, 'name', Topic.name) as topic
@@ -76,7 +76,7 @@ export class Task {
     return tasks
   }
 
-  static async create(t: CreateTask): Promise<ITask> {
+  static async create(t: CreateTask): Promise<Task> {
     const [task] = await db.query(
       `
         INSERT INTO Task as T
@@ -98,7 +98,7 @@ export class Task {
     return task
   }
 
-  static async update(t: UpdateTask): Promise<ITask> {
+  static async update(t: UpdateTask): Promise<Task> {
     const updateTaskQuery = db.createQueryString(
       `
         UPDATE Task T
@@ -175,7 +175,7 @@ export class Task {
     return task
   }
 
-  static async removeById(id: TaskId): Promise<ITask> {
+  static async removeById(id: TaskId): Promise<Task> {
     const [task] = await db.query(
       `
         DELETE FROM Task as T

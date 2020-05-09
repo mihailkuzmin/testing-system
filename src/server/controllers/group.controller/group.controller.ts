@@ -1,7 +1,7 @@
+import { GroupRepository } from '@repositories'
 import { Group, CreateGroup, UpdateGroup, GroupId } from '@common/typings/group'
 import { Response } from '@common/typings'
-import { Controller } from '../../typings'
-import { GroupRepository } from '../../models'
+import { Controller } from '@typings'
 
 export const groupController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {

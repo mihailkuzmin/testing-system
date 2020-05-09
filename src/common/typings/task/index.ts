@@ -15,7 +15,7 @@ export type CreateTask = {
   tests: Test[]
 }
 
-export type ITask = {
+export type Task = {
   id: TaskId
   name: string
   description: string

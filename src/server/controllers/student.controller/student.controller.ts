@@ -43,7 +43,7 @@ export const studentController: Controller = (app, options, done) => {
 
     const result = await StudentRepository.removeById(id)
 
-    const response: Response<Student> = { payload: result, message: '' }
+    const response: Response<Student> = { payload: result, message: 'Выполнено' }
     reply.send(response)
   })
 

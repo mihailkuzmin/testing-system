@@ -1,8 +1,0 @@
-export const Create = 'Выполнено'
-export const GetAll = ''
-export const GetById = ''
-export const GetTestsById = ''
-export const Update = 'Выполнено'
-export const RemoveById = 'Выполнено'
-export const GetTopics = ''
-export const GetPreviewById = ''

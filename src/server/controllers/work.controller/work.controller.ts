@@ -1,6 +1,6 @@
 import { Response } from '@common/typings'
 import { Controller } from '../../typings'
-import { Work } from '../../models'
+import { Work } from '../../repositories'
 import { WorkId } from '../../typings/work'
 import * as Payload from './typings/payloads'
 import * as Messages from './typings/messages'
