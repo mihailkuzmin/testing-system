@@ -26,5 +26,6 @@
     "strict": true,
     "removeComments": true
   },
-  "exclude": ["node_modules", "./src/server"]
+  "include": ["client/**/*"],
+  "exclude": ["node_modules", "server"]
 }

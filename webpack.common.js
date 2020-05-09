@@ -26,7 +26,7 @@ module.exports = {
           },
           // { loader: 'eslint-loader' },
         ],
-        exclude: /node_modules/,
+        exclude: /node_modules|server/,
       },
       {
         test: /\.css$/,
@@ -47,7 +47,7 @@ module.exports = {
     alias: {
       '@common': path.resolve(__dirname, './src/common'),
       '@components': path.resolve(__dirname, './src/client/components'),
-      '@api': path.resolve(__dirname, './src/client/api'),
+      '@api': path.resolve(__dirname, './src/client/group'),
       '@model': path.resolve(__dirname, './src/client/model'),
       '@pages': path.resolve(__dirname, './src/client/pages'),
       '@routes': path.resolve(__dirname, './src/client/routes'),
