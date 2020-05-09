@@ -5,14 +5,16 @@
     "paths": {
       "@common": ["common/index.ts"],
       "@common/*": ["common/*"],
-      "@typings": ["server/typings/index.ts"],
-      "@typings/*": ["server/typings/*"],
-      "@repositories": ["server/repositories/index.ts"],
-      "@repositories/*": ["server/repositories/*"],
+      "@controllers": ["server/controllers/index.ts"],
+      "@controllers/*": ["server/controllers/*"],
       "@db": ["server/db/index.ts"],
       "@db/*": ["server/db/*"],
-      "@controllers": ["server/controllers/index.ts"],
-      "@controllers/*": ["server/controllers/*"]
+      "@repositories": ["server/repositories/index.ts"],
+      "@repositories/*": ["server/repositories/*"],
+      "@routes": ["server/routes/index.ts"],
+      "@routes/*": ["server/routes/*"],
+      "@typings": ["server/typings/index.ts"],
+      "@typings/*": ["server/typings/*"]
     },
     "outDir": "../../dist/server",
     "esModuleInterop": true,
