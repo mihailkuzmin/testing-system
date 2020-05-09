@@ -1,6 +1,6 @@
+import { Response } from '@common/typings'
+import { WorkId, Work } from '@common/typings/work'
 import { request } from '../request'
-import { Response } from '../../typings'
-import { WorkId, Work } from './typings'
 
 const getAll = async (): Promise<Response<Work[]>> => {
   const result = await request.get<Work[]>('work')
