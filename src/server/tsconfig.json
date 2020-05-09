@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "../",
+    "rootDirs": ["common", "server"],
+    "paths": {
+      "@common": ["common/index.ts"],
+      "@common/*": ["common/*"],
+      "@typings": ["server/typings/index.ts"],
+      "@typings/*": ["server/typings/*"],
+      "@repositories": ["server/models/index.ts"],
+      "@repositories/*": ["server/models/*"],
+      "@db": ["server/db/index.ts"],
+      "@db/*": ["server/db/*"]
+    },
+    "outDir": "../../dist/server",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "target": "ES2019",
+    "lib": ["ES2019"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "strict": true,
+    "removeComments": true
+  },
+  "exclude": ["node_modules", "client"]
+}

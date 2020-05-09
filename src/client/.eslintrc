@@ -1,0 +1,25 @@
+{
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./src/client/tsconfig.json"
+  },
+  "extends": ["kit/base", "kit/packs/react-typescript"],
+  "ignorePatterns": ["node_modules", "dist"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "import/no-unresolved": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/destructuring-assignment": 0
+  }
+}

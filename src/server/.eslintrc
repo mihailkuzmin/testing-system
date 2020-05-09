@@ -10,10 +10,14 @@
     }
   },
   "parser": "@typescript-eslint/parser",
-  "extends": ["kit/base", "kit/node","kit/packs/react-typescript"],
-  "ignorePatterns": ["node_modules", "dist", "webpack*"],
+  "parserOptions": {
+    "project": "./src/server/tsconfig.json"
+  },
+  "extends": ["kit/base", "kit/node", "kit/typescript"],
+  "ignorePatterns": ["node_modules", "dist"],
   "rules": {
     "@typescript-eslint/no-explicit-any": 0,
-    "@typescript-eslint/consistent-type-definitions": ["error", "type"]
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "import/no-unresolved": 0
   }
 }

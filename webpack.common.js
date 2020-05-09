@@ -20,8 +20,8 @@ module.exports = {
           {
             loader: 'ts-loader',
             options: {
-              configFile: path.resolve(__dirname, 'tsconfig.build.client.json'),
-              context: path.resolve(__dirname, './src'),
+              configFile: path.resolve(__dirname, 'src/client/tsconfig.json'),
+              context: path.resolve(__dirname, 'src'),
             },
           },
           // { loader: 'eslint-loader' },
@@ -47,7 +47,7 @@ module.exports = {
     alias: {
       '@common': path.resolve(__dirname, './src/common'),
       '@components': path.resolve(__dirname, './src/client/components'),
-      '@api': path.resolve(__dirname, './src/client/group'),
+      '@api': path.resolve(__dirname, './src/client/api'),
       '@model': path.resolve(__dirname, './src/client/model'),
       '@pages': path.resolve(__dirname, './src/client/pages'),
       '@routes': path.resolve(__dirname, './src/client/routes'),

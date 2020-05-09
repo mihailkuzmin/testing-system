@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "rootDirs": ["client", "common"],
+    "baseUrl": "../",
+    "rootDirs": ["common", "client"],
     "paths": {
       "@common": ["common/index.ts"],
       "@common/*": ["common/*"],
@@ -14,11 +14,11 @@
       "@pages": ["client/pages/index.ts"],
       "@pages/*": ["client/pages/*"],
       "@routes": ["client/routes/index.ts"],
-      "@routes/*": ["client/routes/*"]
+      "@routes/*": ["client/routes/*"],
+      "@typings": ["client/typings/index.ts"],
+      "@typings/*": ["client/typings/*"]
     },
-    "outDir": "./dist/client",
     "esModuleInterop": true,
-    "module": "es6",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "target": "es5",
@@ -26,6 +26,5 @@
     "strict": true,
     "removeComments": true
   },
-  "include": ["client/**/*"],
   "exclude": ["node_modules", "server"]
 }
