@@ -1,5 +1,6 @@
+import { Response } from '@typings'
 import { request } from '../request'
-import { Response } from '../../typings'
+//TODO refactor with shared types
 import { Task, CreateTask, UpdateTask, TaskId, Test, Topic, TaskPreview } from './typings'
 
 const getAll = async (): Promise<Response<Task[]>> => {
