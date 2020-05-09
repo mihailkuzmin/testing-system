@@ -1,51 +1,49 @@
+import { StudentRepository } from '@repositories'
+import { Student, CreateStudent, UpdateStudent, StudentId } from '@common/typings/student'
 import { Response } from '@common/typings'
-import { Controller } from '../../typings'
-import { Student } from '../../models'
-import { CreateStudent, UpdateStudent, StudentId } from '../../typings/student'
-import * as Payload from './typings/payloads'
-import * as Messages from './typings/messages'
+import { Controller } from '@typings'
 
 export const studentController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
-    const result = await Student.getAll()
+    const result = await StudentRepository.getAll()
 
-    const response: Response<Payload.GetAll> = { payload: result, message: Messages.GetAll }
+    const response: Response<Student[]> = { payload: result, message: '' }
     reply.send(response)
   })
 
   app.get('/:id', async (request, reply) => {
     const id: StudentId = request.params.id
 
-    const result = await Student.getById(id)
+    const result = await StudentRepository.getById(id)
 
-    const response: Response<Payload.GetById> = { payload: result, message: Messages.GetById }
+    const response: Response<Student> = { payload: result, message: '' }
     reply.send(response)
   })
 
   app.post('/', async (request, reply) => {
     const newStudent: CreateStudent = request.body
 
-    const result = await Student.create(newStudent)
+    const result = await StudentRepository.create(newStudent)
 
-    const response: Response<Payload.Create> = { payload: result, message: Messages.Create }
+    const response: Response<Student> = { payload: result, message: 'Выполнено' }
     reply.send(response)
   })
 
   app.put('/', async (request, reply) => {
     const user: UpdateStudent = request.body
 
-    const result = await Student.update(user)
+    const result = await StudentRepository.update(user)
 
-    const response: Response<Payload.Update> = { payload: result, message: Messages.Update }
+    const response: Response<Student> = { payload: result, message: 'Выполнено' }
     reply.send(response)
   })
 
   app.delete('/:id', async (request, reply) => {
     const id: StudentId = request.params.id
 
-    const result = await Student.removeById(id)
+    const result = await StudentRepository.removeById(id)
 
-    const response: Response<Payload.RemoveById> = { payload: result, message: Messages.RemoveById }
+    const response: Response<Student> = { payload: result, message: '' }
     reply.send(response)
   })
 

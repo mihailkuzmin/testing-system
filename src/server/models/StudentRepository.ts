@@ -1,8 +1,8 @@
-import { db } from '../db'
-import { IStudent, UpdateStudent, CreateStudent, StudentId } from '../typings/student'
+import { db } from '@db'
+import { Student, UpdateStudent, CreateStudent, StudentId } from '@common/typings/student'
 
-export class Student {
-  static async getById(id: StudentId): Promise<IStudent> {
+export class StudentRepository {
+  static async getById(id: StudentId): Promise<Student> {
     const [student] = await db.query(
       `
         SELECT 
@@ -18,7 +18,7 @@ export class Student {
     return student
   }
 
-  static async removeById(id: StudentId): Promise<IStudent> {
+  static async removeById(id: StudentId): Promise<Student> {
     const [student] = await db.query(
       `
         DELETE FROM Student as S
@@ -34,7 +34,7 @@ export class Student {
     return student
   }
 
-  static async update(s: UpdateStudent): Promise<IStudent> {
+  static async update(s: UpdateStudent): Promise<Student> {
     if (s.changePassword) {
       const [student] = await db.query(
         `
@@ -96,7 +96,7 @@ export class Student {
     return student
   }
 
-  static async getAll(): Promise<IStudent[]> {
+  static async getAll(): Promise<Student[]> {
     const students = await db.query(`
         SELECT
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
@@ -112,7 +112,7 @@ export class Student {
     return students
   }
 
-  static async create(user: CreateStudent): Promise<IStudent> {
+  static async create(user: CreateStudent): Promise<Student> {
     const [student] = await db.query(
       `
         INSERT INTO Student as S

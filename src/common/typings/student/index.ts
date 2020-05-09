@@ -1,7 +1,6 @@
 export type StudentId = number
 
-//TODO fix types naming
-export type IStudent = {
+export type Student = {
   id: StudentId
   lastName: string
   firstName: string
