@@ -1,5 +1,5 @@
+import { db } from '@db'
 import { Group, GroupId, CreateGroup, UpdateGroup } from '@common/typings/group'
-import { db } from '../db'
 
 export class GroupRepository {
   static async getById(id: GroupId): Promise<Group> {
