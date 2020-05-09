@@ -1,5 +1,5 @@
-import { Request, Response } from '../typings'
 import ky from 'ky'
+import { Request, Response } from '@common/typings'
 
 const timeout = (time: number): Promise<void> => new Promise((r) => setTimeout(r, time))
 
