@@ -1,7 +1,7 @@
 import { combine, forward, guard, sample } from 'effector'
-import { AddWorkPage } from '../page'
 import { notifications } from '@model'
 import { MessageType } from '@typings'
+import { AddWorkPage } from '../page'
 import { createWorkFx, getTasksFx, getTopicsFx } from './effects'
 import { $name, $openAt, $closeAt, $selectedTasks, $selectedTopic, $tasks, $topics } from './stores'
 import {
