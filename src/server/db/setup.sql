@@ -22,8 +22,8 @@ CREATE TABLE Student (
 CREATE TABLE Work (
 	id SERIAL PRIMARY KEY,
 	name varchar(100) NOT NULL,
-	open_at timestamp NOT NULL,
-	close_at timestamp NOT NULL
+	open_at varchar(50) NOT NULL,
+	close_at varchar(50) NOT NULL
 );
 
 
