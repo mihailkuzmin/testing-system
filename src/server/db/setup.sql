@@ -54,7 +54,7 @@ CREATE TABLE TaskResult (
 	program_text text NOT NULL,
 	program_output text NOT NULL,
 	solved BOOLEAN NOT NULL,
-	language_id INT REFERENCES PLanguage(id) NOT NULL
+	language_id INT NOT NULL REFERENCES PLanguage(id)
 );
 
 CREATE TABLE WorkResult (
