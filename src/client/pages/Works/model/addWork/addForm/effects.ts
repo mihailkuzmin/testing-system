@@ -1,5 +1,7 @@
 import { createReEffect } from 'effector-reeffect'
-import { tasksApi } from '@api'
+import { tasksApi, worksApi } from '@api'
 
 export const getTopicsFx = createReEffect({ handler: tasksApi.getTopics })
 export const getTasksFx = createReEffect({ handler: tasksApi.getAll })
+
+export const createWorkFx = createReEffect({ handler: worksApi.create })

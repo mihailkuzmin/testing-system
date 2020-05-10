@@ -64,3 +64,9 @@
   align-items: center;
   height: 30px;
 }
+
+.dates {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--addWorkGap);
+}

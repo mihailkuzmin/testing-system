@@ -1,8 +1,18 @@
-import { forward, sample } from 'effector'
+import { combine, forward, guard, sample } from 'effector'
 import { AddWorkPage } from '../page'
-import { getTopicsFx, getTasksFx } from './effects'
-import { $tasks, $selectedTasks, $topics, $selectedTopic } from './stores'
-import { topicChange, addTask, deleteTask } from './events'
+import { notifications } from '@model'
+import { MessageType } from '@typings'
+import { createWorkFx, getTasksFx, getTopicsFx } from './effects'
+import { $name, $openAt, $closeAt, $selectedTasks, $selectedTopic, $tasks, $topics } from './stores'
+import {
+  addTask,
+  addWork,
+  closeAtChange,
+  deleteTask,
+  nameChange,
+  openAtChange,
+  topicChange,
+} from './events'
 
 forward({ from: AddWorkPage.open, to: [getTasksFx, getTopicsFx] })
 forward({ from: AddWorkPage.close, to: [getTasksFx.cancel, getTopicsFx.cancel] })
@@ -33,6 +43,7 @@ $selectedTasks.on(addTaskToWork, (tasks, task) => [...tasks, task!])
 $selectedTasks.on(deleteTaskFromWork, (tasks, taskForDelete) =>
   tasks.filter((task) => task.id !== taskForDelete.id),
 )
+const $selectedTasksIds = $selectedTasks.map((tasks) => tasks.map((task) => task.id))
 
 $selectedTopic.on(getTopicsFx.doneData, (_, { payload }) => {
   if (payload.length) {
@@ -58,12 +69,64 @@ const $filteredTasks = sample({
 })
 $filteredTasks.reset(AddWorkPage.close)
 
+$name.on(nameChange, (_, name) => name)
+$name.reset(AddWorkPage.close)
+
+$openAt.on(openAtChange, (_, date) => date)
+$openAt.reset(AddWorkPage.close)
+
+$closeAt.on(closeAtChange, (_, date) => date)
+$closeAt.reset(AddWorkPage.close)
+
+const $form = combine({
+  name: $name,
+  openAt: $openAt,
+  closeAt: $closeAt,
+  tasks: $selectedTasksIds,
+})
+
+const $canSave = $selectedTasks.map((tasks) => Boolean(tasks.length))
+
+// when addWork triggered, call effect if selected more than 0 tasks
+guard({
+  source: sample({
+    source: $form,
+    clock: addWork,
+    fn: (form) => ({
+      ...form,
+      openAt: form.openAt.toISOString(),
+      closeAt: form.closeAt.toISOString(),
+    }),
+  }),
+  filter: $canSave,
+  target: createWorkFx,
+})
+
+createWorkFx.watch(() => {
+  notifications.createMessage({ text: 'Выполняется', type: MessageType.Info })
+})
+
+createWorkFx.doneData.watch(({ message }) => {
+  notifications.createMessage({ text: message, type: MessageType.Success })
+})
+
+createWorkFx.failData.watch(({ message }) => {
+  notifications.createMessage({ text: message, type: MessageType.Error })
+})
+
 export const addForm = {
   $filteredTasks,
   $selectedTasks,
   $topics,
   $selectedTopic,
+  $name,
+  $openAt,
+  $closeAt,
+  nameChange,
+  openAtChange,
+  closeAtChange,
   topicChange,
   addTask,
   deleteTask,
+  addWork,
 }

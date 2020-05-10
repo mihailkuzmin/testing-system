@@ -11,6 +11,7 @@ forward({ from: WorksPage.close, to: getWorksFx.cancel })
 forward({ from: deleteWorkFx.done, to: getWorksFx })
 
 $works.on(getWorksFx.doneData, (_, { payload }) => {
+  console.log(payload)
   return payload.map(({ openAt, closeAt, ...work }) => ({
     ...work,
     openAt: new Date(openAt).toLocaleString(),
