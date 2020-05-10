@@ -1,3 +1,5 @@
+import { TaskId } from '../task'
+
 export type WorkId = number
 
 export type Work = {
@@ -11,4 +13,5 @@ export type CreateWork = {
   name: string
   openAt: string
   closeAt: string
+  tasks: TaskId[]
 }
