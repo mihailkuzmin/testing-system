@@ -69,6 +69,6 @@ CREATE TABLE StudentGroup_Work (
 );
 
 CREATE TABLE Work_Task (
-	work_id INT NOT NULL,
+	work_id INT NOT NULL REFERENCES Work(id) ON DELETE CASCADE,
 	task_id INT NOT NULL
 );
