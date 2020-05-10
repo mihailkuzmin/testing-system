@@ -2,15 +2,19 @@ import { db } from '@db'
 import { Work, CreateWork, WorkId } from '@common/typings/work'
 
 export class WorkRepository {
-  static async create(w: CreateWork): Promise<Work> {
+  static async create(w: CreateWork): Promise<void> {
     const [work] = await db.query(
       `
         INSERT INTO Work as W (name, open_at, close_at) VALUES (%L)
         RETURNING
-          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
+          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt";
       `,
       [w.name, w.openAt, w.closeAt],
     )
+
+    const tasks = w.tasks.map((taskId) => [work.id, taskId])
+    await db.query(`INSERT INTO Work_Task as WT (work_id, task_id) VALUES %L`, tasks)
+
     return work
   }
 
