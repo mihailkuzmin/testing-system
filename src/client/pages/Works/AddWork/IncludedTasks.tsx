@@ -24,7 +24,9 @@ export const IncludedTasks = () => {
       </div>
       <div className={styles.tasksList}>
         {tasksIsEmpty ? (
-          <p>Добавьте задания к работе из списка ниже</p>
+          <div className={styles.emptyList}>
+            <span>Добавьте задания к работе из списка ниже</span>
+          </div>
         ) : (
           tasks.map((task) => (
             <Task key={task.id} id={task.id} name={task.name} topic={task.topic.name}>

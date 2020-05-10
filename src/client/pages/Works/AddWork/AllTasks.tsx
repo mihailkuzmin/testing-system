@@ -44,7 +44,9 @@ export const AllTasks = () => {
       </div>
       <div className={styles.tasksList}>
         {tasksIsEmpty ? (
-          <p>Заданий на эту тему пока нет</p>
+          <div className={styles.emptyList}>
+            <span>Заданий на эту тему пока нет</span>
+          </div>
         ) : (
           tasks.map((task) => (
             <Task key={task.id} id={task.id} name={task.name} topic={task.topic.name}>

@@ -53,3 +53,14 @@
   display: grid;
   gap: var(--addWorkGap);
 }
+
+.emptyList {
+  composes: task;
+  grid-template-columns: 1fr;
+}
+
+.emptyList > * {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
