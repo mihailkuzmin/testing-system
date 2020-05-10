@@ -14,4 +14,16 @@ module.exports = merge(common, {
     open: true,
     hot: true,
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', options: { modules: { auto: true } } },
+          { loader: 'postcss-loader' },
+        ],
+      },
+    ],
+  },
 })

@@ -1,6 +1,5 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   entry: {
@@ -10,7 +9,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/client/index.html'),
     }),
-    new MiniCssExtractPlugin({ filename: '[name].css' }),
   ],
   module: {
     rules: [
@@ -27,14 +25,6 @@ module.exports = {
           // { loader: 'eslint-loader' },
         ],
         exclude: /node_modules|server/,
-      },
-      {
-        test: /\.css$/,
-        use: [
-          { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader', options: { modules: { auto: true } } },
-          { loader: 'postcss-loader' },
-        ],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
