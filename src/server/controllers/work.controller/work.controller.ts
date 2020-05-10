@@ -1,7 +1,7 @@
 import { WorkRepository } from '@repositories'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
-import { Work, WorkId } from '@common/typings/work'
+import { Work, WorkId, CreateWork } from '@common/typings/work'
 
 export const workController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
@@ -17,6 +17,15 @@ export const workController: Controller = (app, options, done) => {
     const result = await WorkRepository.getById(id)
 
     const response: Response<Work> = { payload: result, message: '' }
+    reply.send(response)
+  })
+
+  app.post('/', async (request, reply) => {
+    const newWork: CreateWork = request.body
+
+    await WorkRepository.create(newWork)
+
+    const response: Response<void> = { payload: undefined, message: 'Выполнено' }
     reply.send(response)
   })
 
