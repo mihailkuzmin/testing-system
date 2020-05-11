@@ -2,6 +2,7 @@ import React from 'react'
 import { useStore } from 'effector-react'
 import { PageLoader, PageError } from '@components/Loaders'
 import { Paper } from '@components'
+import { Divider } from '@material-ui/core'
 import { PreviewPage, taskPreview } from '../model/previewTask'
 import styles from './PreviewTask.module.css'
 
@@ -25,17 +26,24 @@ export const PreviewTask = ({ id }: PreviewTaskProps) => {
     <Paper className={styles.preview}>
       <h2>Задание "{preview?.name}"</h2>
       <span>Тема: {preview?.topic}</span>
-      <div className={styles.card}>
-        <span>Описание</span>
+
+      <Divider />
+
+      <div className={styles.taskPreview}>
         <div dangerouslySetInnerHTML={{ __html: preview?.description ?? '' }}></div>
-      </div>
-      <div className={styles.card}>
-        <span>Пример входных данных</span>
-        <div className={styles.test}>{preview?.test.input}</div>
-      </div>
-      <div className={styles.card}>
-        <span>Пример выходных данных</span>
-        <div className={styles.test}>{preview?.test.output}</div>
+
+        <Divider />
+
+        <div className={styles.tests}>
+          <div>
+            <span>Пример входных данных</span>
+            <div className={styles.test}>{preview?.test.input}</div>
+          </div>
+          <div>
+            <span>Пример выходных данных</span>
+            <div className={styles.test}>{preview?.test.output}</div>
+          </div>
+        </div>
       </div>
     </Paper>
   )
