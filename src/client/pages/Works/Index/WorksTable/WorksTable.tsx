@@ -6,6 +6,7 @@ import {
   PrimaryButton as Add,
   EditButton as Edit,
   DeleteButton as Delete,
+  PreviewButton as Preview,
 } from '@components/Buttons'
 import { worksTable } from '../../model/index'
 import styles from './WorksTable.module.css'
@@ -52,6 +53,7 @@ export const WorksTable = () => {
               <T.Cell>{work.closeAt}</T.Cell>
               <T.Cell>
                 <div className={styles.actions}>
+                  <Preview onClick={() => navigate(`/works/preview/${work.id}`)} />
                   <Edit onClick={() => {}} />
                   <Delete onClick={() => worksTable.selectForDelete(work.id)} />
                 </div>
