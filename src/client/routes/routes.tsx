@@ -12,4 +12,5 @@ export const routes = {
   '/tasks/preview/:id': ({ id }: QueryParams) => <Tasks.PreviewTask id={id} />,
   '/works': () => <Works.Index />,
   '/works/add': () => <Works.AddWork />,
+  '/works/preview/:id': ({ id }: QueryParams) => <Works.PreviewWork id={id} />,
 }
