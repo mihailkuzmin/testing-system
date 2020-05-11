@@ -1,7 +1,15 @@
 import { TaskRepository } from '@repositories'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
-import { Task, CreateTask, UpdateTask, TaskId, TaskPreview, Topic } from '@common/typings/task'
+import {
+  Task,
+  CreateTask,
+  UpdateTask,
+  TaskId,
+  TaskPreview,
+  Topic,
+  TaskWithoutDescription,
+} from '@common/typings/task'
 
 export const taskController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
@@ -11,21 +19,28 @@ export const taskController: Controller = (app, options, done) => {
     reply.send(response)
   })
 
-  app.post('/', async (request, reply) => {
-    const newTask: CreateTask = request.body
-
-    const result = await TaskRepository.create(newTask)
-
-    const response: Response<Task> = { payload: result, message: 'Выполнено' }
-    reply.send(response)
-  })
-
   app.get('/:id', async (request, reply) => {
     const id: TaskId = request.params.id
 
     const result = await TaskRepository.getById(id)
 
     const response: Response<Task> = { payload: result, message: '' }
+    reply.send(response)
+  })
+
+  app.get('/nodesc', async (request, reply) => {
+    const result = await TaskRepository.getAllWithoutDescription()
+
+    const response: Response<TaskWithoutDescription[]> = { payload: result, message: '' }
+    reply.send(response)
+  })
+
+  app.post('/', async (request, reply) => {
+    const newTask: CreateTask = request.body
+
+    const result = await TaskRepository.create(newTask)
+
+    const response: Response<Task> = { payload: result, message: 'Выполнено' }
     reply.send(response)
   })
 
