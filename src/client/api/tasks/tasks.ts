@@ -1,10 +1,16 @@
 import { Response } from '@typings'
+import { TaskWithoutDescription } from '@common/typings/task'
 import { request } from '../request'
 //TODO refactor with shared types
 import { Task, CreateTask, UpdateTask, TaskId, Test, Topic, TaskPreview } from './typings'
 
 const getAll = async (): Promise<Response<Task[]>> => {
   const result = await request.get<Task[]>('task')
+  return result
+}
+
+const getAllWithoutDescription = async (): Promise<Response<TaskWithoutDescription[]>> => {
+  const result = await request.get<TaskWithoutDescription[]>('task/nodesc')
   return result
 }
 
@@ -45,6 +51,7 @@ const deleteById = async (id: TaskId): Promise<Response<Task>> => {
 
 export const tasksApi = {
   getAll,
+  getAllWithoutDescription,
   create,
   deleteById,
   getById,
