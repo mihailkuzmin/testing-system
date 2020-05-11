@@ -1,5 +1,6 @@
 import { db } from '@db'
 import { Work, CreateWork, WorkId } from '@common/typings/work'
+import { TaskPreview } from '@common/typings/task'
 
 export class WorkRepository {
   static async create(w: CreateWork): Promise<void> {
@@ -30,6 +31,26 @@ export class WorkRepository {
       id,
     )
     return work
+  }
+
+  static async getTasksOfWorkPreviews(id: WorkId): Promise<TaskPreview[]> {
+    const tasks = await db.query(
+      `
+        SELECT
+          T.id, T.name, T.description, jsonb_build_object('id', Topic.id, 'name', Topic.name) as topic,
+          (
+            SELECT jsonb_build_object('input', input, 'output', output)
+            FROM Test
+            WHERE Test.task_id = T.id
+            ORDER BY id LIMIT 1
+          ) as test
+        FROM Work_Task WT, Task T, TaskTopic Topic, Test
+        WHERE
+          (WT.work_id = %L and T.id = WT.task_id and Topic.id = T.topic_id and Test.task_id = T.id);
+      `,
+      id,
+    )
+    return tasks
   }
 
   static async getAll(): Promise<Work[]> {
