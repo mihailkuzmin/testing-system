@@ -2,6 +2,7 @@ import { WorkRepository } from '@repositories'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
 import { Work, WorkId, CreateWork } from '@common/typings/work'
+import { TaskPreview } from '@common/typings/task'
 
 export const workController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
@@ -17,6 +18,14 @@ export const workController: Controller = (app, options, done) => {
     const result = await WorkRepository.getById(id)
 
     const response: Response<Work> = { payload: result, message: '' }
+    reply.send(response)
+  })
+
+  app.get('/:id/tasks', async (request, reply) => {
+    const id: WorkId = request.params.id
+    const result = await WorkRepository.getTasksOfWorkPreviews(id)
+
+    const response: Response<TaskPreview[]> = { payload: result, message: '' }
     reply.send(response)
   })
 
