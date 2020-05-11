@@ -22,6 +22,12 @@ export type Task = {
   topic: Topic
 }
 
+export type TaskWithoutDescription = {
+  id: TaskId
+  name: string
+  topic: Topic
+}
+
 export type UpdateTask = {
   id: TaskId
   name: string
