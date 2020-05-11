@@ -29,11 +29,18 @@ const deleteTaskFromWork = sample({
   fn: (tasks, taskId) => tasks.find((task) => task.id === taskId)!,
 })
 
+const mergedTasksAfterCreate = sample({
+  source: combine({ selected: $selectedTasks, all: $tasks }),
+  clock: createWorkFx.done,
+  fn: ({ selected, all }) => all.concat(selected),
+})
+
 $tasks.on(getTasksFx.doneData, (_, { payload }) => payload)
 $tasks.on(addTaskToWork, (tasks, taskForDelete) =>
   tasks.filter((task) => task.id !== taskForDelete!.id),
 )
 $tasks.on(deleteTaskFromWork, (tasks, task) => [...tasks, task])
+$tasks.on(mergedTasksAfterCreate, (_, tasks) => tasks)
 $tasks.reset(AddWorkPage.close)
 
 $topics.on(getTopicsFx.doneData, (_, { payload }) => payload)
@@ -43,11 +50,12 @@ $selectedTasks.on(addTaskToWork, (tasks, task) => [...tasks, task!])
 $selectedTasks.on(deleteTaskFromWork, (tasks, taskForDelete) =>
   tasks.filter((task) => task.id !== taskForDelete.id),
 )
+$selectedTasks.on(mergedTasksAfterCreate, () => [])
 const $selectedTasksIds = $selectedTasks.map((tasks) => tasks.map((task) => task.id))
 
-$selectedTopic.on(getTopicsFx.doneData, (_, { payload }) => {
-  if (payload.length) {
-    const [first] = payload
+$selectedTopic.on($topics.updates, (_, topics) => {
+  if (topics.length) {
+    const [first] = topics
     return first
   }
 })
@@ -67,15 +75,17 @@ const $filteredTasks = sample({
   clock: $selectedTopic,
   fn: (tasks, selected) => tasks.filter((task) => task.topic.id === selected?.id),
 })
-$filteredTasks.reset(AddWorkPage.close)
+$filteredTasks.reset(AddWorkPage.close, createWorkFx.done)
 
 $name.on(nameChange, (_, name) => name)
-$name.reset(AddWorkPage.close)
+$name.reset(AddWorkPage.close, createWorkFx.done)
 
 $openAt.on(openAtChange, (_, date) => date)
+$openAt.on(createWorkFx.done, () => new Date())
 $openAt.reset(AddWorkPage.close)
 
 $closeAt.on(closeAtChange, (_, date) => date)
+$closeAt.on(createWorkFx.done, () => new Date())
 $closeAt.reset(AddWorkPage.close)
 
 const $form = combine({
