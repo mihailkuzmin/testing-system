@@ -1,5 +1,13 @@
 import { db } from '@db'
-import { Task, CreateTask, UpdateTask, TaskId, Topic, TaskPreview } from '@common/typings/task'
+import {
+  Task,
+  CreateTask,
+  UpdateTask,
+  TaskId,
+  Topic,
+  TaskPreview,
+  TaskWithoutDescription,
+} from '@common/typings/task'
 
 export class TaskRepository {
   static async getById(id: TaskId): Promise<Task> {
@@ -68,6 +76,18 @@ export class TaskRepository {
     const tasks = await db.query(`
       SELECT
         T.id, T.name, T.description, jsonb_build_object('id', Topic.id, 'name', Topic.name) as topic
+      FROM Task T, TaskTopic Topic
+      WHERE (T.topic_id = Topic.id)
+      ORDER BY Topic.name
+    `)
+
+    return tasks
+  }
+
+  static async getAllWithoutDescription(): Promise<TaskWithoutDescription[]> {
+    const tasks = await db.query(`
+      SELECT
+        T.id, T.name, jsonb_build_object('id', Topic.id, 'name', Topic.name) as topic
       FROM Task T, TaskTopic Topic
       WHERE (T.topic_id = Topic.id)
       ORDER BY Topic.name
