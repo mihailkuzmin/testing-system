@@ -43,9 +43,9 @@ export class WorkRepository {
             WHERE Test.task_id = T.id
             ORDER BY id)
           ) as tests
-        FROM Work_Task WT, Task T, TaskTopic Topic, Test
+        FROM Work_Task WT, Task T, TaskTopic Topic
         WHERE
-          (WT.work_id = %L and T.id = WT.task_id and Topic.id = T.topic_id and Test.task_id = T.id);
+          (WT.work_id = %L and T.id = WT.task_id and Topic.id = T.topic_id);
       `,
       id,
     )
