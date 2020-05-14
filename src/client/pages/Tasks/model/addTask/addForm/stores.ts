@@ -1,14 +1,12 @@
 import { createStore, combine } from 'effector'
-import { Test, Topic, TopicId } from './typings'
+import { Topic, TopicId, CreateTest } from '@common/typings/task'
 import { nanoid } from 'nanoid'
 
 export const $name = createStore('')
 
-export const $description = createStore(
-  '<p style="font-size: 16px">Добавьте описание задания здесь</p>',
-)
+export const $description = createStore('')
 
-export const $tests = createStore<Test[]>([{ id: nanoid(), input: '', output: '' }])
+export const $tests = createStore<CreateTest[]>([{ id: nanoid(), input: '', output: '' }])
 
 export const $testsCount = $tests.map((tests) => tests.length)
 

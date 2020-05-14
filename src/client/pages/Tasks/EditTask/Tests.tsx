@@ -1,8 +1,8 @@
 import React from 'react'
 import { useList } from 'effector-react'
-import { tests } from '../model/editTask'
 import { DeleteButton as Delete } from '@components/Buttons'
-import { UpdateTestId } from '../model/editTask/editForm/typings'
+import { UpdateTestId } from '@common/typings/task'
+import { tests } from '../model/editTask'
 import { ExampleInput, ExampleOutput } from './Inputs'
 import styles from './EditTask.module.css'
 

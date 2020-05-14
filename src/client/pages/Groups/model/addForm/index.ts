@@ -26,7 +26,9 @@ $createGroupStatus.on(createGroupFx.pending, (s, p) => (p ? Status.Pending : s))
 $createGroupStatus.reset(setField, addModal.closeAddModal, createGroup)
 
 createGroupFx.doneData.watch(({ message }) => {
-  notifications.createMessage({ type: MessageType.Success, text: message })
+  if (message) {
+    notifications.createMessage({ type: MessageType.Success, text: message })
+  }
 })
 
 createGroupFx.failData.watch(({ message }) => {

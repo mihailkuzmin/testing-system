@@ -1,5 +1,5 @@
 import { createEvent } from 'effector'
-import { TaskId } from './typings'
+import { TaskId } from '@common/typings/task'
 
 export const selectForDelete = createEvent<TaskId>()
 export const confirmDelete = createEvent()

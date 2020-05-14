@@ -1,5 +1,5 @@
 import { createStore, combine } from 'effector'
-import { UpdateTest, TaskId, UpdateTestId, Topic, TopicId } from './typings'
+import { UpdateTest, TaskId, TestId, Topic, TopicId } from '@common/typings/task'
 
 export const $taskId = createStore<TaskId | null>(null)
 
@@ -13,7 +13,7 @@ export const $selectedTopic = createStore<TopicId | null>(null)
 export const $tests = createStore<UpdateTest[]>([])
 export const $testsCount = $tests.map((tests) => tests.length)
 
-export const $oldTestsForDelete = createStore<UpdateTestId[]>([])
+export const $oldTestsForDelete = createStore<TestId[]>([])
 
 export const $editTests = createStore(false)
 

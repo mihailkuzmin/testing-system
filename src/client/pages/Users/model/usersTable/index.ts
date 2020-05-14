@@ -1,4 +1,9 @@
 import { forward, sample, combine } from 'effector'
+import { Status, MessageType } from '@typings'
+import { notifications } from '@model'
+import { editModal } from '../editModal'
+import { UsersPage } from '../page'
+import { userCreated } from '../addForm/events'
 import {
   $users,
   $getAllUsersStatus,
@@ -21,11 +26,6 @@ import {
   refreshUsers,
 } from './events'
 import { getAllUsersFx, getGroupsFx, deleteUserFx } from './effects'
-import { userCreated } from '../addForm/events'
-import { Status, MessageType } from '../../../../typings'
-import { notifications } from '../../../../model'
-import { editModal } from '../editModal'
-import { UsersPage } from '../page'
 
 forward({ from: UsersPage.open, to: [getAllUsersFx, getGroupsFx] })
 forward({
@@ -49,8 +49,9 @@ $groups.reset(UsersPage.close)
 
 // when groups list was loaded - select the first group in list
 $groupSelectValue.on(groupsRefreshed, (_, { payload }) => {
-  const [first] = payload
-  return first.id
+  if (payload) {
+    return payload[0].id
+  }
 })
 $groupSelectValue.on(groupSelectChange, (_, value) => value)
 $groupSelectValue.reset(UsersPage.close)
@@ -105,7 +106,9 @@ deleteUserFx.watch(() => {
 })
 
 deleteUserFx.doneData.watch(({ message }) => {
-  notifications.createMessage({ type: MessageType.Success, text: message })
+  if (message) {
+    notifications.createMessage({ type: MessageType.Success, text: message })
+  }
 })
 
 deleteUserFx.failData.watch(({ message }) => {

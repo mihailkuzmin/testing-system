@@ -11,7 +11,7 @@ forward({ from: WorksPage.close, to: getWorksFx.cancel })
 forward({ from: deleteWorkFx.done, to: getWorksFx })
 
 $works.on(getWorksFx.doneData, (_, { payload }) => {
-  return payload.map(({ openAt, closeAt, ...work }) => ({
+  return payload!.map(({ openAt, closeAt, ...work }) => ({
     ...work,
     openAt: new Date(openAt).toLocaleString(),
     closeAt: new Date(closeAt).toLocaleString(),
@@ -38,8 +38,10 @@ deleteWorkFx.watch(() => {
   notifications.createMessage({ text: 'Выполняется', type: MessageType.Info })
 })
 
-deleteWorkFx.doneData.watch(() => {
-  notifications.createMessage({ text: 'Выполнено', type: MessageType.Success })
+deleteWorkFx.doneData.watch(({ message }) => {
+  if (message) {
+    notifications.createMessage({ text: message, type: MessageType.Success })
+  }
 })
 
 export const worksTable = {

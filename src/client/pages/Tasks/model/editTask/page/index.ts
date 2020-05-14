@@ -21,9 +21,6 @@ $isFail.on(getTaskFx.fail, () => true)
 $isFail.on(getTopicsFx.fail, () => true)
 $isFail.reset(close)
 
-const $status = combine({ isLoading: $isLoading, isFail: $isFail }, (status) => ({
-  ...status,
-  isLoading: Boolean(status.isLoading),
-}))
+const $status = combine({ isLoading: $isLoading.map(Boolean), isFail: $isFail })
 
 export const EditPage = { open, close, onMount, $status }

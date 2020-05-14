@@ -54,7 +54,7 @@ export const WorksTable = () => {
               <T.Cell>
                 <div className={styles.actions}>
                   <Preview onClick={() => navigate(`/works/preview/${work.id}`)} />
-                  <Edit onClick={() => {}} />
+                  <Edit onClick={() => navigate(`/works/edit/${work.id}`)} />
                   <Delete onClick={() => worksTable.selectForDelete(work.id)} />
                 </div>
               </T.Cell>

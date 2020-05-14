@@ -1,4 +1,4 @@
 import { createStore } from 'effector'
-import { TaskPreview } from './typings'
+import { Task } from '@common/typings/task'
 
-export const $taskPreview = createStore<TaskPreview | null>(null)
+export const $taskPreview = createStore<Task | null>(null)

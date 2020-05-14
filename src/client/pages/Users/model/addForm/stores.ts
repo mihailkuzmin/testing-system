@@ -1,8 +1,8 @@
 import { createStore } from 'effector'
-import { AddForm } from './typings'
 import { Status } from '@typings'
+import { AddForm } from './typings'
 
-export const addFormIntitialState: AddForm = {
+export const addFormInitialState: AddForm = {
   firstName: '',
   lastName: '',
   patronymic: '',
@@ -12,6 +12,6 @@ export const addFormIntitialState: AddForm = {
   password: '',
 }
 
-export const $addForm = createStore<AddForm>(addFormIntitialState)
+export const $addForm = createStore<AddForm>(addFormInitialState)
 
 export const $createUserStatus = createStore<Status>(Status.Idle)

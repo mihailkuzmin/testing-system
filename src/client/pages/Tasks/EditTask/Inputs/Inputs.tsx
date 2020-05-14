@@ -2,12 +2,12 @@ import React from 'react'
 import { useStore, useStoreMap } from 'effector-react'
 import { Input } from '@components/Inputs'
 import { Editor } from '@components'
-import { tests, editForm } from '../../model/editTask'
-import { TopicId, UpdateTestId } from '../../model/editTask/editForm/typings'
+import { TopicId, CreateTestId } from '@common/typings/task'
 import { Item, Select } from '@components/Inputs/Select'
+import { tests, editForm } from '../../model/editTask'
 
-type ExampleInputProps = { id: UpdateTestId }
-type ExampleOutputProps = { id: UpdateTestId }
+type ExampleInputProps = { id: CreateTestId }
+type ExampleOutputProps = { id: CreateTestId }
 
 export const TopicSelect = () => {
   const topics = useStore(editForm.$topics)

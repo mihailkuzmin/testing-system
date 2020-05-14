@@ -5,4 +5,4 @@ export type Request = {
   delete: <P, R>(url: string, payload?: P) => Promise<Response<R>>
 }
 
-export type Response<T> = { payload: T; message: string }
+export type Response<T> = { payload?: T; message?: string }

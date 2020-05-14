@@ -1,11 +1,11 @@
 import { sample, forward } from 'effector'
-import { editUserFx, getUserFx } from './effects'
-import { $editForm, $editUserStatus, $getUserStatus } from './stores'
-import { setField, fieldValueChange, editUser, userUpdated } from './events'
 import { Status, MessageType } from '@typings'
 import { notifications } from '@model'
 import { editModal } from '../editModal'
 import { usersTable } from '../usersTable'
+import { editUserFx, getUserFx } from './effects'
+import { $editForm, $editUserStatus, $getUserStatus } from './stores'
+import { setField, fieldValueChange, editUser, userUpdated } from './events'
 
 forward({ from: editUserFx.done, to: userUpdated })
 forward({
@@ -23,8 +23,9 @@ $editForm.on(setField, (state, { key, value }) => ({
   [key]: value,
 }))
 $editForm.on(getUserFx.doneData, (state, { payload }) => {
-  const selectValue = payload.group.id
-  return { ...state, ...payload, group: selectValue }
+  if (payload) {
+    return { ...state, ...payload, group: payload.group.id }
+  }
 })
 $editForm.reset(editModal.closeEditModal)
 
@@ -44,7 +45,9 @@ $getUserStatus.on(getUserFx.fail, () => Status.Fail)
 $getUserStatus.reset(editModal.closeEditModal)
 
 editUserFx.doneData.watch(({ message }) => {
-  notifications.createMessage({ type: MessageType.Success, text: message })
+  if (message) {
+    notifications.createMessage({ type: MessageType.Success, text: message })
+  }
 })
 
 editUserFx.failData.watch(({ message }) => {

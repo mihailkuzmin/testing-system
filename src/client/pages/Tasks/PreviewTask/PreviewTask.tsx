@@ -25,7 +25,7 @@ export const PreviewTask = ({ id }: PreviewTaskProps) => {
   return (
     <Paper className={styles.preview}>
       <h2>Задание "{preview?.name}"</h2>
-      <span>Тема: {preview?.topic}</span>
+      <span>Тема: {preview?.topic.name}</span>
 
       <Divider />
 
@@ -35,14 +35,18 @@ export const PreviewTask = ({ id }: PreviewTaskProps) => {
         <Divider />
 
         <div className={styles.tests}>
-          <div>
-            <span>Пример входных данных</span>
-            <div className={styles.test}>{preview?.test.input}</div>
-          </div>
-          <div>
-            <span>Пример выходных данных</span>
-            <div className={styles.test}>{preview?.test.output}</div>
-          </div>
+          {preview?.tests?.map((test) => (
+            <React.Fragment key={test.id}>
+              <div>
+                <span>Пример входных данных</span>
+                <div className={styles.test}>{test.input}</div>
+              </div>
+              <div>
+                <span>Пример выходных данных</span>
+                <div className={styles.test}>{test.output}</div>
+              </div>
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </Paper>

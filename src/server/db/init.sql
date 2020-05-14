@@ -13,9 +13,7 @@ INSERT INTO Work VALUES (DEFAULT, 'Работа 2. ИТ', '2020-03-01 03:00', '2
 INSERT INTO Work VALUES (DEFAULT, 'Работа 1. Программирование', '2020-03-01 03:00', '2020-03-20 03:00');
 INSERT INTO Work VALUES (DEFAULT, 'Работа 2. Программирование', '2020-03-15 00:00', '2020-03-18 00:00');
 
-INSERT INTO TaskTopic
-    (name)
-VALUES ('Массивы'), ('Строки'), ('Рекурсия'), ('Графы'), ('Деревья');
+INSERT INTO TaskTopic (name) VALUES ('Массивы'), ('Строки'), ('Рекурсия'), ('Графы'), ('Деревья');
 
 INSERT INTO Task
     (name, description, topic_id)
@@ -29,14 +27,18 @@ VALUES
     ('Task 7 name', 'Task 7 desc', 4),
     ('Task 8 name', 'Task 8 desc', 4);
 
-INSERT INTO Test VALUES (DEFAULT, 1, 'Test 1 Input', 'Test 1 Output');
-INSERT INTO Test VALUES (DEFAULT, 2, 'Test 2 Input', 'Test 2 Output');
-INSERT INTO Test VALUES (DEFAULT, 3, 'Test 3 Input', 'Test 3 Output');
-INSERT INTO Test VALUES (DEFAULT, 4, 'Test 4 Input', 'Test 4 Output');
-INSERT INTO Test VALUES (DEFAULT, 5, 'Test 5 Input', 'Test 5 Output');
-INSERT INTO Test VALUES (DEFAULT, 6, 'Test 6 Input', 'Test 6 Output');
-INSERT INTO Test VALUES (DEFAULT, 7, 'Test 7 Input', 'Test 7 Output');
-INSERT INTO Test VALUES (DEFAULT, 8, 'Test 8 Input', 'Test 8 Output');
+INSERT INTO Test
+    (task_id, input, output)
+VALUES
+    (1, 'Test 1 Input', 'Test 1 Output'),
+    (2, 'Test 2 Input', 'Test 2 Output'),
+    (3, 'Test 3 Input', 'Test 3 Output'),
+    (4, 'Test 4 Input', 'Test 4 Output'),
+    (5, 'Test 5 Input', 'Test 5 Output'),
+    (6, 'Test 6 Input', 'Test 6 Output'),
+    (7, 'Test 7 Input', 'Test 7 Output'),
+    (7, 'Test 8 Input', 'Test 8 Output'),
+    (8, 'Test 9 Input', 'Test 9 Output');
 
 INSERT INTO Work_Task VALUES (1, 1);
 INSERT INTO Work_Task VALUES (1, 2);

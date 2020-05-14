@@ -2,13 +2,13 @@ import { WorkRepository } from '@repositories'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
 import { Work, WorkId, CreateWork } from '@common/typings/work'
-import { TaskPreview } from '@common/typings/task'
+import { Task } from '@common/typings/task'
 
 export const workController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
     const result = await WorkRepository.getAll()
 
-    const response: Response<Work[]> = { payload: result, message: '' }
+    const response: Response<Work[]> = { payload: result }
     reply.send(response)
   })
 
@@ -17,15 +17,23 @@ export const workController: Controller = (app, options, done) => {
 
     const result = await WorkRepository.getById(id)
 
-    const response: Response<Work> = { payload: result, message: '' }
+    const response: Response<Work> = { payload: result }
     reply.send(response)
   })
 
-  app.get('/:id/tasks', async (request, reply) => {
+  app.get('/:id/task', async (request, reply) => {
     const id: WorkId = request.params.id
-    const result = await WorkRepository.getTasksOfWorkPreviews(id)
+    const fieldsForExclude: Array<keyof Task> = request.query.exclude ?? []
 
-    const response: Response<TaskPreview[]> = { payload: result, message: '' }
+    const result = await WorkRepository.getTasksOfWork(id)
+
+    for (const field of fieldsForExclude) {
+      for (const task of result) {
+        delete task[field]
+      }
+    }
+
+    const response: Response<Task[]> = { payload: result }
     reply.send(response)
   })
 
@@ -34,16 +42,16 @@ export const workController: Controller = (app, options, done) => {
 
     await WorkRepository.create(newWork)
 
-    const response: Response<void> = { payload: undefined, message: 'Выполнено' }
+    const response: Response<void> = { message: 'Выполнено' }
     reply.send(response)
   })
 
   app.delete('/:id', async (request, reply) => {
     const id: WorkId = request.params.id
 
-    const result = await WorkRepository.removeById(id)
+    await WorkRepository.removeById(id)
 
-    const response: Response<Work> = { payload: result, message: 'Выполнено' }
+    const response: Response<void> = { message: 'Выполнено' }
     reply.send(response)
   })
 

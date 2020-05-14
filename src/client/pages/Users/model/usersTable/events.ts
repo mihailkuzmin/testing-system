@@ -1,5 +1,6 @@
 import { createEvent } from 'effector'
-import { Response, UsersTableRow, UsersTableGroup, UsersTableRowId } from '@typings'
+import { Response } from '@common/typings'
+import { UsersTableRow, UsersTableGroup, UsersTableRowId } from '@typings'
 
 export const groupSelectChange = createEvent<number>()
 export const onGroupSelectChange = groupSelectChange.prepend(
@@ -15,6 +16,6 @@ export const usersRefreshed = createEvent<Response<UsersTableRow[]>>()
 export const selectForDelete = createEvent<UsersTableRowId>()
 export const selectForEdit = createEvent<UsersTableRowId>()
 export const deleteUser = createEvent()
-export const userDeleted = createEvent<Response<UsersTableRow>>()
+export const userDeleted = createEvent()
 export const confirmDelete = createEvent()
 export const cancelDelete = createEvent()

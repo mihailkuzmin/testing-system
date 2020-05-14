@@ -1,16 +1,14 @@
-import { Response } from '@typings'
-import { TaskWithoutDescription } from '@common/typings/task'
+import { Response } from '@common/typings'
+import { Task, CreateTask, UpdateTask, TaskId, Test, Topic } from '@common/typings/task'
 import { request } from '../request'
-//TODO refactor with shared types
-import { Task, CreateTask, UpdateTask, TaskId, Test, Topic, TaskPreview } from './typings'
 
 const getAll = async (): Promise<Response<Task[]>> => {
   const result = await request.get<Task[]>('task')
   return result
 }
 
-const getAllWithoutDescription = async (): Promise<Response<TaskWithoutDescription[]>> => {
-  const result = await request.get<TaskWithoutDescription[]>('task/nodesc')
+const getAllWithoutDescriptionAndTests = async (): Promise<Response<Task[]>> => {
+  const result = await request.get<Task[]>('task?exclude[]=description&exclude[]=tests')
   return result
 }
 
@@ -19,13 +17,13 @@ const getById = async (id: TaskId): Promise<Response<Task>> => {
   return result
 }
 
-const getTestsById = async (id: TaskId): Promise<Response<Test[]>> => {
-  const result = await request.get<Test[]>(`task/tests/${id}`)
+const getByIdWithoutTests = async (id: TaskId): Promise<Response<Task>> => {
+  const result = await request.get<Task>(`task/${id}?exclude[]=tests`)
   return result
 }
 
-const getPreviewById = async (id: TaskId): Promise<Response<TaskPreview>> => {
-  const result = await request.get<TaskPreview>(`task/preview/${id}`)
+const getTestsById = async (id: TaskId): Promise<Response<Test[]>> => {
+  const result = await request.get<Test[]>(`task/${id}/test`)
   return result
 }
 
@@ -34,29 +32,29 @@ const getTopics = async (): Promise<Response<Topic[]>> => {
   return result
 }
 
-const create = async (task: CreateTask): Promise<Response<Task>> => {
-  const result = await request.post<CreateTask, Task>('task', task)
+const create = async (task: CreateTask): Promise<Response<void>> => {
+  const result = await request.post<CreateTask, void>('task', task)
   return result
 }
 
-const update = async (task: UpdateTask): Promise<Response<Task>> => {
-  const result = await request.put<UpdateTask, Task>('task', task)
+const update = async (task: UpdateTask): Promise<Response<void>> => {
+  const result = await request.put<UpdateTask, void>('task', task)
   return result
 }
 
-const deleteById = async (id: TaskId): Promise<Response<Task>> => {
-  const result = await request.delete<void, Task>(`task/${id}`)
+const deleteById = async (id: TaskId): Promise<Response<void>> => {
+  const result = await request.delete<TaskId, void>(`task/${id}`)
   return result
 }
 
 export const tasksApi = {
   getAll,
-  getAllWithoutDescription,
+  getAllWithoutDescriptionAndTests,
   create,
   deleteById,
   getById,
+  getByIdWithoutTests,
   getTestsById,
-  getPreviewById,
   getTopics,
   update,
 }

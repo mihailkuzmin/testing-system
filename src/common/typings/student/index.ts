@@ -1,4 +1,5 @@
 export type StudentId = number
+export type GroupId = number
 
 export type Student = {
   id: StudentId
@@ -6,7 +7,7 @@ export type Student = {
   firstName: string
   patronymic: string
   bookNumber: string
-  group: string
+  group: { id: GroupId; name: string }
   login: string
 }
 

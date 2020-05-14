@@ -1,13 +1,13 @@
 import React from 'react'
 import { useStore, useStoreMap } from 'effector-react'
 import { Item, Select } from '@components/Inputs/Select'
-import { TestId, TopicId } from '../../model/addTask/addForm/typings'
+import { CreateTestId, TopicId } from '@common/typings/task'
 import { Input } from '@components/Inputs/Input'
 import { Editor } from '@components/Editor'
-import { addForm } from '../../model/addTask/addForm'
+import { addForm } from '@pages/Tasks/model/addTask'
 
-type ExampleInputProps = { id: TestId }
-type ExampleOutputProps = { id: TestId }
+type ExampleInputProps = { id: CreateTestId }
+type ExampleOutputProps = { id: CreateTestId }
 
 export const TopicSelect = () => {
   const topics = useStore(addForm.$topics)

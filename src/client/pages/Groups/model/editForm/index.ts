@@ -41,7 +41,9 @@ $getGroupStatus.on(getGroupFx.fail, () => Status.Fail)
 $getGroupStatus.reset(editModal.closeEditModal)
 
 editGroupFx.doneData.watch(({ message }) => {
-  notifications.createMessage({ type: MessageType.Success, text: message })
+  if (message) {
+    notifications.createMessage({ type: MessageType.Success, text: message })
+  }
 })
 
 editGroupFx.failData.watch(({ message }) => {

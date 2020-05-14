@@ -30,9 +30,9 @@ const deleteTaskFromWork = sample({
 })
 
 const mergedTasksAfterCreate = sample({
-  source: combine({ selected: $selectedTasks, all: $tasks }),
+  source: [$selectedTasks, $tasks],
   clock: createWorkFx.done,
-  fn: ({ selected, all }) => all.concat(selected),
+  fn: ([selected, all]) => all.concat(selected),
 })
 
 $tasks.on(getTasksFx.doneData, (_, { payload }) => payload)
@@ -44,6 +44,7 @@ $tasks.on(mergedTasksAfterCreate, (_, tasks) => tasks)
 $tasks.reset(AddWorkPage.close)
 
 $topics.on(getTopicsFx.doneData, (_, { payload }) => payload)
+$topics.on(createWorkFx.done, (topics) => [...topics])
 $topics.reset(AddWorkPage.close)
 
 $selectedTasks.on(addTaskToWork, (tasks, task) => [...tasks, task!])
@@ -53,29 +54,23 @@ $selectedTasks.on(deleteTaskFromWork, (tasks, taskForDelete) =>
 $selectedTasks.on(mergedTasksAfterCreate, () => [])
 const $selectedTasksIds = $selectedTasks.map((tasks) => tasks.map((task) => task.id))
 
-$selectedTopic.on($topics.updates, (_, topics) => {
-  if (topics.length) {
-    const [first] = topics
-    return first
-  }
-})
-//trigger filter when tasks updates
-$selectedTopic.on($tasks.updates, (state) => (state ? { ...state } : state))
-
-sample({
+const newTopic = sample({
   source: $topics,
   clock: topicChange,
-  target: $selectedTopic,
   fn: (topics, topicId) => topics.find((topic) => topic.id === topicId) ?? null,
 })
+const setInitialTopic = sample({
+  source: getTopicsFx.doneData,
+  clock: getTopicsFx.doneData,
+  fn: ({ payload }) => (payload ? payload[0] : null),
+})
+$selectedTopic.on(setInitialTopic, (_, topic) => topic)
+$selectedTopic.on(newTopic, (_, topic) => topic)
 $selectedTopic.reset(AddWorkPage.close)
 
-const $filteredTasks = sample({
-  source: $tasks,
-  clock: $selectedTopic,
-  fn: (tasks, selected) => tasks.filter((task) => task.topic.id === selected?.id),
+const $filteredTasks = combine({ tasks: $tasks, topic: $selectedTopic }, ({ tasks, topic }) => {
+  return tasks.filter((task) => task.topic.id === topic?.id)
 })
-$filteredTasks.reset(AddWorkPage.close, createWorkFx.done)
 
 $name.on(nameChange, (_, name) => name)
 $name.reset(AddWorkPage.close, createWorkFx.done)
@@ -90,8 +85,8 @@ $closeAt.reset(AddWorkPage.close)
 
 const $form = combine({
   name: $name,
-  openAt: $openAt,
-  closeAt: $closeAt,
+  openAt: $openAt.map((date) => date.toISOString()),
+  closeAt: $closeAt.map((date) => date.toISOString()),
   tasks: $selectedTasksIds,
 })
 
@@ -99,15 +94,7 @@ const $canSave = $selectedTasks.map((tasks) => Boolean(tasks.length))
 
 // when addWork triggered, call effect if selected more than 0 tasks
 guard({
-  source: sample({
-    source: $form,
-    clock: addWork,
-    fn: (form) => ({
-      ...form,
-      openAt: form.openAt.toISOString(),
-      closeAt: form.closeAt.toISOString(),
-    }),
-  }),
+  source: sample({ source: $form, clock: addWork }),
   filter: $canSave,
   target: createWorkFx,
 })
@@ -117,7 +104,9 @@ createWorkFx.watch(() => {
 })
 
 createWorkFx.doneData.watch(({ message }) => {
-  notifications.createMessage({ text: message, type: MessageType.Success })
+  if (message) {
+    notifications.createMessage({ text: message, type: MessageType.Success })
+  }
 })
 
 createWorkFx.failData.watch(({ message }) => {

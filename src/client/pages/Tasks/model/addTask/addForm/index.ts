@@ -1,4 +1,8 @@
 import { forward, sample } from 'effector'
+import { notifications } from '@model'
+import { MessageType } from '@typings'
+import { nanoid } from 'nanoid'
+import { AddTaskPage } from '../page'
 import { $description, $tests, $testsCount, $name, $form, $topics, $selectedTopic } from './stores'
 import {
   descriptionChange,
@@ -11,10 +15,6 @@ import {
   topicChange,
 } from './events'
 import { createTaskFx, getTopicsFx } from './effects'
-import { AddTaskPage } from '../page'
-import { notifications } from '@model'
-import { MessageType } from '@typings'
-import { nanoid } from 'nanoid'
 
 forward({ from: AddTaskPage.open, to: getTopicsFx })
 forward({ from: AddTaskPage.close, to: getTopicsFx.cancel })
@@ -26,9 +26,8 @@ $name.on(nameChange, (_, name) => name)
 $name.reset(AddTaskPage.close, createTaskFx.done)
 
 $selectedTopic.on(getTopicsFx.doneData, (_, { payload }) => {
-  if (payload.length > 0) {
-    const [first] = payload
-    return first.id
+  if (payload) {
+    return payload[0].id
   }
 })
 $selectedTopic.on(topicChange, (_, topic) => topic)
@@ -60,7 +59,6 @@ sample({
   target: createTaskFx,
   fn: (task) => ({
     ...task,
-    tests: task.tests.map(({ input, output }) => ({ input, output })),
     topicId: task.topicId!,
   }),
 })
@@ -70,7 +68,9 @@ createTaskFx.watch(() => {
 })
 
 createTaskFx.doneData.watch(({ message }) => {
-  notifications.createMessage({ text: message, type: MessageType.Success })
+  if (message) {
+    notifications.createMessage({ text: message, type: MessageType.Success })
+  }
 })
 
 createTaskFx.failData.watch(({ message }) => {

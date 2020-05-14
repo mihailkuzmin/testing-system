@@ -1,5 +1,5 @@
 import { createEvent } from 'effector'
-import { TopicId, UpdateTestId } from './typings'
+import { TopicId, UpdateTestId } from '@common/typings/task'
 
 export const toggleEditTests = createEvent<boolean>()
 

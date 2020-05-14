@@ -1,15 +1,25 @@
 import { Response } from '@common/typings'
 import { WorkId, Work, CreateWork } from '@common/typings/work'
+import { Task } from '@common/typings/task'
 import { request } from '../request'
-import { TaskPreview } from '@common/typings/task'
 
 const getAll = async (): Promise<Response<Work[]>> => {
   const result = await request.get<Work[]>('work')
   return result
 }
 
-const getTasksOfWorkPreviews = async (id: WorkId): Promise<Response<TaskPreview[]>> => {
-  const result = await request.get<TaskPreview[]>(`work/${id}/tasks`)
+const getTasksOfWork = async (id: WorkId): Promise<Response<Task[]>> => {
+  const result = await request.get<Task[]>(`work/${id}/task`)
+  return result
+}
+
+const getTasksOfWorkWithoutDescription = async (id: WorkId): Promise<Response<Task[]>> => {
+  const result = await request.get<Task[]>(`work/${id}/task?exclude[]=description`)
+  return result
+}
+
+const getTasksOfWorkWithoutDescriptionAndTests = async (id: WorkId): Promise<Response<Task[]>> => {
+  const result = await request.get<Task[]>(`work/${id}/task?exclude[]=description&exclude[]=tests`)
   return result
 }
 
@@ -31,7 +41,9 @@ const create = async (work: CreateWork): Promise<Response<void>> => {
 export const worksApi = {
   getAll,
   getById,
-  getTasksOfWorkPreviews,
+  getTasksOfWork,
+  getTasksOfWorkWithoutDescription,
+  getTasksOfWorkWithoutDescriptionAndTests,
   deleteById,
   create,
 }

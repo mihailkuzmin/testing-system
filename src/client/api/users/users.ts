@@ -1,30 +1,29 @@
-import { Response } from '@typings'
+import { Response } from '@common/typings'
+import { CreateStudent, UpdateStudent, Student, StudentId } from '@common/typings/student'
 import { request } from '../request'
-//TODO refactor with shared types
-import { CreateUser, UpdateUser, User, UserId } from './typings'
 
-const getAll = async (): Promise<Response<User[]>> => {
-  const result = await request.get<User[]>('student')
+const getAll = async (): Promise<Response<Student[]>> => {
+  const result = await request.get<Student[]>('student')
   return result
 }
 
-const getById = async (id: UserId): Promise<Response<User>> => {
-  const result = await request.get<User>(`student/${id}`)
+const getById = async (id: StudentId): Promise<Response<Student>> => {
+  const result = await request.get<Student>(`student/${id}`)
   return result
 }
 
-const create = async (user: CreateUser): Promise<Response<User>> => {
-  const result = await request.post<CreateUser, User>('student', user)
+const create = async (user: CreateStudent): Promise<Response<Student>> => {
+  const result = await request.post<CreateStudent, Student>('student', user)
   return result
 }
 
-const deleteById = async (id: UserId): Promise<Response<User>> => {
-  const result = await request.delete<void, User>(`student/${id}`)
+const deleteById = async (id: StudentId): Promise<Response<void>> => {
+  const result = await request.delete<StudentId, void>(`student/${id}`)
   return result
 }
 
-const update = async (user: UpdateUser): Promise<Response<User>> => {
-  const result = await request.put<UpdateUser, User>('student', user)
+const update = async (user: UpdateStudent): Promise<Response<void>> => {
+  const result = await request.put<UpdateStudent, void>('student', user)
   return result
 }
 

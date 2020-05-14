@@ -1,4 +1,4 @@
-export interface AddForm {
+export type AddForm = {
   firstName: string
   lastName: string
   patronymic: string
@@ -8,12 +8,12 @@ export interface AddForm {
   password: string
 }
 
-export interface AddFormNewValue {
+export type AddFormNewValue = {
   key: string
   value: number | string
 }
 
-export interface Group {
+export type Group = {
   id: number | string
   name: string
 }

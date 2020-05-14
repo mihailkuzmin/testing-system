@@ -7,36 +7,23 @@ export class StudentRepository {
       `
         SELECT 
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-          S.book_number as "bookNumber", (G.id, G.name) as group, S.login
+          S.book_number as "bookNumber", jsonb_build_object('id', G.id, 'name', G.name) as group, S.login
         FROM Student S, StudentGroup G
         WHERE (S.id = %L and S.group_id = G.id)
       `,
       id,
     )
 
-    student.group = this._parseGroup(student.group)
     return student
   }
 
-  static async removeById(id: StudentId): Promise<Student> {
-    const [student] = await db.query(
-      `
-        DELETE FROM Student as S
-        USING StudentGroup as G
-        WHERE (S.id = %L) and (G.id = S.group_id)
-        RETURNING 
-          S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-          S.book_number as bookNumber, (G.id, G.name) as group, S.login
-      `,
-      id,
-    )
-    student.group = this._parseGroup(student.group)
-    return student
+  static async removeById(id: StudentId): Promise<void> {
+    await db.query(`DELETE FROM Student as S WHERE (S.id = %L)`, id)
   }
 
-  static async update(s: UpdateStudent): Promise<Student> {
+  static async update(s: UpdateStudent): Promise<void> {
     if (s.changePassword) {
-      const [student] = await db.query(
+      await db.query(
         `
           UPDATE Student S
           SET
@@ -48,11 +35,6 @@ export class StudentRepository {
             login = %L,
             password = %L
           WHERE (S.id = %L)
-          RETURNING
-            S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-            S.book_number as "bookNumber", (S.group_id, (
-              SELECT G.name FROM StudentGroup G WHERE G.id = S.group_id
-            )) as group, S.login, S.password
         `,
         s.lastName,
         s.firstName,
@@ -63,12 +45,9 @@ export class StudentRepository {
         s.password,
         s.id,
       )
-      student.group = this._parseGroup(student.group)
-      return student
-    }
-
-    const [student] = await db.query(
-      `
+    } else {
+      await db.query(
+        `
         UPDATE Student S
         SET
           last_name = %L,
@@ -78,52 +57,34 @@ export class StudentRepository {
           group_id = %L,
           login = %L
         WHERE (S.id = %L)
-        RETURNING
-          S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-          S.book_number as "bookNumber", (S.group_id, (
-            SELECT G.name FROM StudentGroup G WHERE G.id = S.group_id
-          )) as group, S.login, S.password
       `,
-      s.lastName,
-      s.firstName,
-      s.patronymic,
-      s.bookNumber,
-      s.group,
-      s.login,
-      s.id,
-    )
-    student.group = this._parseGroup(student.group)
-    return student
+        s.lastName,
+        s.firstName,
+        s.patronymic,
+        s.bookNumber,
+        s.group,
+        s.login,
+        s.id,
+      )
+    }
   }
 
   static async getAll(): Promise<Student[]> {
     const students = await db.query(`
-        SELECT
-          S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-          S.book_number as "bookNumber", (G.id, G.name) as group, S.login
-        FROM Student S, StudentGroup G
-        WHERE G.id = S.group_id
-        ORDER BY G.name, S.last_Name, S.first_name, S.patronymic
-      `)
-    for (const student of students) {
-      student.group = this._parseGroup(student.group)
-    }
+      SELECT
+        S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
+        S.book_number as "bookNumber", jsonb_build_object('id', G.id, 'name', G.name) as group, S.login
+      FROM Student S, StudentGroup G
+      WHERE G.id = S.group_id
+      ORDER BY G.name, S.last_Name, S.first_name, S.patronymic
+    `)
 
     return students
   }
 
-  static async create(user: CreateStudent): Promise<Student> {
-    const [student] = await db.query(
-      `
-        INSERT INTO Student as S
-          (last_name, first_name, patronymic, book_number, group_id, login, password)
-        VALUES (%L)
-        RETURNING
-          S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-          S.book_number as "bookNumber", (group_id, (
-            SELECT G.name FROM StudentGroup G WHERE G.id = group_id
-          )) as group, S.login
-      `,
+  static async create(user: CreateStudent): Promise<void> {
+    await db.query(
+      `INSERT INTO Student as S (last_name, first_name, patronymic, book_number, group_id, login, password) VALUES (%L)`,
       [
         user.lastName,
         user.firstName,
@@ -134,13 +95,5 @@ export class StudentRepository {
         user.password,
       ],
     )
-    student.group = this._parseGroup(student.group)
-    return student
-  }
-
-  static _parseGroup(str: string): { id: number; name: string } {
-    // parse string '($id, $name)' into object {id, name}
-    const [id, name] = str.slice(1, -1).split(',')
-    return { id: Number(id), name }
   }
 }

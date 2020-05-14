@@ -15,17 +15,8 @@ export class GroupRepository {
     return group
   }
 
-  static async removeById(id: GroupId): Promise<Group> {
-    const [group] = await db.query(
-      `
-        DELETE FROM StudentGroup as G
-        WHERE (G.id = %L)
-        RETURNING
-          G.id, G.name
-      `,
-      id,
-    )
-    return group
+  static async removeById(id: GroupId): Promise<void> {
+    await db.query(`DELETE FROM StudentGroup as G WHERE (G.id = %L)`, id)
   }
 
   static async getAll(): Promise<Group[]> {
@@ -38,33 +29,11 @@ export class GroupRepository {
     return groups
   }
 
-  static async create(g: CreateGroup): Promise<Group> {
-    const [result] = await db.query(
-      `
-        INSERT INTO StudentGroup as G (
-          name
-        ) VALUES (%L)
-        RETURNING
-          G.id, G.name
-      `,
-      g.name,
-    )
-    return result
+  static async create(g: CreateGroup): Promise<void> {
+    await db.query(`INSERT INTO StudentGroup as G (name) VALUES (%L)`, g.name)
   }
 
-  static async update(g: UpdateGroup): Promise<Group> {
-    const [group] = await db.query(
-      `
-        UPDATE StudentGroup G
-        SET
-          name = %L
-        WHERE (G.id = %L)
-        RETURNING
-          G.id, G.name
-      `,
-      g.name,
-      g.id,
-    )
-    return group
+  static async update(g: UpdateGroup): Promise<void> {
+    await db.query(`UPDATE StudentGroup G SET name = %L WHERE (G.id = %L)`, g.name, g.id)
   }
 }

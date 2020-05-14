@@ -1,4 +1,9 @@
 import { forward, guard, sample } from 'effector'
+import { notifications } from '@model/notifications'
+import { MessageType } from '@typings'
+import { nanoid } from 'nanoid'
+import { TestId } from '@common/typings/task'
+import { EditPage } from '../page'
 import {
   $description,
   $editTests,
@@ -23,32 +28,27 @@ import {
   topicChange,
 } from './events'
 import { getTaskFx, getTestsFx, getTopicsFx, updateTaskFx } from './effects'
-import { EditPage } from '../page'
-import { notifications } from '@model/notifications'
-import { MessageType } from '@typings'
-import { nanoid } from 'nanoid'
 
 //bind open/close/done events
 forward({ from: EditPage.open, to: [getTaskFx, getTopicsFx] })
 forward({ from: EditPage.close, to: [getTaskFx.cancel, getTestsFx.cancel, getTopicsFx.cancel] })
-updateTaskFx.doneData.watch(({ payload: { id } }) => getTaskFx(id))
 
 // working with inputs
-$taskId.on(getTaskFx.doneData, (_, { payload }) => payload.id)
+$taskId.on(getTaskFx.doneData, (_, { payload }) => payload?.id)
 $taskId.reset(EditPage.close)
 
-$name.on(getTaskFx.doneData, (_, { payload }) => payload.name)
+$name.on(getTaskFx.doneData, (_, { payload }) => payload?.name)
 $name.on(nameChange, (_, name) => name)
 $name.reset(EditPage.close)
 
-$description.on(getTaskFx.doneData, (_, { payload }) => payload.description)
+$description.on(getTaskFx.doneData, (_, { payload }) => payload?.description)
 $description.on(descriptionChange, (_, desc) => desc)
 $description.reset(EditPage.close)
 
 $topics.on(getTopicsFx.doneData, (_, { payload }) => payload)
 $topics.reset(EditPage.close)
 
-$selectedTopic.on(getTaskFx.doneData, (_, { payload }) => payload.topic.id)
+$selectedTopic.on(getTaskFx.doneData, (_, { payload }) => payload?.topic.id)
 $selectedTopic.on(topicChange, (_, topic) => topic)
 $selectedTopic.reset(EditPage.close)
 
@@ -62,10 +62,10 @@ const deleteTest = guard({
 
 const removeOldTest = deleteTest.filter({ fn: ({ old }) => old })
 
-$oldTestsForDelete.on(removeOldTest, (tests, { id }) => [...tests, id])
+$oldTestsForDelete.on(removeOldTest, (tests, { id }) => [...tests, id as TestId])
 $oldTestsForDelete.reset(EditPage.close, toggleEditTests)
 
-$tests.on(getTestsFx.doneData, (_, { payload }) => payload.map((test) => ({ ...test, old: true })))
+$tests.on(getTestsFx.doneData, (_, { payload }) => payload?.map((test) => ({ ...test, old: true })))
 $tests.on(deleteTest, (tests, { id }) => tests.filter((test) => test.id !== id))
 $tests.on(addTest, (tests) => [...tests, { id: nanoid(), input: '', output: '', old: false }])
 $tests.on(inputChange, (tests, { id, value }) =>
@@ -112,7 +112,9 @@ updateTaskFx.watch(() => {
 })
 
 updateTaskFx.doneData.watch(({ message }) => {
-  notifications.createMessage({ text: message, type: MessageType.Success })
+  if (message) {
+    notifications.createMessage({ text: message, type: MessageType.Success })
+  }
 })
 
 updateTaskFx.failData.watch(({ message }) => {

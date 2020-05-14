@@ -7,7 +7,7 @@ export const studentController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
     const result = await StudentRepository.getAll()
 
-    const response: Response<Student[]> = { payload: result, message: '' }
+    const response: Response<Student[]> = { payload: result }
     reply.send(response)
   })
 
@@ -16,34 +16,34 @@ export const studentController: Controller = (app, options, done) => {
 
     const result = await StudentRepository.getById(id)
 
-    const response: Response<Student> = { payload: result, message: '' }
+    const response: Response<Student> = { payload: result }
     reply.send(response)
   })
 
   app.post('/', async (request, reply) => {
     const newStudent: CreateStudent = request.body
 
-    const result = await StudentRepository.create(newStudent)
+    await StudentRepository.create(newStudent)
 
-    const response: Response<Student> = { payload: result, message: 'Выполнено' }
+    const response: Response<void> = { message: 'Выполнено' }
     reply.send(response)
   })
 
   app.put('/', async (request, reply) => {
     const user: UpdateStudent = request.body
 
-    const result = await StudentRepository.update(user)
+    await StudentRepository.update(user)
 
-    const response: Response<Student> = { payload: result, message: 'Выполнено' }
+    const response: Response<void> = { message: 'Выполнено' }
     reply.send(response)
   })
 
   app.delete('/:id', async (request, reply) => {
     const id: StudentId = request.params.id
 
-    const result = await StudentRepository.removeById(id)
+    await StudentRepository.removeById(id)
 
-    const response: Response<Student> = { payload: result, message: 'Выполнено' }
+    const response: Response<void> = { message: 'Выполнено' }
     reply.send(response)
   })
 

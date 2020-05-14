@@ -7,7 +7,7 @@ export const groupController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
     const result = await GroupRepository.getAll()
 
-    const response: Response<Group[]> = { payload: result, message: '' }
+    const response: Response<Group[]> = { payload: result }
     reply.send(response)
   })
 
@@ -16,34 +16,34 @@ export const groupController: Controller = (app, options, done) => {
 
     const result = await GroupRepository.getById(id)
 
-    const response: Response<Group> = { payload: result, message: '' }
+    const response: Response<Group> = { payload: result }
     reply.send(response)
   })
 
   app.post('/', async (request, reply) => {
     const newGroup: CreateGroup = request.body
 
-    const result = await GroupRepository.create(newGroup)
+    await GroupRepository.create(newGroup)
 
-    const response: Response<Group> = { payload: result, message: 'Выполнено' }
+    const response: Response<void> = { message: 'Выполнено' }
     reply.send(response)
   })
 
   app.delete('/:id', async (request, reply) => {
     const id: GroupId = request.params.id
 
-    const result = await GroupRepository.removeById(id)
+    await GroupRepository.removeById(id)
 
-    const response: Response<Group> = { payload: result, message: 'Выполнено' }
+    const response: Response<void> = { message: 'Выполнено' }
     reply.send(response)
   })
 
   app.put('/', async (request, reply) => {
     const group: UpdateGroup = request.body
 
-    const result = await GroupRepository.update(group)
+    await GroupRepository.update(group)
 
-    const response: Response<Group> = { payload: result, message: 'Выполнено' }
+    const response: Response<void> = { message: 'Выполнено' }
     reply.send(response)
   })
 

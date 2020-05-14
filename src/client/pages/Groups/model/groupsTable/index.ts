@@ -48,7 +48,9 @@ $getGroupsStatus.on(getGroupsFx.fail, () => Status.Fail)
 $getGroupsStatus.reset(GroupsPage.close)
 
 deleteGroupFx.doneData.watch(({ message }) => {
-  notifications.createMessage({ type: MessageType.Success, text: message })
+  if (message) {
+    notifications.createMessage({ type: MessageType.Success, text: message })
+  }
 })
 
 deleteGroupFx.failData.watch(({ message }) => {

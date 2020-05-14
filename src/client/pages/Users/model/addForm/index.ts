@@ -1,11 +1,11 @@
 import { sample, forward } from 'effector'
-import { $addForm, addFormIntitialState, $createUserStatus } from './stores'
-import { setField, fieldValueChange, createUser, userCreated } from './events'
-import { createUserFx } from './effects'
 import { Status, MessageType } from '@typings'
 import { notifications } from '@model'
 import { addModal } from '../addModal'
 import { usersTable } from '../usersTable'
+import { $addForm, addFormInitialState, $createUserStatus } from './stores'
+import { setField, fieldValueChange, createUser, userCreated } from './events'
+import { createUserFx } from './effects'
 
 forward({ from: createUserFx.done, to: userCreated })
 
@@ -21,7 +21,7 @@ $addForm.on(setField, (state, { key, value }) => ({
 }))
 $addForm.on(initialSelectValue, (state, group) => ({ ...state, group }))
 $addForm.on(userCreated, (form) => ({
-  ...addFormIntitialState,
+  ...addFormInitialState,
   group: form.group,
 }))
 $addForm.reset(addModal.closeAddModal)
@@ -38,7 +38,9 @@ $createUserStatus.on(createUserFx.pending, (s, p) => (p ? Status.Pending : s))
 $createUserStatus.reset(setField, addModal.closeAddModal, createUser)
 
 createUserFx.doneData.watch(({ message }) => {
-  notifications.createMessage({ type: MessageType.Success, text: message })
+  if (message) {
+    notifications.createMessage({ type: MessageType.Success, text: message })
+  }
 })
 
 createUserFx.failData.watch(({ message }) => {
