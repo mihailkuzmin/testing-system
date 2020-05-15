@@ -16,7 +16,7 @@ export const PreviewWork = ({ id }: PreviewWorkProps) => {
   const { isLoading, isFail } = useStore(PreviewPage.$status)
   const work = useStore(workPreview.$preview)
   const tasks = useStore(workPreview.$tasks)
-  console.log(tasks)
+
   if (isLoading) {
     return <PageLoader />
   }
