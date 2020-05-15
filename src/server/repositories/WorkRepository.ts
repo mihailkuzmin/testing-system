@@ -35,9 +35,27 @@ export class WorkRepository {
   static async update(w: UpdateWork): Promise<void> {
     await db.query(
       `
-        SELECT NOW()
+        UPDATE Work W
+        SET
+          name = %L,
+          open_at = %L,
+          close_at = %L
+        WHERE (W.id = %L)
       `,
+      w.name,
+      w.openAt,
+      w.closeAt,
       w.id,
+    )
+
+    const tasks = w.tasks.map((taskId) => [w.id, taskId])
+    await db.query(
+      `
+      DELETE FROM Work_Task as WT WHERE (WT.work_id = %L);
+      INSERT INTO Work_Task (work_id, task_id) VALUES %L;
+    `,
+      w.id,
+      tasks,
     )
   }
 
