@@ -15,3 +15,11 @@ export type CreateWork = {
   closeAt: string
   tasks: TaskId[]
 }
+
+export type UpdateWork = {
+  id: WorkId
+  name: string
+  openAt: string
+  closeAt: string
+  tasks: TaskId[]
+}
