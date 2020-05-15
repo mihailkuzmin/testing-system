@@ -8,7 +8,7 @@ const TIMEOUT = 500
 
 const api = ky.extend({
   hooks: {
-    beforeRequest: [async (req) => await timeout(TIMEOUT)],
+    beforeRequest: [() => timeout(TIMEOUT)],
   },
   prefixUrl: HOST,
   retry: 0,
