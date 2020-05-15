@@ -1,5 +1,5 @@
 import { Response } from '@common/typings'
-import { WorkId, Work, CreateWork } from '@common/typings/work'
+import { WorkId, Work, CreateWork, UpdateWork } from '@common/typings/work'
 import { Task } from '@common/typings/task'
 import { request } from '../request'
 
@@ -38,6 +38,11 @@ const create = async (work: CreateWork): Promise<Response<void>> => {
   return result
 }
 
+const update = async (work: UpdateWork): Promise<Response<void>> => {
+  const result = await request.post<UpdateWork, void>('work', work)
+  return result
+}
+
 export const worksApi = {
   getAll,
   getById,
@@ -46,4 +51,5 @@ export const worksApi = {
   getTasksOfWorkWithoutDescriptionAndTests,
   deleteById,
   create,
+  update,
 }
