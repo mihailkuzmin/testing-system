@@ -5,7 +5,6 @@ import { Paper } from '@components'
 import { WorkId } from '@common/typings/work'
 import { Divider } from '@material-ui/core'
 import { PrimaryButton as Save } from '@components/Buttons'
-import { addForm } from '@pages/Works/model/addWork'
 import { EditPage, editForm } from '../model/editWork'
 import { CloseDateInput, NameInput, OpenDateInput } from './Inputs'
 import { IncludedTasks } from './IncludedTasks'
@@ -31,7 +30,7 @@ export const EditWork = ({ id }: EditWorkProps) => {
     <Paper className={styles.editWork}>
       <div className={styles.header}>
         <h2>Редактировать работу</h2>
-        <Save onClick={() => addForm.addWork()}>Сохранить</Save>
+        <Save onClick={() => editForm.updateWork()}>Сохранить</Save>
       </div>
       <NameInput />
       <div className={styles.dates}>
