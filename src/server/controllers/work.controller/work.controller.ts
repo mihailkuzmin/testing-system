@@ -1,8 +1,8 @@
 import { WorkRepository } from '@repositories'
 import { Response } from '@common/typings'
-import { Controller } from '@typings'
-import { Work, WorkId, CreateWork } from '@common/typings/work'
+import { Work, WorkId, CreateWork, UpdateWork } from '@common/typings/work'
 import { Task } from '@common/typings/task'
+import { Controller } from '@typings'
 
 export const workController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
@@ -41,6 +41,15 @@ export const workController: Controller = (app, options, done) => {
     const newWork: CreateWork = request.body
 
     await WorkRepository.create(newWork)
+
+    const response: Response<void> = { message: 'Выполнено' }
+    reply.send(response)
+  })
+
+  app.put('/', async (request, reply) => {
+    const updateWork: UpdateWork = request.body
+
+    await WorkRepository.update(updateWork)
 
     const response: Response<void> = { message: 'Выполнено' }
     reply.send(response)
