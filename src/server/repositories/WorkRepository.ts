@@ -1,5 +1,5 @@
 import { db } from '@db'
-import { Work, CreateWork, WorkId } from '@common/typings/work'
+import { Work, CreateWork, WorkId, UpdateWork } from '@common/typings/work'
 import { Task } from '@common/typings/task'
 
 export class WorkRepository {
@@ -30,6 +30,15 @@ export class WorkRepository {
       id,
     )
     return work
+  }
+
+  static async update(w: UpdateWork): Promise<void> {
+    await db.query(
+      `
+        SELECT NOW()
+      `,
+      w.id,
+    )
   }
 
   static async getTasksOfWork(id: WorkId): Promise<Task[]> {
