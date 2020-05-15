@@ -39,7 +39,7 @@ const create = async (work: CreateWork): Promise<Response<void>> => {
 }
 
 const update = async (work: UpdateWork): Promise<Response<void>> => {
-  const result = await request.post<UpdateWork, void>('work', work)
+  const result = await request.put<UpdateWork, void>('work', work)
   return result
 }
 
