@@ -8,4 +8,4 @@ export const getTasksOfWorkFx = createReEffect({
 })
 export const getTopicsFx = createReEffect({ handler: tasksApi.getTopics })
 
-export const updateWorkFx = createReEffect({ handler: async (kek: any) => {} })
+export const updateWorkFx = createReEffect({ handler: worksApi.update })
