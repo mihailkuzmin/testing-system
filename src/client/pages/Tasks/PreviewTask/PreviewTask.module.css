@@ -19,16 +19,16 @@
   padding: 0.5rem;
 }
 
-.taskPreview span {
+.tests {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--previewGap);
+}
+
+.tests span {
   display: block;
   color: rgba(0, 0, 0, 0.54);
   font-size: 0.9rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
-}
-
-.tests {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--previewGap);
 }
