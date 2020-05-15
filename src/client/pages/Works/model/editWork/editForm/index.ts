@@ -1,7 +1,16 @@
-import { combine, createStore, forward, guard, sample } from 'effector'
+import { combine, forward, guard, sample } from 'effector'
 import { EditPage } from '../page'
-import { $closeAt, $name, $openAt, $selectedTopic, $tasks, $selectedTasks, $topics } from './stores'
-import { getWorkFx, getTopicsFx, getAllTasksFx, getTasksOfWorkFx, updateWorkFx } from './effects'
+import {
+  $closeAt,
+  $id,
+  $name,
+  $openAt,
+  $selectedTasks,
+  $selectedTopic,
+  $tasks,
+  $topics,
+} from './stores'
+import { getAllTasksFx, getTasksOfWorkFx, getTopicsFx, getWorkFx, updateWorkFx } from './effects'
 import {
   addTask,
   closeAtChange,
@@ -11,7 +20,8 @@ import {
   topicChange,
   updateWork,
 } from './events'
-import { Task } from '@common/typings/task'
+import { notifications } from '@model'
+import { MessageType } from '@typings'
 
 forward({ from: EditPage.open, to: [getWorkFx, getTopicsFx, getAllTasksFx, getTasksOfWorkFx] })
 forward({
@@ -63,19 +73,23 @@ const $filteredTasks = combine(
   ({ available, topic }) => available.filter((task) => task.topic.id === topic?.id),
 )
 
-$name.on(getWorkFx.doneData, (_, { payload }) => payload!.name)
+$id.on(getWorkFx.doneData, (_, { payload }) => payload?.id)
+$id.reset(EditPage.close)
+
+$name.on(getWorkFx.doneData, (_, { payload }) => payload?.name)
 $name.on(nameChange, (_, name) => name)
 $name.reset(EditPage.close)
 
-$openAt.on(getWorkFx.doneData, (_, { payload }) => new Date(payload!.openAt))
+$openAt.on(getWorkFx.doneData, (_, { payload }) => new Date(payload?.openAt ?? Date.now()))
 $openAt.on(openAtChange, (_, date) => date)
 $openAt.reset(EditPage.close)
 
-$closeAt.on(getWorkFx.doneData, (_, { payload }) => new Date(payload!.closeAt))
+$closeAt.on(getWorkFx.doneData, (_, { payload }) => new Date(payload?.closeAt ?? Date.now()))
 $closeAt.on(closeAtChange, (_, date) => date)
 $closeAt.reset(EditPage.close)
 
 const $form = combine({
+  id: $id,
   name: $name,
   openAt: $openAt.map((date) => date.toISOString()),
   closeAt: $closeAt.map((date) => date.toISOString()),
@@ -89,6 +103,18 @@ guard({
   source: sample({ source: $form, clock: updateWork }),
   filter: $canSave,
   target: updateWorkFx,
+})
+
+updateWorkFx.watch(() => {
+  notifications.createMessage({ text: 'Выполняется', type: MessageType.Info })
+})
+updateWorkFx.doneData.watch(({ message }) => {
+  if (message) {
+    notifications.createMessage({ text: message, type: MessageType.Success })
+  }
+})
+updateWorkFx.failData.watch(({ message }) => {
+  notifications.createMessage({ text: message, type: MessageType.Error })
 })
 
 export const editForm = {
