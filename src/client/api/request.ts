@@ -2,15 +2,13 @@ import ky from 'ky'
 import { Request, Response } from '@common/typings'
 
 const timeout = (time: number): Promise<void> => new Promise((r) => setTimeout(r, time))
-
-const HOST = 'http://localhost:5000/api/'
 const TIMEOUT = 500
 
 const api = ky.extend({
   hooks: {
     beforeRequest: [() => timeout(TIMEOUT)],
   },
-  prefixUrl: HOST,
+  prefixUrl: '/api/',
   retry: 0,
 })
 
