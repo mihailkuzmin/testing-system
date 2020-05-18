@@ -24,8 +24,10 @@ export const PreviewTask = ({ id }: PreviewTaskProps) => {
 
   return (
     <Paper className={styles.preview}>
-      <h2>Задание "{preview?.name}"</h2>
-      <span>Тема: {preview?.topic.name}</span>
+      <div className={styles.previewHeader}>
+        <h2>Задание "{preview?.name}"</h2>
+        <span>Тема: {preview?.topic.name}</span>
+      </div>
 
       <Divider />
 
