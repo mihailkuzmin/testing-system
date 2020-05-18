@@ -1,6 +1,6 @@
 import { db } from '@db'
 import { Work, CreateWork, WorkId, UpdateWork } from '@common/typings/work'
-import { Task } from '@common/typings/task'
+import { Task, TaskId } from '@common/typings/task'
 
 export class WorkRepository {
   static async create(w: CreateWork): Promise<void> {
@@ -78,6 +78,21 @@ export class WorkRepository {
     )
 
     return tasks
+  }
+
+  static async getWorksWithTask(id: TaskId): Promise<Work[]> {
+    const works = await db.query(
+      `
+        SELECT
+          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
+        FROM Work W, Work_Task WT
+        WHERE
+          (W.id = WT.work_id and WT.task_id = %L)
+    `,
+      id,
+    )
+
+    return works
   }
 
   static async getAll(): Promise<Work[]> {
