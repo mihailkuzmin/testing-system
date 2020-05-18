@@ -8,6 +8,7 @@ type ConfirmationDialogProps = {
   onConfirm: () => void
   onCancel: () => void
   title: string
+  cancelIsNotNegative?: boolean
   confirmText?: string
   cancelText?: string
   children?: React.ReactNode
