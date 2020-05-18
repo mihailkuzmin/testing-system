@@ -1,0 +1,12 @@
+.login {
+  padding: 1rem;
+}
+
+.login h2 {
+  margin: 0;
+}
+
+.loginForm {
+  display: grid;
+  gap: 1rem;
+}
