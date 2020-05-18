@@ -1,6 +1,6 @@
 import { Response } from '@common/typings'
 import { WorkId, Work, CreateWork, UpdateWork } from '@common/typings/work'
-import { Task } from '@common/typings/task'
+import { Task, TaskId } from '@common/typings/task'
 import { request } from '../request'
 
 const getAll = async (): Promise<Response<Work[]>> => {
@@ -10,6 +10,11 @@ const getAll = async (): Promise<Response<Work[]>> => {
 
 const getTasksOfWork = async (id: WorkId): Promise<Response<Task[]>> => {
   const result = await request.get<Task[]>(`work/${id}/task`)
+  return result
+}
+
+const getWorksWithTask = async (id: TaskId): Promise<Response<Work[]>> => {
+  const result = await request.get<Work[]>(`work/filterByTask/${id}`)
   return result
 }
 
@@ -47,6 +52,7 @@ export const worksApi = {
   getAll,
   getById,
   getTasksOfWork,
+  getWorksWithTask,
   getTasksOfWorkWithoutDescription,
   getTasksOfWorkWithoutDescriptionAndTests,
   deleteById,
