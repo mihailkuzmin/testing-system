@@ -1,7 +1,7 @@
 import { WorkRepository } from '@repositories'
 import { Response } from '@common/typings'
 import { Work, WorkId, CreateWork, UpdateWork } from '@common/typings/work'
-import { Task } from '@common/typings/task'
+import { Task, TaskId } from '@common/typings/task'
 import { Controller } from '@typings'
 
 export const workController: Controller = (app, options, done) => {
@@ -34,6 +34,15 @@ export const workController: Controller = (app, options, done) => {
     }
 
     const response: Response<Task[]> = { payload: result }
+    reply.send(response)
+  })
+
+  app.get('/filterByTask/:id', async (request, reply) => {
+    const id: TaskId = request.params.id
+
+    const result = await WorkRepository.getWorksWithTask(id)
+
+    const response: Response<Work[]> = { payload: result }
     reply.send(response)
   })
 
