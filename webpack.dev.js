@@ -13,6 +13,11 @@ module.exports = merge(common, {
     port: 3000,
     open: true,
     hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+      },
+    },
   },
   module: {
     rules: [
