@@ -7,7 +7,13 @@
   gap: var(--previewGap);
 }
 
-.preview > h2 {
+.previewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.previewHeader > h2 {
   margin: 0;
 }
 
