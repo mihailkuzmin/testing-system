@@ -5,7 +5,7 @@ import styles from './ConfirmationDialog.module.css'
 
 type ConfirmationDialogProps = {
   open: boolean
-  onConfirm: () => void
+  onConfirm?: () => void
   onCancel: () => void
   title: string
   cancelIsNotNegative?: boolean
@@ -20,8 +20,14 @@ export const ConfirmationDialog = (props: ConfirmationDialogProps) => (
       <h3>{props.title}</h3>
       <div className={styles.content}>{props.children}</div>
       <div className={styles.actions}>
-        <Confirm onClick={props.onConfirm}>{props.confirmText ?? 'Подтвердить'}</Confirm>
-        <Cancel onClick={props.onCancel}>{props.cancelText ?? 'Отмена'}</Cancel>
+        {props.onConfirm && (
+          <Confirm onClick={props.onConfirm}>{props.confirmText ?? 'Подтвердить'}</Confirm>
+        )}
+        {props.cancelIsNotNegative ? (
+          <Confirm onClick={props.onCancel}>{props.cancelText ?? 'Отмена'}</Confirm>
+        ) : (
+          <Cancel onClick={props.onCancel}>{props.cancelText ?? 'Отмена'}</Cancel>
+        )}
       </div>
     </div>
   </Modal>
