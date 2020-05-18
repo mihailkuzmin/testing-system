@@ -16,6 +16,7 @@ function App() {
         <Header>
           <Navigation>
             <NavLink href='/' strict text='Главная' icon={Icons.Home} />
+            <NavLink href='/login' text='Вход' icon={Icons.Login} />
             <NavLink href='/groups' text='Группы' icon={Icons.Groups} />
             <NavLink href='/users' text='Пользователи' icon={Icons.Users} />
             <NavLink href='/tasks' text='Задания' icon={Icons.Tasks} />
