@@ -10,7 +10,7 @@ import { routes } from '@routes'
 import { Login } from '@pages'
 import { auth } from '@model'
 
-function App() {
+export const App = () => {
   const isLoading = useStore(auth.$checkPending)
   const isAuth = useStore(auth.$isAuth)
   const pages = useRoutes(routes)
@@ -42,5 +42,3 @@ function App() {
     </div>
   )
 }
-
-export default App
