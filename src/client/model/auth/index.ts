@@ -1,4 +1,5 @@
 import { createEvent, forward } from 'effector'
+import { navigate } from 'hookrouter'
 import { Credentials } from '@common/typings/auth'
 import { $user, $isAuth } from './stores'
 import { loginFx, checkFx, logoutFx } from './effects'
@@ -17,12 +18,14 @@ $user.on(checkFx.doneData, (_, { payload }) => payload)
 $user.on(loginFx.doneData, (_, { payload }) => payload)
 $user.reset(logoutFx)
 
+loggedIn.watch(() => navigate('/'))
+
 export const auth = {
   $user,
   $isAuth,
   $loginPending: loginFx.pending,
   $checkPending: checkFx.pending,
-  check: () => checkAuth(),
+  checkAuth,
   login,
   loginFailed,
   loggedIn,
