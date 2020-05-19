@@ -3,16 +3,21 @@ import { useStore } from 'effector-react'
 import { useRoutes } from 'hookrouter'
 import { SnackbarProvider } from 'notistack'
 import { Navigation, NavLink } from '@components/Navigation'
-import * as Icons from '@components/Icons'
+import { PageLoader } from '@components/Loaders'
 import { Header, Layout, Notifier } from '@components'
+import * as Icons from '@components/Icons'
 import { routes } from '@routes'
 import { Login } from '@pages'
 import { auth } from '@model'
 
 function App() {
-  React.useEffect(auth.check, [])
+  const isLoading = useStore(auth.$checkPending)
   const isAuth = useStore(auth.$isAuth)
   const pages = useRoutes(routes)
+
+  if (isLoading) {
+    return <PageLoader style={{ marginLeft: '0' }} />
+  }
 
   if (!isAuth) {
     return <Login />
