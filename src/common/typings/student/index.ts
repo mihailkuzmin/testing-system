@@ -1,5 +1,7 @@
 export type StudentId = number
 export type GroupId = number
+export type Login = string
+export type Password = string
 
 export type Student = {
   id: StudentId
@@ -8,7 +10,7 @@ export type Student = {
   patronymic: string
   bookNumber: string
   group: { id: GroupId; name: string }
-  login: string
+  login: Login
 }
 
 export type CreateStudent = {
