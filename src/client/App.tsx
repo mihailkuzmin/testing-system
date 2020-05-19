@@ -34,6 +34,7 @@ function App() {
             <NavLink href='/users' text='Пользователи' icon={Icons.Users} />
             <NavLink href='/tasks' text='Задания' icon={Icons.Tasks} />
             <NavLink href='/works' text='Работы' icon={Icons.Works} />
+            <NavLink href='/logout' text='Выйти' icon={Icons.Logout} />
           </Navigation>
         </Header>
         <Layout>{pages}</Layout>
