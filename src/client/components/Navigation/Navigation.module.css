@@ -6,8 +6,16 @@
   list-style: none;
   max-width: inherit;
   width: 100%;
+  height: 100%;
 }
 
 .item {
+  border-bottom: 1px solid #5f5f5f91;
   max-width: inherit;
+}
+
+.item:last-child {
+  border-bottom: none;
+  border-top: 1px solid #5f5f5f91;
+  margin-top: auto;
 }
