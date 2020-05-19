@@ -1,17 +1,21 @@
-INSERT INTO StudentGroup VALUES (DEFAULT, 'АП-31');
-INSERT INTO StudentGroup VALUES (DEFAULT, 'УС-31');
-INSERT INTO StudentGroup VALUES (DEFAULT, 'АП-191');
+INSERT INTO StudentGroup (name) VALUES ('АП-31'), ('УС-31'), ('МР-31');
 
-INSERT INTO Student VALUES (DEFAULT, 'Шаров', 'Константин', 'Аркадьевич', '6700984', 1, 'login1', 'password1');
-INSERT INTO Student VALUES (DEFAULT, 'Исаков', 'Клим', 'Ярославович', '2890827', 1, 'login2', 'password2');
-INSERT INTO Student VALUES (DEFAULT, 'Мясников', 'Арнольд', 'Артемович', '2478722', 1, 'login3', 'password3');
-INSERT INTO Student VALUES (DEFAULT, 'Блинов', 'Мирон', 'Олегович', '3836977', 2, 'login4', 'password4');
-INSERT INTO Student VALUES (DEFAULT, 'Виноградов', 'Владислав', 'Георгьевич', '8638902', 2, 'login5', 'password5');
+INSERT INTO Student
+    (last_name, first_name, patronymic, book_number, group_id, login, password)
+VALUES
+    ('Шаров', 'Константин', 'Аркадьевич', '6700984', 1, 'login1', '31017be1598818491486eb32748e5a38.8ee96ff639fff6b26167f55f95d6e8fe'),
+    ('Исаков', 'Клим', 'Ярославович', '2890827', 1, 'login2', '3f2969202fef7659b5d65f26c171b909.c0b1f8c16ce2005ba3d2e60d1eae7b2f'),
+    ('Мясников', 'Арнольд', 'Артемович', '2478722', 1, 'login3', '4082d84e0562fae4798fd436a52277fa.c4171237f893a3c64c69b62bb3326e87'),
+    ('Блинов', 'Мирон', 'Олегович', '3836977', 2, 'login4', '942acb10626e2095dbb78e8078e386bd.7a04a915800cecddc21c18ed2cd4af09'),
+    ('Иванов', 'Владислав', 'Петрович', '8638902', 2, 'login5', '9d0f558c49f28368eb78f70d50e4b08f.03f56b29019edc6c4759cfd4ff525fca');
 
-INSERT INTO Work VALUES (DEFAULT, 'Работа 1. ИТ', '2020-03-01 03:00', '2020-03-20 03:00');
-INSERT INTO Work VALUES (DEFAULT, 'Работа 2. ИТ', '2020-03-01 03:00', '2020-03-20 03:00');
-INSERT INTO Work VALUES (DEFAULT, 'Работа 1. Программирование', '2020-03-01 03:00', '2020-03-20 03:00');
-INSERT INTO Work VALUES (DEFAULT, 'Работа 2. Программирование', '2020-03-15 00:00', '2020-03-18 00:00');
+INSERT INTO Work
+    (name, open_at, close_at)
+VALUES
+    ('Работа 1. ИТ', '2020-03-01 03:00', '2020-03-20 03:00'),
+    ('Работа 2. ИТ', '2020-03-01 03:00', '2020-03-20 03:00'),
+    ('Работа 1. Программирование', '2020-03-01 03:00', '2020-03-20 03:00'),
+    ('Работа 2. Программирование', '2020-03-15 00:00', '2020-03-18 00:00');
 
 INSERT INTO TaskTopic (name) VALUES ('Массивы'), ('Строки'), ('Рекурсия'), ('Графы'), ('Деревья');
 
@@ -40,37 +44,16 @@ VALUES
     (7, 'Test 8 Input', 'Test 8 Output'),
     (8, 'Test 9 Input', 'Test 9 Output');
 
-INSERT INTO Work_Task VALUES (1, 1);
-INSERT INTO Work_Task VALUES (1, 2);
-INSERT INTO Work_Task VALUES (1, 3);
-INSERT INTO Work_Task VALUES (2, 2);
-INSERT INTO Work_Task VALUES (2, 3);
-INSERT INTO Work_Task VALUES (2, 4);
-INSERT INTO Work_Task VALUES (3, 3);
-INSERT INTO Work_Task VALUES (3, 4);
-INSERT INTO Work_Task VALUES (3, 5);
-INSERT INTO Work_Task VALUES (4, 4);
-INSERT INTO Work_Task VALUES (4, 5);
-INSERT INTO Work_Task VALUES (4, 6);
+INSERT INTO Work_Task
+    (work_id, task_id)
+VALUES
+    (1, 1), (1, 2), (1, 3), (2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (3, 5), (4, 4), (4, 5), (4, 6);
 
-INSERT INTO StudentGroup_Work VALUES (1, 1);
-INSERT INTO StudentGroup_Work VALUES (1, 2);
-INSERT INTO StudentGroup_Work VALUES (2, 3);
-INSERT INTO StudentGroup_Work VALUES (3, 4);
+INSERT INTO StudentGroup_Work (group_id, work_id) VALUES (1, 1), (1, 2), (2, 3), (3, 4);
 
-INSERT INTO PLanguage VALUES (DEFAULT, 'Go');
-INSERT INTO PLanguage VALUES (DEFAULT, 'C++');
-INSERT INTO PLanguage VALUES (DEFAULT, 'Scala');
-INSERT INTO PLanguage VALUES (DEFAULT, 'Ruby');
-INSERT INTO PLanguage VALUES (DEFAULT, 'JavaScript');
-INSERT INTO PLanguage VALUES (DEFAULT, 'Pascal');
-INSERT INTO PLanguage VALUES (DEFAULT, 'Python');
-INSERT INTO PLanguage VALUES (DEFAULT, 'PHP');
-
-INSERT INTO TaskResult VALUES (DEFAULT, 1, 1, 1, 'Program text', 'Program output', TRUE, 1);
-INSERT INTO TaskResult VALUES (DEFAULT, 1, 2, 1, 'Program text', 'Program output', TRUE, 1);
-INSERT INTO TaskResult VALUES (DEFAULT, 1, 3, 1, 'Program text', 'Program output', TRUE, 1);
-INSERT INTO TaskResult VALUES (DEFAULT, 4, 3, 7, 'Program text', 'Program output', FALSE, 7);
-INSERT INTO TaskResult VALUES (DEFAULT, 4, 4, 7, 'Program text', 'Program output', TRUE, 7);
+INSERT INTO PLanguage
+    (name)
+VALUES
+    ('Go'), ('C++'), ('Scala'), ('Ruby'), ('JavaScript'), ('Pascal'), ('Python'), ('PHP');
 
 
