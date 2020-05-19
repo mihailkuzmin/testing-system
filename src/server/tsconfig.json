@@ -14,7 +14,11 @@
       "@routes": ["server/routes/index.ts"],
       "@routes/*": ["server/routes/*"],
       "@typings": ["server/typings/index.ts"],
-      "@typings/*": ["server/typings/*"]
+      "@typings/*": ["server/typings/*"],
+      "@lib": ["server/lib/index.ts"],
+      "@lib/*": ["server/lib/*"],
+      "@services": ["server/services/index.ts"],
+      "@services/*": ["server/services/*"]
     },
     "outDir": "../../dist/server",
     "esModuleInterop": true,
