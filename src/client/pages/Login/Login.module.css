@@ -1,12 +1,13 @@
-.login {
-  padding: 1rem;
-}
-
-.login h2 {
-  margin: 0;
-}
-
 .loginForm {
   display: grid;
   gap: 1rem;
+  min-width: 20rem;
+  max-width: 25rem;
+  margin: 8rem auto 0 auto;
+}
+
+.loginForm h2 {
+  margin: 0;
+  font-weight: 400;
+  text-align: center;
 }
