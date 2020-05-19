@@ -1,11 +1,48 @@
 import { db } from '@db'
-import { Student, UpdateStudent, CreateStudent, StudentId } from '@common/typings/student'
+import {
+  Student,
+  UpdateStudent,
+  CreateStudent,
+  StudentId,
+  Login,
+  Password,
+} from '@common/typings/student'
+import { UserInfo } from '@common/typings/auth'
 
 export class StudentRepository {
+  static async getUserInfoByLogin(login: Login): Promise<UserInfo> {
+    const [user] = await db.query(
+      `
+      SELECT
+        S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
+        S.book_number as "bookNumber", jsonb_build_object('id', G.id, 'name', G.name) as group, S.login
+      FROM Student S, StudentGroup G
+      WHERE (S.login = %L)
+    `,
+      login,
+    )
+
+    return user
+  }
+
+  static async getPasswordByLogin(login: Login): Promise<Password> {
+    const [fromDb] = await db.query(
+      `
+      SELECT
+        S.password
+      FROM Student S
+      WHERE (S.login = %L)
+    `,
+      login,
+    )
+
+    return fromDb.password
+  }
+
   static async getById(id: StudentId): Promise<Student> {
     const [student] = await db.query(
       `
-        SELECT 
+        SELECT
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
           S.book_number as "bookNumber", jsonb_build_object('id', G.id, 'name', G.name) as group, S.login
         FROM Student S, StudentGroup G
