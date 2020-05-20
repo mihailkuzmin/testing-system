@@ -12,7 +12,7 @@ export const authController: Controller = (app, options, done) => {
 
     const { error, user } = await authService.login(credentials)
     if (error) {
-      reply.status(401)
+      return reply.status(401).send()
     }
 
     if (user) {
@@ -25,7 +25,7 @@ export const authController: Controller = (app, options, done) => {
 
   app.get('/check', async (request, reply) => {
     if (!request.session.userId) {
-      reply.status(401)
+      return reply.code(401).send({})
     }
 
     const id = request.session.userId
@@ -36,17 +36,18 @@ export const authController: Controller = (app, options, done) => {
   })
 
   app.get('/logout', async (request, reply) => {
+    const response: Response<void> = {}
     if (request.session.userId) {
       request.destroySession((err) => {
         if (err) {
-          reply.status(500)
-        } else {
-          reply.status(200)
+          response.message = 'Произошла ошибка'
+          return reply.code(500).send(response)
         }
+        return reply.send(response)
       })
+    } else {
+      return reply.code(500).send(response)
     }
-
-    reply.status(500)
   })
 
   done()
