@@ -52,6 +52,7 @@ $selectedTasks.on(deleteTaskFromWork, (tasks, taskForDelete) =>
   tasks.filter((task) => task.id !== taskForDelete.id),
 )
 $selectedTasks.on(mergedTasksAfterCreate, () => [])
+$selectedTasks.reset(AddWorkPage.close)
 const $selectedTasksIds = $selectedTasks.map((tasks) => tasks.map((task) => task.id))
 
 const newTopic = sample({
