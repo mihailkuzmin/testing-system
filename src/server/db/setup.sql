@@ -3,6 +3,11 @@ CREATE TABLE PLanguage (
 	name varchar(30) NOT NULL
 );
 
+CREATE TABLE Role (
+    id SERIAL PRIMARY KEY,
+    name varchar(30) NOT NULL
+);
+
 CREATE TABLE StudentGroup (
 	id SERIAL PRIMARY KEY,
 	name varchar(20) UNIQUE NOT NULL
@@ -15,6 +20,7 @@ CREATE TABLE Student (
 	patronymic varchar(30) NOT NULL,
 	book_number varchar(100) NOT NULL,
 	group_id INT NOT NULL REFERENCES StudentGroup(id) ON DELETE CASCADE,
+	role_id INT NOT NULL REFERENCES Role(id),
 	login varchar(100) NOT NULL,
 	password varchar(100) NOT NULL
 );
