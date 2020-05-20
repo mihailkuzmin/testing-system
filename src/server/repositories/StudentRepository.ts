@@ -9,15 +9,18 @@ import {
 } from '@common/typings/student'
 import { UserInfo } from '@common/typings/auth'
 
+//TODO - fix create, update queries
 export class StudentRepository {
   static async getUserInfoByLogin(login: Login): Promise<UserInfo> {
     const [user] = await db.query(
       `
       SELECT
         S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-        S.book_number as "bookNumber", jsonb_build_object('id', G.id, 'name', G.name) as group, S.login
-      FROM Student S, StudentGroup G
-      WHERE (S.login = %L)
+        S.book_number as "bookNumber", S.login,
+        jsonb_build_object('id', G.id, 'name', G.name) as group,
+        jsonb_build_object('id', R.id, 'name', R.name) as role
+      FROM Student S, StudentGroup G, Role R
+      WHERE (S.login = %L and G.id = S.group_id and R.id = S.role_id)
     `,
       login,
     )
@@ -44,9 +47,11 @@ export class StudentRepository {
       `
         SELECT
           S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-          S.book_number as "bookNumber", jsonb_build_object('id', G.id, 'name', G.name) as group, S.login
-        FROM Student S, StudentGroup G
-        WHERE (S.id = %L and S.group_id = G.id)
+          S.book_number as "bookNumber", S.login,
+          jsonb_build_object('id', G.id, 'name', G.name) as group,
+          jsonb_build_object('id', R.id, 'name', R.name) as role
+        FROM Student S, StudentGroup G, Role R
+        WHERE (S.id = %L and G.id = S.group_id and R.id = S.role_id)
       `,
       id,
     )
@@ -110,9 +115,11 @@ export class StudentRepository {
     const students = await db.query(`
       SELECT
         S.id, S.last_name as "lastName", S.first_name as "firstName", S.patronymic,
-        S.book_number as "bookNumber", jsonb_build_object('id', G.id, 'name', G.name) as group, S.login
-      FROM Student S, StudentGroup G
-      WHERE G.id = S.group_id
+        S.book_number as "bookNumber", S.login,
+        jsonb_build_object('id', G.id, 'name', G.name) as group,
+        jsonb_build_object('id', R.id, 'name', R.name) as role
+      FROM Student S, StudentGroup G, Role R
+      WHERE (G.id = S.group_id and R.id = S.role_id)
       ORDER BY G.name, S.last_Name, S.first_name, S.patronymic
     `)
 
