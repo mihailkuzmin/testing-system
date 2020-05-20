@@ -12,8 +12,8 @@ const check = async (): Promise<Response<UserInfo>> => {
   return result
 }
 
-const logout = async (): Promise<Response<UserInfo>> => {
-  const result = await request.get<UserInfo>(`auth/logout`)
+const logout = async (): Promise<Response<void>> => {
+  const result = await request.get<void>(`auth/logout`)
   return result
 }
 
