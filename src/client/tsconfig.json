@@ -13,7 +13,7 @@
       "@model/*": ["client/model/*"],
       "@pages": ["client/pages/index.ts"],
       "@pages/*": ["client/pages/*"],
-      "@routes": ["client/routes/index.ts"],
+      "@routes": ["client/routes/index.tsx"],
       "@routes/*": ["client/routes/*"],
       "@typings": ["client/typings/index.ts"],
       "@typings/*": ["client/typings/*"]

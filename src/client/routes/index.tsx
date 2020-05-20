@@ -8,6 +8,8 @@ export const routes = {
   '/logout': () => <Logout />,
   '/groups': () => <Groups.Index />,
   '/users': () => <Users.Index />,
+  '/users/add': () => <Users.AddUser />,
+  '/users/edit/:id': ({ id }: QueryParams) => <Users.EditUser id={id} />,
   '/tasks': () => <Tasks.Index />,
   '/tasks/add': () => <Tasks.AddTask />,
   '/tasks/edit/:id': ({ id }: QueryParams) => <Tasks.EditTask id={id} />,
