@@ -1,10 +1,11 @@
 import React from 'react'
-import { Main, Groups, Works, Users, Tasks, Login } from '@pages'
+import { Main, Groups, Works, Users, Tasks, Login, Logout } from '@pages'
 import { QueryParams } from '@typings'
 
 export const routes = {
   '/': () => <Main.Index />,
   '/login': () => <Login />,
+  '/logout': () => <Logout />,
   '/groups': () => <Groups.Index />,
   '/users': () => <Users.Index />,
   '/tasks': () => <Tasks.Index />,
