@@ -1,6 +1,0 @@
-export { usersTable } from './usersTable'
-export { addModal } from './addModal'
-export { editModal } from './editModal'
-export { addForm } from './addForm'
-export { editForm } from './editForm'
-export { UsersPage } from './page'

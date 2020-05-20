@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { usersTable } from '../model/usersTable'
+import { usersTable } from '@pages/Users/model/index'
 import { ConfirmationDialog } from '@components/ConfirmationDialog'
 
 export const DeleteUser = () => {

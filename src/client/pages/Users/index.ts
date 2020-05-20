@@ -1,3 +1,5 @@
-import { Users as Index } from './Users'
+import { Index } from './Index'
+import { AddUser } from './AddUser'
+import { EditUser } from './EditUser'
 
-export const Users = { Index }
+export const Users = { Index, AddUser, EditUser }

@@ -10,6 +10,7 @@ export const Main = () => {
   return (
     <Paper className={styles.main}>
       <p>Пользователь: {`${user?.lastName} ${user?.firstName} ${user?.patronymic}`}</p>
+      <p>Статус: {user?.role.name}</p>
       <p>Группа: {user?.group.name}</p>
       <p>Номер зачетной книжки: {user?.bookNumber}</p>
     </Paper>
