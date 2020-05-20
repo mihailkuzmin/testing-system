@@ -1,5 +1,6 @@
 import React from 'react'
 import { useStore } from 'effector-react'
+import { navigate } from 'hookrouter'
 import {
   PrimaryButton as Add,
   EditButton as Edit,
@@ -10,7 +11,6 @@ import { usersTable } from '@pages/Users/model/index'
 import { DeleteUser } from './DeleteUser'
 import { GroupSelect } from './GroupSelect'
 import styles from './UsersTable.module.css'
-import { navigate } from 'hookrouter'
 
 export const UsersTable = () => {
   const users = useStore(usersTable.$filteredUsers)
