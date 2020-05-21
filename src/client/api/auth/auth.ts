@@ -1,5 +1,6 @@
 import { Response } from '@common/typings'
 import { Credentials, UserInfo } from '@common/typings/auth'
+import { Role } from '@common/typings/student'
 import { request } from '../request'
 
 const login = async (credentials: Credentials): Promise<Response<UserInfo>> => {
@@ -17,8 +18,14 @@ const logout = async (): Promise<Response<void>> => {
   return result
 }
 
+const getRoles = async (): Promise<Response<Role[]>> => {
+  const result = await request.get<Role[]>(`auth/role`)
+  return result
+}
+
 export const authApi = {
   login,
   logout,
   check,
+  getRoles,
 }
