@@ -6,11 +6,17 @@ import {
   StudentId,
   Login,
   Password,
+  Role,
 } from '@common/typings/student'
 import { UserInfo } from '@common/typings/auth'
 
 //TODO - fix create, update queries
 export class StudentRepository {
+  static async getRoles(): Promise<Role[]> {
+    const roles = await db.query(`SELECT id, name FROM Role`)
+    return roles
+  }
+
   static async getUserInfoByLogin(login: Login): Promise<UserInfo> {
     const [user] = await db.query(
       `
@@ -82,7 +88,7 @@ export class StudentRepository {
         s.firstName,
         s.patronymic,
         s.bookNumber,
-        s.group,
+        s.groupId,
         s.login,
         s.password,
         s.id,
@@ -104,7 +110,7 @@ export class StudentRepository {
         s.firstName,
         s.patronymic,
         s.bookNumber,
-        s.group,
+        s.groupId,
         s.login,
         s.id,
       )
@@ -128,15 +134,16 @@ export class StudentRepository {
 
   static async create(user: CreateStudent): Promise<void> {
     await db.query(
-      `INSERT INTO Student as S (last_name, first_name, patronymic, book_number, group_id, login, password) VALUES (%L)`,
+      `INSERT INTO Student as S (last_name, first_name, patronymic, book_number, login, password, group_id, role_id) VALUES (%L)`,
       [
         user.lastName,
         user.firstName,
         user.patronymic,
         user.bookNumber,
-        user.group,
         user.login,
         user.password,
+        user.groupId,
+        user.roleId,
       ],
     )
   }
