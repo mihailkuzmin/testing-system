@@ -1,6 +1,7 @@
 import { AuthInfo, UserInfo, Credentials, UserId } from '@common/typings/auth'
 import { StudentRepository } from '@repositories'
 import { IHasher } from '@lib/Hasher'
+import { Role } from '@common/typings/student'
 
 export class AuthService {
   constructor(private hasher: IHasher) {}
@@ -27,5 +28,10 @@ export class AuthService {
   async getUserInfoById(id: UserId): Promise<UserInfo> {
     const user = await StudentRepository.getById(id)
     return user
+  }
+
+  async getRoles(): Promise<Role[]> {
+    const roles = await StudentRepository.getRoles()
+    return roles
   }
 }
