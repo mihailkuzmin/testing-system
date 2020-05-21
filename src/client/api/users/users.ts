@@ -12,8 +12,8 @@ const getById = async (id: StudentId): Promise<Response<Student>> => {
   return result
 }
 
-const create = async (user: CreateStudent): Promise<Response<Student>> => {
-  const result = await request.post<CreateStudent, Student>('student', user)
+const create = async (user: CreateStudent): Promise<Response<void>> => {
+  const result = await request.post<CreateStudent, void>('student', user)
   return result
 }
 
