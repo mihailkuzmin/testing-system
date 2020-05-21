@@ -3,6 +3,7 @@ import { Response } from '@common/typings'
 import { UserInfo, Credentials } from '@common/typings/auth'
 import { AuthService } from '@services/AuthService'
 import { Hasher } from '@lib/Hasher'
+import { Role } from '@common/typings/student'
 
 const authService = new AuthService(new Hasher())
 
@@ -48,6 +49,14 @@ export const authController: Controller = (app, options, done) => {
     } else {
       return reply.code(500).send(response)
     }
+  })
+
+  app.get('/role', async (request, reply) => {
+    const roles = await authService.getRoles()
+
+    const response: Response<Role[]> = { payload: roles }
+
+    reply.send(response)
   })
 
   done()
