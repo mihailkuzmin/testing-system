@@ -3,10 +3,10 @@ import { useStore } from 'effector-react'
 import { Paper, Divider } from '@components'
 import { PageLoader, PageError } from '@components/Loaders'
 import { PrimaryButton as Save } from '@components/Buttons'
+import { addForm, AddTaskPage } from '../model/addTask'
 import { NameInput, DescriptionInput, TopicSelect } from './Inputs'
 import { TestsCounter } from './TestsCounter'
 import { Tests } from './Tests'
-import { addForm, AddTaskPage } from '../model/addTask'
 import styles from './AddTask.module.css'
 
 export const AddTask = () => {
