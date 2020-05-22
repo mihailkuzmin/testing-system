@@ -4,7 +4,7 @@ import { addForm } from '@pages/Users/model/addUser'
 import { Input } from '@components/Inputs'
 import { Item, Select } from '@components/Inputs/Select'
 import { GroupId } from '@common/typings/group'
-import { RoleId } from '@common/typings/student'
+import { RoleId } from '@common/typings/user'
 
 export const FirstName = () => {
   const value = useStore(addForm.$firstName)

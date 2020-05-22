@@ -1,29 +1,29 @@
 import { Response } from '@common/typings'
-import { CreateStudent, UpdateStudent, Student, StudentId } from '@common/typings/student'
+import { CreateUser, UpdateUser, User, UserId } from '@common/typings/user'
 import { request } from '../request'
 
-const getAll = async (): Promise<Response<Student[]>> => {
-  const result = await request.get<Student[]>('student')
+const getAll = async (): Promise<Response<User[]>> => {
+  const result = await request.get<User[]>('student')
   return result
 }
 
-const getById = async (id: StudentId): Promise<Response<Student>> => {
-  const result = await request.get<Student>(`student/${id}`)
+const getById = async (id: UserId): Promise<Response<User>> => {
+  const result = await request.get<User>(`student/${id}`)
   return result
 }
 
-const create = async (user: CreateStudent): Promise<Response<void>> => {
-  const result = await request.post<CreateStudent, void>('student', user)
+const create = async (user: CreateUser): Promise<Response<void>> => {
+  const result = await request.post<CreateUser, void>('student', user)
   return result
 }
 
-const deleteById = async (id: StudentId): Promise<Response<void>> => {
-  const result = await request.delete<StudentId, void>(`student/${id}`)
+const deleteById = async (id: UserId): Promise<Response<void>> => {
+  const result = await request.delete<UserId, void>(`student/${id}`)
   return result
 }
 
-const update = async (user: UpdateStudent): Promise<Response<void>> => {
-  const result = await request.put<UpdateStudent, void>('student', user)
+const update = async (user: UpdateUser): Promise<Response<void>> => {
+  const result = await request.put<UpdateUser, void>('student', user)
   return result
 }
 

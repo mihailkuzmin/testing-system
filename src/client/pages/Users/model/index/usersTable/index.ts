@@ -33,7 +33,7 @@ $users.reset(IndexPage.close)
 const $filteredUsers = combine(
   { users: $users, groupId: $selectedGroupId },
   ({ users, groupId }) => {
-    return users.filter((user) => user.group.id === groupId)
+    return users.filter((user) => user.group?.id === groupId)
   },
 )
 const $filteredUsersAreEmpty = $filteredUsers.map((users) => !users.length)

@@ -10,5 +10,6 @@ export const loginChanged = createEvent<string>()
 export const passwordChanged = createEvent<string>()
 export const groupChanged = createEvent<GroupId>()
 export const roleChanged = createEvent<RoleId>()
+export const toggleChangePassword = createEvent()
 
-export const createUser = createEvent()
+export const updateUser = createEvent()

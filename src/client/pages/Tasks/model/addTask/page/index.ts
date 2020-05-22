@@ -9,15 +9,10 @@ const onMount = () => {
   return () => close()
 }
 
-const $isLoading = createStore(true)
-$isLoading.on(getTopicsFx.done, () => false)
-$isLoading.on(getTopicsFx.fail, () => false)
-$isLoading.reset(close)
-
 const $isFail = createStore(false)
 $isFail.on(getTopicsFx.fail, () => true)
 $isFail.reset(close)
 
-const $status = combine({ isLoading: $isLoading, isFail: $isFail })
+const $status = combine({ isLoading: getTopicsFx.pending, isFail: $isFail })
 
 export const AddTaskPage = { open, close, onMount, $status }

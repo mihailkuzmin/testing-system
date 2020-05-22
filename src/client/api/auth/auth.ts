@@ -1,6 +1,6 @@
 import { Response } from '@common/typings'
 import { Credentials, UserInfo } from '@common/typings/auth'
-import { Role } from '@common/typings/student'
+import { Role } from '@common/typings/user'
 import { request } from '../request'
 
 const login = async (credentials: Credentials): Promise<Response<UserInfo>> => {

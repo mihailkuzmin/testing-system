@@ -16,7 +16,7 @@ export const TopicSelect = () => {
   return (
     <Select
       label='Тема'
-      value={value}
+      value={value ?? ''}
       onChange={(e) => editForm.topicChange(e.target.value as TopicId)}
     >
       {topics.map((topic) => (

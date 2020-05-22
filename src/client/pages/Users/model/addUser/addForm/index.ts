@@ -1,4 +1,4 @@
-import { combine, forward, guard, sample } from 'effector'
+import { forward, guard, sample } from 'effector'
 import { notifications } from '@model'
 import { MessageType } from '@typings'
 import { AddUserPage } from '../page'
@@ -37,18 +37,10 @@ $roles.reset(AddUserPage.close)
 $selectedRole.on(roleChanged, (_, role) => role)
 $selectedRole.reset(AddUserPage.close, createUserFx.done)
 
-const $adminRoleSelected = combine(
-  { selectedId: $selectedRole, roles: $roles },
-  ({ selectedId, roles }) => {
-    return roles.some((role) => role.name === 'Администратор' && role.id === selectedId)
-  },
-)
-
 $groups.on(getGroupsFx.doneData, (_, { payload }) => payload)
 $groups.reset(AddUserPage.close)
 
 $selectedGroup.on(groupChanged, (_, group) => group)
-$selectedGroup.on($adminRoleSelected, (group, isAdmin) => (isAdmin ? null : group))
 $selectedGroup.reset(AddUserPage.close, createUserFx.done)
 
 $login.on(loginChanged, (_, login) => login)
@@ -58,7 +50,6 @@ $password.on(passwordChanged, (_, password) => password)
 $password.reset(AddUserPage.close, createUserFx.done)
 
 $bookNumber.on(bookNumberChanged, (_, number) => number)
-$bookNumber.on($adminRoleSelected, (_, isAdmin) => (isAdmin ? null : ''))
 $bookNumber.reset(AddUserPage.close, createUserFx.done)
 
 $firstName.on(firstNameChanged, (_, firstName) => firstName)
@@ -70,19 +61,9 @@ $lastName.reset(AddUserPage.close, createUserFx.done)
 $patronymic.on(patronymicChanged, (_, patronymic) => patronymic)
 $patronymic.reset(AddUserPage.close, createUserFx.done)
 
+const $canSubmit = $form.map((form) => form.roleId !== null && form.groupId !== null)
+
 const forSubmit = sample({ source: $form, clock: createUser })
-
-const $canSubmit = $form.map((form) => {
-  const roleSelected = form.roleId !== null
-  const groupSelected = form.groupId !== null
-
-  if (!roleSelected) {
-    return false
-  }
-
-  const isStudent = form.bookNumber !== null
-  return (groupSelected && isStudent) || !isStudent
-})
 guard({
   source: forSubmit,
   filter: $canSubmit,
@@ -112,7 +93,6 @@ export const addForm = {
   $password,
   $selectedGroup,
   $selectedRole,
-  $adminRoleSelected,
   $groups,
   $roles,
   loginChanged,

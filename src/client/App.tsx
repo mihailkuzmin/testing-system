@@ -5,15 +5,17 @@ import { SnackbarProvider } from 'notistack'
 import { Navigation, NavLink } from '@components/Navigation'
 import { PageLoader } from '@components/Loaders'
 import { Header, Layout, Notifier } from '@components'
-import * as Icons from '@components/Icons'
-import { routes } from '@routes'
+import { getNavigationLinks, getRoutes } from '@routes'
 import { Login } from '@pages'
 import { auth } from '@model'
 
 export const App = () => {
   const isLoading = useStore(auth.$checkPending)
   const isAuth = useStore(auth.$isAuth)
-  const pages = useRoutes(routes)
+  const user = useStore(auth.$user)
+
+  const pages = useRoutes(getRoutes(user?.role.name))
+  const links = getNavigationLinks(user?.role.name)
 
   if (isLoading) {
     return <PageLoader style={{ marginLeft: '0' }} />
@@ -29,12 +31,15 @@ export const App = () => {
         <Notifier />
         <Header>
           <Navigation>
-            <NavLink href='/' strict text='Главная' icon={Icons.Home} />
-            <NavLink href='/groups' text='Группы' icon={Icons.Groups} />
-            <NavLink href='/users' text='Пользователи' icon={Icons.Users} />
-            <NavLink href='/tasks' text='Задания' icon={Icons.Tasks} />
-            <NavLink href='/works' text='Работы' icon={Icons.Works} />
-            <NavLink href='/logout' text='Выйти' icon={Icons.Logout} />
+            {links.map((link) => (
+              <NavLink
+                key={link.path}
+                href={link.path}
+                strict={link.strict}
+                text={link.text}
+                icon={link.icon}
+              />
+            ))}
           </Navigation>
         </Header>
         <Layout>{pages}</Layout>

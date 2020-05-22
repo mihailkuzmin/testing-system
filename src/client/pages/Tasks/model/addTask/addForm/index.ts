@@ -25,23 +25,18 @@ $description.reset(AddTaskPage.close, createTaskFx.done)
 $name.on(nameChange, (_, name) => name)
 $name.reset(AddTaskPage.close, createTaskFx.done)
 
-$selectedTopic.on(getTopicsFx.doneData, (_, { payload }) => {
-  if (payload) {
-    return payload[0].id
-  }
-})
 $selectedTopic.on(topicChange, (_, topic) => topic)
 $selectedTopic.reset(AddTaskPage.close)
 
 $topics.on(getTopicsFx.doneData, (_, { payload }) => payload)
 $topics.reset(AddTaskPage.close)
 
-$tests.on(inputChange, (tests, { id, value }) =>
-  tests.map((test) => (test.id === id ? { ...test, input: value } : test)),
-)
-$tests.on(outputChange, (tests, { id, value }) =>
-  tests.map((test) => (test.id === id ? { ...test, output: value } : test)),
-)
+$tests.on(inputChange, (tests, { id, value }) => {
+  return tests.map((test) => (test.id === id ? { ...test, input: value } : test))
+})
+$tests.on(outputChange, (tests, { id, value }) => {
+  return tests.map((test) => (test.id === id ? { ...test, output: value } : test))
+})
 $tests.on(addTest, (tests) => [...tests, { id: nanoid(), input: '', output: '' }])
 $tests.on(removeTest, (tests, testId) => {
   if (tests.length === 1) {

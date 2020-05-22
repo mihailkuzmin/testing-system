@@ -9,10 +9,7 @@ const onMount = () => {
   return () => close()
 }
 
-const $isLoading = createStore(true)
-$isLoading.on(getWorksFx.done, () => false)
-$isLoading.on(getWorksFx.fail, () => false)
-$isLoading.reset(close)
+const $isLoading = getWorksFx.pending
 
 const $isFail = createStore(false)
 $isFail.on(getWorksFx.fail, () => true)

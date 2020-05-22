@@ -11,7 +11,6 @@ export const AddUser = () => {
   React.useEffect(AddUserPage.onMount, [])
 
   const { isLoading, isFail } = useStore(AddUserPage.$status)
-  const isAdmin = useStore(addForm.$adminRoleSelected)
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,8 +41,8 @@ export const AddUser = () => {
         <FirstName />
         <Patronymic />
         <Role />
-        {!isAdmin && <BookNumber />}
-        {!isAdmin && <Group />}
+        <BookNumber />
+        <Group />
         <Login />
         <Password />
       </form>

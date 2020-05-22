@@ -1,0 +1,28 @@
+.editUser {
+  display: grid;
+  gap: 1rem;
+  width: 50%;
+  padding: 1rem;
+}
+
+.editUser h2 {
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editForm {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.editForm > *:last-child {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  justify-self: center;
+}

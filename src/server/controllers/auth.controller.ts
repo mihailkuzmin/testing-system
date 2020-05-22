@@ -1,38 +1,37 @@
 import { Controller } from '@typings'
 import { Response } from '@common/typings'
 import { UserInfo, Credentials } from '@common/typings/auth'
+import { Role } from '@common/typings/user'
 import { AuthService } from '@services/AuthService'
-import { Hasher } from '@lib/Hasher'
-import { Role } from '@common/typings/student'
-
-const authService = new AuthService(new Hasher())
 
 export const authController: Controller = (app, options, done) => {
   app.post('/login', async (request, reply) => {
     const credentials: Credentials = request.body
 
-    const { error, user } = await authService.login(credentials)
-    if (error) {
-      return reply.status(401).send()
+    const { error, user } = await AuthService.login(credentials)
+    if (error || !user) {
+      return reply.status(401).send({})
     }
 
-    if (user) {
-      request.session.userId = user.id
-    }
+    request.session.userId = user.id
     const response: Response<UserInfo> = { payload: user }
 
     reply.send(response)
   })
 
   app.get('/check', async (request, reply) => {
-    if (!request.session.userId) {
+    const id = request.session.userId
+    if (!id) {
       return reply.code(401).send({})
     }
 
-    const id = request.session.userId
-    const user = await authService.getUserInfoById(id)
-    const response: Response<UserInfo> = { payload: user }
+    const user = await AuthService.getUserInfoById(id)
 
+    if (!user) {
+      return reply.code(401).send({})
+    }
+
+    const response: Response<UserInfo> = { payload: user }
     reply.send(response)
   })
 
@@ -52,7 +51,7 @@ export const authController: Controller = (app, options, done) => {
   })
 
   app.get('/role', async (request, reply) => {
-    const roles = await authService.getRoles()
+    const roles = await AuthService.getRoles()
 
     const response: Response<Role[]> = { payload: roles }
 

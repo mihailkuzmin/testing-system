@@ -1,37 +1,39 @@
 import { GroupId, Group } from '../group'
 
-export type StudentId = number
-export type Login = string
-export type Password = string
+export type UserId = number
 
 export type RoleId = number
-export type Roles = 'Студент' | 'Администратор'
+export enum Roles {
+  student = 'Студент',
+  moderator = 'Модератор',
+  administrator = 'Администратор',
+}
 export type Role = { id: RoleId; name: Roles }
 
-export type Student = {
-  id: StudentId
-  lastName: string
-  firstName: string
-  patronymic: string
-  bookNumber: string
-  group: Group
-  role: Role
-  login: Login
-}
-
-export type CreateStudent = {
+export type User = {
+  id: UserId
   lastName: string
   firstName: string
   patronymic: string
   bookNumber: string | null
+  group: Group | null
+  role: Role
+  login: string
+}
+
+export type CreateUser = {
+  lastName: string
+  firstName: string
+  patronymic: string
+  bookNumber: string
   login: string
   password: string
-  groupId: GroupId | null
+  groupId: GroupId
   roleId: RoleId
 }
 
-export type UpdateStudent = {
-  id: StudentId
+export type UpdateUser = {
+  id: UserId
   lastName: string
   firstName: string
   patronymic: string

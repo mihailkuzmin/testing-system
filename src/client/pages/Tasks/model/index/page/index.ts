@@ -9,9 +9,7 @@ const onMount = () => {
   return () => close()
 }
 
-const $isLoading = createStore(true)
-$isLoading.on(getTasksFx.done, () => false)
-$isLoading.on(getTasksFx.fail, () => false)
+const $isLoading = getTasksFx.pending
 $isLoading.reset(close)
 
 const $isFail = createStore(false)

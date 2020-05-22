@@ -1,11 +1,12 @@
-INSERT INTO Role (name) VALUES ('Студент'), ('Администратор');
+INSERT INTO Role (name) VALUES ('Студент'), ('Модератор'), ('Администратор');
 
 INSERT INTO StudentGroup (name) VALUES ('АП-31'), ('УС-31'), ('МР-31');
 
 INSERT INTO Student
     (last_name, first_name, patronymic, book_number, group_id, role_id, login, password)
 VALUES
-    ('Шаров', 'Константин', 'Аркадьевич', '6700984', 1, 2, 'login1', '31017be1598818491486eb32748e5a38.8ee96ff639fff6b26167f55f95d6e8fe'),
+    ('Кеков', 'Кек', 'Кекович', NULL, NULL, 3, 'admin', 'b88c043a8fe9ad3b80d00108c61827b4.ad70172de59850cffd6fd62843f51f9f'),
+    ('Шаров', 'Константин', 'Аркадьевич', '1274869', 1, 2, 'login1', '31017be1598818491486eb32748e5a38.8ee96ff639fff6b26167f55f95d6e8fe'),
     ('Исаков', 'Клим', 'Ярославович', '2890827', 1, 1, 'login2', '3f2969202fef7659b5d65f26c171b909.c0b1f8c16ce2005ba3d2e60d1eae7b2f'),
     ('Мясников', 'Арнольд', 'Артемович', '2478722', 1, 1, 'login3', '4082d84e0562fae4798fd436a52277fa.c4171237f893a3c64c69b62bb3326e87'),
     ('Блинов', 'Мирон', 'Олегович', '3836977', 2, 1, 'login4', '942acb10626e2095dbb78e8078e386bd.7a04a915800cecddc21c18ed2cd4af09'),

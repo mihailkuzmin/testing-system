@@ -51,7 +51,7 @@ export const UsersTable = () => {
             <T.Row key={user.id} className={styles.row}>
               <T.Cell>{index + 1}</T.Cell>
               <T.Cell>{`${user.lastName} ${user.firstName} ${user.patronymic}`}</T.Cell>
-              <T.Cell>{user.group.name}</T.Cell>
+              <T.Cell>{user.group?.name}</T.Cell>
               <T.Cell>{user.bookNumber}</T.Cell>
               <T.Cell>{user.login}</T.Cell>
               <T.Cell>

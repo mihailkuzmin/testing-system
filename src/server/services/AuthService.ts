@@ -1,37 +1,24 @@
 import { AuthInfo, UserInfo, Credentials, UserId } from '@common/typings/auth'
-import { StudentRepository } from '@repositories'
-import { IHasher } from '@lib/Hasher'
-import { Role } from '@common/typings/student'
+import { Role } from '@common/typings/user'
+import { UserRepository } from '@repositories'
 
 export class AuthService {
-  constructor(private hasher: IHasher) {}
-
-  async login(credentials: Credentials): Promise<AuthInfo> {
-    const isValid = await this.verifyCredentials(credentials)
-
+  static async login(credentials: Credentials): Promise<AuthInfo> {
+    const isValid = await UserRepository.verifyCredentials(credentials)
     if (!isValid) {
       return { error: true, message: 'Неверные данные' }
     }
 
-    const user = await StudentRepository.getUserInfoByLogin(credentials.login)
+    const user = await UserRepository.getUserInfoByLogin(credentials.login)
+
     return { user }
   }
 
-  async verifyCredentials(fromUser: Credentials): Promise<boolean> {
-    const fromDb = await StudentRepository.getPasswordByLogin(fromUser.login)
-    const [oldHash, salt] = fromDb.split('.')
-
-    const isValid = await this.hasher.verifyString(fromUser.password, oldHash, salt)
-    return isValid
+  static async getUserInfoById(id: UserId): Promise<UserInfo> {
+    return UserRepository.getUserInfoById(id)
   }
 
-  async getUserInfoById(id: UserId): Promise<UserInfo> {
-    const user = await StudentRepository.getById(id)
-    return user
-  }
-
-  async getRoles(): Promise<Role[]> {
-    const roles = await StudentRepository.getRoles()
-    return roles
+  static async getRoles(): Promise<Role[]> {
+    return UserRepository.getRoles()
   }
 }

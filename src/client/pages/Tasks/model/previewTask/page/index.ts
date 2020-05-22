@@ -11,9 +11,7 @@ const onMount = (id: number) => {
   return () => close()
 }
 
-const $isLoading = createStore(true)
-$isLoading.on(getTaskPreviewFx.done, () => false)
-$isLoading.on(getTaskPreviewFx.fail, () => false)
+const $isLoading = getTaskPreviewFx.pending
 $isLoading.reset(close)
 
 const $isFail = createStore(false)

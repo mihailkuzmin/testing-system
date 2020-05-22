@@ -1,4 +1,4 @@
-import { combine, createEvent, createStore } from 'effector'
+import { combine, createEvent, createStore, forward } from 'effector'
 import { getTopicsFx, getTasksFx } from '../addForm/effects'
 
 const open = createEvent()
@@ -9,19 +9,17 @@ const onMount = () => {
   return () => close()
 }
 
-const $isLoading = createStore(2)
-$isLoading.on(getTasksFx.done, (count) => (count > 0 ? count - 1 : count))
-$isLoading.on(getTopicsFx.done, (count) => (count > 0 ? count - 1 : count))
-$isLoading.reset(close)
+const $isLoading = combine([getTasksFx.pending, getTopicsFx.pending], (arr) => {
+  return arr.reduce((prev, next) => prev || next)
+})
+
+const setFail = createEvent()
+forward({ from: [getTasksFx.fail, getTopicsFx.fail], to: setFail })
 
 const $isFail = createStore(false)
-$isFail.on(getTasksFx.fail, () => true)
-$isFail.on(getTopicsFx.fail, () => true)
+$isFail.on(setFail, () => true)
 $isFail.reset(close)
 
-const $status = combine({ isLoading: $isLoading, isFail: $isFail }, (status) => ({
-  ...status,
-  isLoading: Boolean(status.isLoading),
-}))
+const $status = combine({ isLoading: $isLoading, isFail: $isFail })
 
 export const AddWorkPage = { open, close, onMount, $status }

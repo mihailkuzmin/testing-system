@@ -1,4 +1,4 @@
-import { createEvent, createStore, combine } from 'effector'
+import { createEvent, createStore, combine, forward } from 'effector'
 import { getTaskFx, getTopicsFx } from '../editForm/effects'
 
 type TaskId = number
@@ -11,16 +11,17 @@ const onMount = (id: number) => {
   return () => close()
 }
 
-const $isLoading = createStore(2)
-$isLoading.on(getTaskFx.done, (count) => (count > 0 ? count - 1 : count))
-$isLoading.on(getTopicsFx.done, (count) => (count > 0 ? count - 1 : count))
-$isLoading.reset(close)
+const $isLoading = combine([getTaskFx.pending, getTopicsFx.pending], (arr) => {
+  return arr.reduce((prev, next) => prev || next)
+})
+
+const setFail = createEvent()
+forward({ from: [getTaskFx.fail, getTopicsFx.fail], to: setFail })
 
 const $isFail = createStore(false)
-$isFail.on(getTaskFx.fail, () => true)
-$isFail.on(getTopicsFx.fail, () => true)
+$isFail.on(setFail, () => true)
 $isFail.reset(close)
 
-const $status = combine({ isLoading: $isLoading.map(Boolean), isFail: $isFail })
+const $status = combine({ isLoading: $isLoading, isFail: $isFail })
 
 export const EditPage = { open, close, onMount, $status }
