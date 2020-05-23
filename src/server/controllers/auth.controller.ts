@@ -1,61 +1,70 @@
 import { Controller } from '@typings'
 import { Response } from '@common/typings'
-import { UserInfo, Credentials } from '@common/typings/auth'
-import { Role } from '@common/typings/user'
+import { Credentials, UserInfo } from '@common/typings/auth'
+import { Role, Roles } from '@common/typings/user'
 import { AuthService } from '@services/AuthService'
+import { allowFor } from '@hooks'
 
 export const authController: Controller = (app, options, done) => {
-  app.post('/login', async (request, reply) => {
-    const credentials: Credentials = request.body
+  app.route({
+    method: 'POST',
+    url: '/login',
+    handler: async (request, reply) => {
+      const credentials: Credentials = request.body
 
-    const { error, user } = await AuthService.login(credentials)
-    if (error || !user) {
-      return reply.status(401).send({})
-    }
+      const { error, user } = await AuthService.login(credentials)
+      if (error || !user) {
+        const response: Response<void> = { message: 'Неверные данные' }
+        return reply.status(401).send(response)
+      }
 
-    request.session.userId = user.id
-    const response: Response<UserInfo> = { payload: user }
+      request.session.userId = user.id
+      const response: Response<UserInfo> = { payload: user }
 
-    reply.send(response)
+      reply.send(response)
+    },
   })
 
-  app.get('/check', async (request, reply) => {
-    const id = request.session.userId
-    if (!id) {
-      return reply.code(401).send({})
-    }
+  app.route({
+    method: 'GET',
+    url: '/check',
+    preValidation: allowFor([Roles.Student, Roles.Moderator, Roles.Administrator]),
+    handler: async (request, reply) => {
+      const id = request.session.userId
+      const user = await AuthService.getUserInfoById(id)
 
-    const user = await AuthService.getUserInfoById(id)
-
-    if (!user) {
-      return reply.code(401).send({})
-    }
-
-    const response: Response<UserInfo> = { payload: user }
-    reply.send(response)
+      const response: Response<UserInfo> = { payload: user! }
+      reply.send(response)
+    },
   })
 
-  app.get('/logout', async (request, reply) => {
-    const response: Response<void> = {}
-    if (request.session.userId) {
+  app.route({
+    method: 'GET',
+    url: '/logout',
+    preValidation: allowFor([Roles.Student, Roles.Moderator, Roles.Administrator]),
+    handler: async (request, reply) => {
       request.destroySession((err) => {
         if (err) {
-          response.message = 'Произошла ошибка'
+          const response: Response<void> = { message: 'Произошла ошибка' }
           return reply.code(500).send(response)
         }
-        return reply.send(response)
+
+        reply.send({})
       })
-    } else {
-      return reply.code(500).send(response)
-    }
+    },
   })
 
-  app.get('/role', async (request, reply) => {
-    const roles = await AuthService.getRoles()
+  app.route({
+    method: 'GET',
+    url: '/role',
+    preValidation: allowFor([Roles.Administrator]),
+    handler: async (request, reply) => {
+      const roles = await AuthService.getRoles()
 
-    const response: Response<Role[]> = { payload: roles }
+      const response: Response<Role[]> = { payload: roles }
 
-    reply.send(response)
+      reply.send(response)
+    },
   })
 
   done()
