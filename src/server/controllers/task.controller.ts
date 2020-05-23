@@ -1,9 +1,9 @@
-import { TaskRepository } from '@repositories'
+import { CreateTask, Task, TaskId, Test, Topic, UpdateTask } from '@common/typings/task'
+import { Roles } from '@common/typings/user'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
-import { CreateTask, Task, TaskId, Test, Topic, UpdateTask } from '@common/typings/task'
+import { TaskRepository } from '@repositories'
 import { allowFor } from '@hooks'
-import { Roles } from '@common/typings/user'
 
 export const taskController: Controller = (app, options, done) => {
   app.route({
