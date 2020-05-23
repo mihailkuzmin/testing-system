@@ -18,11 +18,7 @@ const connection: PoolConfig = config.db
 app.register(routes, { prefix: '/api' })
 app.register(fastifyCors)
 app.register(fastifyCookie)
-app.register(fastifySession, {
-  cookieName: 'sessionId',
-  secret: '1OPN4nUhzXEA5N8iDJ0y4M7Y998OvLAT',
-  cookie: { secure: false, maxAge: 1800000 },
-})
+app.register(fastifySession, config.session)
 
 const start = async (): Promise<void> => {
   try {
