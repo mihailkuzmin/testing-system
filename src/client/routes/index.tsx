@@ -65,11 +65,11 @@ const adminLinks: Link[] = [
 
 export const getRoutes = (role?: Roles) => {
   switch (role) {
-    case Roles.student:
+    case Roles.Student:
       return studentRoutes
-    case Roles.moderator:
+    case Roles.Moderator:
       return moderatorRoutes
-    case Roles.administrator:
+    case Roles.Administrator:
       return adminRoutes
     default:
       return anonymousRoutes
@@ -78,11 +78,11 @@ export const getRoutes = (role?: Roles) => {
 
 export const getNavigationLinks = (role?: Roles): Link[] => {
   switch (role) {
-    case Roles.student:
+    case Roles.Student:
       return studentLinks
-    case Roles.moderator:
+    case Roles.Moderator:
       return moderatorLinks
-    case Roles.administrator:
+    case Roles.Administrator:
       return adminLinks
     default:
       return anonymousLinks
