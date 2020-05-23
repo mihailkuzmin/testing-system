@@ -4,9 +4,9 @@ export type UserId = number
 
 export type RoleId = number
 export enum Roles {
-  student = 'Студент',
-  moderator = 'Модератор',
-  administrator = 'Администратор',
+  Student = 'Студент',
+  Moderator = 'Модератор',
+  Administrator = 'Администратор',
 }
 export type Role = { id: RoleId; name: Roles }
 
