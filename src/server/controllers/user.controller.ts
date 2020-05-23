@@ -1,9 +1,9 @@
-import { UserRepository } from '@repositories'
 import { User, CreateUser, UpdateUser, UserId } from '@common/typings/user'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
+import { UserRepository } from '@repositories'
 
-export const studentController: Controller = (app, options, done) => {
+export const userController: Controller = (app, options, done) => {
   app.get('/', async (request, reply) => {
     const result = await UserRepository.getAll()
 
