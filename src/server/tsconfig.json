@@ -9,6 +9,8 @@
       "@controllers/*": ["server/controllers/*"],
       "@db": ["server/db/index.ts"],
       "@db/*": ["server/db/*"],
+      "@hooks": ["server/hooks/index.ts"],
+      "@hooks/*": ["server/hooks/*"],
       "@repositories": ["server/repositories/index.ts"],
       "@repositories/*": ["server/repositories/*"],
       "@routes": ["server/routes/index.ts"],
