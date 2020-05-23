@@ -14,8 +14,13 @@ export class AuthService {
     return { user }
   }
 
-  static async getUserInfoById(id: UserId): Promise<UserInfo> {
-    return UserRepository.getUserInfoById(id)
+  static async getUserInfoById(id: UserId): Promise<UserInfo | null> {
+    const user = await UserRepository.getUserInfoById(id)
+    if (!user) {
+      return null
+    }
+
+    return user
   }
 
   static async getRoles(): Promise<Role[]> {
