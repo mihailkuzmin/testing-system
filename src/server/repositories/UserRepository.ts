@@ -9,7 +9,7 @@ export class UserRepository {
   static async getRoles(): Promise<Role[]> {
     const roles = await db.query(
       `SELECT id, name FROM Role WHERE (Role.name != %L)`,
-      Roles.administrator,
+      Roles.Administrator,
     )
     return roles
   }
