@@ -28,7 +28,7 @@ const getTestsById = async (id: TaskId): Promise<Response<Test[]>> => {
 }
 
 const getTopics = async (): Promise<Response<Topic[]>> => {
-  const result = await request.get<Topic[]>(`task/topic`)
+  const result = await request.get<Topic[]>(`task/topics`)
   return result
 }
 

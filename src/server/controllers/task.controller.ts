@@ -75,7 +75,7 @@ export const taskController: Controller = (app, options, done) => {
 
   app.route({
     method: 'GET',
-    url: '/topic',
+    url: '/topics',
     preValidation: allowFor([Roles.Administrator, Roles.Moderator]),
     handler: async (request, reply) => {
       const topics = await TaskRepository.getTopics()
