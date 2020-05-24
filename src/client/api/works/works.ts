@@ -9,7 +9,7 @@ const getAll = async (): Promise<Response<Work[]>> => {
 }
 
 const getTasksOfWork = async (id: WorkId): Promise<Response<Task[]>> => {
-  const result = await request.get<Task[]>(`work/${id}/task`)
+  const result = await request.get<Task[]>(`work/${id}/tasks`)
   return result
 }
 

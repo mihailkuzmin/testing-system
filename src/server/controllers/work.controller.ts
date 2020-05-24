@@ -35,7 +35,7 @@ export const workController: Controller = (app, options, done) => {
 
   app.route({
     method: 'GET',
-    url: '/:id/task',
+    url: '/:id/tasks',
     preValidation: allowFor([Roles.Administrator]),
     handler: async (request, reply) => {
       const id: WorkId = request.params.id
