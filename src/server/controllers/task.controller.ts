@@ -61,7 +61,7 @@ export const taskController: Controller = (app, options, done) => {
 
   app.route({
     method: 'GET',
-    url: '/:id/test',
+    url: '/:id/tests',
     preValidation: allowFor([Roles.Administrator]),
     handler: async (request, reply) => {
       const id: TaskId = request.params.id

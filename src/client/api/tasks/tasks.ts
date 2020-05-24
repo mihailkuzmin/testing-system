@@ -23,7 +23,7 @@ const getByIdWithoutTests = async (id: TaskId): Promise<Response<Task>> => {
 }
 
 const getTestsById = async (id: TaskId): Promise<Response<Test[]>> => {
-  const result = await request.get<Test[]>(`task/${id}/test`)
+  const result = await request.get<Test[]>(`task/${id}/tests`)
   return result
 }
 
