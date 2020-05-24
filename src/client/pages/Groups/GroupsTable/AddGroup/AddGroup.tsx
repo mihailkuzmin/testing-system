@@ -35,10 +35,10 @@ export const AddGroup = () => {
           </div>
         ) : (
           <div className={styles.actions}>
-            <Add type='submit' onClick={addForm.createGroup}>
+            <Add type='submit' onClick={() => addForm.createGroup()}>
               Добавить
             </Add>
-            <Cancel onClick={addModal.closeAddModal}>Отменить</Cancel>
+            <Cancel onClick={() => addModal.closeAddModal()}>Отменить</Cancel>
           </div>
         )}
       </form>

@@ -37,7 +37,7 @@ export const GroupsTable = ({ groups }: GroupsTableProps) => {
             <T.Header>
               <T.Title>Группы</T.Title>
               <T.Actions>
-                <Add onClick={addModal.openAddModal}>Добавить</Add>
+                <Add onClick={() => addModal.openAddModal()}>Добавить</Add>
               </T.Actions>
             </T.Header>
           </T.Cell>
