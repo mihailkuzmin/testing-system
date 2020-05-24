@@ -20,7 +20,7 @@ $user.on(checkFx.doneData, (_, { payload }) => payload)
 $user.on(loginFx.doneData, (_, { payload }) => payload)
 $user.reset(logoutFx.done)
 
-loggedIn.watch(() => navigate('/'))
+loginFx.done.watch(() => navigate('/'))
 logoutFx.done.watch(() => navigate('/'))
 
 export const auth = {
