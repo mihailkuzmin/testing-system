@@ -19,7 +19,7 @@ const logout = async (): Promise<Response<void>> => {
 }
 
 const getRoles = async (): Promise<Response<Role[]>> => {
-  const result = await request.get<Role[]>(`auth/role`)
+  const result = await request.get<Role[]>(`auth/roles`)
   return result
 }
 

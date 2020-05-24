@@ -56,7 +56,7 @@ export const authController: Controller = (app, options, done) => {
 
   app.route({
     method: 'GET',
-    url: '/role',
+    url: '/roles',
     preValidation: allowFor([Roles.Administrator]),
     handler: async (request, reply) => {
       const roles = await AuthService.getRoles()
