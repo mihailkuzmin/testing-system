@@ -70,11 +70,11 @@ CREATE TABLE WorkResult (
 );
 
 CREATE TABLE StudentGroup_Work (
-	group_id INT NOT NULL,
-	work_id INT NOT NULL
+	group_id INT NOT NULL REFERENCES StudentGroup(id),
+	work_id INT NOT NULL REFERENCES Work(id)
 );
 
 CREATE TABLE Work_Task (
-	work_id INT NOT NULL REFERENCES Work(id) ON DELETE CASCADE,
+	work_id INT NOT NULL REFERENCES Work(id),
 	task_id INT NOT NULL REFERENCES Task(id)
 );
