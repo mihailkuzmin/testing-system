@@ -14,7 +14,7 @@ forward({ from: checkAuth, to: checkFx })
 forward({ from: login, to: loginFx })
 forward({ from: logout, to: logoutFx })
 forward({ from: loginFx.fail, to: loginFailed })
-forward({ from: loginFx.done, to: loggedIn })
+forward({ from: [loginFx.done, checkFx.done], to: loggedIn })
 
 $user.on(checkFx.doneData, (_, { payload }) => payload)
 $user.on(loginFx.doneData, (_, { payload }) => payload)
