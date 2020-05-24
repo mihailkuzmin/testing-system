@@ -8,6 +8,7 @@ import { IncludedTasks } from './IncludedTasks'
 import { AllTasks } from './AllTasks'
 import { CloseDateInput, NameInput, OpenDateInput } from './Inputs'
 import styles from './AddWork.module.css'
+import { GroupsList } from '@pages/Works/AddWork/GroupsList'
 
 export const AddWork = () => {
   React.useEffect(AddWorkPage.onMount, [])
@@ -29,10 +30,14 @@ export const AddWork = () => {
         <Save onClick={() => addForm.addWork()}>Сохранить</Save>
       </div>
       <NameInput />
+
       <div className={styles.dates}>
         <OpenDateInput />
         <CloseDateInput />
       </div>
+
+      <h3>Назначьте работу группам</h3>
+      <GroupsList />
       <Divider />
       <IncludedTasks />
       <Divider />

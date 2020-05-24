@@ -2,9 +2,21 @@ import { combine, forward, guard, sample } from 'effector'
 import { notifications } from '@model'
 import { MessageType } from '@typings'
 import { AddWorkPage } from '../page'
-import { createWorkFx, getTasksFx, getTopicsFx } from './effects'
-import { $name, $openAt, $closeAt, $selectedTasks, $selectedTopic, $tasks, $topics } from './stores'
+import { createWorkFx, getTasksFx, getTopicsFx, getGroupsFx } from './effects'
 import {
+  $name,
+  $openAt,
+  $closeAt,
+  $selectedTasks,
+  $selectedTopic,
+  $tasks,
+  $topics,
+  $groups,
+  $selectedGroups,
+} from './stores'
+import {
+  addGroup,
+  removeGroup,
   addTask,
   addWork,
   closeAtChange,
@@ -14,8 +26,44 @@ import {
   topicChange,
 } from './events'
 
-forward({ from: AddWorkPage.open, to: [getTasksFx, getTopicsFx] })
-forward({ from: AddWorkPage.close, to: [getTasksFx.cancel, getTopicsFx.cancel] })
+forward({ from: AddWorkPage.open, to: [getTasksFx, getTopicsFx, getGroupsFx] })
+forward({
+  from: AddWorkPage.close,
+  to: [getTasksFx.cancel, getTopicsFx.cancel, getGroupsFx.cancel],
+})
+
+const groupForAdd = sample({
+  source: $groups,
+  clock: addGroup,
+  fn: (groups, groupId) => groups.find((group) => group.id === groupId),
+})
+
+const groupForRemove = sample({
+  source: $selectedGroups,
+  clock: removeGroup,
+  fn: (groups, groupId) => groups.find((group) => group.id === groupId)!,
+})
+
+const mergedGroupsAfterCreate = sample({
+  source: [$selectedGroups, $groups],
+  clock: createWorkFx.done,
+  fn: ([selected, all]) => all.concat(selected),
+})
+
+$groups.on(getGroupsFx.doneData, (_, { payload }) => payload)
+$groups.on(groupForAdd, (groups, groupForDelete) => {
+  return groups.filter((group) => group.id !== groupForDelete!.id)
+})
+$groups.on(groupForRemove, (groups, group) => [...groups, group])
+$groups.on(mergedGroupsAfterCreate, (_, groups) => groups)
+$groups.reset(AddWorkPage.close)
+
+$selectedGroups.on(groupForAdd, (groups, group) => [...groups, group!])
+$selectedGroups.on(groupForRemove, (groups, groupForDelete) => {
+  return groups.filter((group) => group.id !== groupForDelete.id)
+})
+$selectedGroups.on(mergedGroupsAfterCreate, () => [])
+$selectedGroups.reset(AddWorkPage.close)
 
 const addTaskToWork = sample({
   source: $tasks,
@@ -36,9 +84,9 @@ const mergedTasksAfterCreate = sample({
 })
 
 $tasks.on(getTasksFx.doneData, (_, { payload }) => payload)
-$tasks.on(addTaskToWork, (tasks, taskForDelete) =>
-  tasks.filter((task) => task.id !== taskForDelete!.id),
-)
+$tasks.on(addTaskToWork, (tasks, taskForDelete) => {
+  return tasks.filter((task) => task.id !== taskForDelete!.id)
+})
 $tasks.on(deleteTaskFromWork, (tasks, task) => [...tasks, task])
 $tasks.on(mergedTasksAfterCreate, (_, tasks) => tasks)
 $tasks.reset(AddWorkPage.close)
@@ -48,9 +96,9 @@ $topics.on(createWorkFx.done, (topics) => [...topics])
 $topics.reset(AddWorkPage.close)
 
 $selectedTasks.on(addTaskToWork, (tasks, task) => [...tasks, task!])
-$selectedTasks.on(deleteTaskFromWork, (tasks, taskForDelete) =>
-  tasks.filter((task) => task.id !== taskForDelete.id),
-)
+$selectedTasks.on(deleteTaskFromWork, (tasks, taskForDelete) => {
+  return tasks.filter((task) => task.id !== taskForDelete.id)
+})
 $selectedTasks.on(mergedTasksAfterCreate, () => [])
 $selectedTasks.reset(AddWorkPage.close)
 const $selectedTasksIds = $selectedTasks.map((tasks) => tasks.map((task) => task.id))
@@ -115,6 +163,8 @@ createWorkFx.failData.watch(({ message }) => {
 })
 
 export const addForm = {
+  $groups,
+  $selectedGroups,
   $filteredTasks,
   $selectedTasks,
   $topics,
@@ -122,6 +172,8 @@ export const addForm = {
   $name,
   $openAt,
   $closeAt,
+  addGroup,
+  removeGroup,
   nameChange,
   openAtChange,
   closeAtChange,
