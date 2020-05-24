@@ -1,5 +1,6 @@
 import { User, UpdateUser, CreateUser, UserId, Role, Roles } from '@common/typings/user'
 import { Credentials, UserInfo } from '@common/typings/auth'
+import { Work } from '@common/typings/work'
 import { db } from '@db'
 import { Hasher } from '@lib/Hasher'
 
@@ -79,6 +80,20 @@ export class UserRepository {
     )
 
     return student
+  }
+
+  static async getAvailableWorksById(id: UserId): Promise<Work[]> {
+    const works = await db.query(
+      `
+      SELECT
+        W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
+      FROM Student S, StudentGroup_Work GW, Work W
+      WHERE (S.id = %L and S.group_id = GW.group_id and W.id = GW.work_id)
+    `,
+      id,
+    )
+
+    return works
   }
 
   static async removeById(id: UserId): Promise<void> {
