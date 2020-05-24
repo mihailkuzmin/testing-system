@@ -1,18 +1,41 @@
 import React from 'react'
 import { useStore } from 'effector-react'
+import { Paper, Divider } from '@components'
+import { Linear } from '@components/Loaders'
+import { PrimaryButton as Begin } from '@components/Buttons'
 import { auth } from '@model'
-import { Paper } from '@components'
+import { MainPage } from './model/index'
 import styles from './Main.module.css'
+import { navigate } from 'hookrouter'
 
 export const Main = () => {
   const user = useStore(auth.$user)
+  const isLoading = useStore(MainPage.$isLoading)
 
   return (
-    <Paper className={styles.main}>
-      <p>Пользователь: {`${user?.lastName} ${user?.firstName} ${user?.patronymic}`}</p>
-      <p>Статус: {user?.role.name}</p>
-      {user?.group && <p>Группа: {user?.group?.name}</p>}
-      {user?.bookNumber && <p>Номер зачетной книжки: {user?.bookNumber}</p>}
+    <Paper className={styles.mainPage}>
+      <h3>Добро пожаловать, {`${user?.lastName} ${user?.firstName} ${user?.patronymic}`}</h3>
+
+      <Divider />
+
+      {isLoading ? <Linear /> : <Works />}
     </Paper>
+  )
+}
+
+const Works = () => {
+  const works = useStore(MainPage.$works)
+  const isEmpty = !works.length
+
+  return (
+    <div className={styles.worksList}>
+      {isEmpty ? <p>Доступных работ пока нет</p> : <p>Доступные работы:</p>}
+      {works.map((work) => (
+        <div key={work.id} className={styles.work}>
+          {work.name}
+          <Begin onClick={() => navigate(`/begin/${work.id}`)}>Начать</Begin>
+        </div>
+      ))}
+    </div>
   )
 }

@@ -1,4 +1,28 @@
-.main {
+.mainPage {
+  display: grid;
+  gap: 1rem;
   padding: 1rem;
-  width: 70%;
+  width: 50%;
+}
+
+.mainPage > h3 {
+  margin: 0.5rem 0;
+}
+
+.worksList {
+  display: grid;
+  gap: 1rem;
+}
+
+.worksList > p {
+  margin: 0;
+}
+
+.work {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 0.5rem;
 }
