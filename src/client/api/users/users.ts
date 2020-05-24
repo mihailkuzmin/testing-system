@@ -1,5 +1,6 @@
 import { Response } from '@common/typings'
 import { CreateUser, UpdateUser, User, UserId } from '@common/typings/user'
+import { Work } from '@common/typings/work'
 import { request } from '../request'
 
 const getAll = async (): Promise<Response<User[]>> => {
@@ -9,6 +10,11 @@ const getAll = async (): Promise<Response<User[]>> => {
 
 const getById = async (id: UserId): Promise<Response<User>> => {
   const result = await request.get<User>(`user/${id}`)
+  return result
+}
+
+const getAvailableWorks = async (id: UserId): Promise<Response<Work[]>> => {
+  const result = await request.get<Work[]>(`user/${id}/works`)
   return result
 }
 
@@ -31,6 +37,7 @@ export const usersApi = {
   create,
   getAll,
   getById,
+  getAvailableWorks,
   deleteById,
   update,
 }
