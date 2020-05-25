@@ -1,6 +1,7 @@
 import { Response } from '@common/typings'
 import { WorkId, Work, CreateWork, UpdateWork } from '@common/typings/work'
 import { Task, TaskId } from '@common/typings/task'
+import { Group } from '@common/typings/group'
 import { request } from '../request'
 
 const getAll = async (): Promise<Response<Work[]>> => {
@@ -10,6 +11,11 @@ const getAll = async (): Promise<Response<Work[]>> => {
 
 const getTasksOfWork = async (id: WorkId): Promise<Response<Task[]>> => {
   const result = await request.get<Task[]>(`work/${id}/tasks`)
+  return result
+}
+
+const getGroupsOfWork = async (id: WorkId): Promise<Response<Group[]>> => {
+  const result = await request.get<Group[]>(`work/${id}/groups`)
   return result
 }
 
@@ -51,6 +57,7 @@ const update = async (work: UpdateWork): Promise<Response<void>> => {
 export const worksApi = {
   getAll,
   getById,
+  getGroupsOfWork,
   getTasksOfWork,
   getWorksWithTask,
   getTasksOfWorkWithoutDescription,
