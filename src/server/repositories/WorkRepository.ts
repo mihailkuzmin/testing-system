@@ -1,6 +1,7 @@
 import { db } from '@db'
 import { Work, CreateWork, WorkId, UpdateWork } from '@common/typings/work'
 import { Task, TaskId } from '@common/typings/task'
+import { Group } from '@common/typings/group'
 
 export class WorkRepository {
   static async create(w: CreateWork): Promise<void> {
@@ -93,6 +94,20 @@ export class WorkRepository {
     )
 
     return tasks
+  }
+
+  static async getGroupsOfWork(id: WorkId): Promise<Group[]> {
+    const groups = await db.query(
+      `
+      SELECT
+        G.id, G.name
+      FROM StudentGroup G, StudentGroup_Work WG
+      WHERE (WG.work_id = %L and WG.group_id = G.id)
+    `,
+      id,
+    )
+
+    return groups
   }
 
   static async getWorksWithTask(id: TaskId): Promise<Work[]> {
