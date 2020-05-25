@@ -44,26 +44,20 @@ const groupForRemove = sample({
   fn: (groups, groupId) => groups.find((group) => group.id === groupId)!,
 })
 
-const mergedGroupsAfterCreate = sample({
-  source: [$selectedGroups, $groups],
-  clock: createWorkFx.done,
-  fn: ([selected, all]) => all.concat(selected),
-})
-
 $groups.on(getGroupsFx.doneData, (_, { payload }) => payload)
-$groups.on(groupForAdd, (groups, groupForDelete) => {
-  return groups.filter((group) => group.id !== groupForDelete!.id)
-})
-$groups.on(groupForRemove, (groups, group) => [...groups, group])
-$groups.on(mergedGroupsAfterCreate, (_, groups) => groups)
 $groups.reset(AddWorkPage.close)
 
 $selectedGroups.on(groupForAdd, (groups, group) => [...groups, group!])
 $selectedGroups.on(groupForRemove, (groups, groupForDelete) => {
   return groups.filter((group) => group.id !== groupForDelete.id)
 })
-$selectedGroups.on(mergedGroupsAfterCreate, () => [])
-$selectedGroups.reset(AddWorkPage.close)
+$selectedGroups.reset(AddWorkPage.close, createWorkFx.done)
+const $selectedGroupsIds = $selectedGroups.map((groups) => groups.map((group) => group.id))
+
+const $availableGroups = combine(
+  { groups: $groups, selected: $selectedGroupsIds },
+  ({ groups, selected }) => groups.filter((group) => !selected.includes(group.id)),
+)
 
 const addTaskToWork = sample({
   source: $tasks,
@@ -77,19 +71,8 @@ const deleteTaskFromWork = sample({
   fn: (tasks, taskId) => tasks.find((task) => task.id === taskId)!,
 })
 
-const mergedTasksAfterCreate = sample({
-  source: [$selectedTasks, $tasks],
-  clock: createWorkFx.done,
-  fn: ([selected, all]) => all.concat(selected),
-})
-
 $tasks.on(getTasksFx.doneData, (_, { payload }) => payload)
-$tasks.on(addTaskToWork, (tasks, taskForDelete) => {
-  return tasks.filter((task) => task.id !== taskForDelete!.id)
-})
-$tasks.on(deleteTaskFromWork, (tasks, task) => [...tasks, task])
-$tasks.on(mergedTasksAfterCreate, (_, tasks) => tasks)
-$tasks.reset(AddWorkPage.close)
+$tasks.reset(AddWorkPage.close, createWorkFx.done)
 
 $topics.on(getTopicsFx.doneData, (_, { payload }) => payload)
 $topics.on(createWorkFx.done, (topics) => [...topics])
@@ -99,8 +82,8 @@ $selectedTasks.on(addTaskToWork, (tasks, task) => [...tasks, task!])
 $selectedTasks.on(deleteTaskFromWork, (tasks, taskForDelete) => {
   return tasks.filter((task) => task.id !== taskForDelete.id)
 })
-$selectedTasks.on(mergedTasksAfterCreate, () => [])
-$selectedTasks.reset(AddWorkPage.close)
+$selectedTasks.reset(AddWorkPage.close, createWorkFx.done)
+const $selectedTasksIds = $selectedTasks.map((tasks) => tasks.map((task) => task.id))
 
 const newTopic = sample({
   source: $topics,
@@ -116,9 +99,14 @@ $selectedTopic.on(setInitialTopic, (_, topic) => topic)
 $selectedTopic.on(newTopic, (_, topic) => topic)
 $selectedTopic.reset(AddWorkPage.close)
 
-const $filteredTasks = combine({ tasks: $tasks, topic: $selectedTopic }, ({ tasks, topic }) => {
-  return tasks.filter((task) => task.topic.id === topic?.id)
-})
+const $availableTasks = combine(
+  { tasks: $tasks, selected: $selectedTasksIds },
+  ({ tasks, selected }) => tasks.filter((task) => !selected.includes(task.id)),
+)
+const $filteredTasks = combine(
+  { available: $availableTasks, topic: $selectedTopic },
+  ({ available, topic }) => available.filter((task) => task.topic.id === topic?.id),
+)
 
 $name.on(nameChange, (_, name) => name)
 $name.reset(AddWorkPage.close, createWorkFx.done)
@@ -167,7 +155,7 @@ createWorkFx.failData.watch(({ message }) => {
 })
 
 export const addForm = {
-  $groups: combine({ groups: $groups, selected: $selectedGroups }),
+  $groups: combine({ groups: $availableGroups, selected: $selectedGroups }),
   $tasks: combine({ tasks: $filteredTasks, selected: $selectedTasks }),
   $topics: combine({ topics: $topics, selected: $selectedTopic }),
   $name,
