@@ -3,7 +3,7 @@ import { useStore } from 'effector-react'
 import { useRoutes } from 'hookrouter'
 import { SnackbarProvider } from 'notistack'
 import { Navigation, NavLink } from '@components/Navigation'
-import { PageLoader } from '@components/Loaders'
+import { AppLoader } from '@components/Loaders'
 import { Header, Layout, Notifier } from '@components'
 import { getNavigationLinks, getRoutes } from '@routes'
 import { Login } from '@pages'
@@ -18,7 +18,7 @@ export const App = () => {
   const links = getNavigationLinks(user?.role.name)
 
   if (isLoading) {
-    return <PageLoader style={{ marginLeft: '0' }} />
+    return <AppLoader />
   }
 
   if (!isAuth) {
