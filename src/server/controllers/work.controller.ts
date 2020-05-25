@@ -1,5 +1,6 @@
 import { CreateWork, UpdateWork, Work, WorkId } from '@common/typings/work'
 import { Task, TaskId } from '@common/typings/task'
+import { Group } from '@common/typings/group'
 import { Roles } from '@common/typings/user'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
@@ -50,6 +51,20 @@ export const workController: Controller = (app, options, done) => {
       }
 
       const response: Response<Task[]> = { payload: result }
+      reply.send(response)
+    },
+  })
+
+  app.route({
+    method: 'GET',
+    url: '/:id/groups',
+    preValidation: allowFor([Roles.Administrator]),
+    handler: async (request, reply) => {
+      const id: WorkId = request.params.id
+
+      const result = await WorkRepository.getGroupsOfWork(id)
+
+      const response: Response<Group[]> = { payload: result }
       reply.send(response)
     },
   })
