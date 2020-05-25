@@ -10,7 +10,8 @@ body {
 }
 
 .App {
-  padding-left: 5rem;
+  --navigation-width: 4.8rem;
+  margin-left: var(--navigation-width);
 }
 
 /* styles rewrite */

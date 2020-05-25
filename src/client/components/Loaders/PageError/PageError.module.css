@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 5rem;
+  margin-left: var(--navigation-width);
   position: fixed;
   top: 0;
   left: 0;
