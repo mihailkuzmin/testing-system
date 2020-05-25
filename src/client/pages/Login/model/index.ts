@@ -20,16 +20,23 @@ const $loginFailed = createStore(false)
 $loginFailed.on(auth.loginFailed, () => true)
 $loginFailed.reset(resetFailed)
 
-sample({
-  source: combine({ login: $login, password: $password }),
-  clock: login,
-  target: auth.login,
+auth.loginFailed.watch(() => setTimeout(resetFailed, 2000))
+
+const $loginValid = $login.map((login) => Boolean(login.length))
+const $passwordValid = $password.map((password) => Boolean(password.length))
+const $canSubmit = combine([$loginValid, $passwordValid], (arr) => {
+  return arr.reduce((prev, next) => prev && next)
 })
+
+const $form = combine({ login: $login, password: $password })
+
+guard({ source: sample($form, login), filter: $canSubmit, target: auth.login })
 
 export const loginForm = {
   $login,
   $password,
   $loginFailed,
+  $canSubmit,
   loginChanged,
   passwordChanged,
   login,
