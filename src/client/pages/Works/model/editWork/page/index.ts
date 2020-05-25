@@ -1,7 +1,13 @@
 import { createEvent, createStore, combine, forward } from 'effector'
 import { WorkId } from '@common/typings/work'
-import { getWorkFx, getTopicsFx, getAllTasksFx, getTasksOfWorkFx } from '../editForm/effects'
-import { getGroupsFx, getRolesFx, getUserFx } from '@pages/Users/model/editUser/editForm/effects'
+import {
+  getWorkFx,
+  getTopicsFx,
+  getAllTasksFx,
+  getTasksOfWorkFx,
+  getGroupsFx,
+  getGroupsOfWorkFx,
+} from '../editForm/effects'
 
 const open = createEvent<WorkId>()
 const close = createEvent()
@@ -12,7 +18,14 @@ const onMount = (id: WorkId) => {
 }
 
 const $isLoading = combine(
-  [getWorkFx.pending, getAllTasksFx.pending, getTopicsFx.pending, getTasksOfWorkFx.pending],
+  [
+    getWorkFx.pending,
+    getAllTasksFx.pending,
+    getTopicsFx.pending,
+    getTasksOfWorkFx.pending,
+    getGroupsFx.pending,
+    getGroupsOfWorkFx.pending,
+  ],
   (arr) => {
     return arr.reduce((prev, next) => prev || next)
   },
@@ -20,7 +33,14 @@ const $isLoading = combine(
 
 const setFail = createEvent()
 forward({
-  from: [getWorkFx.fail, getAllTasksFx.fail, getTopicsFx.fail, getTasksOfWorkFx.fail],
+  from: [
+    getWorkFx.fail,
+    getAllTasksFx.fail,
+    getTopicsFx.fail,
+    getTasksOfWorkFx.fail,
+    getGroupsFx.fail,
+    getGroupsOfWorkFx.fail,
+  ],
   to: setFail,
 })
 const $isFail = createStore(false)

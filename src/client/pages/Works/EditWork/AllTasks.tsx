@@ -8,8 +8,7 @@ import { Task } from './Task'
 import styles from './EditWork.module.css'
 
 const TopicSelect = () => {
-  const topics = useStore(editForm.$topics)
-  const selected = useStore(editForm.$selectedTopic)
+  const { topics, selected } = useStore(editForm.$topics)
 
   return (
     <Select
@@ -27,7 +26,7 @@ const TopicSelect = () => {
 }
 
 export const AllTasks = () => {
-  const tasks = useStore(editForm.$filteredTasks)
+  const { tasks } = useStore(editForm.$tasks)
   const tasksIsEmpty = tasks.length === 0
 
   const onAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
