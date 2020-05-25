@@ -19,12 +19,12 @@ const getWorksWithTask = async (id: TaskId): Promise<Response<Work[]>> => {
 }
 
 const getTasksOfWorkWithoutDescription = async (id: WorkId): Promise<Response<Task[]>> => {
-  const result = await request.get<Task[]>(`work/${id}/task?exclude[]=description`)
+  const result = await request.get<Task[]>(`work/${id}/tasks?exclude[]=description`)
   return result
 }
 
 const getTasksOfWorkWithoutDescriptionAndTests = async (id: WorkId): Promise<Response<Task[]>> => {
-  const result = await request.get<Task[]>(`work/${id}/task?exclude[]=description&exclude[]=tests`)
+  const result = await request.get<Task[]>(`work/${id}/tasks?exclude[]=description&exclude[]=tests`)
   return result
 }
 
