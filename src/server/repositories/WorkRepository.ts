@@ -15,7 +15,11 @@ export class WorkRepository {
     )
 
     const tasks = w.tasks.map((taskId) => [work.id, taskId])
-    await db.query(`INSERT INTO Work_Task as WT (work_id, task_id) VALUES %L`, tasks)
+    const groups = w.groups.map((groupId) => [work.id, groupId])
+    await Promise.all([
+      db.query(`INSERT INTO Work_Task as WT (work_id, task_id) VALUES %L`, tasks),
+      db.query(`INSERT INTO StudentGroup_Work as WG (work_id, group_id) VALUES %L`, groups),
+    ])
   }
 
   static async getById(id: WorkId): Promise<Work> {
@@ -32,7 +36,7 @@ export class WorkRepository {
     return work
   }
 
-  static async update(w: UpdateWork): Promise<void> {
+  static async update(work: UpdateWork): Promise<void> {
     await db.query(
       `
         UPDATE Work W
@@ -42,21 +46,32 @@ export class WorkRepository {
           close_at = %L
         WHERE (W.id = %L)
       `,
-      w.name,
-      w.openAt,
-      w.closeAt,
-      w.id,
+      work.name,
+      work.openAt,
+      work.closeAt,
+      work.id,
     )
 
-    const tasks = w.tasks.map((taskId) => [w.id, taskId])
-    await db.query(
-      `
+    const tasks = work.tasks.map((taskId) => [work.id, taskId])
+    const groups = work.groups.map((groupId) => [work.id, groupId])
+    await Promise.all([
+      db.query(
+        `
       DELETE FROM Work_Task as WT WHERE (WT.work_id = %L);
       INSERT INTO Work_Task (work_id, task_id) VALUES %L;
     `,
-      w.id,
-      tasks,
-    )
+        work.id,
+        tasks,
+      ),
+      db.query(
+        `
+      DELETE FROM StudentGroup_Work as WG WHERE (WG.work_id = %L);
+      INSERT INTO StudentGroup_Work as WG (work_id, group_id) VALUES %L;
+      `,
+        work.id,
+        groups,
+      ),
+    ])
   }
 
   static async getTasksOfWork(id: WorkId): Promise<Task[]> {
