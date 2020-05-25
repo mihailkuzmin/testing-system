@@ -139,9 +139,13 @@ const $form = combine({
   groups: $selectedGroups.map((groups) => groups.map((group) => group.id)),
 })
 
-const $canSave = $selectedTasks.map((tasks) => Boolean(tasks.length))
+const $tasksValid = $selectedTasks.map((tasks) => Boolean(tasks.length))
+const $groupsValid = $selectedGroups.map((groups) => Boolean(groups.length))
+const $canSave = combine([$tasksValid, $groupsValid], (arr) => {
+  return arr.reduce((prev, next) => prev && next)
+})
 
-// when addWork triggered, call effect if selected more than 0 tasks
+// when addWork triggered, call effect if selected more than 0 tasks and more than 0 groups
 guard({
   source: sample({ source: $form, clock: addWork }),
   filter: $canSave,
