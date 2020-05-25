@@ -5,8 +5,7 @@ import { addForm } from '../model/addWork'
 import styles from './AddWork.module.css'
 
 export const GroupsList = () => {
-  const groups = useStore(addForm.$groups)
-  const selected = useStore(addForm.$selectedGroups)
+  const { groups, selected } = useStore(addForm.$groups)
 
   return (
     <div className={styles.groupsList}>

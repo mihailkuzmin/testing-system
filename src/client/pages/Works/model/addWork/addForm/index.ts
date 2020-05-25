@@ -163,12 +163,9 @@ createWorkFx.failData.watch(({ message }) => {
 })
 
 export const addForm = {
-  $groups,
-  $selectedGroups,
-  $filteredTasks,
-  $selectedTasks,
-  $topics,
-  $selectedTopic,
+  $groups: combine({ groups: $groups, selected: $selectedGroups }),
+  $tasks: combine({ tasks: $filteredTasks, selected: $selectedTasks }),
+  $topics: combine({ topics: $topics, selected: $selectedTopic }),
   $name,
   $openAt,
   $closeAt,

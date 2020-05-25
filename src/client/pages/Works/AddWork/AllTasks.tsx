@@ -8,8 +8,7 @@ import { Task } from './Task'
 import styles from './AddWork.module.css'
 
 const TopicSelect = () => {
-  const topics = useStore(addForm.$topics)
-  const selected = useStore(addForm.$selectedTopic)
+  const { topics, selected } = useStore(addForm.$topics)
 
   return (
     <Select
@@ -27,7 +26,7 @@ const TopicSelect = () => {
 }
 
 export const AllTasks = () => {
-  const tasks = useStore(addForm.$filteredTasks)
+  const { tasks } = useStore(addForm.$tasks)
   const tasksIsEmpty = tasks.length === 0
 
   const onAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
