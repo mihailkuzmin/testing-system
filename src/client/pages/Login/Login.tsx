@@ -13,16 +13,16 @@ export const Login = () => {
     loginForm.login()
   }
 
-  const disabled = useStore(auth.$loginPending)
+  const { loginPending } = useStore(auth.$store)
   const error = useStore(loginForm.$loginFailed)
   const canSubmit = useStore(loginForm.$canSubmit)
 
   return (
     <form className={styles.loginForm} onSubmit={onSubmit}>
       <h2>{error ? 'Неверные данные' : 'Вход'}</h2>
-      <LoginInput disabled={disabled} error={error} />
-      <PasswordInput disabled={disabled} error={error} />
-      <LoginButton disabled={disabled || !canSubmit} error={error} />
+      <LoginInput disabled={loginPending} error={error} />
+      <PasswordInput disabled={loginPending} error={error} />
+      <LoginButton disabled={loginPending || !canSubmit} error={error} />
     </form>
   )
 }

@@ -12,9 +12,9 @@ $works.reset(auth.logout)
 
 guard({
   source: sample({
-    source: auth.$user,
+    source: auth.$store,
     clock: auth.loggedIn,
-    fn: (user) => (user ? user.id : null),
+    fn: ({ user }) => (user ? user.id : null),
   }),
   filter: Boolean,
   target: getWorksFx,

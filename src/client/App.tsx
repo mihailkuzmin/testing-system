@@ -10,9 +10,7 @@ import { Login } from '@pages'
 import { auth } from '@model'
 
 export const App = () => {
-  const isLoading = useStore(auth.$checkPending)
-  const isAuth = useStore(auth.$isAuth)
-  const user = useStore(auth.$user)
+  const { user, isAuth, isLoading } = useStore(auth.$store)
 
   const pages = useRoutes(getRoutes(user?.role.name))
   const links = getNavigationLinks(user?.role.name)

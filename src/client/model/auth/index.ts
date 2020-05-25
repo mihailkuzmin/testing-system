@@ -1,4 +1,4 @@
-import { createEvent, forward } from 'effector'
+import { combine, createEvent, forward } from 'effector'
 import { navigate } from 'hookrouter'
 import { Credentials } from '@common/typings/auth'
 import { $user, $isAuth } from './stores'
@@ -23,11 +23,15 @@ $user.reset(logoutFx.done)
 loginFx.done.watch(() => navigate('/'))
 logoutFx.done.watch(() => navigate('/'))
 
+const $store = combine({
+  user: $user,
+  isAuth: $isAuth,
+  loginPending: loginFx.pending,
+  isLoading: checkFx.pending,
+})
+
 export const auth = {
-  $user,
-  $isAuth,
-  $loginPending: loginFx.pending,
-  $checkPending: checkFx.pending,
+  $store,
   checkAuth,
   login,
   logout,

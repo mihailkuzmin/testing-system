@@ -1,15 +1,15 @@
 import React from 'react'
 import { useStore } from 'effector-react'
+import { navigate } from 'hookrouter'
 import { Paper, Divider } from '@components'
 import { Linear } from '@components/Loaders'
 import { PrimaryButton as Begin } from '@components/Buttons'
 import { auth } from '@model'
 import { MainPage } from './model/index'
 import styles from './Main.module.css'
-import { navigate } from 'hookrouter'
 
 export const Main = () => {
-  const user = useStore(auth.$user)
+  const { user } = useStore(auth.$store)
   const isLoading = useStore(MainPage.$isLoading)
 
   return (
