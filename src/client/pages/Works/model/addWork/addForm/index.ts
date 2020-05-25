@@ -101,7 +101,6 @@ $selectedTasks.on(deleteTaskFromWork, (tasks, taskForDelete) => {
 })
 $selectedTasks.on(mergedTasksAfterCreate, () => [])
 $selectedTasks.reset(AddWorkPage.close)
-const $selectedTasksIds = $selectedTasks.map((tasks) => tasks.map((task) => task.id))
 
 const newTopic = sample({
   source: $topics,
@@ -136,7 +135,8 @@ const $form = combine({
   name: $name,
   openAt: $openAt.map((date) => date.toISOString()),
   closeAt: $closeAt.map((date) => date.toISOString()),
-  tasks: $selectedTasksIds,
+  tasks: $selectedTasks.map((tasks) => tasks.map((task) => task.id)),
+  groups: $selectedGroups.map((groups) => groups.map((group) => group.id)),
 })
 
 const $canSave = $selectedTasks.map((tasks) => Boolean(tasks.length))

@@ -1,4 +1,5 @@
 import { TaskId } from '../task'
+import { GroupId } from '../group'
 
 export type WorkId = number
 
@@ -14,6 +15,7 @@ export type CreateWork = {
   openAt: string
   closeAt: string
   tasks: TaskId[]
+  groups: GroupId[]
 }
 
 export type UpdateWork = {
@@ -22,4 +24,5 @@ export type UpdateWork = {
   openAt: string
   closeAt: string
   tasks: TaskId[]
+  groups: GroupId[]
 }
