@@ -37,7 +37,7 @@ export const workController: Controller = (app, options, done) => {
   app.route({
     method: 'GET',
     url: '/:id/tasks',
-    preValidation: allowFor([Roles.Administrator]),
+    preValidation: allowFor([Roles.Administrator, Roles.Moderator, Roles.Student]),
     handler: async (request, reply) => {
       const id: WorkId = request.params.id
       const fieldsForExclude: Array<keyof Task> = request.query.exclude ?? []
