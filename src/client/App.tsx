@@ -6,7 +6,6 @@ import { Navigation, NavLink } from '@components/Navigation'
 import { AppLoader } from '@components/Loaders'
 import { Header, Layout, Notifier } from '@components'
 import { getNavigationLinks, getRoutes } from '@routes'
-import { Login } from '@pages'
 import { auth } from '@model'
 
 export const App = () => {
@@ -20,7 +19,7 @@ export const App = () => {
   }
 
   if (!isAuth) {
-    return <Login />
+    return pages
   }
 
   return (

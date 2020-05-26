@@ -20,6 +20,7 @@ $user.on(checkFx.doneData, (_, { payload }) => payload)
 $user.on(loginFx.doneData, (_, { payload }) => payload)
 $user.reset(logoutFx.done)
 
+checkFx.fail.watch(() => navigate('/login'))
 loginFx.done.watch(() => navigate('/'))
 logoutFx.done.watch(() => navigate('/'))
 
