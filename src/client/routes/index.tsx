@@ -1,5 +1,5 @@
 import React from 'react'
-import { Groups, Login, Logout, Main, Tasks, Users, Works } from '@pages'
+import { Groups, Login, Logout, Main, Tasks, Users, Works, Begin } from '@pages'
 import * as Icons from '@components/Icons'
 import { QueryParams } from '@typings'
 import { Roles } from '@common/typings/user'
@@ -8,6 +8,7 @@ type Link = { path: string; strict?: boolean; text: string; icon: () => JSX.Elem
 
 const studentRoutes = {
   '/': () => <Main.Index />,
+  '/begin/:id': ({ id }: QueryParams) => <Begin id={id} />,
   '/login': () => <Login />,
   '/logout': () => <Logout />,
 }
@@ -19,6 +20,7 @@ const studentLinks: Link[] = [
 
 const moderatorRoutes = {
   '/': () => <Main.Index />,
+  '/begin/:id': ({ id }: QueryParams) => <Begin id={id} />,
   '/login': () => <Login />,
   '/logout': () => <Logout />,
   '/tasks': () => <Tasks.AddTask />,

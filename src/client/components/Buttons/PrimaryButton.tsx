@@ -7,5 +7,5 @@ type onClick = {
 type PrimaryButtonProps = Omit<ButtonProps, 'onClick'> & onClick
 
 export const PrimaryButton = (props: PrimaryButtonProps) => {
-  return <Button {...props} variant='outlined' color='primary' />
+  return <Button variant='outlined' color='primary' {...props} />
 }

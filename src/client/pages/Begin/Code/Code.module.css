@@ -1,0 +1,14 @@
+.code {
+  display: grid;
+  gap: 0.2rem;
+  grid-template-rows: 4fr 1fr;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actions > *:not(:last-child) {
+  margin-right: 1rem !important;
+}
