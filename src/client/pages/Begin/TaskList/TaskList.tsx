@@ -3,12 +3,13 @@ import { useStore } from 'effector-react'
 import { Card } from '@components'
 import { List, ListItem } from '@material-ui/core'
 import { workspace } from '../model'
+import styles from './TaskList.module.css'
 
 export const TaskList = () => {
   const { tasks, selected } = useStore(workspace.$tasks)
 
   return (
-    <Card>
+    <Card className={styles.taskList}>
       <List>
         {tasks.map((task, index) => (
           <ListItem

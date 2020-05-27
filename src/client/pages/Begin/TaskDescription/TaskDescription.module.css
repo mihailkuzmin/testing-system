@@ -1,14 +1,9 @@
-.card {
+.taskDescription {
   padding: 0;
   position: relative;
 }
 
 .description {
-  /*display: block;*/
-  /*border: none;*/
-  /*background: none;*/
-  /*font-family: monospace;*/
-  /*font-size: 0.9rem;*/
   padding: 0.5rem;
   position: absolute;
   top: 0;

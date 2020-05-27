@@ -2,7 +2,7 @@ import React from 'react'
 import { WorkId } from '@common/typings/work'
 import { Paper } from '@components'
 import { BeginPage } from '@pages/Begin/model/page'
-import { SelectedTask } from './SelectedTask'
+import { TaskDescription } from './TaskDescription'
 import { TaskList } from './TaskList'
 import { CodeEditor } from './CodeEditor'
 import styles from './Begin.module.css'
@@ -16,7 +16,7 @@ export const Begin = ({ id }: BeginProps) => {
     <div className={styles.wrap}>
       <Paper className={styles.beginPage}>
         <TaskList />
-        <SelectedTask />
+        <TaskDescription />
         <CodeEditor />
       </Paper>
     </div>

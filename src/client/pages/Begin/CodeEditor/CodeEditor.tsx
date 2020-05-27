@@ -1,20 +1,25 @@
 import React from 'react'
-import { Card } from '@components'
-import { PrimaryButton as Button } from '@components/Buttons'
-import { LangSelect } from './LangSelect'
-import { Editor } from './Editor'
+import { useStore } from 'effector-react'
+import { Card, Divider } from '@components'
+import { workspace } from '../model'
+import { Tabs } from '../model/workspace/typings'
+import { TabControl } from './TabControl'
 import styles from './CodeEditor.module.css'
 
 export const CodeEditor = () => {
-  return (
-    <Card className={styles.code}>
-      <Editor />
+  const { code, console, tab } = useStore(workspace.$codeEditor)
+  const consoleSelected = tab === Tabs.Console
 
-      <div className={styles.actions}>
-        <Button variant='contained'>Сохранить</Button>
-        <Button>Тест</Button>
-        <LangSelect />
-      </div>
+  return (
+    <Card className={styles.codeEditor}>
+      <TabControl />
+      <Divider />
+      <textarea
+        value={consoleSelected ? console : code}
+        disabled={consoleSelected}
+        onChange={(e) => workspace.codeChanged(e.target.value)}
+        className={styles.editor}
+      />
     </Card>
   )
 }

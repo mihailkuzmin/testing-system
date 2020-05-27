@@ -2,7 +2,7 @@ import React from 'react'
 import { useStore } from 'effector-react'
 import { Select, Item } from '@components/Inputs/Select'
 import { PLangId } from '@common/typings/task'
-import { workspace } from '../model'
+import { workspace } from './model'
 
 export const LangSelect = () => {
   const { langs, selected } = useStore(workspace.$langs)
