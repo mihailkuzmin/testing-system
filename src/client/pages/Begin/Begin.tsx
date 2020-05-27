@@ -1,10 +1,10 @@
 import React from 'react'
 import { WorkId } from '@common/typings/work'
 import { Paper } from '@components'
-import { BeginPage } from '@pages/Begin/model'
+import { BeginPage } from '@pages/Begin/model/page'
 import { SelectedTask } from './SelectedTask'
 import { TaskList } from './TaskList'
-import { Code } from './Code'
+import { CodeEditor } from './CodeEditor'
 import styles from './Begin.module.css'
 
 type BeginProps = { id: WorkId }
@@ -17,7 +17,7 @@ export const Begin = ({ id }: BeginProps) => {
       <Paper className={styles.beginPage}>
         <TaskList />
         <SelectedTask />
-        <Code />
+        <CodeEditor />
       </Paper>
     </div>
   )

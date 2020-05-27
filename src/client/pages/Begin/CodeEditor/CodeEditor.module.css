@@ -1,0 +1,16 @@
+.code {
+  display: grid;
+  gap: 0.1rem;
+  grid-template-rows: 4fr 1fr;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 7rem 7rem 10rem;
+  gap: 1rem;
+  align-items: end;
+}
+
+.actions > *:nth-child(3) {
+  margin: 0.1rem 0;
+}

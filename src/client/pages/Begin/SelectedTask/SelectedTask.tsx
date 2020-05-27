@@ -1,14 +1,18 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { Card } from '@components'
-import { $selectedTask } from '@pages/Begin/model'
+import { workspace } from '../model'
+import styles from './SelectedTask.module.css'
 
 export const SelectedTask = () => {
-  const selected = useStore($selectedTask)
+  const { selected } = useStore(workspace.$tasks)
 
   return (
-    <Card>
-      <div dangerouslySetInnerHTML={{ __html: selected?.description ?? '' }} />
+    <Card className={styles.card}>
+      <div
+        className={styles.description}
+        dangerouslySetInnerHTML={{ __html: selected?.description ?? '' }}
+      />
     </Card>
   )
 }
