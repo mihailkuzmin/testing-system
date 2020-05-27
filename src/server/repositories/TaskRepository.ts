@@ -42,7 +42,7 @@ export class TaskRepository {
   }
 
   static async getPLanguages(): Promise<PLang[]> {
-    const langs = await db.query(`SELECT P.id, P.name FROM PLanguage P`)
+    const langs = await db.query(`SELECT P.id, P.name FROM PLanguage P ORDER BY P.name`)
     return langs
   }
 
