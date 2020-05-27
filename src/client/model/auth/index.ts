@@ -22,7 +22,7 @@ $user.reset(logoutFx.done)
 
 checkFx.fail.watch(() => navigate('/login'))
 loginFx.done.watch(() => navigate('/'))
-logoutFx.done.watch(() => navigate('/'))
+logoutFx.done.watch(() => navigate('/login'))
 
 const $store = combine({
   user: $user,
