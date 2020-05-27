@@ -1,4 +1,4 @@
-import { CreateTask, Task, TaskId, Test, Topic, UpdateTask } from '@common/typings/task'
+import { CreateTask, PLang, Task, TaskId, Test, Topic, UpdateTask } from '@common/typings/task'
 import { Roles } from '@common/typings/user'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
@@ -81,6 +81,19 @@ export const taskController: Controller = (app, options, done) => {
       const topics = await TaskRepository.getTopics()
 
       const response: Response<Topic[]> = { payload: topics }
+
+      reply.send(response)
+    },
+  })
+
+  app.route({
+    method: 'GET',
+    url: '/plangs',
+    preValidation: allowFor([Roles.Administrator, Roles.Moderator, Roles.Student]),
+    handler: async (request, reply) => {
+      const langs = await TaskRepository.getPLanguages()
+
+      const response: Response<PLang[]> = { payload: langs }
 
       reply.send(response)
     },
