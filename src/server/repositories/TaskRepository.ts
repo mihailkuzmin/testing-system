@@ -1,5 +1,5 @@
 import { db } from '@db'
-import { Task, CreateTask, UpdateTask, TaskId, Topic, Test } from '@common/typings/task'
+import { Task, CreateTask, UpdateTask, TaskId, Topic, Test, PLang } from '@common/typings/task'
 
 export class TaskRepository {
   static async getById(id: TaskId): Promise<Task> {
@@ -39,6 +39,11 @@ export class TaskRepository {
   static async getTopics(): Promise<Topic[]> {
     const topics = await db.query(`SELECT T.id, T.name FROM TaskTopic T ORDER BY T.name`)
     return topics
+  }
+
+  static async getPLanguages(): Promise<PLang[]> {
+    const langs = await db.query(`SELECT P.id, P.name FROM PLanguage P`)
+    return langs
   }
 
   static async getAll(): Promise<Task[]> {
