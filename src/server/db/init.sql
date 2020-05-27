@@ -54,9 +54,6 @@ VALUES
 
 INSERT INTO StudentGroup_Work (group_id, work_id) VALUES (1, 1), (1, 2), (2, 3), (3, 4);
 
-INSERT INTO PLanguage
-    (name)
-VALUES
-    ('Go'), ('C++'), ('Scala'), ('Ruby'), ('JavaScript'), ('Pascal'), ('Python'), ('PHP');
+INSERT INTO PLanguage (name) VALUES ('JavaScript'), ('Python');
 
 
