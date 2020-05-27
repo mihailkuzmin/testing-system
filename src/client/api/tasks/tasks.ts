@@ -1,5 +1,5 @@
 import { Response } from '@common/typings'
-import { Task, CreateTask, UpdateTask, TaskId, Test, Topic } from '@common/typings/task'
+import { Task, CreateTask, UpdateTask, TaskId, Test, Topic, PLang } from '@common/typings/task'
 import { request } from '../request'
 
 const getAll = async (): Promise<Response<Task[]>> => {
@@ -32,6 +32,11 @@ const getTopics = async (): Promise<Response<Topic[]>> => {
   return result
 }
 
+const getPLangs = async (): Promise<Response<PLang[]>> => {
+  const result = await request.get<PLang[]>(`task/plangs`)
+  return result
+}
+
 const create = async (task: CreateTask): Promise<Response<void>> => {
   const result = await request.post<CreateTask, void>('task', task)
   return result
@@ -56,5 +61,6 @@ export const tasksApi = {
   getByIdWithoutTests,
   getTestsById,
   getTopics,
+  getPLangs,
   update,
 }
