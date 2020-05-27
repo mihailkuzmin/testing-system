@@ -1,4 +1,6 @@
-import exp = require('constants')
+export type PLangId = number
+
+export type PLang = { id: PLangId; name: string }
 
 export type TaskId = number
 export type TestId = number
