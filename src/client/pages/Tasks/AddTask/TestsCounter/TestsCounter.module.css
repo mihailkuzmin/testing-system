@@ -1,0 +1,8 @@
+.counter {
+  display: flex;
+  align-items: center;
+}
+
+.counter > span {
+  margin-right: 0.5rem;
+}

@@ -6,7 +6,7 @@ import { PrimaryButton as Save } from '@components/Buttons'
 import { addForm, AddTaskPage } from '../model/addTask'
 import { NameInput, DescriptionInput, TopicSelect } from './Inputs'
 import { TestsCounter } from './TestsCounter'
-import { Tests } from './Tests'
+import { TestList } from './TestList'
 import styles from './AddTask.module.css'
 
 export const AddTask = () => {
@@ -50,7 +50,7 @@ export const AddTask = () => {
           <h3>Добавьте тесты к заданию</h3>
           <TestsCounter count={testsCount} onClick={() => addForm.addTest()} />
         </div>
-        <Tests />
+        <TestList />
       </form>
     </Paper>
   )

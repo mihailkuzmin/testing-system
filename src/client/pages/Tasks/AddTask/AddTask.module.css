@@ -42,23 +42,3 @@
   justify-content: space-between;
   align-items: center;
 }
-
-.testsCounter {
-  display: flex;
-  align-items: center;
-}
-
-.testsCounter > span {
-  margin-right: 0.5rem;
-}
-
-.testsList {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr) 1.8rem;
-  gap: 1rem;
-}
-
-.testsList > button {
-  align-self: center;
-  justify-self: center;
-}
