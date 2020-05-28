@@ -1,9 +1,10 @@
 import { createStore } from 'effector'
-import { PLang, PLangId, Task } from '@common/typings/task'
+import { PLang, PLangId, Task, TaskId } from '@common/typings/task'
 import { Tabs } from './typings'
 
 export const $tasks = createStore<Task[]>([])
-export const $selectedTask = createStore<Task | null>(null)
+export const $selectedTaskId = createStore<TaskId | null>(null)
+export const $selectedTaskInfo = createStore<Task | null>(null)
 
 export const $langs = createStore<PLang[]>([])
 export const $selectedLangId = createStore<PLangId | null>(null)

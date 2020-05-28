@@ -6,7 +6,7 @@ import { workspace } from '../model'
 import styles from './TaskList.module.css'
 
 export const TaskList = () => {
-  const { tasks, selected } = useStore(workspace.$tasks)
+  const { tasks, selectedId } = useStore(workspace.$tasks)
 
   return (
     <Card className={styles.taskList}>
@@ -15,7 +15,7 @@ export const TaskList = () => {
           <ListItem
             key={task.id}
             onClick={() => workspace.taskChanged(task.id)}
-            selected={selected?.id === task.id}
+            selected={task.id === selectedId}
             button
           >
             {index + 1}. {task.name}

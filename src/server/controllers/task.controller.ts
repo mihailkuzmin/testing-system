@@ -29,7 +29,7 @@ export const taskController: Controller = (app, options, done) => {
   app.route({
     method: 'GET',
     url: '/:id',
-    preValidation: allowFor([Roles.Administrator]),
+    preValidation: allowFor([Roles.Administrator, Roles.Moderator, Roles.Student]),
     handler: async (request, reply) => {
       const fieldsForExclude: Array<keyof Task> = request.query.exclude ?? []
       const id: TaskId = request.params.id
