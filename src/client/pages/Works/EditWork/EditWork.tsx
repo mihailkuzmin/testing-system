@@ -8,7 +8,7 @@ import { EditPage, editForm } from '../model/editWork'
 import { CloseDateInput, NameInput, OpenDateInput } from './Inputs'
 import { IncludedTasks } from './IncludedTasks'
 import { AllTasks } from './AllTasks'
-import { GroupsList } from './GroupsList'
+import { GroupList } from './GroupList'
 import styles from './EditWork.module.css'
 
 type EditWorkProps = { id: WorkId }
@@ -40,7 +40,7 @@ export const EditWork = ({ id }: EditWorkProps) => {
       </div>
 
       <h3>Назначьте работу группам</h3>
-      <GroupsList />
+      <GroupList />
       <Divider />
       <IncludedTasks />
       <Divider />

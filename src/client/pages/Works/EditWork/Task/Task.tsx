@@ -1,6 +1,6 @@
 import React from 'react'
 import { PreviewButton as Preview } from '@components/Buttons'
-import styles from './EditWork.module.css'
+import styles from './Task.module.css'
 
 type TaskProps = {
   id: number | string

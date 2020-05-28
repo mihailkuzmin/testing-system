@@ -3,9 +3,9 @@ import { useStore } from 'effector-react'
 import { PlusButton as Add } from '@components/Buttons'
 import { Item, Select } from '@components/Inputs/Select'
 import { TaskId, TopicId } from '@common/typings/task'
-import { editForm } from '../model/editWork'
-import { Task } from './Task'
-import styles from './EditWork.module.css'
+import { editForm } from '../../model/editWork'
+import { Task } from '../Task'
+import styles from './AllTasks.module.css'
 
 const TopicSelect = () => {
   const { topics, selected } = useStore(editForm.$topics)
@@ -37,11 +37,11 @@ export const AllTasks = () => {
 
   return (
     <div className={styles.allTasks}>
-      <div className={styles.flexBetween}>
+      <div className={styles.header}>
         <h3>Все задания</h3>
         <TopicSelect />
       </div>
-      <div className={styles.tasksList}>
+      <div className={styles.list}>
         {tasksIsEmpty ? (
           <div className={styles.emptyList}>
             <span>Заданий на эту тему пока нет</span>
