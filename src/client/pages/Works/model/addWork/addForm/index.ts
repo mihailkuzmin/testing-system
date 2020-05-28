@@ -72,7 +72,7 @@ const deleteTaskFromWork = sample({
 })
 
 $tasks.on(getTasksFx.doneData, (_, { payload }) => payload)
-$tasks.reset(AddWorkPage.close, createWorkFx.done)
+$tasks.reset(AddWorkPage.close)
 
 $topics.on(getTopicsFx.doneData, (_, { payload }) => payload)
 $topics.on(createWorkFx.done, (topics) => [...topics])
