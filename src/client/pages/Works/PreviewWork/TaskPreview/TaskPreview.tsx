@@ -1,18 +1,18 @@
 import React from 'react'
 import { Task } from '@common/typings/task'
 import { Divider } from '@material-ui/core'
-import styles from './PreviewWork.module.css'
+import styles from './TaskPreview.module.css'
 
 type TaskPreviewProps = Task & { number: number }
 
 export const TaskPreview = (props: TaskPreviewProps) => (
-  <div className={styles.taskPreview}>
-    <div className={styles.taskHeader}>
+  <div className={styles.task}>
+    <div className={styles.header}>
       <h3>Задание {props.number}</h3>
       <span>Тема: {props.topic.name}</span>
     </div>
 
-    <div dangerouslySetInnerHTML={{ __html: props.description ?? '' }}></div>
+    <div dangerouslySetInnerHTML={{ __html: props.description ?? '' }} />
 
     <Divider />
 
