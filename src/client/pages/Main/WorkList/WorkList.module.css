@@ -1,0 +1,14 @@
+.worksList {
+  display: grid;
+  gap: 1rem;
+}
+
+.worksList > p {
+  margin: 0;
+}
+
+.work {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

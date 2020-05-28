@@ -1,11 +1,10 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { navigate } from 'hookrouter'
 import { Paper, Divider } from '@components'
-import { Linear } from '@components/Loaders'
-import { PrimaryButton as Begin } from '@components/Buttons'
+import { Linear as Loader } from '@components/Loaders'
 import { auth } from '@model'
 import { MainPage } from './model/index'
+import { WorkList } from './WorkList'
 import styles from './Main.module.css'
 
 export const Main = () => {
@@ -18,24 +17,7 @@ export const Main = () => {
 
       <Divider />
 
-      {isLoading ? <Linear /> : <Works />}
+      {isLoading ? <Loader /> : <WorkList />}
     </Paper>
-  )
-}
-
-const Works = () => {
-  const works = useStore(MainPage.$works)
-  const isEmpty = !works.length
-
-  return (
-    <div className={styles.worksList}>
-      {isEmpty ? <p>Доступных работ пока нет</p> : <p>Доступные работы:</p>}
-      {works.map((work) => (
-        <div key={work.id} className={styles.work}>
-          {work.name}
-          <Begin onClick={() => navigate(`/begin/${work.id}`)}>Начать</Begin>
-        </div>
-      ))}
-    </div>
   )
 }
