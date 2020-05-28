@@ -1,0 +1,25 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--addWorkGap);
+}
+
+.list > * {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 0.7rem;
+}
+
+.group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin-bottom: 0.3rem;
+}
+
+.group:last-child {
+  margin-bottom: unset;
+}

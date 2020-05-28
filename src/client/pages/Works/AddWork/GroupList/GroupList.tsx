@@ -1,14 +1,14 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { PlusButton as Add, DeleteButton as Delete } from '@components/Buttons'
-import { addForm } from '../model/addWork'
-import styles from './AddWork.module.css'
+import { addForm } from '../../model/addWork'
+import styles from './GroupList.module.css'
 
-export const GroupsList = () => {
+export const GroupList = () => {
   const { groups, selected } = useStore(addForm.$groups)
 
   return (
-    <div className={styles.groupsList}>
+    <div className={styles.list}>
       <div>
         <span>Выбранные группы:</span>
         {selected.map((group) => (

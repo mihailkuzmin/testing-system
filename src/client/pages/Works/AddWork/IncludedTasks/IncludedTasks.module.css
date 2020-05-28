@@ -1,0 +1,31 @@
+.includedTasks {
+  display: grid;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list {
+  display: grid;
+  gap: 1rem;
+}
+
+.emptyList {
+  display: grid;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 0.7rem;
+  grid-template-columns: 1fr;
+}
+
+.emptyList > * {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}

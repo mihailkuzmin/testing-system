@@ -2,9 +2,9 @@ import React from 'react'
 import { useStore } from 'effector-react'
 import { DeleteButton as Delete } from '@components/Buttons'
 import { TaskId } from '@common/typings/task'
-import { addForm } from '../model/addWork/addForm'
-import { Task } from './Task'
-import styles from './AddWork.module.css'
+import { addForm } from '@pages/Works/model/addWork'
+import { Task } from '../Task'
+import styles from './IncludedTasks.module.css'
 
 export const IncludedTasks = () => {
   const { selected } = useStore(addForm.$tasks)
@@ -18,11 +18,11 @@ export const IncludedTasks = () => {
 
   return (
     <div className={styles.includedTasks}>
-      <div className={styles.flexBetween}>
+      <div className={styles.header}>
         <h3>Задания в работе</h3>
         <span>Заданий: {selected.length}</span>
       </div>
-      <div className={styles.tasksList}>
+      <div className={styles.list}>
         {tasksIsEmpty ? (
           <div className={styles.emptyList}>
             <span>Добавьте задания к работе из списка ниже</span>

@@ -6,9 +6,9 @@ import { PageLoader, PageError } from '@components/Loaders'
 import { addForm, AddWorkPage } from '../model/addWork'
 import { IncludedTasks } from './IncludedTasks'
 import { AllTasks } from './AllTasks'
+import { GroupList } from './GroupList'
 import { CloseDateInput, NameInput, OpenDateInput } from './Inputs'
 import styles from './AddWork.module.css'
-import { GroupsList } from '@pages/Works/AddWork/GroupsList'
 
 export const AddWork = () => {
   React.useEffect(AddWorkPage.onMount, [])
@@ -37,7 +37,7 @@ export const AddWork = () => {
       </div>
 
       <h3>Назначьте работу группам</h3>
-      <GroupsList />
+      <GroupList />
       <Divider />
       <IncludedTasks />
       <Divider />
