@@ -1,0 +1,8 @@
+.loader {
+  padding: 0 0.5rem;
+}
+
+.loader > div {
+  height: 30px !important;
+  width: 30px !important;
+}

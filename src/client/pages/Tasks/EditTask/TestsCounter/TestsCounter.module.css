@@ -1,0 +1,8 @@
+.testsCounter {
+  display: flex;
+  align-items: center;
+}
+
+.testsCounter > span {
+  margin-right: 0.5rem;
+}

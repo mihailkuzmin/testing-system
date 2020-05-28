@@ -8,8 +8,8 @@ import {
   DeleteButton as Delete,
   PreviewButton as Preview,
 } from '@components/Buttons'
-import { DeleteTask } from './DeleteTask'
 import { tasksTable } from '../../model/index'
+import { DeleteTask } from './DeleteTask'
 import styles from './TasksTable.module.css'
 
 export const TasksTable = () => {

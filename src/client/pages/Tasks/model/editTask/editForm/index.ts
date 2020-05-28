@@ -1,4 +1,4 @@
-import { forward, guard, sample } from 'effector'
+import { combine, forward, guard, sample } from 'effector'
 import { notifications } from '@model/notifications'
 import { MessageType } from '@typings'
 import { nanoid } from 'nanoid'
@@ -134,9 +134,11 @@ export const editForm = {
 
 export const tests = {
   $tests,
-  $testsCount,
-  $testsAreLoading: getTestsFx.pending,
-  $editTests,
+  $options: combine({
+    testsCount: $testsCount,
+    testsAreLoading: getTestsFx.pending,
+    editTests: $editTests,
+  }),
   toggleEditTests,
   inputChange,
   outputChange,

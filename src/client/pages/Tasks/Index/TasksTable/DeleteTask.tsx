@@ -5,10 +5,7 @@ import { ConfirmationDialog } from '@components/ConfirmationDialog'
 import { tasksTable } from '../../model/index'
 
 export const DeleteTask = () => {
-  const isOpen = useStore(tasksTable.$deleteDialogIsOpen)
-  const isLoading = useStore(tasksTable.$deleteDialogIsLoading)
-  const isIncluded = useStore(tasksTable.$isIncludedToWork)
-  const works = useStore(tasksTable.$worksWithTask)
+  const { isOpen, isLoading, isIncluded, worksWithTask } = useStore(tasksTable.$deleteDialog)
 
   if (isLoading) {
     return (
@@ -36,8 +33,8 @@ export const DeleteTask = () => {
         cancelText='Понятно'
       >
         <p>Невозможно удалить задание, так как оно включено в следующие работы:</p>
-        <ol>
-          {works.map((work) => (
+        <ol style={{ maxWidth: '70%', margin: 'auto', wordBreak: 'break-all' }}>
+          {worksWithTask.map((work) => (
             <li key={work.id}>{work.name}</li>
           ))}
         </ol>

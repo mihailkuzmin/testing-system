@@ -8,8 +8,8 @@ import { TaskId } from '@common/typings/task'
 import { EditPage, editForm, tests } from '../model/editTask'
 import { NameInput, DescriptionInput, TopicSelect } from './Inputs'
 import { TestsCounter } from './TestsCounter'
-import { Loader } from './Loader'
-import { Tests } from './Tests'
+import { TestList } from './TestList'
+import { TestsLoader } from './TestsLoader'
 import styles from './EditTask.module.css'
 
 type EditTaskProps = { id: TaskId }
@@ -18,9 +18,7 @@ export const EditTask = ({ id }: EditTaskProps) => {
   React.useEffect(() => EditPage.onMount(id), [id])
 
   const { isLoading, isFail } = useStore(EditPage.$status)
-  const editTests = useStore(tests.$editTests)
-  const testsAreLoading = useStore(tests.$testsAreLoading)
-  const testsCount = useStore(tests.$testsCount)
+  const { editTests, testsAreLoading, testsCount } = useStore(tests.$options)
 
   const showTests = editTests && !testsAreLoading && testsCount > 0
   const showCounter = editTests && !testsAreLoading
@@ -60,11 +58,11 @@ export const EditTask = ({ id }: EditTaskProps) => {
           <div className={styles.editControl}>
             <CheckBox checked={editTests} onChange={() => tests.toggleEditTests(!editTests)} />
             <h3>Редактировать тесты</h3>
-            {testsAreLoading && <Loader />}
+            {testsAreLoading && <TestsLoader />}
           </div>
           {showCounter && <TestsCounter count={testsCount} onClick={() => tests.addTest()} />}
         </div>
-        {showTests && <Tests />}
+        {showTests && <TestList />}
       </form>
     </Paper>
   )

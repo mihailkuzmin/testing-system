@@ -70,10 +70,12 @@ deleteTaskFx.failData.watch(({ message }) => {
 export const tasksTable = {
   $tasks,
   $taskForDelete,
-  $deleteDialogIsOpen: $taskForDelete.map(Boolean),
-  $deleteDialogIsLoading: getWorksWithTaskFx.pending,
-  $isIncludedToWork,
-  $worksWithTask,
+  $deleteDialog: combine({
+    isOpen: $taskForDelete.map(Boolean),
+    isLoading: getWorksWithTaskFx.pending,
+    isIncluded: $isIncludedToWork,
+    worksWithTask: $worksWithTask,
+  }),
   confirmDelete,
   cancelDelete,
   selectForDelete,
