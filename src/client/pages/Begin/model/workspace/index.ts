@@ -65,21 +65,28 @@ $selectedLangId.on(getLangsFx.doneData, (_, { payload }) => {
 $selectedLangId.on(langChanged, (_, lang) => lang)
 $selectedLangId.reset(BeginPage.close)
 
+const $selectedLang = combine({ langs: $langs, langId: $selectedLangId }, ({ langs, langId }) => {
+  return langs.find((lang) => lang.id === langId) ?? null
+})
+
 $selectedTab.on(tabChanged, (_, tab) => tab)
 $selectedTab.on(runFx, () => Tabs.Console)
+$selectedTab.on(taskChanged, () => Tabs.Editor)
 $selectedTab.reset(BeginPage.close)
 
+$code.on(BeginPage.open, () => 'Type your code here')
 $code.on(codeChanged, (_, code) => code)
-$code.reset(BeginPage.close)
+$code.reset(BeginPage.close, taskChanged)
 
-$console.on(runFx, () => 'Running...')
-$console.on(runFx.doneData, (_, { payload }) => payload?.output)
-$console.reset(BeginPage.close)
+$console.on(runFx, (state) => ({ ...state, output: 'Running...' }))
+$console.on(runFx.doneData, (_, { payload }) => payload)
+$console.on(runFx.failData, () => ({ ok: false, output: 'Server error' }))
+$console.reset(BeginPage.close, taskChanged)
 
 const $forSubmit = combine(
   {
     code: $code,
-    plangId: $selectedLangId,
+    plang: $selectedLang,
     workId: $workId,
     taskId: $selectedTaskId,
     userId: $user,

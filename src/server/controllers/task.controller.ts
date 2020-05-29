@@ -14,11 +14,29 @@ import { Response } from '@common/typings'
 import { Controller } from '@typings'
 import { TaskRepository } from '@repositories'
 import { allowFor } from '@hooks'
-import { PythonRunner } from '@lib/Runners/PythonRunner'
-
-const runner = new PythonRunner()
+import { Runner } from '@lib/Runner'
 
 export const taskController: Controller = (app, options, done) => {
+  app.route({
+    method: 'POST',
+    url: '/run',
+    preValidation: allowFor([Roles.Administrator, Roles.Moderator, Roles.Student]),
+    handler: async (request, reply) => {
+      const task: SubmitTask = request.body
+
+      const { runner, error } = Runner.create(task.plang.name)
+
+      if (!runner) {
+        const response: Response<SubmitResult> = { payload: { ok: false, output: error! } }
+        return reply.send(response)
+      }
+
+      const result = await runner.run(task.code)
+      const response: Response<SubmitResult> = { payload: result }
+      reply.send(response)
+    },
+  })
+
   app.route({
     method: 'GET',
     url: '/',
@@ -68,20 +86,6 @@ export const taskController: Controller = (app, options, done) => {
       await TaskRepository.create(newTask)
 
       const response: Response<void> = { message: 'Выполнено' }
-      reply.send(response)
-    },
-  })
-
-  app.route({
-    method: 'POST',
-    url: '/run',
-    preValidation: allowFor([Roles.Administrator, Roles.Moderator, Roles.Student]),
-    handler: async (request, reply) => {
-      const task: SubmitTask = request.body
-
-      const result = await runner.run(task.code)
-
-      const response: Response<SubmitResult> = { payload: result }
       reply.send(response)
     },
   })

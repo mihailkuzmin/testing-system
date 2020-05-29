@@ -1,9 +1,12 @@
 import { WorkId } from '../work'
 import { UserId } from '../user'
 
+export enum PLangs {
+  Python = 'Python',
+  JavaScript = 'JavaScript',
+}
 export type PLangId = number
-
-export type PLang = { id: PLangId; name: string }
+export type PLang = { id: PLangId; name: PLangs }
 
 export type TaskId = number
 export type TestId = number
@@ -46,7 +49,7 @@ export type UpdateTask = {
 
 export type SubmitTask = {
   code: string
-  plangId: PLangId
+  plang: PLang
   taskId: TaskId
   workId: WorkId
   userId: UserId

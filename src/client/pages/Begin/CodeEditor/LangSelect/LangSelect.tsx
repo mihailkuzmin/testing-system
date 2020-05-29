@@ -12,7 +12,6 @@ export const LangSelect = ({ disabled }: LangSelectProps) => {
 
   return (
     <Select
-      autoWidth
       disabled={disabled}
       className={styles.select}
       value={selected ?? ''}

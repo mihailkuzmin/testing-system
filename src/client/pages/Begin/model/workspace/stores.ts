@@ -1,7 +1,7 @@
 import { createStore } from 'effector'
 import { PLang, PLangId, Task, TaskId } from '@common/typings/task'
 import { WorkId } from '@common/typings/work'
-import { Tabs } from './typings'
+import { Tabs, Console } from './typings'
 
 export const $workId = createStore<WorkId | null>(null)
 
@@ -12,7 +12,7 @@ export const $selectedTaskInfo = createStore<Task | null>(null)
 export const $langs = createStore<PLang[]>([])
 export const $selectedLangId = createStore<PLangId | null>(null)
 
-export const $code = createStore('Type your code here')
-export const $console = createStore('Output will be here')
+export const $code = createStore('')
+export const $console = createStore<Console>({ ok: true, output: '' })
 
 export const $selectedTab = createStore(Tabs.Editor)
