@@ -6,6 +6,7 @@ import { workspace } from '../model'
 import styles from './TaskList.module.css'
 
 export const TaskList = () => {
+  const { runPending } = useStore(workspace.$codeEditor)
   const { tasks, selectedId } = useStore(workspace.$tasks)
 
   return (
@@ -15,6 +16,7 @@ export const TaskList = () => {
           <ListItem
             key={task.id}
             onClick={() => workspace.taskChanged(task.id)}
+            disabled={runPending}
             selected={task.id === selectedId}
             button
           >

@@ -1,6 +1,9 @@
 import { createStore } from 'effector'
 import { PLang, PLangId, Task, TaskId } from '@common/typings/task'
+import { WorkId } from '@common/typings/work'
 import { Tabs } from './typings'
+
+export const $workId = createStore<WorkId | null>(null)
 
 export const $tasks = createStore<Task[]>([])
 export const $selectedTaskId = createStore<TaskId | null>(null)

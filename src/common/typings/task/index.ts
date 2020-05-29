@@ -1,3 +1,6 @@
+import { WorkId } from '../work'
+import { UserId } from '../user'
+
 export type PLangId = number
 
 export type PLang = { id: PLangId; name: string }
@@ -39,4 +42,17 @@ export type UpdateTask = {
   testsForDelete: TestId[]
   testsForUpdate: UpdateTest[]
   testsForInsert: CreateTest[]
+}
+
+export type SubmitTask = {
+  code: string
+  plangId: PLangId
+  taskId: TaskId
+  workId: WorkId
+  userId: UserId
+}
+
+export type SubmitResult = {
+  ok: boolean
+  output: string
 }

@@ -1,4 +1,14 @@
-import { CreateTask, PLang, Task, TaskId, Test, Topic, UpdateTask } from '@common/typings/task'
+import {
+  CreateTask,
+  PLang,
+  SubmitResult,
+  SubmitTask,
+  Task,
+  TaskId,
+  Test,
+  Topic,
+  UpdateTask,
+} from '@common/typings/task'
 import { Roles } from '@common/typings/user'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
@@ -55,6 +65,18 @@ export const taskController: Controller = (app, options, done) => {
       await TaskRepository.create(newTask)
 
       const response: Response<void> = { message: 'Выполнено' }
+      reply.send(response)
+    },
+  })
+
+  app.route({
+    method: 'POST',
+    url: '/run',
+    preValidation: allowFor([Roles.Administrator, Roles.Moderator, Roles.Student]),
+    handler: async (request, reply) => {
+      const task: SubmitTask = request.body
+
+      const response: Response<SubmitResult> = { payload: { ok: true, output: 'Example output' } }
       reply.send(response)
     },
   })

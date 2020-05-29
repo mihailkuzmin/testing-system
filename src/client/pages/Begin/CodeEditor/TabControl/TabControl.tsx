@@ -3,7 +3,9 @@ import { useStore } from 'effector-react'
 import { Tabs, Tab } from '@material-ui/core'
 import { workspace } from '../../model'
 
-export const TabControl = () => {
+type TabControlProps = { disabled?: boolean }
+
+export const TabControl = ({ disabled }: TabControlProps) => {
   const { tab } = useStore(workspace.$codeEditor)
 
   return (
@@ -14,8 +16,8 @@ export const TabControl = () => {
         textColor='primary'
         onChange={(e: React.ChangeEvent<{}>, newValue: number) => workspace.tabChanged(newValue)}
       >
-        <Tab label='Редактор' />
-        <Tab label='Консоль' />
+        <Tab disabled={disabled} label='Редактор' />
+        <Tab disabled={disabled} label='Консоль' />
       </Tabs>
     </div>
   )

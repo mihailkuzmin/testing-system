@@ -5,5 +5,7 @@ export const langChanged = createEvent<PLangId>()
 
 export const codeChanged = createEvent<string>()
 export const tabChanged = createEvent<number>()
+export const testTask = createEvent()
+export const submitTask = createEvent()
 
 export const taskChanged = createEvent<TaskId>()
