@@ -18,6 +18,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.50",
     "@material-ui/pickers": "^3.2.10",
+    "child-process-promise": "^2.2.1",
     "date-fns": "^2.13.0",
     "effector": "^20.14.0",
     "effector-react": "^20.7.1",
@@ -39,6 +40,7 @@
     "tmp-promise": "^3.0.2"
   },
   "devDependencies": {
+    "@types/child-process-promise": "^2.2.1",
     "@types/express": "^4.17.3",
     "@types/hookrouter": "^2.2.1",
     "@types/node": "^13.9.1",
