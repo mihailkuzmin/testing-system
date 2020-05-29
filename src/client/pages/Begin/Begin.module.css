@@ -18,5 +18,5 @@
 
 .beginPage > *:first-child {
   grid-row-start: 1;
-  grid-row-end: 4;
+  grid-row-end: 3;
 }
