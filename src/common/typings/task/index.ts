@@ -4,6 +4,7 @@ import { UserId } from '../user'
 export enum PLangs {
   Python = 'Python',
   JavaScript = 'JavaScript',
+  Pascal = 'Pascal',
 }
 export type PLangId = number
 export type PLang = { id: PLangId; name: PLangs }
