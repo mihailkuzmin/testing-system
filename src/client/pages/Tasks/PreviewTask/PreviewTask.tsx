@@ -32,22 +32,24 @@ export const PreviewTask = ({ id }: PreviewTaskProps) => {
       <Divider />
 
       <div className={styles.taskPreview}>
-        <div dangerouslySetInnerHTML={{ __html: preview?.description ?? '' }}></div>
+        <div dangerouslySetInnerHTML={{ __html: preview?.description ?? '' }} />
 
         <Divider />
 
-        <div className={styles.tests}>
+        <h3>Примеры входных и выходных данных</h3>
+        <div className={styles.testList}>
           {preview?.tests?.map((test) => (
-            <React.Fragment key={test.id}>
+            <div key={test.id} className={styles.test}>
               <div>
                 <span>Пример входных данных</span>
-                <div className={styles.test}>{test.input}</div>
+                <div>{test.input}</div>
               </div>
               <div>
                 <span>Пример выходных данных</span>
-                <div className={styles.test}>{test.output}</div>
+                <div>{test.output}</div>
               </div>
-            </React.Fragment>
+              <Divider />
+            </div>
           ))}
         </div>
       </div>

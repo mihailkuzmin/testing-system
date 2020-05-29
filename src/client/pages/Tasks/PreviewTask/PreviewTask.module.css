@@ -25,13 +25,24 @@
   padding: 0.5rem;
 }
 
-.tests {
+.testList {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--previewGap);
+  gap: 1rem;
 }
 
-.tests span {
+.test {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  white-space: pre-wrap;
+}
+
+.test > *:nth-child(3) {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.test span {
   display: block;
   color: rgba(0, 0, 0, 0.54);
   font-size: 0.9rem;

@@ -23,3 +23,28 @@
   height: 100%;
   overflow: auto;
 }
+
+.testList {
+  display: grid;
+  gap: 1rem;
+}
+
+.test {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  white-space: pre-wrap;
+}
+
+.test > *:nth-child(3) {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.test span {
+  display: block;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
