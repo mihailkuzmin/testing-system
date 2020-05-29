@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify'
+import { ExecResult } from '@common/typings/task'
 
 export type Controller = {
   (
@@ -10,4 +11,8 @@ export type Controller = {
     },
     done: () => void,
   ): void
+}
+
+export interface ITaskRunner {
+  run(code: string): Promise<ExecResult>
 }

@@ -56,3 +56,8 @@ export type SubmitResult = {
   ok: boolean
   output: string
 }
+
+export type ExecResult = {
+  ok: boolean
+  output: string
+}

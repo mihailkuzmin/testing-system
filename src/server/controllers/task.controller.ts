@@ -14,6 +14,9 @@ import { Response } from '@common/typings'
 import { Controller } from '@typings'
 import { TaskRepository } from '@repositories'
 import { allowFor } from '@hooks'
+import { PythonRunner } from '@lib/Runners/PythonRunner'
+
+const runner = new PythonRunner()
 
 export const taskController: Controller = (app, options, done) => {
   app.route({
@@ -76,7 +79,9 @@ export const taskController: Controller = (app, options, done) => {
     handler: async (request, reply) => {
       const task: SubmitTask = request.body
 
-      const response: Response<SubmitResult> = { payload: { ok: true, output: 'Example output' } }
+      const result = await runner.run(task.code)
+
+      const response: Response<SubmitResult> = { payload: result }
       reply.send(response)
     },
   })
