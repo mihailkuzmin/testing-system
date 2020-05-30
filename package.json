@@ -5,7 +5,7 @@
   "scripts": {
     "build:client": "webpack --config webpack.prod.js --display minimal",
     "dev:client": "webpack-dev-server --config webpack.dev.js",
-    "start:client": "serve -s ./dist/client",
+    "start:client": "serve -s ./dist/frontend",
     "build:server": "eslint \"src/server/**/*.ts\" && rm -rf ./dist/backend/* && tsc -P ./src/server/tsconfig.json && cp ./src/server/tsconfig.json ./dist/backend/server",
     "dev:server": "nodemon",
     "start:server": "cd ./dist/backend/server && node -r tsconfig-paths/register index.js"
