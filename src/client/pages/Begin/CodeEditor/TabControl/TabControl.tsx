@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { Tabs, Tab } from '@material-ui/core'
+import { Tabs, Tab } from '@components/Tabs'
 import { workspace } from '../../model'
 
 type TabControlProps = { disabled?: boolean }
