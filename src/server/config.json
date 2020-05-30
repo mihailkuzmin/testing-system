@@ -4,11 +4,19 @@
     "host": "host",
     "database": "database",
     "password": "password",
-    "port": 1000
+    "port": 5432
+  },
+  "session": {
+    "cookieName": "sessionId",
+    "secret": "session-secret",
+    "cookie": {
+      "secure": false,
+      "maxAge": 259200000
+    }
   },
   "logger": {
     "prettyPrint": true
   },
-  "port": 2000,
+  "port": 5000,
   "restartTime": 5000
 }
