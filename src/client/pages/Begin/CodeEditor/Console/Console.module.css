@@ -1,0 +1,27 @@
+.consoleWrap {
+  position: relative;
+}
+
+.console {
+  font-family: monospace;
+  font-size: 1rem;
+  white-space: pre-wrap;
+  overflow: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.console > *:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.execOk {
+  color: #27c022;
+}
+
+.execError {
+  color: #b94a48;
+}

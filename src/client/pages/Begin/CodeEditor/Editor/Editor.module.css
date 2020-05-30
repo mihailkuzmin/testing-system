@@ -1,0 +1,13 @@
+.editor {
+  display: block;
+  border: none;
+  background: none;
+  font-family: monospace;
+  font-size: 1rem;
+  overflow: auto;
+  resize: none;
+}
+
+.editor:focus {
+  outline: unset;
+}

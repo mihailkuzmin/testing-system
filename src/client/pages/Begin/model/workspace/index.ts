@@ -4,7 +4,7 @@ import { BeginPage } from '../page'
 import { getLangsFx, getTaskInfoFx, getTasksFx, runFx } from './effects'
 import {
   $code,
-  $console,
+  $execResult,
   $langs,
   $selectedLangId,
   $selectedTab,
@@ -74,14 +74,17 @@ $selectedTab.on(runFx, () => Tabs.Console)
 $selectedTab.on(taskChanged, () => Tabs.Editor)
 $selectedTab.reset(BeginPage.close)
 
-$code.on(BeginPage.open, () => 'Type your code here')
 $code.on(codeChanged, (_, code) => code)
 $code.reset(BeginPage.close, taskChanged)
 
-$console.on(runFx, (state) => ({ ...state, output: 'Running...' }))
-$console.on(runFx.doneData, (_, { payload }) => payload)
-$console.on(runFx.failData, () => ({ ok: false, output: 'Server error' }))
-$console.reset(BeginPage.close, taskChanged)
+$execResult.on(runFx, () => [{ ok: true, runtimeError: false, output: 'Выполнение...' }])
+$execResult.on(runFx.doneData, (_, { payload }) => payload)
+$execResult.on(runFx.failData, () => [{ ok: false, runtimeError: false, output: 'Ошибка сервера' }])
+$execResult.reset(BeginPage.close, taskChanged)
+
+const $testsPassed = $execResult.map((results) => {
+  return results.reduce((sum, result) => sum + Number(result.ok), 0)
+})
 
 const $forSubmit = combine(
   {
@@ -116,9 +119,11 @@ export const workspace = {
   $langs: combine({ langs: $langs, selected: $selectedLangId }),
   $codeEditor: combine({
     code: $code,
-    console: $console,
+    execResult: $execResult,
+    testsPassed: $testsPassed,
     tab: $selectedTab,
     runPending: runFx.pending,
+    canRun: $canSubmit,
   }),
   langChanged,
   codeChanged,

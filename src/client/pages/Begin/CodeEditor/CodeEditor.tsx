@@ -6,26 +6,24 @@ import { workspace } from '../model'
 import { Tabs } from '../model/workspace/typings'
 import { TabControl } from './TabControl'
 import { LangSelect } from './LangSelect'
+import { Editor } from './Editor'
+import { Console } from './Console'
 import styles from './CodeEditor.module.css'
 
 export const CodeEditor = () => {
-  const { code, console, tab, runPending } = useStore(workspace.$codeEditor)
-  const codeSelected = tab === Tabs.Editor
-  const consoleError = !codeSelected && !runPending && !console.ok
+  const { tab, runPending, canRun } = useStore(workspace.$codeEditor)
+  const editorSelected = tab === Tabs.Editor
 
   return (
     <Card className={styles.codeEditor}>
       <TabControl disabled={runPending} />
       <Divider />
-      <textarea
-        value={codeSelected ? code : console.output}
-        disabled={!codeSelected}
-        onChange={(e) => workspace.codeChanged(e.target.value)}
-        className={`${styles.editor} ${consoleError && styles.error}`}
-      />
+
+      {editorSelected ? <Editor /> : <Console />}
+
       <Divider />
       <div className={styles.editorControl}>
-        <Button disabled={runPending} onClick={() => workspace.testTask()}>
+        <Button disabled={runPending || !canRun} onClick={() => workspace.testTask()}>
           Запуск
         </Button>
         <LangSelect disabled={runPending} />

@@ -3,7 +3,7 @@ import { UserId } from '../user'
 
 export enum PLangs {
   Python = 'Python',
-  JavaScript = 'JavaScript',
+  NodeJS = 'Node.js',
   Pascal = 'Pascal',
 }
 export type PLangId = number
@@ -56,12 +56,10 @@ export type SubmitTask = {
   userId: UserId
 }
 
-export type SubmitResult = {
-  ok: boolean
-  output: string
-}
-
 export type ExecResult = {
   ok: boolean
+  runtimeError: boolean
   output: string
+  testInput?: string
+  testOutput?: string
 }

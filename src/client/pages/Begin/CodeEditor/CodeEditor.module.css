@@ -4,27 +4,9 @@
   padding: 0;
 }
 
-.editor {
-  display: block;
-  border: none;
-  background: none;
-  font-family: monospace;
-  font-size: 1rem;
-  overflow: auto;
-  resize: none;
-}
-
-.editor:focus {
-  outline: unset;
-}
-
-.error {
-  color: #b94a48;
-}
-
 .editorControl {
   display: grid;
-  grid-template-columns: 5rem 7rem;
+  grid-template-columns: repeat(2, 7rem);
   grid-template-rows: 2.5rem;
   align-items: center;
   gap: 0.5rem;

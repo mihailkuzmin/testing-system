@@ -89,6 +89,7 @@ export class UserRepository {
         W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
       FROM Student S, StudentGroup_Work GW, Work W
       WHERE (S.id = %L and S.group_id = GW.group_id and W.id = GW.work_id)
+      ORDER BY W.name
     `,
       id,
     )

@@ -1,7 +1,7 @@
 import {
   CreateTask,
   PLang,
-  SubmitResult,
+  ExecResult,
   SubmitTask,
   Task,
   TaskId,
@@ -27,12 +27,16 @@ export const taskController: Controller = (app, options, done) => {
       const { runner, error } = Runner.create(task.plang.name)
 
       if (!runner) {
-        const response: Response<SubmitResult> = { payload: { ok: false, output: error! } }
+        const response: Response<ExecResult[]> = {
+          payload: [{ ok: false, runtimeError: true, output: error! }],
+        }
         return reply.send(response)
       }
 
-      const result = await runner.run(task.code)
-      const response: Response<SubmitResult> = { payload: result }
+      const tests = await TaskRepository.getTestsById(task.taskId)
+      const result = await runner.run(task.code, tests)
+
+      const response: Response<ExecResult[]> = { payload: result }
       reply.send(response)
     },
   })

@@ -4,9 +4,9 @@ import { ExecResult, Test } from '@common/typings/task'
 import { ITaskRunner } from '@typings'
 import { exec } from 'child-process-promise'
 
-export class PythonRunner implements ITaskRunner {
+export class NodeRunner implements ITaskRunner {
   async run(code: string, tests: Test[]): Promise<ExecResult[]> {
-    const { path, cleanup } = await tmp.file({ postfix: '.py' })
+    const { path, cleanup } = await tmp.file({ postfix: '.js' })
     await fs.promises.writeFile(path, code)
 
     const processes = tests.map((test) => this.exec(path, test.input, test.output))
@@ -18,11 +18,10 @@ export class PythonRunner implements ITaskRunner {
 
   private async exec(filePath: string, testInput: string, testOutput: string): Promise<ExecResult> {
     try {
-      const process = exec(`python3 ${filePath}`)
+      const process = exec(`node ${filePath}`)
       process.childProcess.stdin?.write(testInput)
       process.childProcess.stdin?.end()
       const { stdout } = await process
-
       const output = stdout.trim()
 
       const ok = output === testOutput

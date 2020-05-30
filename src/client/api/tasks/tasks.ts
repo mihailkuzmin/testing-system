@@ -8,12 +8,12 @@ import {
   Topic,
   PLang,
   SubmitTask,
-  SubmitResult,
+  ExecResult,
 } from '@common/typings/task'
 import { request } from '../request'
 
-const run = async (task: SubmitTask): Promise<Response<SubmitResult>> => {
-  const result = await request.post<SubmitTask, SubmitResult>('task/run', task)
+const run = async (task: SubmitTask): Promise<Response<ExecResult[]>> => {
+  const result = await request.post<SubmitTask, ExecResult[]>('task/run', task)
   return result
 }
 
