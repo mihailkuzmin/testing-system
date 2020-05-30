@@ -1,10 +1,11 @@
 import fs from 'fs'
 import tmp from 'tmp-promise'
 import { ExecResult, Test } from '@common/typings/task'
+import { timeout } from '@common/helpers'
 import { ITaskRunner } from '@typings'
-import { exec } from 'child-process-promise'
+import { exec, PromiseResult } from 'child-process-promise'
 
-export class NodeRunner implements ITaskRunner {
+export class JavaScriptRunner implements ITaskRunner {
   async run(code: string, tests: Test[]): Promise<ExecResult[]> {
     const { path, cleanup } = await tmp.file({ postfix: '.js' })
     await fs.promises.writeFile(path, code)
@@ -16,14 +17,31 @@ export class NodeRunner implements ITaskRunner {
     return result
   }
 
+  private async startTimeoutTimer(): Promise<ExecResult> {
+    await timeout(2000)
+    return {
+      ok: false,
+      runtimeError: true,
+      timeoutError: true,
+      output: 'Превышен лимит времени выполнения',
+    }
+  }
+
   private async exec(filePath: string, testInput: string, testOutput: string): Promise<ExecResult> {
     try {
       const process = exec(`node ${filePath}`)
       process.childProcess.stdin?.write(testInput)
       process.childProcess.stdin?.end()
-      const { stdout } = await process
-      const output = stdout.trim()
+      const result = await Promise.race([this.startTimeoutTimer(), process])
 
+      if (result.hasOwnProperty('timeoutError')) {
+        process.childProcess.kill()
+        return { ...result, testInput, testOutput } as ExecResult
+      }
+
+      const processResult = result as PromiseResult<string>
+
+      const output = processResult.stdout.trim()
       const ok = output === testOutput
 
       return { ok, runtimeError: false, output, testInput, testOutput }

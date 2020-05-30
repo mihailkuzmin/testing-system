@@ -1,7 +1,7 @@
 import ky from 'ky'
 import { Request, Response } from '@common/typings'
+import { timeout } from '@common/helpers'
 
-const timeout = (time: number): Promise<void> => new Promise((r) => setTimeout(r, time))
 const TIMEOUT = 500
 
 const api = ky.extend({

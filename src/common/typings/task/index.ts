@@ -3,7 +3,7 @@ import { UserId } from '../user'
 
 export enum PLangs {
   Python = 'Python',
-  NodeJS = 'Node.js',
+  JavaScript = 'JavaScript',
   Pascal = 'Pascal',
 }
 export type PLangId = number
@@ -60,6 +60,7 @@ export type ExecResult = {
   ok: boolean
   runtimeError: boolean
   output: string
+  timeoutError?: boolean
   testInput?: string
   testOutput?: string
 }

@@ -6,8 +6,9 @@
     "build:client": "webpack --config webpack.prod.js --display minimal",
     "dev:client": "webpack-dev-server --config webpack.dev.js",
     "start:client": "serve -s ./dist/client",
-    "build:server": "eslint \"src/server/**/*.ts\" && rm -rf ./dist/server/* && tsc -P tsconfig.build.server.json",
-    "dev:server": "nodemon"
+    "build:server": "eslint \"src/server/**/*.ts\" && rm -rf ./dist/backend/* && tsc -P ./src/server/tsconfig.json && cp ./src/server/tsconfig.json ./dist/backend/server",
+    "dev:server": "nodemon",
+    "start:server": "cd ./dist/backend/server && node -r tsconfig-paths/register index.js"
   },
   "keywords": [],
   "author": "",
@@ -48,6 +49,7 @@
     "@types/pg-format": "^1.0.0",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
+    "@types/tmp": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
     "autoprefixer": "^9.7.6",

@@ -1,7 +1,7 @@
 import { PLangs } from '@common/typings/task'
 import { ITaskRunner } from '@typings'
 import { PythonRunner } from './PythonRunner'
-import { NodeRunner } from './NodeRunner'
+import { JavaScriptRunner } from './JavaScriptRunner'
 import { PascalRunner } from './PascalRunner'
 
 export class Runner {
@@ -9,8 +9,8 @@ export class Runner {
     switch (lang) {
       case PLangs.Python:
         return { runner: new PythonRunner() }
-      case PLangs.NodeJS:
-        return { runner: new NodeRunner() }
+      case PLangs.JavaScript:
+        return { runner: new JavaScriptRunner() }
       case PLangs.Pascal:
         return { runner: new PascalRunner() }
       default:
