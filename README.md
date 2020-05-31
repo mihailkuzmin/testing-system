@@ -1,5 +1,11 @@
 # About project
 It's a clone of codewars/hackerrank/leetcode, but for students in my university
+<br />
+Demo here: http://51.15.239.35
+<br />
+Admin credentials: <code>admin:admin</code>
+<br />
+Common user credentials: <code>user:user</code>
 
 ## How to use:
 1. Login as admin
