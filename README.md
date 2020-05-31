@@ -1,7 +1,7 @@
-#About project
+# About project
 It's a clone of codewars/hackerrank/leetcode, but for students in my university
 
-##How to use:
+## How to use:
 1. Login as admin
 2. Create groups of students
 3. Create students
@@ -9,7 +9,7 @@ It's a clone of codewars/hackerrank/leetcode, but for students in my university
 5. Combine different tasks into one work
 6. That's all. Login as common user and enjoy coding
 
-##How to set up on linux:
+## How to set up on linux:
 <code>git clone https://github.com/mihailkuzmin/testing-system </code>
 <br />
 <code>npm install</code>
@@ -20,7 +20,7 @@ It's a clone of codewars/hackerrank/leetcode, but for students in my university
 <br />
 <code>install postgresql</code>
 
-##Run:
+## Run:
 1. Configure <code>nginx</code> for serving frontend from <code>dist/frontend</code>
 2. Add nginx <code>proxy_pass</code> for <code>/api</code> routes to the address that backend listening 
 (default is <code>localhost:5000</code>)
