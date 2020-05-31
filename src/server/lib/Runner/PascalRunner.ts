@@ -1,8 +1,8 @@
 import fs from 'fs'
 import tmp from 'tmp-promise'
+import { execFile, PromiseResult } from 'child-process-promise'
 import { ExecResult, Test } from '@common/typings/task'
 import { ITaskRunner } from '@typings'
-import { exec, PromiseResult } from 'child-process-promise'
 import { timeout } from '@common/helpers'
 
 export class PascalRunner implements ITaskRunner {
@@ -37,7 +37,7 @@ export class PascalRunner implements ITaskRunner {
 
   private async exec(filePath: string, testInput: string, testOutput: string): Promise<ExecResult> {
     try {
-      const process = exec(`mono ${filePath}`)
+      const process = execFile('mono', [filePath])
       process.childProcess.stdin?.write(`${testInput}\n`)
       process.childProcess.stdin?.end()
       const result = await Promise.race([this.startTimeoutTimer(), process])
@@ -60,7 +60,7 @@ export class PascalRunner implements ITaskRunner {
 
   private async compile(filePath: string): Promise<ExecResult> {
     try {
-      await exec(`mono ~/pascal/pabcnetc.exe ${filePath}`)
+      await execFile('mono', [`~/pascal/pabcnetc.exe ${filePath}`])
       const compiledFilePath = filePath.replace('.pas', '.exe')
 
       return { ok: true, runtimeError: false, output: compiledFilePath }

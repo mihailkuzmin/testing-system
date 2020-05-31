@@ -1,9 +1,9 @@
 import fs from 'fs'
 import tmp from 'tmp-promise'
+import { execFile, PromiseResult } from 'child-process-promise'
 import { ExecResult, Test } from '@common/typings/task'
 import { timeout } from '@common/helpers'
 import { ITaskRunner } from '@typings'
-import { exec, PromiseResult } from 'child-process-promise'
 
 export class JavaScriptRunner implements ITaskRunner {
   async run(code: string, tests: Test[]): Promise<ExecResult[]> {
@@ -29,7 +29,7 @@ export class JavaScriptRunner implements ITaskRunner {
 
   private async exec(filePath: string, testInput: string, testOutput: string): Promise<ExecResult> {
     try {
-      const process = exec(`node ${filePath}`)
+      const process = execFile('node', [filePath])
       process.childProcess.stdin?.write(testInput)
       process.childProcess.stdin?.end()
       const result = await Promise.race([this.startTimeoutTimer(), process])
