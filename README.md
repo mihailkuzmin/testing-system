@@ -1,7 +1,7 @@
 # About project
 It's a clone of codewars/hackerrank/leetcode, but for students in my university
 <br />
-Demo here: http://51.15.239.35
+**DEMO**: http://testingsystemdemo.site
 <br />
 Admin credentials: <code>admin:admin</code>
 <br />
