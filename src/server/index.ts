@@ -6,7 +6,7 @@ import qs from 'qs'
 import { PoolConfig } from 'pg'
 import { db } from '@db'
 import { routes } from '@routes'
-import config from './dev.config.json'
+import config from './config.json'
 
 const app: FastifyInstance = fastify({
   logger: config.logger,
