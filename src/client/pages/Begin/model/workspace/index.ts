@@ -3,7 +3,7 @@ import { $user } from '@model/auth/stores'
 import { BeginPage } from '../page'
 import { getLangsFx, getTaskInfoFx, getTasksFx, runFx } from './effects'
 import {
-  $code,
+  $codeTask,
   $execResult,
   $langs,
   $selectedLangId,
@@ -14,7 +14,7 @@ import {
   $workId,
 } from './stores'
 import { codeChanged, langChanged, submitTask, tabChanged, taskChanged, testTask } from './events'
-import { Tabs } from '@pages/Begin/model/workspace/typings'
+import { CodeTask, Tabs } from '@pages/Begin/model/workspace/typings'
 
 const selectedTaskChanged = sample({
   source: $tasks,
@@ -42,6 +42,26 @@ getTasksFx.doneData.watch(({ payload }) => {
 
 $tasks.on(getTasksFx.doneData, (_, { payload }) => payload)
 $tasks.reset(BeginPage.close)
+
+$codeTask.on(getTasksFx.doneData, (_, { payload }) => {
+  if (payload) {
+    const res: CodeTask = {}
+
+    payload.forEach((t) => (res[t.id] = ''))
+
+    return res
+  }
+})
+
+const taskCodeChanged = sample({
+  source: $selectedTaskId,
+  clock: codeChanged,
+  fn: (taskId, code) => ({ taskId, code }),
+})
+
+$codeTask.on(taskCodeChanged, (codeTask, { taskId, code }) => {
+  return { ...codeTask, [taskId as number]: code }
+})
 
 $selectedTaskId.on(getTasksFx.doneData, (_, { payload }) => {
   if (payload) {
@@ -74,8 +94,16 @@ $selectedTab.on(runFx, () => Tabs.Console)
 $selectedTab.on(taskChanged, () => Tabs.Editor)
 $selectedTab.reset(BeginPage.close)
 
-$code.on(codeChanged, (_, code) => code)
-$code.reset(BeginPage.close, taskChanged)
+const $code = combine(
+  { selectedTaskId: $selectedTaskId, codeTask: $codeTask },
+  ({ selectedTaskId, codeTask }) => {
+    if (selectedTaskId) {
+      return codeTask[selectedTaskId]
+    }
+
+    return ''
+  },
+)
 
 $execResult.on(runFx, () => [{ ok: true, runtimeError: false, output: 'Выполнение...' }])
 $execResult.on(runFx.doneData, (_, { payload }) => payload)
