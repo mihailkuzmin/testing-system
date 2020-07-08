@@ -44,7 +44,6 @@ export const taskController: Controller = (app, options, done) => {
   app.route({
     method: 'GET',
     url: '/',
-    preValidation: allowFor([Roles.Administrator]),
     handler: async (request, reply) => {
       const fieldsForExclude: Array<keyof Task> = request.query.exclude ?? []
 

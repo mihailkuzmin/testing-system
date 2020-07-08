@@ -61,6 +61,4 @@ export type ExecResult = {
   runtimeError: boolean
   output: string
   timeoutError?: boolean
-  testInput?: string
-  testOutput?: string
 }

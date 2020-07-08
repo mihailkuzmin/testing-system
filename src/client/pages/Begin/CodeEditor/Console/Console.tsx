@@ -1,6 +1,7 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { workspace } from '@pages/Begin/model'
+import { ExecResult } from '@common/typings/task'
 import styles from './Console.module.css'
 
 export const Console = () => {
@@ -15,19 +16,35 @@ export const Console = () => {
           <>
             {execResult.length > 0 && (
               <div>
-                Пройдено: {testsPassed} из {execResult.length} тестов
+                Пройдено тестов: {testsPassed} из {execResult.length}
               </div>
             )}
             {execResult.map((result, index) => (
-              <div key={index} className={result.ok ? styles.execOk : styles.execError}>
-                <div>Входные данные: {result.testInput}</div>
-                <div>Выходные данные: {result.testOutput}</div>
-                <div>Вывод программы: {result.output}</div>
-              </div>
+              <Result key={index} number={index + 1} {...result} />
             ))}
           </>
         )}
       </div>
+    </div>
+  )
+}
+
+type ExecResultProps = ExecResult & { number: number }
+
+const Result = (props: ExecResultProps) => {
+  if (props.ok) {
+    return (
+      <div className={styles.execOk}>
+        <span>{props.number}. [+] Тест пройден</span>
+      </div>
+    )
+  }
+
+  return (
+    <div className={styles.execError}>
+      <span>
+        {props.number}. [-] Тест не пройден. {props.timeoutError && props.output}
+      </span>
     </div>
   )
 }

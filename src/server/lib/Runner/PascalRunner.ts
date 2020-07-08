@@ -44,7 +44,7 @@ export class PascalRunner implements ITaskRunner {
 
       if (result.hasOwnProperty('timeoutError')) {
         process.childProcess.kill()
-        return { ...result, testInput, testOutput } as ExecResult
+        return result as ExecResult
       }
 
       const processResult = result as PromiseResult<string>
@@ -52,7 +52,7 @@ export class PascalRunner implements ITaskRunner {
       const output = processResult.stdout.trim()
       const ok = output === testOutput
 
-      return { ok, runtimeError: false, output, testInput, testOutput }
+      return { ok, runtimeError: false, output }
     } catch (e) {
       return { ok: false, runtimeError: true, output: e.stderr }
     }

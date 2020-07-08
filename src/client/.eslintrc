@@ -20,6 +20,7 @@
     "@typescript-eslint/consistent-type-definitions": 0,
     "import/no-unresolved": 0,
     "react/jsx-props-no-spreading": 0,
-    "react/destructuring-assignment": 0
+    "react/destructuring-assignment": 0,
+    "@typescript-eslint/no-non-null-assertion": 0
   }
 }
