@@ -43,10 +43,11 @@ export class JavaScriptRunner implements ITaskRunner {
 
       const output = processResult.stdout.trim()
       const ok = output === testOutput
-
       return { ok, runtimeError: false, output }
     } catch (e) {
-      return { ok: false, runtimeError: true, output: e.stderr }
+      const withoutStack = e.stderr.split('\n').slice(1, 5).join('\n')
+
+      return { ok: false, runtimeError: true, output: withoutStack }
     }
   }
 }

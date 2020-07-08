@@ -32,6 +32,9 @@ export const Console = () => {
 type ExecResultProps = ExecResult & { number: number }
 
 const Result = (props: ExecResultProps) => {
+  const showOutput = props.timeoutError || props.runtimeError
+  const outputPrefix = props.runtimeError ? 'Ошибка во время выполнения: ' : ''
+
   if (props.ok) {
     return (
       <div className={styles.execOk}>
@@ -42,9 +45,13 @@ const Result = (props: ExecResultProps) => {
 
   return (
     <div className={styles.execError}>
-      <span>
-        {props.number}. [-] Тест не пройден. {props.timeoutError && props.output}
-      </span>
+      <span>{props.number}. [-] Тест не пройден.</span>
+      {showOutput && (
+        <>
+          <div>{outputPrefix}</div>
+          <div>{props.output}</div>
+        </>
+      )}
     </div>
   )
 }
