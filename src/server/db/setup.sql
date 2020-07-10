@@ -54,19 +54,22 @@ CREATE TABLE Test (
 
 CREATE TABLE TaskResult (
 	id SERIAL PRIMARY KEY,
-	work_id INT NOT NULL,
-	task_id INT NOT NULL,
-	student_id INT NOT NULL,
-	program_text text NOT NULL,
-	program_output text NOT NULL,
-	solved BOOLEAN NOT NULL,
+	work_id INT NOT NULL REFERENCES Work(id),
+	task_id INT NOT NULL REFERENCES Task(id),
+	user_id INT NOT NULL REFERENCES Student(id),
+	code text NOT NULL,
+	code_output text NOT NULL,
+	tests_passed INT NOT NULL,
+	tests_count INT NOT NULL,
 	language_id INT NOT NULL REFERENCES PLanguage(id)
 );
 
 CREATE TABLE WorkResult (
-	id SERIAL PRIMARY KEY,
-	user_id INT NOT NULL,
-	work_id INT NOT NULL
+	id SERIAL,
+	user_id INT NOT NULL REFERENCES Student(id),
+	work_id INT NOT NULL REFERENCES Work(id),
+	started_at varchar(50) NOT NULL,
+	PRIMARY KEY(user_id, work_id)
 );
 
 CREATE TABLE StudentGroup_Work (

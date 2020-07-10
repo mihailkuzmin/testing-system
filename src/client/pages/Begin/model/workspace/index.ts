@@ -1,7 +1,7 @@
 import { combine, forward, guard, sample } from 'effector'
 import { $user } from '@model/auth/stores'
 import { BeginPage } from '../page'
-import { getLangsFx, getTaskInfoFx, getTasksFx, runFx } from './effects'
+import { getLangsFx, getTaskInfoFx, getTasksFx, runFx, beginWorkFx } from './effects'
 import {
   $codeTask,
   $execResult,
@@ -26,8 +26,11 @@ const selectedTaskChanged = sample({
 })
 const selectedTaskIdChanged = selectedTaskChanged.map((task) => task.id)
 
-forward({ from: BeginPage.open, to: [getTasksFx, getLangsFx] })
-forward({ from: BeginPage.close, to: [getTasksFx.cancel, getLangsFx.cancel, getTaskInfoFx.cancel] })
+forward({ from: BeginPage.open, to: [getTasksFx, getLangsFx, beginWorkFx] })
+forward({
+  from: BeginPage.close,
+  to: [getTasksFx.cancel, getLangsFx.cancel, getTaskInfoFx.cancel, beginWorkFx.cancel],
+})
 forward({ from: taskChanged, to: getTaskInfoFx.cancel })
 forward({ from: selectedTaskIdChanged, to: getTaskInfoFx })
 

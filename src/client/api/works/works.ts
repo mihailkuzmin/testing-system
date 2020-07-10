@@ -9,6 +9,11 @@ const getAll = async (): Promise<Response<Work[]>> => {
   return result
 }
 
+const beginWork = async (id: WorkId): Promise<Response<void>> => {
+  const result = await request.get<void>(`work/begin/${id}`)
+  return result
+}
+
 const getTasksOfWork = async (id: WorkId): Promise<Response<Task[]>> => {
   const result = await request.get<Task[]>(`work/${id}/tasks`)
   return result
@@ -65,4 +70,5 @@ export const worksApi = {
   deleteById,
   create,
   update,
+  beginWork,
 }

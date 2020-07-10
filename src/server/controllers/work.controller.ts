@@ -6,6 +6,7 @@ import { Response } from '@common/typings'
 import { Controller } from '@typings'
 import { WorkRepository } from '@repositories'
 import { allowFor } from '@hooks'
+import { UserId } from '@common/typings/auth'
 
 export const workController: Controller = (app, options, done) => {
   app.route({
@@ -122,6 +123,21 @@ export const workController: Controller = (app, options, done) => {
 
       const response: Response<void> = { message: 'Выполнено' }
       reply.send(response)
+    },
+  })
+
+  app.route({
+    method: 'GET',
+    url: '/begin/:id',
+    preValidation: allowFor([Roles.Administrator, Roles.Moderator, Roles.Student]),
+    handler: async (request, reply) => {
+      const workId: WorkId = request.params.id
+      const userId: UserId = request.session.userId
+      const startedAt = new Date()
+
+      await WorkRepository.beginWork({ workId, userId, startedAt })
+
+      reply.send({ workId, userId })
     },
   })
 

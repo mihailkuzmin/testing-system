@@ -1,5 +1,5 @@
 import { db } from '@db'
-import { Work, CreateWork, WorkId, UpdateWork } from '@common/typings/work'
+import { Work, CreateWork, WorkId, UpdateWork, BeginWork } from '@common/typings/work'
 import { Task, TaskId } from '@common/typings/task'
 import { Group } from '@common/typings/group'
 
@@ -134,5 +134,14 @@ export class WorkRepository {
 
   static async removeById(id: WorkId): Promise<void> {
     await db.query(`DELETE FROM Work as W WHERE (W.id = %L)`, id)
+  }
+
+  static async beginWork(w: BeginWork): Promise<void> {
+    await db.query(
+      `INSERT INTO WorkResult as W (user_id, work_id, started_at) VALUES (%L, %L, %L) ON CONFLICT DO NOTHING`,
+      w.userId,
+      w.workId,
+      w.startedAt.toISOString(),
+    )
   }
 }
