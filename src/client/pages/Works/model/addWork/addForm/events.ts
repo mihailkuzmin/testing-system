@@ -13,5 +13,6 @@ export const deleteTask = createEvent<TaskId>()
 export const nameChange = createEvent<string>()
 export const openAtChange = createEvent<Date>()
 export const closeAtChange = createEvent<Date>()
+export const timeToCompleteChange = createEvent<Date>()
 
 export const addWork = createEvent()

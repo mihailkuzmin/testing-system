@@ -9,12 +9,14 @@ export type Work = {
   name: string
   openAt: string
   closeAt: string
+  timeToComplete: string
 }
 
 export type CreateWork = {
   name: string
   openAt: string
   closeAt: string
+  timeToComplete: string
   tasks: TaskId[]
   groups: GroupId[]
 }
@@ -24,15 +26,18 @@ export type UpdateWork = {
   name: string
   openAt: string
   closeAt: string
+  timeToComplete: string
   tasks: TaskId[]
   groups: GroupId[]
 }
 
-export type BeginWork = {
+export type WorkResult = {
   workId: WorkId
   userId: UserId
   startedAt: string
 }
+
+export type BeginWork = WorkResult & { timeToComplete: string }
 
 export type TaskExecResult = {
   workId: WorkId

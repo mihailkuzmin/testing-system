@@ -86,7 +86,7 @@ export class UserRepository {
     const works = await db.query(
       `
       SELECT
-        W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
+        W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt", W.time_to_complete as "timeToComplete"
       FROM Student S, StudentGroup_Work GW, Work W
       WHERE (S.id = %L and S.group_id = GW.group_id and W.id = GW.work_id)
       ORDER BY W.name

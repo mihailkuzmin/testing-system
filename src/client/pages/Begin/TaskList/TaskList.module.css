@@ -1,7 +1,28 @@
+.wrap {
+  position: relative;
+}
+
 .taskList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 0;
+
+  height: 95%;
+  overflow: auto;
 }
 
 .taskList > ul {
   padding: 0;
+}
+
+.timeLeft {
+  display: grid;
+  grid-template-columns: max-content 120px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  padding: 0.2rem;
+  font-size: 14px;
 }

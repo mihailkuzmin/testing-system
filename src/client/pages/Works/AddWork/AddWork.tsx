@@ -7,7 +7,7 @@ import { addForm, AddWorkPage } from '../model/addWork'
 import { IncludedTasks } from './IncludedTasks'
 import { AllTasks } from './AllTasks'
 import { GroupList } from './GroupList'
-import { CloseDateInput, NameInput, OpenDateInput } from './Inputs'
+import { CloseDateInput, NameInput, OpenDateInput, TimeToCompleteInput } from './Inputs'
 import styles from './AddWork.module.css'
 
 export const AddWork = () => {
@@ -34,6 +34,7 @@ export const AddWork = () => {
       <div className={styles.dates}>
         <OpenDateInput />
         <CloseDateInput />
+        <TimeToCompleteInput />
       </div>
 
       <h3>Назначьте работу группам</h3>

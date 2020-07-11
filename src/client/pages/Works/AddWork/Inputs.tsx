@@ -1,9 +1,10 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import DateFnsUtils from '@date-io/date-fns'
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { DateTimePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { Input } from '@components/Inputs'
 import { addForm } from '@pages/Works/model/addWork'
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 
 export const NameInput = () => {
   const value = useStore(addForm.$name)
@@ -46,6 +47,22 @@ export const CloseDateInput = () => {
         value={value}
         format='dd.LL.yyyy HH:mm'
         onChange={(date) => addForm.closeAtChange(date as Date)}
+      />
+    </MuiPickersUtilsProvider>
+  )
+}
+
+export const TimeToCompleteInput = () => {
+  const value = useStore(addForm.$timeToComplete)
+
+  return (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <TimePicker
+        ampm={false}
+        label='Время на выполнение'
+        inputVariant='outlined'
+        value={value}
+        onChange={(date) => addForm.timeToCompleteChange(date as Date)}
       />
     </MuiPickersUtilsProvider>
   )

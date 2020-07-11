@@ -7,6 +7,7 @@ import {
   $id,
   $name,
   $openAt,
+  $timeToComplete,
   $groups,
   $selectedGroups,
   $selectedTasks,
@@ -33,7 +34,9 @@ import {
   openAtChange,
   topicChange,
   updateWork,
+  timeToCompleteChange,
 } from './events'
+import { setTimeToCompleteDate } from '@common/helpers'
 
 forward({
   from: EditPage.open,
@@ -138,11 +141,22 @@ $closeAt.on(getWorkFx.doneData, (_, { payload }) => new Date(payload?.closeAt ??
 $closeAt.on(closeAtChange, (_, date) => date)
 $closeAt.reset(EditPage.close)
 
+$timeToComplete.on(getWorkFx.doneData, (_, { payload }) => {
+  if (payload) {
+    return new Date(payload.timeToComplete)
+  }
+
+  return setTimeToCompleteDate({ date: new Date(), hours: 1, minutes: 0 })
+})
+$timeToComplete.on(timeToCompleteChange, (_, date) => date)
+$timeToComplete.reset(EditPage.close)
+
 const $form = combine({
   id: $id,
   name: $name,
   openAt: $openAt.map((date) => date.toISOString()),
   closeAt: $closeAt.map((date) => date.toISOString()),
+  timeToComplete: $timeToComplete.map((date) => date.toISOString()),
   tasks: $selectedTasksIds,
   groups: $selectedGroups.map((groups) => groups.map((group) => group.id)),
 })
@@ -179,11 +193,13 @@ export const editForm = {
   $name,
   $openAt,
   $closeAt,
+  $timeToComplete,
   addGroup,
   removeGroup,
   nameChange,
   openAtChange,
   closeAtChange,
+  timeToCompleteChange,
   topicChange,
   addTask,
   deleteTask,

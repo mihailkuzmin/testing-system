@@ -1,12 +1,14 @@
 import { combine, forward, guard, sample } from 'effector'
 import { notifications } from '@model'
 import { MessageType } from '@typings'
+import { setTimeToCompleteDate } from '@common/helpers'
 import { AddWorkPage } from '../page'
 import { createWorkFx, getTasksFx, getTopicsFx, getGroupsFx } from './effects'
 import {
   $name,
   $openAt,
   $closeAt,
+  $timeToComplete,
   $selectedTasks,
   $selectedTopic,
   $tasks,
@@ -24,6 +26,7 @@ import {
   nameChange,
   openAtChange,
   topicChange,
+  timeToCompleteChange,
 } from './events'
 
 forward({ from: AddWorkPage.open, to: [getTasksFx, getTopicsFx, getGroupsFx] })
@@ -119,10 +122,17 @@ $closeAt.on(closeAtChange, (_, date) => date)
 $closeAt.on(createWorkFx.done, () => new Date())
 $closeAt.reset(AddWorkPage.close)
 
+$timeToComplete.on(timeToCompleteChange, (_, date) => date)
+$timeToComplete.on(createWorkFx.done, () =>
+  setTimeToCompleteDate({ date: new Date(), hours: 1, minutes: 0 }),
+)
+$timeToComplete.reset(AddWorkPage.close)
+
 const $form = combine({
   name: $name,
   openAt: $openAt.map((date) => date.toISOString()),
   closeAt: $closeAt.map((date) => date.toISOString()),
+  timeToComplete: $timeToComplete.map((date) => date.toISOString()),
   tasks: $selectedTasks.map((tasks) => tasks.map((task) => task.id)),
   groups: $selectedGroups.map((groups) => groups.map((group) => group.id)),
 })
@@ -161,11 +171,13 @@ export const addForm = {
   $name,
   $openAt,
   $closeAt,
+  $timeToComplete,
   addGroup,
   removeGroup,
   nameChange,
   openAtChange,
   closeAtChange,
+  timeToCompleteChange,
   topicChange,
   addTask,
   deleteTask,

@@ -1,8 +1,14 @@
 import { combine, forward, guard, sample } from 'effector'
 import { $user } from '@model/auth/stores'
 import { CodeTask, Tabs } from '@pages/Begin/model/workspace/typings'
+import {
+  addToDate,
+  getTimeToCompleteString,
+  intervalToDuration,
+  setTimeToCompleteDate,
+} from '@common/helpers'
 import { BeginPage } from '../page'
-import { getLangsFx, getTaskInfoFx, getTasksFx, runFx, beginWorkFx } from './effects'
+import { getLangsFx, getTaskInfoFx, getTasksFx, runFx, beginWorkFx, tickFx } from './effects'
 import {
   $codeTask,
   $execResult,
@@ -14,6 +20,8 @@ import {
   $tasks,
   $workId,
   $startedAt,
+  $endAt,
+  $timeLeft,
 } from './stores'
 import { codeChanged, langChanged, submitTask, tabChanged, taskChanged, testTask } from './events'
 
@@ -27,10 +35,16 @@ const selectedTaskChanged = sample({
 })
 const selectedTaskIdChanged = selectedTaskChanged.map((task) => task.id)
 
-forward({ from: BeginPage.open, to: [getTasksFx, getLangsFx, beginWorkFx] })
+forward({ from: BeginPage.open, to: [getTasksFx, getLangsFx, beginWorkFx, tickFx] })
 forward({
   from: BeginPage.close,
-  to: [getTasksFx.cancel, getLangsFx.cancel, getTaskInfoFx.cancel, beginWorkFx.cancel],
+  to: [
+    getTasksFx.cancel,
+    getLangsFx.cancel,
+    getTaskInfoFx.cancel,
+    beginWorkFx.cancel,
+    tickFx.cancel,
+  ],
 })
 forward({ from: taskChanged, to: getTaskInfoFx.cancel })
 forward({ from: selectedTaskIdChanged, to: getTaskInfoFx })
@@ -46,6 +60,40 @@ $startedAt.on(beginWorkFx.doneData, (_, { payload }) => {
   return null
 })
 $startedAt.reset(BeginPage.close)
+
+$endAt.on(beginWorkFx.doneData, (_, { payload }) => {
+  if (payload) {
+    const startedAt = new Date(payload.startedAt)
+    const timeToComplete = new Date(payload.timeToComplete)
+    return addToDate(startedAt, {
+      hours: timeToComplete.getHours(),
+      minutes: timeToComplete.getMinutes(),
+    })
+  }
+})
+$endAt.reset(BeginPage.close)
+
+const updateTime = sample({
+  source: [$startedAt, $endAt],
+  clock: tickFx.done,
+  fn: ([startedAt, endAt]) => {
+    if (startedAt === null || endAt === null) {
+      return ''
+    }
+
+    const currentDate = new Date()
+    const duration = intervalToDuration({
+      start: startedAt > currentDate ? startedAt : currentDate,
+      end: endAt,
+    })
+
+    return `${duration.hours}ч. ${duration.minutes}мин. ${duration.seconds}сек.`
+  },
+})
+$timeLeft.on(updateTime, (_, time) => time)
+$timeLeft.reset(BeginPage.close)
+
+updateTime.watch(tickFx)
 
 getTasksFx.doneData.watch(({ payload }) => {
   if (payload) {
@@ -152,7 +200,7 @@ guard({
 })
 
 export const workspace = {
-  $startedAt,
+  $timeLeft,
   $tasks: combine({
     tasks: $tasks,
     selectedId: $selectedTaskId,

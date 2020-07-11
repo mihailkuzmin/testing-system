@@ -29,7 +29,8 @@ CREATE TABLE Work (
 	id SERIAL PRIMARY KEY,
 	name varchar(100) NOT NULL,
 	open_at varchar(50) NOT NULL,
-	close_at varchar(50) NOT NULL
+	close_at varchar(50) NOT NULL,
+	time_to_complete varchar(50) NOT NULL
 );
 
 

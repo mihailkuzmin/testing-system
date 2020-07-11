@@ -19,3 +19,5 @@ export const $codeTask = createStore<CodeTask>({})
 export const $selectedTab = createStore(Tabs.Editor)
 
 export const $startedAt = createStore<Date | null>(null)
+export const $endAt = createStore<Date | null>(null)
+export const $timeLeft = createStore('')

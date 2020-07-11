@@ -143,9 +143,13 @@ export const workController: Controller = (app, options, done) => {
       const userId: UserId = request.session.userId
       const startedAt = new Date().toISOString()
 
-      const beginWork = await WorkRepository.beginWork({ workId, userId, startedAt })
+      const workResult = await WorkRepository.beginWork({ workId, userId, startedAt })
+      const work = await WorkRepository.getById(workId)
 
-      const response: Response<BeginWork> = { payload: beginWork }
+      const response: Response<BeginWork> = {
+        payload: { ...workResult, timeToComplete: work.timeToComplete },
+      }
+
       reply.send(response)
     },
   })

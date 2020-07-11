@@ -11,6 +11,7 @@ import {
 import { worksTable } from '../../model/index'
 import styles from './WorksTable.module.css'
 import { DeleteWork } from './DeleteWork'
+import { getTimeToCompleteString } from '@common/helpers'
 
 export const WorksTable = () => {
   const works = useStore(worksTable.$works)
@@ -21,7 +22,7 @@ export const WorksTable = () => {
       <DeleteWork />
       <T.Head className={styles.head}>
         <T.Row>
-          <T.Cell colSpan={5}>
+          <T.Cell colSpan={6}>
             <T.Header>
               <T.Title>Работы</T.Title>
               <T.Actions>
@@ -35,6 +36,7 @@ export const WorksTable = () => {
           <T.Cell>Название</T.Cell>
           <T.Cell>Открытие</T.Cell>
           <T.Cell>Закрытие</T.Cell>
+          <T.Cell>Время на выполнение</T.Cell>
           <T.Cell align='center'>Действия</T.Cell>
         </T.Row>
       </T.Head>
@@ -42,7 +44,7 @@ export const WorksTable = () => {
         {worksIsEmpty ? (
           <T.Row>
             <T.Cell>Список работ пока пуст</T.Cell>
-            <T.Cell colSpan={4}></T.Cell>
+            <T.Cell colSpan={5}></T.Cell>
           </T.Row>
         ) : (
           works.map((work, index) => (
@@ -51,6 +53,7 @@ export const WorksTable = () => {
               <T.Cell>{work.name}</T.Cell>
               <T.Cell>{work.openAt}</T.Cell>
               <T.Cell>{work.closeAt}</T.Cell>
+              <T.Cell>{work.timeToComplete}</T.Cell>
               <T.Cell>
                 <div className={styles.actions}>
                   <Preview onClick={() => navigate(`/works/preview/${work.id}`)} />

@@ -15,7 +15,8 @@ export const WorkList = () => {
       {isEmpty ? <p>Доступных работ пока нет</p> : <p>Доступные работы:</p>}
       {works.map((work) => (
         <Card key={work.id} className={styles.work}>
-          {work.name}
+          <div>{work.name}</div>
+          <div>Время на выполнение: {work.timeToComplete}</div>
           <Begin onClick={() => navigate(`/begin/${work.id}`)}>Начать</Begin>
         </Card>
       ))}

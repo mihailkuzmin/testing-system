@@ -4,8 +4,8 @@ import {
   CreateWork,
   WorkId,
   UpdateWork,
-  BeginWork,
   TaskExecResult,
+  WorkResult,
 } from '@common/typings/work'
 import { Task, TaskId } from '@common/typings/task'
 import { Group } from '@common/typings/group'
@@ -14,12 +14,13 @@ export class WorkRepository {
   static async create(w: CreateWork): Promise<void> {
     const [work] = await db.query(
       `
-        INSERT INTO Work as W (name, open_at, close_at) VALUES (%L, %L, %L)
+        INSERT INTO Work as W (name, open_at, close_at, time_to_complete) VALUES (%L, %L, %L, %L)
         RETURNING W.id
       `,
       w.name,
       w.openAt,
       w.closeAt,
+      w.timeToComplete,
     )
 
     const tasks = w.tasks.map((taskId) => [work.id, taskId])
@@ -34,7 +35,7 @@ export class WorkRepository {
     const [work] = await db.query(
       `
         SELECT
-          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
+          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt", W.time_to_complete as "timeToComplete"
         FROM Work W
         WHERE
           (W.id = %L)
@@ -51,12 +52,14 @@ export class WorkRepository {
         SET
           name = %L,
           open_at = %L,
-          close_at = %L
+          close_at = %L,
+          time_to_complete = %L
         WHERE (W.id = %L)
       `,
       work.name,
       work.openAt,
       work.closeAt,
+      work.timeToComplete,
       work.id,
     )
 
@@ -121,7 +124,7 @@ export class WorkRepository {
     const works = await db.query(
       `
         SELECT
-          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt"
+          W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt", W.time_to_complete as "timeToComplete"
         FROM Work W, Work_Task WT
         WHERE
           (W.id = WT.work_id and WT.task_id = %L)
@@ -133,9 +136,9 @@ export class WorkRepository {
   }
 
   static async getAll(): Promise<Work[]> {
-    const works = await db.query(
-      `SELECT W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt" FROM Work W`,
-    )
+    const works = await db.query(`
+      SELECT W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt", W.time_to_complete as "timeToComplete" FROM Work W
+    `)
     return works
   }
 
@@ -143,7 +146,7 @@ export class WorkRepository {
     await db.query(`DELETE FROM Work as W WHERE (W.id = %L)`, id)
   }
 
-  static async beginWork(w: BeginWork): Promise<BeginWork> {
+  static async beginWork(w: WorkResult): Promise<WorkResult> {
     const [work] = await db.query(
       `SELECT W.user_id as "userId", W.work_id as "workId", W.started_at as "startedAt" FROM WorkResult as W WHERE (W.work_id = %L and W.user_id = %L)`,
       w.workId,
