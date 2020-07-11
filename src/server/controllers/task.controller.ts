@@ -1,46 +1,11 @@
-import {
-  CreateTask,
-  PLang,
-  ExecResult,
-  SubmitTask,
-  Task,
-  TaskId,
-  Test,
-  Topic,
-  UpdateTask,
-} from '@common/typings/task'
+import { CreateTask, PLang, Task, TaskId, Test, Topic, UpdateTask } from '@common/typings/task'
 import { Roles } from '@common/typings/user'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
 import { TaskRepository } from '@repositories'
 import { allowFor } from '@hooks'
-import { Runner } from '@lib/Runner'
 
 export const taskController: Controller = (app, options, done) => {
-  app.route({
-    method: 'POST',
-    url: '/run',
-    preValidation: allowFor([Roles.Administrator, Roles.Moderator, Roles.Student]),
-    handler: async (request, reply) => {
-      const task: SubmitTask = request.body
-
-      const { runner, error } = Runner.create(task.plang.name)
-
-      if (!runner) {
-        const response: Response<ExecResult[]> = {
-          payload: [{ ok: false, runtimeError: true, output: error! }],
-        }
-        return reply.send(response)
-      }
-
-      const tests = await TaskRepository.getTestsById(task.taskId)
-      const result = await runner.run(task.code, tests)
-
-      const response: Response<ExecResult[]> = { payload: result }
-      reply.send(response)
-    },
-  })
-
   app.route({
     method: 'GET',
     url: '/',
