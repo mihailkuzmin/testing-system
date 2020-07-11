@@ -1,5 +1,12 @@
 import { db } from '@db'
-import { Work, CreateWork, WorkId, UpdateWork, BeginWork } from '@common/typings/work'
+import {
+  Work,
+  CreateWork,
+  WorkId,
+  UpdateWork,
+  BeginWork,
+  TaskExecResult,
+} from '@common/typings/work'
 import { Task, TaskId } from '@common/typings/task'
 import { Group } from '@common/typings/group'
 
@@ -136,12 +143,40 @@ export class WorkRepository {
     await db.query(`DELETE FROM Work as W WHERE (W.id = %L)`, id)
   }
 
-  static async beginWork(w: BeginWork): Promise<void> {
+  static async beginWork(w: BeginWork): Promise<BeginWork> {
+    const [work] = await db.query(
+      `SELECT W.user_id as "userId", W.work_id as "workId", W.started_at as "startedAt" FROM WorkResult as W WHERE (W.work_id = %L and W.user_id = %L)`,
+      w.workId,
+      w.userId,
+    )
+
+    if (work) {
+      return work
+    }
+
     await db.query(
-      `INSERT INTO WorkResult as W (user_id, work_id, started_at) VALUES (%L, %L, %L) ON CONFLICT DO NOTHING`,
+      `INSERT INTO WorkResult as W (user_id, work_id, started_at) VALUES (%L, %L, %L)`,
       w.userId,
       w.workId,
-      w.startedAt.toISOString(),
+      w.startedAt,
+    )
+
+    return { userId: w.userId, workId: w.workId, startedAt: w.startedAt }
+  }
+
+  static async saveExecResult(w: TaskExecResult): Promise<void> {
+    await db.query(
+      `
+      INSERT INTO TaskResult as T
+        (work_id, task_id, user_id, code, tests_passed, tests_count, language_id)
+      VALUES (%L, %L, %L, %L, %L, %L, %L)`,
+      w.workId,
+      w.taskId,
+      w.userId,
+      w.code,
+      w.testsPassed,
+      w.testsCount,
+      w.languageId,
     )
   }
 }

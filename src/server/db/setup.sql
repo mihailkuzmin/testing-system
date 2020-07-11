@@ -58,7 +58,6 @@ CREATE TABLE TaskResult (
 	task_id INT NOT NULL REFERENCES Task(id),
 	user_id INT NOT NULL REFERENCES Student(id),
 	code text NOT NULL,
-	code_output text NOT NULL,
 	tests_passed INT NOT NULL,
 	tests_count INT NOT NULL,
 	language_id INT NOT NULL REFERENCES PLanguage(id)

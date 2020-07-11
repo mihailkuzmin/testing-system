@@ -1,12 +1,20 @@
-import { CreateWork, UpdateWork, Work, WorkId } from '@common/typings/work'
-import { Task, TaskId } from '@common/typings/task'
+import {
+  BeginWork,
+  CreateWork,
+  TaskExecResult,
+  UpdateWork,
+  Work,
+  WorkId,
+} from '@common/typings/work'
+import { ExecResult, SubmitTask, Task, TaskId } from '@common/typings/task'
 import { Group } from '@common/typings/group'
 import { Roles } from '@common/typings/user'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
-import { WorkRepository } from '@repositories'
+import { TaskRepository, WorkRepository } from '@repositories'
 import { allowFor } from '@hooks'
 import { UserId } from '@common/typings/auth'
+import { Runner } from '@lib/Runner'
 
 export const workController: Controller = (app, options, done) => {
   app.route({
@@ -133,11 +141,50 @@ export const workController: Controller = (app, options, done) => {
     handler: async (request, reply) => {
       const workId: WorkId = request.params.id
       const userId: UserId = request.session.userId
-      const startedAt = new Date()
+      const startedAt = new Date().toISOString()
 
-      await WorkRepository.beginWork({ workId, userId, startedAt })
+      const beginWork = await WorkRepository.beginWork({ workId, userId, startedAt })
 
-      reply.send({ workId, userId })
+      const response: Response<BeginWork> = { payload: beginWork }
+      reply.send(response)
+    },
+  })
+
+  app.route({
+    method: 'POST',
+    url: '/begin/submittask',
+    preValidation: allowFor([Roles.Administrator, Roles.Moderator, Roles.Student]),
+    handler: async (request, reply) => {
+      const task: SubmitTask = request.body
+
+      const { runner, error } = Runner.create(task.plang.name)
+
+      if (!runner) {
+        const response: Response<ExecResult[]> = {
+          payload: [{ ok: false, runtimeError: true, output: error! }],
+        }
+        return reply.send(response)
+      }
+
+      const tests = await TaskRepository.getTestsById(task.taskId)
+      const result = await runner.run(task.code, tests)
+
+      const passedTestsCount = result.reduce((count, r) => (r.ok ? count + 1 : count), 0)
+
+      const execResult: TaskExecResult = {
+        code: task.code,
+        testsCount: tests.length,
+        testsPassed: passedTestsCount,
+        languageId: task.plang.id,
+        userId: task.userId,
+        taskId: task.taskId,
+        workId: task.workId,
+      }
+
+      await WorkRepository.saveExecResult(execResult)
+
+      const response: Response<ExecResult[]> = { payload: result }
+      reply.send(response)
     },
   })
 

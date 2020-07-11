@@ -1,21 +1,6 @@
 import { Response } from '@common/typings'
-import {
-  Task,
-  CreateTask,
-  UpdateTask,
-  TaskId,
-  Test,
-  Topic,
-  PLang,
-  SubmitTask,
-  ExecResult,
-} from '@common/typings/task'
+import { Task, CreateTask, UpdateTask, TaskId, Test, Topic, PLang } from '@common/typings/task'
 import { request } from '../request'
-
-const run = async (task: SubmitTask): Promise<Response<ExecResult[]>> => {
-  const result = await request.post<SubmitTask, ExecResult[]>('task/run', task)
-  return result
-}
 
 const getAll = async (): Promise<Response<Task[]>> => {
   const result = await request.get<Task[]>('task')
@@ -68,7 +53,6 @@ const deleteById = async (id: TaskId): Promise<Response<void>> => {
 }
 
 export const tasksApi = {
-  run,
   getAll,
   getAllWithoutDescriptionAndTests,
   create,

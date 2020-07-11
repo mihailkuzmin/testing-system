@@ -1,16 +1,21 @@
 import { Response } from '@common/typings'
-import { WorkId, Work, CreateWork, UpdateWork } from '@common/typings/work'
-import { Task, TaskId } from '@common/typings/task'
+import { WorkId, Work, CreateWork, UpdateWork, BeginWork } from '@common/typings/work'
+import { ExecResult, SubmitTask, Task, TaskId } from '@common/typings/task'
 import { Group } from '@common/typings/group'
 import { request } from '../request'
+
+const submitTask = async (task: SubmitTask): Promise<Response<ExecResult[]>> => {
+  const result = await request.post<SubmitTask, ExecResult[]>('work/begin/submittask', task)
+  return result
+}
 
 const getAll = async (): Promise<Response<Work[]>> => {
   const result = await request.get<Work[]>('work')
   return result
 }
 
-const beginWork = async (id: WorkId): Promise<Response<void>> => {
-  const result = await request.get<void>(`work/begin/${id}`)
+const beginWork = async (id: WorkId): Promise<Response<BeginWork>> => {
+  const result = await request.get<BeginWork>(`work/begin/${id}`)
   return result
 }
 
@@ -71,4 +76,5 @@ export const worksApi = {
   create,
   update,
   beginWork,
+  submitTask,
 }

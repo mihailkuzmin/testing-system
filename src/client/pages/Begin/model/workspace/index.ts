@@ -1,5 +1,6 @@
 import { combine, forward, guard, sample } from 'effector'
 import { $user } from '@model/auth/stores'
+import { CodeTask, Tabs } from '@pages/Begin/model/workspace/typings'
 import { BeginPage } from '../page'
 import { getLangsFx, getTaskInfoFx, getTasksFx, runFx, beginWorkFx } from './effects'
 import {
@@ -12,9 +13,9 @@ import {
   $selectedTaskInfo,
   $tasks,
   $workId,
+  $startedAt,
 } from './stores'
 import { codeChanged, langChanged, submitTask, tabChanged, taskChanged, testTask } from './events'
-import { CodeTask, Tabs } from '@pages/Begin/model/workspace/typings'
 
 const selectedTaskChanged = sample({
   source: $tasks,
@@ -36,6 +37,15 @@ forward({ from: selectedTaskIdChanged, to: getTaskInfoFx })
 
 $workId.on(BeginPage.open, (_, workId) => workId)
 $workId.reset(BeginPage.close)
+
+$startedAt.on(beginWorkFx.doneData, (_, { payload }) => {
+  if (payload) {
+    return new Date(payload.startedAt)
+  }
+
+  return null
+})
+$startedAt.reset(BeginPage.close)
 
 getTasksFx.doneData.watch(({ payload }) => {
   if (payload) {
@@ -65,6 +75,7 @@ const taskCodeChanged = sample({
 $codeTask.on(taskCodeChanged, (codeTask, { taskId, code }) => {
   return { ...codeTask, [taskId as number]: code }
 })
+$codeTask.reset(BeginPage.close)
 
 $selectedTaskId.on(getTasksFx.doneData, (_, { payload }) => {
   if (payload) {
@@ -141,6 +152,7 @@ guard({
 })
 
 export const workspace = {
+  $startedAt,
   $tasks: combine({
     tasks: $tasks,
     selectedId: $selectedTaskId,

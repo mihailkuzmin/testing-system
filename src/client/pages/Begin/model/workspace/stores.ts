@@ -12,9 +12,10 @@ export const $selectedTaskInfo = createStore<Task | null>(null)
 export const $langs = createStore<PLang[]>([])
 export const $selectedLangId = createStore<PLangId | null>(null)
 
-export const $code = createStore('')
 export const $execResult = createStore<ExecResult[]>([])
 
 export const $codeTask = createStore<CodeTask>({})
 
 export const $selectedTab = createStore(Tabs.Editor)
+
+export const $startedAt = createStore<Date | null>(null)

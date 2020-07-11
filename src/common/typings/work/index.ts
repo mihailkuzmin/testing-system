@@ -1,4 +1,4 @@
-import { TaskId } from '../task'
+import { PLangId, TaskId } from '../task'
 import { GroupId } from '../group'
 import { UserId } from '../user'
 
@@ -31,5 +31,15 @@ export type UpdateWork = {
 export type BeginWork = {
   workId: WorkId
   userId: UserId
-  startedAt: Date
+  startedAt: string
+}
+
+export type TaskExecResult = {
+  workId: WorkId
+  userId: UserId
+  taskId: TaskId
+  code: string
+  testsPassed: number
+  testsCount: number
+  languageId: PLangId
 }
