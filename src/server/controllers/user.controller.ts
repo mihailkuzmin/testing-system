@@ -39,9 +39,17 @@ export const userController: Controller = (app, options, done) => {
     handler: async (request, reply) => {
       const id: UserId = request.params.id
 
-      const result = await UserRepository.getAvailableWorksById(id)
+      const works = await UserRepository.getAvailableWorksById(id)
+      const currentDate = new Date()
 
-      const response: Response<Work[]> = { payload: result }
+      const availableWorks = works.filter((w) => {
+        const openAt = new Date(w.openAt)
+        const closeAt = new Date(w.closeAt)
+
+        return currentDate >= openAt && currentDate < closeAt
+      })
+
+      const response: Response<Work[]> = { payload: availableWorks }
       reply.send(response)
     },
   })
