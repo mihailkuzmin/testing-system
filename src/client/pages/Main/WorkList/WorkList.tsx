@@ -17,7 +17,13 @@ export const WorkList = () => {
         <Card key={work.id} className={styles.work}>
           <div>{work.name}</div>
           <div>Время на выполнение: {work.timeToComplete}</div>
-          <Begin onClick={() => navigate(`/begin/${work.id}`)}>Начать</Begin>
+          {work.started ? (
+            <Begin onClick={() => navigate(`/begin/${work.id}`)}>Продолжить</Begin>
+          ) : (
+            <Begin className={styles.notStarted} onClick={() => navigate(`/begin/${work.id}`)}>
+              Начать
+            </Begin>
+          )}
         </Card>
       ))}
     </div>

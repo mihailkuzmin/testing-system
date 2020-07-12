@@ -1,9 +1,10 @@
 import { CreateUser, Roles, UpdateUser, User, UserId } from '@common/typings/user'
-import { Work } from '@common/typings/work'
+import { AvailableWork, Work } from '@common/typings/work'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
 import { UserRepository } from '@repositories'
 import { allowFor } from '@hooks'
+import { addToDate } from '@common/helpers'
 
 export const userController: Controller = (app, options, done) => {
   app.route({
@@ -39,17 +40,40 @@ export const userController: Controller = (app, options, done) => {
     handler: async (request, reply) => {
       const id: UserId = request.params.id
 
-      const works = await UserRepository.getAvailableWorksById(id)
+      const allWorksForUser = await UserRepository.getAvailableWorksForUser(id)
+      const startedWorks = await UserRepository.getStartedWorks(id)
+
       const currentDate = new Date()
 
-      const availableWorks = works.filter((w) => {
-        const openAt = new Date(w.openAt)
-        const closeAt = new Date(w.closeAt)
+      const startedAndAvailable = startedWorks
+        .filter((w) => {
+          const startedAt = new Date(w.startedAt)
+          const timeToComplete = new Date(w.timeToComplete)
+          const endAt = addToDate(startedAt, {
+            hours: timeToComplete.getHours(),
+            minutes: timeToComplete.getMinutes(),
+          })
 
-        return currentDate >= openAt && currentDate < closeAt
+          return currentDate < endAt
+        })
+        .map(({ startedAt, ...w }) => ({ ...w, started: true }))
+
+      const notStarted = allWorksForUser.filter((w) => {
+        return !startedWorks.find((s) => s.id === w.id)
       })
 
-      const response: Response<Work[]> = { payload: availableWorks }
+      const notStartedAndAvailable = notStarted
+        .filter((w) => {
+          const openAt = new Date(w.openAt)
+          const closeAt = new Date(w.closeAt)
+
+          return currentDate >= openAt && currentDate < closeAt
+        })
+        .map((w) => ({ ...w, started: false }))
+
+      const response: Response<AvailableWork[]> = {
+        payload: notStartedAndAvailable.concat(startedAndAvailable),
+      }
       reply.send(response)
     },
   })

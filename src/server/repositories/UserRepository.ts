@@ -1,6 +1,6 @@
 import { User, UpdateUser, CreateUser, UserId, Role, Roles } from '@common/typings/user'
 import { Credentials, UserInfo } from '@common/typings/auth'
-import { Work } from '@common/typings/work'
+import { StartedWork, Work } from '@common/typings/work'
 import { db } from '@db'
 import { Hasher } from '@lib/Hasher'
 
@@ -82,13 +82,29 @@ export class UserRepository {
     return student
   }
 
-  static async getAvailableWorksById(id: UserId): Promise<Work[]> {
+  static async getAvailableWorksForUser(id: UserId): Promise<Work[]> {
     const works = await db.query(
       `
       SELECT
         W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt", W.time_to_complete as "timeToComplete"
       FROM Student S, StudentGroup_Work GW, Work W
       WHERE (S.id = %L and S.group_id = GW.group_id and W.id = GW.work_id)
+      ORDER BY W.name
+    `,
+      id,
+    )
+
+    return works
+  }
+
+  static async getStartedWorks(id: UserId): Promise<StartedWork[]> {
+    const works = await db.query(
+      `
+      SELECT
+        W.id, W.name, W.open_at as "openAt", W.close_at as "closeAt", 
+        W.time_to_complete as "timeToComplete", WR.started_at as "startedAt"
+      FROM WorkResult WR, Work W
+      WHERE (WR.user_id = %L and WR.work_id = W.id)
       ORDER BY W.name
     `,
       id,

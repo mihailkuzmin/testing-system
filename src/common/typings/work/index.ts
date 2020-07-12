@@ -48,3 +48,12 @@ export type TaskExecResult = {
   testsCount: number
   languageId: PLangId
 }
+
+export type StartedWork = Work & {
+  userId: UserId
+  startedAt: string
+}
+
+export type AvailableWork = Work & {
+  started: boolean
+}

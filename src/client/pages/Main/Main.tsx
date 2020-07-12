@@ -8,6 +8,8 @@ import { WorkList } from './WorkList'
 import styles from './Main.module.css'
 
 export const Main = () => {
+  React.useEffect(() => MainPage.onMount(), [])
+
   const { user } = useStore(auth.$store)
   const isLoading = useStore(MainPage.$isLoading)
 

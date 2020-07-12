@@ -1,6 +1,6 @@
 import { Response } from '@common/typings'
 import { CreateUser, UpdateUser, User, UserId } from '@common/typings/user'
-import { Work } from '@common/typings/work'
+import { AvailableWork, Work } from '@common/typings/work'
 import { request } from '../request'
 
 const getAll = async (): Promise<Response<User[]>> => {
@@ -13,8 +13,8 @@ const getById = async (id: UserId): Promise<Response<User>> => {
   return result
 }
 
-const getAvailableWorks = async (id: UserId): Promise<Response<Work[]>> => {
-  const result = await request.get<Work[]>(`user/${id}/works`)
+const getAvailableWorks = async (id: UserId): Promise<Response<AvailableWork[]>> => {
+  const result = await request.get<AvailableWork[]>(`user/${id}/works`)
   return result
 }
 
