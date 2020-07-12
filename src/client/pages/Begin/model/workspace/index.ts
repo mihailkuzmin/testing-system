@@ -23,7 +23,15 @@ import {
   $endAt,
   $timeLeft,
 } from './stores'
-import { codeChanged, langChanged, submitTask, tabChanged, taskChanged, testTask } from './events'
+import {
+  codeChanged,
+  langChanged,
+  submitTask,
+  tabChanged,
+  taskChanged,
+  testTask,
+  updateTime,
+} from './events'
 
 const selectedTaskChanged = sample({
   source: $tasks,
@@ -73,23 +81,25 @@ $endAt.on(beginWorkFx.doneData, (_, { payload }) => {
 })
 $endAt.reset(BeginPage.close)
 
-const updateTime = sample({
-  source: [$startedAt, $endAt],
-  clock: tickFx.done,
-  fn: ([startedAt, endAt]) => {
-    if (startedAt === null || endAt === null) {
-      return ''
-    }
+const $time = combine({ startedAt: $startedAt, endAt: $endAt })
 
-    const currentDate = new Date()
-    const duration = intervalToDuration({
-      start: startedAt > currentDate ? startedAt : currentDate,
-      end: endAt,
-    })
+$time.watch(tickFx.done, ({ startedAt, endAt }) => {
+  if (startedAt === null || endAt === null) {
+    return updateTime('')
+  }
 
-    return `${duration.hours}ч. ${duration.minutes}мин. ${duration.seconds}сек.`
-  },
+  if (endAt < new Date()) {
+    return updateTime('Время вышло')
+  }
+
+  const duration = intervalToDuration({
+    start: new Date(),
+    end: endAt,
+  })
+
+  return updateTime(`${duration.hours}ч. ${duration.minutes}мин. ${duration.seconds}сек.`)
 })
+
 $timeLeft.on(updateTime, (_, time) => time)
 $timeLeft.reset(BeginPage.close)
 

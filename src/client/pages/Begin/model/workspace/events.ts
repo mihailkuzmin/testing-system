@@ -8,4 +8,6 @@ export const tabChanged = createEvent<number>()
 export const testTask = createEvent()
 export const submitTask = createEvent()
 
+export const updateTime = createEvent<string>()
+
 export const taskChanged = createEvent<TaskId>()
