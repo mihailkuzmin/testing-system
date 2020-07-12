@@ -1,13 +1,23 @@
-import { guard, sample, createStore } from 'effector'
+import { guard, sample, createStore, createEvent, forward } from 'effector'
 import { createReEffect } from 'effector-reeffect'
-import { Work } from '@common/typings/work'
+import { AvailableWork } from '@common/typings/work'
 import { usersApi } from '@api'
 import { auth } from '@model'
 import { getTimeToCompleteString } from '@common/helpers'
 
 const getWorksFx = createReEffect({ handler: usersApi.getAvailableWorks })
 
-const $works = createStore<Work[]>([])
+const open = createEvent()
+const close = createEvent()
+
+forward({ from: close, to: getWorksFx.cancel })
+
+const onMount = () => {
+  open()
+  return () => close()
+}
+
+const $works = createStore<AvailableWork[]>([])
 $works.on(getWorksFx.doneData, (_, { payload }) => {
   if (payload) {
     return payload.map(({ openAt, closeAt, timeToComplete, ...w }) => {
@@ -20,12 +30,12 @@ $works.on(getWorksFx.doneData, (_, { payload }) => {
     })
   }
 })
-$works.reset(auth.logout)
+$works.reset(close)
 
 guard({
   source: sample({
     source: auth.$store,
-    clock: auth.loggedIn,
+    clock: open,
     fn: ({ user }) => (user ? user.id : null),
   }),
   filter: Boolean,
@@ -33,6 +43,7 @@ guard({
 })
 
 export const MainPage = {
+  onMount,
   $works,
   $isLoading: getWorksFx.pending,
 }
