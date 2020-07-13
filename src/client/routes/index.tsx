@@ -1,5 +1,5 @@
 import React from 'react'
-import { Groups, Login, Logout, Main, Tasks, Users, Works, Begin } from '@pages'
+import { Groups, Login, Logout, Main, Tasks, Users, Works, Begin, Report } from '@pages'
 import * as Icons from '@components/Icons'
 import { QueryParams } from '@typings'
 import { Roles } from '@common/typings/user'
@@ -54,6 +54,7 @@ const adminRoutes = {
   '/works/add': () => <Works.AddWork />,
   '/works/edit/:id': ({ id }: QueryParams) => <Works.EditWork id={id} />,
   '/works/preview/:id': ({ id }: QueryParams) => <Works.PreviewWork id={id} />,
+  '/report': () => <Report />,
 }
 
 const adminLinks: Link[] = [
@@ -62,6 +63,7 @@ const adminLinks: Link[] = [
   { path: '/users', text: 'Студенты', icon: Icons.Users },
   { path: '/tasks', text: 'Задания', icon: Icons.Tasks },
   { path: '/works', text: 'Работы', icon: Icons.Works },
+  { path: '/report', text: 'Результаты', icon: Icons.Report },
   { path: '/logout', text: 'Выйти', icon: Icons.Logout },
 ]
 

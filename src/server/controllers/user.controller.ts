@@ -1,5 +1,5 @@
 import { CreateUser, Roles, UpdateUser, User, UserId } from '@common/typings/user'
-import { AvailableWork, Work } from '@common/typings/work'
+import { AvailableWork } from '@common/typings/work'
 import { Response } from '@common/typings'
 import { Controller } from '@typings'
 import { UserRepository } from '@repositories'
