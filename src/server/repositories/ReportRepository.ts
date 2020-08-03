@@ -1,7 +1,8 @@
 import { db } from '@db'
 import { Work, WorkId } from '@common/typings/work'
-import { Report } from '@common/typings/report'
+import { TaskResult } from '@common/typings/report'
 import { User, UserId } from '@common/typings/user'
+import { Group, GroupId } from '@common/typings/group'
 
 export class ReportRepository {
   static async getAllWorksWithResults(): Promise<Work[]> {
@@ -17,7 +18,21 @@ export class ReportRepository {
     return works
   }
 
-  static async getAllUsersWithWorkResults(id: WorkId): Promise<User[]> {
+  static async getAllGroupsWithWorkResults(id: WorkId): Promise<Group[]> {
+    const groups = await db.query(
+      `
+      SELECT DISTINCT
+        G.id, G.name
+      FROM Student S, TaskResult TR, StudentGroup G
+      WHERE (TR.work_id = %L and TR.user_id = S.id and G.id = S.group_id)
+    `,
+      id,
+    )
+
+    return groups
+  }
+
+  static async getUsersOfGroupWithResults(workId: WorkId, groupId: GroupId): Promise<User[]> {
     const users = await db.query(
       `
       SELECT DISTINCT
@@ -26,11 +41,30 @@ export class ReportRepository {
         jsonb_build_object('id', G.id, 'name', G.name) as group,
         jsonb_build_object('id', R.id, 'name', R.name) as role
       FROM Student S, TaskResult TR, StudentGroup G, Role R
-      WHERE (TR.work_id = %L and TR.user_id = S.id and G.id = S.group_id and R.id = S.role_id)
+      WHERE (TR.work_id = %L and TR.user_id = S.id and G.id = S.group_id and G.id = %L and R.id = S.role_id)
     `,
-      id,
+      workId,
+      groupId,
     )
 
     return users
+  }
+
+  static async getUserTasksResults(workId: WorkId, userId: UserId): Promise<TaskResult[]> {
+    const tasksResults = await db.query(
+      `
+      SELECT
+        id, work_id as "workId", task_id as "taskId", user_id as "userId", code, tests_passed as "testsPassed",
+        tests_count as "testsCount", language_id as "languageId"
+      FROM TaskResult TR
+      WHERE (
+        TR.work_id = %L and TR.user_id = %L
+      )
+    `,
+      workId,
+      userId,
+    )
+
+    return tasksResults
   }
 }

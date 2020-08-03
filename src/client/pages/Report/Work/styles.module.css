@@ -1,0 +1,32 @@
+.loader {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.loader > * {
+	width: 30px !important;
+	height: 30px !important;
+}
+
+.header {
+	display: grid;
+	grid-template-columns: min-content 1fr max-content;
+	gap: 0.2rem;
+	align-items: center;
+}
+
+.work {
+	padding: 0.2rem 0.5rem 0.2rem 1rem;
+}
+
+.groupList {
+	display: grid;
+	gap: 0.5rem;
+	padding: 0.5rem 0;
+}
+
+.groups, .list {
+	display: grid;
+	gap: 0.5rem;
+}

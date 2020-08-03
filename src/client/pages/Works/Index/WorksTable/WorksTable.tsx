@@ -11,7 +11,6 @@ import {
 import { worksTable } from '../../model/index'
 import styles from './WorksTable.module.css'
 import { DeleteWork } from './DeleteWork'
-import { getTimeToCompleteString } from '@common/helpers'
 
 export const WorksTable = () => {
   const works = useStore(worksTable.$works)

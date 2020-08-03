@@ -1,5 +1,5 @@
 import React from 'react'
-import { Groups, Login, Logout, Main, Tasks, Users, Works, Begin, Report } from '@pages'
+import { Groups, Login, Logout, Main, Tasks, Users, Works, Begin, Report, UserReport } from '@pages'
 import * as Icons from '@components/Icons'
 import { QueryParams } from '@typings'
 import { Roles } from '@common/typings/user'
@@ -55,6 +55,9 @@ const adminRoutes = {
   '/works/edit/:id': ({ id }: QueryParams) => <Works.EditWork id={id} />,
   '/works/preview/:id': ({ id }: QueryParams) => <Works.PreviewWork id={id} />,
   '/report': () => <Report />,
+  '/report/work/:workId/group/:groupId/user/:userId': (params: QueryParams) => (
+    <UserReport workId={params.workId} userId={params.userId} groupId={params.groupId} />
+  ),
 }
 
 const adminLinks: Link[] = [

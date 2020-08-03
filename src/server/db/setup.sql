@@ -1,83 +1,45 @@
-CREATE TABLE PLanguage (
-	id SERIAL PRIMARY KEY,
-	name varchar(30) NOT NULL
-);
+INSERT INTO Role (name) VALUES ('Студент'), ('Модератор'), ('Администратор');
 
-CREATE TABLE Role (
-    id SERIAL PRIMARY KEY,
-    name varchar(30) NOT NULL
-);
+INSERT INTO StudentGroup (name) VALUES ('АП-31'), ('УС-31');
 
-CREATE TABLE StudentGroup (
-	id SERIAL PRIMARY KEY,
-	name varchar(20) UNIQUE NOT NULL
-);
+INSERT INTO Student
+    (last_name, first_name, patronymic, book_number, group_id, role_id, login, password)
+VALUES
+    ('Администратор', '', '', NULL, NULL, 3, 'admin', 'b88c043a8fe9ad3b80d00108c61827b4.ad70172de59850cffd6fd62843f51f9f'),
+    ('Шаров', 'Константин', 'Аркадьевич', '1274869', 1, 1, 'user', '1cb7afa1cf4058ff6bf59c44a5c61fe3.339ccc7615eee9b305cb41fdba2d63d4'),
+    ('Исаков', 'Клим', 'Ярославович', '2890827', 1, 1, 'login2', '3f2969202fef7659b5d65f26c171b909.c0b1f8c16ce2005ba3d2e60d1eae7b2f'),
+    ('Мясников', 'Арнольд', 'Артемович', '2478722', 1, 1, 'login3', '4082d84e0562fae4798fd436a52277fa.c4171237f893a3c64c69b62bb3326e87'),
+    ('Блинов', 'Мирон', 'Олегович', '3836977', 2, 1, 'login4', '942acb10626e2095dbb78e8078e386bd.7a04a915800cecddc21c18ed2cd4af09'),
+    ('Иванов', 'Владислав', 'Петрович', '8638902', 2, 1, 'login5', '9d0f558c49f28368eb78f70d50e4b08f.03f56b29019edc6c4759cfd4ff525fca');
 
-CREATE TABLE Student (
-	id SERIAL PRIMARY KEY,
-	last_name varchar(30) NOT NULL,
-	first_name varchar(30) NOT NULL,
-	patronymic varchar(30) NOT NULL,
-	book_number varchar(100),
-	group_id INT REFERENCES StudentGroup(id) ON DELETE CASCADE,
-	role_id INT NOT NULL REFERENCES Role(id),
-	login varchar(100) NOT NULL,
-	password varchar(100) NOT NULL
-);
+INSERT INTO Work
+    (name, open_at, close_at, time_to_complete)
+VALUES
+    ('Работа 1. Программирование', '2020-07-11T12:00:00.000Z', '2020-07-31T17:00:00.000Z', '2020-07-10T23:00:29.894Z');
 
-CREATE TABLE Work (
-	id SERIAL PRIMARY KEY,
-	name varchar(100) NOT NULL,
-	open_at varchar(50) NOT NULL,
-	close_at varchar(50) NOT NULL,
-	time_to_complete varchar(50) NOT NULL
-);
+INSERT INTO TaskTopic (name) VALUES ('Массивы'), ('Строки'), ('Рекурсия'), ('Графы'), ('Деревья');
+
+INSERT INTO Task
+    (name, description, topic_id)
+VALUES
+    ('Task 1 name', 'Task 1 desc', 1),
+    ('Task 2 name', 'Task 2 desc', 1),
+    ('Task 3 name', 'Task 3 desc', 2);
+
+INSERT INTO Test
+    (task_id, input, output)
+VALUES
+    (1, 'Test 1 Input', 'Test 1 Output'),
+    (2, 'Test 2 Input', 'Test 2 Output'),
+    (3, 'Test 3 Input', 'Test 3 Output');
+
+INSERT INTO Work_Task
+    (work_id, task_id)
+VALUES
+    (1, 1), (1, 2), (1, 3);
+
+INSERT INTO StudentGroup_Work (group_id, work_id) VALUES (1, 1);
+
+INSERT INTO PLanguage (name) VALUES ('JavaScript'), ('Python');
 
 
-CREATE TABLE TaskTopic (
-	id SERIAL PRIMARY KEY,
-	name varchar(30) UNIQUE NOT NULL
-);
-
-CREATE TABLE Task (
-	id SERIAL PRIMARY KEY,
-	name varchar(100) NOT NULL,
-	description text NOT NULL,
-	topic_id INT NOT NULL REFERENCES TaskTopic(id) ON DELETE CASCADE
-);
-
-CREATE TABLE Test (
-	id SERIAL PRIMARY KEY,
-	task_id INT NOT NULL REFERENCES Task(id) ON DELETE CASCADE,
-	input text NOT NULL,
-	output text NOT NULL
-);
-
-CREATE TABLE TaskResult (
-	id SERIAL PRIMARY KEY,
-	work_id INT NOT NULL REFERENCES Work(id),
-	task_id INT NOT NULL REFERENCES Task(id),
-	user_id INT NOT NULL REFERENCES Student(id),
-	code text NOT NULL,
-	tests_passed INT NOT NULL,
-	tests_count INT NOT NULL,
-	language_id INT NOT NULL REFERENCES PLanguage(id)
-);
-
-CREATE TABLE WorkResult (
-	id SERIAL,
-	user_id INT NOT NULL REFERENCES Student(id),
-	work_id INT NOT NULL REFERENCES Work(id),
-	started_at varchar(50) NOT NULL,
-	PRIMARY KEY(user_id, work_id)
-);
-
-CREATE TABLE StudentGroup_Work (
-	group_id INT NOT NULL REFERENCES StudentGroup(id),
-	work_id INT NOT NULL REFERENCES Work(id)
-);
-
-CREATE TABLE Work_Task (
-	work_id INT NOT NULL REFERENCES Work(id),
-	task_id INT NOT NULL REFERENCES Task(id)
-);

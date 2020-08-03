@@ -16,7 +16,7 @@ export class AuthService {
 
   static async getUserInfoById(id: UserId): Promise<UserInfo | null> {
     const user = await UserRepository.getUserInfoById(id)
-    if (!user) {
+    if (user === undefined) {
       return null
     }
 

@@ -1,0 +1,13 @@
+db:
+  image: postgres
+  restart: unless-stopped
+  net: "host"
+  ports:
+    - ${DB_PORT}:${DB_PORT}
+  volumes:
+    - ./src/server/db/init.sql:/docker-entrypoint-initdb.d/10-init.sql
+    - ./src/server/db/setup.sql:/docker-entrypoint-initdb.d/20-setup.sql
+  environment:
+    POSTGRES_PASSWORD: ${DB_PASSWORD}
+    POSTGRES_USER: ${DB_USER}
+    POSTGRES_DB: ${DB_DATABASE}
