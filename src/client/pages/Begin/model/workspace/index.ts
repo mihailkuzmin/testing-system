@@ -32,6 +32,7 @@ import {
   testTask,
   updateTime,
 } from './events'
+import { navigate } from 'hookrouter'
 
 const selectedTaskChanged = sample({
   source: $tasks,
@@ -89,6 +90,7 @@ $time.watch(tickFx.done, ({ startedAt, endAt }) => {
   }
 
   if (endAt < new Date()) {
+    setTimeout(() => navigate('/'), 1000)
     return updateTime('Время вышло')
   }
 
