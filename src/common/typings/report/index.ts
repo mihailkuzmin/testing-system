@@ -10,6 +10,7 @@ export type TaskResult = {
   taskId: TaskId
   userId: UserId
   languageId: PLangId
+  taskName: string
   code: string
   testsPassed: number
   testsCount: number

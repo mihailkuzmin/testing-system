@@ -1,0 +1,15 @@
+.page {
+	display: grid;
+	gap: 0.5rem;
+
+	width: 70%;
+}
+
+.page h3 {
+	margin: 0;
+}
+
+.tasksList {
+	display: grid;
+	gap: 1rem;
+}

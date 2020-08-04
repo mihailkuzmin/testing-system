@@ -45,6 +45,20 @@ export class WorkRepository {
     return work
   }
 
+  static async getTasksCount(id: WorkId): Promise<number> {
+    const [row] = await db.query(
+      `
+        SELECT COUNT(*)
+        FROM Work_Task WT
+        WHERE
+          (WT.work_id = %L)
+      `,
+      id,
+    )
+
+    return Number(row.count)
+  }
+
   static async update(work: UpdateWork): Promise<void> {
     await db.query(
       `

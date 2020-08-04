@@ -54,11 +54,11 @@ export class ReportRepository {
     const tasksResults = await db.query(
       `
       SELECT
-        id, work_id as "workId", task_id as "taskId", user_id as "userId", code, tests_passed as "testsPassed",
-        tests_count as "testsCount", language_id as "languageId"
-      FROM TaskResult TR
+        TR.id as "id", work_id as "workId", task_id as "taskId", user_id as "userId", code, tests_passed as "testsPassed",
+        tests_count as "testsCount", language_id as "languageId", T.name as "taskName"
+      FROM TaskResult TR, Task T
       WHERE (
-        TR.work_id = %L and TR.user_id = %L
+        TR.work_id = %L and TR.user_id = %L and TR.task_id = T.id
       )
     `,
       workId,

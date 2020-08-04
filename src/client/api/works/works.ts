@@ -49,6 +49,11 @@ const getById = async (id: WorkId): Promise<Response<Work>> => {
   return result
 }
 
+const getTasksCount = async (id: WorkId): Promise<Response<number>> => {
+  const result = await request.get<number>(`work/${id}/tasks/count`)
+  return result
+}
+
 const deleteById = async (id: WorkId): Promise<Response<Work>> => {
   const result = await request.delete<void, Work>(`work/${id}`)
   return result
@@ -67,6 +72,7 @@ const update = async (work: UpdateWork): Promise<Response<void>> => {
 export const worksApi = {
   getAll,
   getById,
+  getTasksCount,
   getGroupsOfWork,
   getTasksOfWork,
   getWorksWithTask,

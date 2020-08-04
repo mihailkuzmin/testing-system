@@ -52,7 +52,7 @@ export const reportController: Controller = (app, options, done) => {
   app.route({
     method: 'GET',
     url: '/work/:workId/group/:groupId/user/:userId',
-    // preValidation: allowFor([Roles.Administrator]),
+    preValidation: allowFor([Roles.Administrator]),
     handler: async (request, reply) => {
       const workId: WorkId = request.params.workId
       const userId: UserId = request.params.userId

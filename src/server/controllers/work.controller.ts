@@ -66,6 +66,20 @@ export const workController: Controller = (app, options, done) => {
 
   app.route({
     method: 'GET',
+    url: '/:id/tasks/count',
+    preValidation: allowFor([Roles.Administrator]),
+    handler: async (request, reply) => {
+      const id: WorkId = request.params.id
+
+      const result = await WorkRepository.getTasksCount(id)
+
+      const response: Response<number> = { payload: result }
+      reply.send(response)
+    },
+  })
+
+  app.route({
+    method: 'GET',
     url: '/:id/groups',
     preValidation: allowFor([Roles.Administrator]),
     handler: async (request, reply) => {

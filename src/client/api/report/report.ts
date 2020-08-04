@@ -3,6 +3,7 @@ import { Work, WorkId } from '@common/typings/work'
 import { User, UserId } from '@common/typings/user'
 import { Group, GroupId } from '@common/typings/group'
 import { request } from '../request'
+import { TaskResult } from '@common/typings/report'
 
 const getWorks = async (): Promise<Response<Work[]>> => {
   const result = await request.get<Work[]>('report/work')
@@ -23,8 +24,8 @@ const getUsers = async ({ workId, groupId }: getUsersArgs): Promise<Response<Use
 
 type getUserReportArgs = { workId: WorkId; groupId: GroupId; userId: UserId }
 
-const getUserReport = async (args: getUserReportArgs): Promise<Response<any>> => {
-  const result = await request.get<any>(
+const getUserReport = async (args: getUserReportArgs): Promise<Response<TaskResult[]>> => {
+  const result = await request.get<TaskResult[]>(
     `report/work/${args.workId}/group/${args.groupId}/user/${args.userId}`,
   )
   return result
